@@ -3,21 +3,21 @@ import ReactDOM from "react-dom";
 import { render, screen } from "@testing-library/react";
 import Adapter from "enzyme-adapter-react-16";
 import Enzyme, { shallow } from "enzyme";
-import Footer from "./Footer";
+import Header from "./Header";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe("Footer renders ", () => {
+describe("Header renders ", () => {
   test("wihout crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<Footer />, div);
+    ReactDOM.render(<Header />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 });
 
-describe('Footer component contains: ',()=>{
-    test('text "Footer"', () => {
-      render(<Footer />);
-      expect(screen.getByText('Footer')).toBeInTheDocument();
+describe('Header component contains: ',()=>{
+    test('text "Header"', () => {
+      render(<Header/>);
+      expect(screen.getByText('Header')).toBeInTheDocument();
     })
 })
