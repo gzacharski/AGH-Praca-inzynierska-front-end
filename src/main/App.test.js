@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { render, screen } from '@testing-library/react';
 import Adapter from 'enzyme-adapter-react-16';
