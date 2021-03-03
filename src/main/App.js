@@ -15,12 +15,11 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
-
   const [openMenu,setOpenMenu]=useState(false);
   const classes=useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid='app-container'>
       <CssBaseline />
       <Header openMenu={openMenu} setOpenMenu={setOpenMenu} />
       {/* <Provider store={dataStore}> */}

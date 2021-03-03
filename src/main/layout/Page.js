@@ -7,7 +7,7 @@ export default function Page(){
     return(
         <Container maxWidth='xl' component='main' data-testid='main-container'>
             <Switch>
-                <Route path='/' exact={true} component={Home}/>
+                <Route path='/' exact component={Home}/>
                 <Route path='/about' component={About}/>
                 <Route path='/blog' component={Blog}/>
                 <Route path='/client' component={Client}/>
