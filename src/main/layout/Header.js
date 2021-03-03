@@ -62,8 +62,10 @@ const useStyles = makeStyles((theme) => ({
     button: {},
 }));
 
-export default function Header() {
+export default function Header(props) {
     const classes = useStyles();
+
+    const {openMenu,setOpenMenu}=props;
 
     return (
         <AppBar
@@ -79,6 +81,7 @@ export default function Header() {
                     color='inherit'
                     data-testid='header-menu-icon'
                     edge='start'
+                    onClick={()=>setOpenMenu(!openMenu)}
                 >
                     <MenuIcon />
                 </IconButton>
