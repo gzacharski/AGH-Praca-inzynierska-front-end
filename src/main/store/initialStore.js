@@ -1,5 +1,7 @@
 export const initialStore = {
-    modelData: {},
+    modelData: {
+        users : []
+    },
     stateData: {
         menuIsOpen: false
     },
