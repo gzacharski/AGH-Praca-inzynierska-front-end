@@ -8,19 +8,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-
 const Navigation = (props) => {
-    const { menuIsOpen, toggle } = props;
-    const [isOpen, setIsOpen] = React.useState(false);
-
-    const handleClose = () => {
-        toggle();
-        setIsOpen(menuIsOpen);
-    }
-    
-    return(
+    return (
         <nav>
-            <Drawer open={isOpen} onClose={()=>handleClose()}>
+            <Drawer open={props.menuIsOpen} onClose={() => props.toggleDrawer()}>
                 <List component='nav' aria-label='About'>
                     <ListItem button component={NavLink} to="/" exact={true}>
                         <ListItemText>Strona główna</ListItemText>
@@ -43,7 +34,7 @@ const Navigation = (props) => {
                     <ListItem button component={NavLink} to="/offer">
                         <ListItemText>Oferta</ListItemText>
                     </ListItem>
-                    <Divider/>
+                    <Divider />
                     <ListItem button component={NavLink} to="/login">
                         <ListItemText>Zaloguj się</ListItemText>
                     </ListItem>
@@ -53,12 +44,8 @@ const Navigation = (props) => {
     )
 }
 
-const mapStateToProps=(store)=>({
-    menuIsOpen : store.stateData.menuIsOpen,
-})
+const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen })
 
-const mapDispatchToProps ={ 
-    toggle: toggleDrawer
-}
+const mapDispatchToProps = { toggleDrawer }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

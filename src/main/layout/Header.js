@@ -81,7 +81,7 @@ const Header = (props) => {
                     color='inherit'
                     data-testid='header-menu-icon'
                     edge='start'
-                    onClick={()=>props.toggle()}
+                    onClick={() => props.toggleDrawer()}
                 >
                     <MenuIcon />
                 </IconButton>
@@ -91,7 +91,7 @@ const Header = (props) => {
                     component='h4'
                     data-testid='header-menu-title'
                 >
-                    Miejce na logo {`${props.isOpen}`}
+                    Miejce na logo
                 </Typography>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -106,19 +106,11 @@ const Header = (props) => {
                     />
                 </div>
                 <Button color='inherit' data-testid='header-login-button' role='button'>
-                    Zaloguj się 
+                    Zaloguj się
                 </Button>
             </Toolbar>
         </AppBar>
     );
 }
 
-const mapStateToProps = (store) => ({
-    isOpen: store.stateData.menuIsOpen
-})
-
-const mapDispatchToProps = {
-    toggle: toggleDrawer
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(null, { toggleDrawer })(Header);
