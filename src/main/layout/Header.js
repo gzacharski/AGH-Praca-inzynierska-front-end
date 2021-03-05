@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { toggleDrawer } from "../store/state/action/creators";
 import { makeStyles, fade } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -8,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,11 +64,9 @@ const useStyles = makeStyles((theme) => ({
     button: {},
 }));
 
-export default function Header(props) {
+const Header = (props) => {
+
     const classes = useStyles();
-
-    const {openMenu,setOpenMenu}=props;
-
     return (
         <AppBar
             aria-label='application bar'
@@ -80,7 +81,7 @@ export default function Header(props) {
                     color='inherit'
                     data-testid='header-menu-icon'
                     edge='start'
-                    onClick={()=>setOpenMenu(!openMenu)}
+                    onClick={()=>props.toggle()}
                 >
                     <MenuIcon />
                 </IconButton>
@@ -90,7 +91,7 @@ export default function Header(props) {
                     component='h4'
                     data-testid='header-menu-title'
                 >
-                    Miejce na logo
+                    Miejce na logo {`${props.isOpen}`}
                 </Typography>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -105,9 +106,19 @@ export default function Header(props) {
                     />
                 </div>
                 <Button color='inherit' data-testid='header-login-button' role='button'>
-                    Zaloguj się
+                    Zaloguj się 
                 </Button>
             </Toolbar>
         </AppBar>
     );
 }
+
+const mapStateToProps = (store) => ({
+    isOpen: store.stateData.menuIsOpen
+})
+
+const mapDispatchToProps = {
+    toggle: toggleDrawer
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,5 +1,7 @@
 import React from "react";
-import {NavLink} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { toggleDrawer } from "../store/state/action/creators";
+import { NavLink } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -7,12 +9,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 
-export default function Navigation(props){
-    const {openMenu,setOpenMenu}=props;
+const Navigation = (props) => {
+    const { menuIsOpen, toggle } = props;
+    const [isOpen, setIsOpen] = React.useState(false);
 
+    const handleClose = () => {
+        toggle();
+        setIsOpen(menuIsOpen);
+    }
+    
     return(
         <nav>
-            <Drawer open={openMenu} onClose={()=>setOpenMenu(!openMenu)}>
+            <Drawer open={isOpen} onClose={()=>handleClose()}>
                 <List component='nav' aria-label='About'>
                     <ListItem button component={NavLink} to="/" exact={true}>
                         <ListItemText>Strona główna</ListItemText>
@@ -44,3 +52,13 @@ export default function Navigation(props){
         </nav>
     )
 }
+
+const mapStateToProps=(store)=>({
+    menuIsOpen : store.stateData.menuIsOpen,
+})
+
+const mapDispatchToProps ={ 
+    toggle: toggleDrawer
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Navigation);
