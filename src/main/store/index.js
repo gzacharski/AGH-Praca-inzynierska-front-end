@@ -1,12 +1,12 @@
-import { createStore, combineReducers,applyMiddleware,compose} from "redux";
-import {composeWithDevTools} from 'redux-devtools-extension'
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension'
 import modelReducer from "./model/reducer";
 import stateReducer from "./state/reducer";
 
-const middlewares=[];
+const middlewares = [];
 
-if(process.env.NODE_ENV==='development'){
-  const {logger}=require('redux-logger');
+if (process.env.NODE_ENV === 'development') {
+  const { logger } = require('redux-logger');
   middlewares.push(logger);
 }
 
