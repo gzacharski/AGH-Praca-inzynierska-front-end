@@ -1,3 +1,3 @@
-import * as ActionTypes from './types';
+import * as actionTypes from './types';
 
-export const toggleDrawer = () => ({ type: ActionTypes.TOGGLE_DRAWER })
+export const toggleDrawer = () => ({ type: actionTypes.TOGGLE_DRAWER })
