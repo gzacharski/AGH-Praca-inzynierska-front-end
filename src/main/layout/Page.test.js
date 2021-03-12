@@ -9,7 +9,7 @@ jest.mock('../pages/Blog', () => jest.fn());
 jest.mock('../pages/Client', () => jest.fn());
 jest.mock('../pages/Contact', () => jest.fn());
 jest.mock('../pages/Home', () => jest.fn());
-jest.mock('../pages/Login', () => jest.fn());
+jest.mock('../pages/login/Login', () => jest.fn());
 jest.mock('../pages/News', () => jest.fn());
 jest.mock('../pages/Offer', () => jest.fn());
 
