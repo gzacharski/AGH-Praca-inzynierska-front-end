@@ -21,12 +21,12 @@ export default function App() {
     <div className={classes.root} data-testid="app-container">
       <Provider store={appStore}>
         <CssBaseline />
-        <Header/>
         <Router basename={process.env.PUBLIC_URL}>
+          <Header/>
           <Navigation/>
           <Page />
+          <Footer />
         </Router>
-        <Footer />
       </Provider>
     </div>
   );
