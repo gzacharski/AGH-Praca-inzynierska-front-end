@@ -8,10 +8,10 @@ const LoginButton = (props) => {
   const handleClick = (history) => history.push("/login");
   return (
     <Button
+      color="inherit"
       data-testid="header-login-button"
       role="button"
       onClick={() => handleClick(props.history)}
-      className={classes.root}
     >
       Zaloguj się
     </Button>
