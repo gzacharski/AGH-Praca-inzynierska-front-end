@@ -13,13 +13,13 @@ describe('Home component', () => {
 
     beforeEach(() => {
         store = mockStore({
-            modelData: {
-                users: []
-            },
-            stateData: {
-                menuIsOpen: false
-            },
-        })
+          modelData: {
+            users: [],
+          },
+          stateData: {
+            menuIsOpen: false,
+          },
+        });
 
         component = renderer.create(
             <Provider store={store}>
