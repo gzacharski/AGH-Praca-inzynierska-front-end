@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme,{shallow} from 'enzyme';
 import App from './App';
 import {Footer,Header,Navigation,Page} from './layout';
+import HeaderRenderer from './renderers/HeaderRenderer';
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -29,7 +30,7 @@ describe('App contains',()=>{
   })
 
   test('Header component', ()=>{
-    const componentExists=wrapper.exists(Header);
+    const componentExists=wrapper.exists(HeaderRenderer);
     expect(componentExists).toBe(true);
   })
 
