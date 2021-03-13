@@ -1,3 +1,3 @@
-import HeaderRenderer from "./HeaderRenderer";
+import LoginFilterRenderer from "./LoginFilterRenderer";
 
-export { HeaderRenderer };
+export { LoginFilterRenderer };

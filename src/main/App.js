@@ -1,11 +1,11 @@
 import React from "react";
 import { Provider } from "react-redux";
 import appStore from "./store";
-import { Footer, Navigation, Page } from "./layout";
+import { Footer, Header, Navigation, Page } from "./layout";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useStyles } from "./App.styles";
-import HeaderRenderer from "./renderers/HeaderRenderer";
+import LoginFilterRenderer from "./renderers/LoginFilterRenderer";
 
 export default function App() {
   const classes = useStyles();
@@ -15,10 +15,14 @@ export default function App() {
       <Provider store={appStore}>
         <CssBaseline />
         <Router basename={process.env.PUBLIC_URL}>
-          <HeaderRenderer />
+          <LoginFilterRenderer>
+            <Header />
+          </LoginFilterRenderer>
           <Navigation />
           <Page />
-          <Footer />
+          <LoginFilterRenderer>
+            <Footer />
+          </LoginFilterRenderer>
         </Router>
       </Provider>
     </div>
