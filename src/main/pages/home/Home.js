@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { addUser } from '../store/model/action/creators';
+import { addUser } from '../../store/model/action/creators';
 import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles({
