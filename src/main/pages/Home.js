@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { addUser } from '../store/model/action/creators';
+import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles({
     root: {
@@ -19,6 +20,7 @@ const Home = (props) => {
     const tempUsers = ["Test user"]
 
     return (
+        <Container maxWidth='xl' component='main' data-testid='main-container'>
         <Typography variant='h5' className={classes.root} align='center'>
             Strona główna
             <br />
@@ -27,6 +29,7 @@ const Home = (props) => {
             </Button>
             {props.users && userList(props.users)}
         </Typography>
+        </Container>
     );
 }
 

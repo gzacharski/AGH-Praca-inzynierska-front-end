@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
+import Container from "@material-ui/core/Container";
 
 const useStyles=makeStyles({
     root : {
@@ -12,8 +13,10 @@ const useStyles=makeStyles({
 export default function Trenings(){
     const classes=useStyles();
     return(
-        <Typography variant='h5' className={classes.root} align='center'>
-            Trening
-        </Typography>
+        <Container maxWidth='xl' component='main' data-testid='main-container'>
+            <Typography variant='h5' className={classes.root} align='center'>
+                Trening
+            </Typography>
+        </Container>
     );
 }

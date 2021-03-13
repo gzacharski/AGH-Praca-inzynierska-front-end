@@ -62,15 +62,15 @@ describe("Page", () => {
     expect(screen.queryByTestId(`${component.name}`)).toBeFalsy();
   })
 
-  test('contains div with data-testid main-container', () => {
-    Home.mockImplementation(() => <div data-testid="home">Home</div>);
+  // test('contains div with data-testid main-container', () => {
+  //   Home.mockImplementation(() => <div data-testid="home">Home</div>);
 
-    render(
-      <MemoryRouter>
-        <Page />
-      </MemoryRouter>
-    );
+  //   render(
+  //     <MemoryRouter>
+  //       <Page />
+  //     </MemoryRouter>
+  //   );
 
-    expect(screen.queryByTestId('main-container')).toBeInTheDocument();
-  })
+  //   expect(screen.queryByTestId('main-container')).toBeInTheDocument();
+  // })
 });
