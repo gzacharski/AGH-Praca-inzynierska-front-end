@@ -1,10 +1,10 @@
-import About from './About';
-import Blog from "./Blog";
-import Client from './Client';
-import Contact from './Contact';
-import Home from './Home';
-import Login from './Login';
-import News from './News';
-import Offer from './Offer';
+import About from './about/About';
+import Blog from "./blog/Blog";
+import Client from './client/Client';
+import Contact from './contact/Contact';
+import Home from './home/Home';
+import Login from './login/Login';
+import News from './news/News';
+import Offer from './offer/Offer';
 
 export { About, Blog, Client, Contact, Home, Login, News, Offer };
