@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -87,7 +88,7 @@ export default function Login() {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Utwórz konto"}
+                  Utwórz konto
                 </Link>
               </Grid>
             </Grid>

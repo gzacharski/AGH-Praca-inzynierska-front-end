@@ -1,6 +1,6 @@
 import React from "react";
-import { render, screen } from "../../../testUtils";
 import { MemoryRouter } from "react-router-dom";
+import { render, screen } from "../../../testUtils";
 import Header from "./Header";
 
 describe("Header component", () => {

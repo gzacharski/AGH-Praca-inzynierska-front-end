@@ -19,6 +19,7 @@ const Header = (props) => {
       aria-label="application bar"
       className={classes.root}
       position="static"
+      // eslint-disable-next-line jsx-a11y/aria-role
       role="header"
     >
       <Toolbar>

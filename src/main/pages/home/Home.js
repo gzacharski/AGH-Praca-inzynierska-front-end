@@ -2,16 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { addUser } from "../../store/model/action/creators";
 import Container from "@material-ui/core/Container";
+import { addUser } from "../../store/model/action/creators";
 import { useStyles } from "./Home.styles";
 
 const Home = (props) => {
   const classes = useStyles();
 
-  const userList = (users) => users.map((user) => <h4>{user}</h4>);
+  const userList = (users) => users.map((user) => <h4 key={user}>{user}</h4>);
   const tempUsers = ["Test user"];
-
+  const {users}=props;
   return (
     <Container maxWidth="xl" component="main" data-testid="main-container">
       <Typography variant="h5" className={classes.root} align="center">
@@ -24,7 +24,7 @@ const Home = (props) => {
         >
           Test button
         </Button>
-        {props.users && userList(props.users)}
+        {users && userList(users)}
       </Typography>
     </Container>
   );
