@@ -6,6 +6,7 @@ import stateReducer from "./state/reducer";
 const middlewares = [];
 
 if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line global-require
   const { logger } = require('redux-logger');
   middlewares.push(logger);
 }

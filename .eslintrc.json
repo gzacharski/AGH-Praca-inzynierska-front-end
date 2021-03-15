@@ -1,0 +1,30 @@
+{
+   "env": {
+      "browser": true,
+      "jest": true
+   },
+   "extends": [
+      "eslint:recommended",
+      "airbnb",
+      "plugin:react/recommended",
+      "prettier"
+   ],
+   "parserOptions": {
+      "ecmaFeatures": {
+         "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
+   },
+   "plugins": ["react", "react-hooks", "jest", "import"],
+   "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "import/no-cycle": [2, { "maxDepth": 1 }],
+      "import/no-extraneous-dependencies": [
+         "error",
+         { "devDependencies": true }
+      ],
+      "react/prop-types": "off",
+      "import/prefer-default-export": "off"
+   }
+}

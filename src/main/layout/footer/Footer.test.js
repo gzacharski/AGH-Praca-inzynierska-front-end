@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { render, screen } from "@testing-library/react";
 import Adapter from "enzyme-adapter-react-16";
-import Enzyme, { shallow } from "enzyme";
+import Enzyme from "enzyme";
 import Footer from "./Footer";
 
 Enzyme.configure({ adapter: new Adapter() });

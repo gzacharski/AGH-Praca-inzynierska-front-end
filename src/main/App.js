@@ -1,9 +1,9 @@
 import React from "react";
 import { Provider } from "react-redux";
-import appStore from "./store";
-import { Footer, Header, Navigation, Page } from "./layout";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter as Router } from "react-router-dom";
+import appStore from "./store";
+import { Footer, Header, Navigation, Page } from "./layout";
 import { useStyles } from "./App.styles";
 import LoginFilterRenderer from "./renderers/LoginFilterRenderer";
 

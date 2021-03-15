@@ -1,9 +1,9 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import { render, screen } from "../../testUtils";
-import LoginFilterRenderer from "./LoginFilterRenderer";
 import { act } from "react-dom/test-utils";
 import { unmountComponentAtNode } from "react-dom";
+import { render, screen } from "../../testUtils";
+import LoginFilterRenderer from "./LoginFilterRenderer";
 
 const TestComponent = () => <div data-testid="test-component">Component</div>;
 
