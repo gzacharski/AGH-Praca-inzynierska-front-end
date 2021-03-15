@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function TestComponent(){
     return (
-        <div>Hello WOrld</div>
+        <div>Hello WOrld2</div>
     );
 }
