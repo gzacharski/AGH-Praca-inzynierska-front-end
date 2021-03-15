@@ -21,6 +21,7 @@
     ]
   },
   "scripts": {
+    "prepare": "husky install",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-app-rewired start",
@@ -63,10 +64,5 @@
     "react-test-renderer": "^17.0.1",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }
