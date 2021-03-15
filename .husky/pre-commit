@@ -2,3 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 # npm test
+
+[ -n "$CI" ] && exit 0
