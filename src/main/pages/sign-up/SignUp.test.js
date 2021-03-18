@@ -75,6 +75,7 @@ describe('Field name:', () => {
          'X',
          timeToWriteNextCharacterInMS,
       );
+      userEvent.click(screen.getByTestId('sign-up-form'));
       expect(await screen.findByPlaceholderText('Imię')).toHaveValue('X');
       expect(
          await screen.findByText('Podaj minimalnie dwa znaki'),
@@ -88,6 +89,7 @@ describe('Field name:', () => {
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
          timeToWriteNextCharacterInMS,
       );
+      userEvent.click(screen.getByTestId('sign-up-form'));
       expect(await screen.findByPlaceholderText('Imię')).toHaveValue(
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
       );
@@ -129,6 +131,7 @@ describe('Surname field:', () => {
          'X',
          timeToWriteNextCharacterInMS,
       );
+      userEvent.click(screen.getByTestId('sign-up-form'));
       expect(await screen.findByPlaceholderText('Nazwisko')).toHaveValue('X');
       expect(
          await screen.findByText('Podaj minimalnie dwa znaki'),
@@ -142,6 +145,7 @@ describe('Surname field:', () => {
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
          timeToWriteNextCharacterInMS,
       );
+      userEvent.click(screen.getByTestId('sign-up-form'));
       expect(await screen.findByPlaceholderText('Nazwisko')).toHaveValue(
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
       );
