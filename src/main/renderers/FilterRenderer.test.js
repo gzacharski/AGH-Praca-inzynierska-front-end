@@ -3,12 +3,13 @@ import { MemoryRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "../../testUtils";
-import LoginFilterRenderer from "./LoginFilterRenderer";
+import FilterRenderer from "./FilterRenderer";
 
 const TestComponent = () => <div data-testid="test-component">Component</div>;
 
-describe("LoginFilterRenderer", () => {
+describe("FilterRenderer", () => {
   let container = null;
+  const filteredUrls = ['/login', '/sign-up'];
 
   beforeEach(() => {
     container = document.createElement("div");
@@ -31,9 +32,9 @@ describe("LoginFilterRenderer", () => {
     act(() => {
       render(
         <MemoryRouter initialEntries={[link]}>
-          <LoginFilterRenderer>
+          <FilterRenderer urls={filteredUrls}>
             <TestComponent />
-          </LoginFilterRenderer>
+          </FilterRenderer>
         </MemoryRouter>
       );
     });
@@ -48,9 +49,9 @@ describe("LoginFilterRenderer", () => {
     act(() => {
       render(
         <MemoryRouter initialEntries={[link]}>
-          <LoginFilterRenderer>
+          <FilterRenderer urls={filteredUrls}>
             <TestComponent />
-          </LoginFilterRenderer>
+          </FilterRenderer>
         </MemoryRouter>
       );
     });
