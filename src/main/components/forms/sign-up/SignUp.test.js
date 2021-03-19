@@ -15,8 +15,8 @@ describe('SignUp component', () => {
 
 describe('SignUp form should have:', () => {
    test('name field', () => {
-      expect(screen.getByPlaceholderText('Imię')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Imię')).toBeVisible();
+      expect(screen.getByLabelText('Imię')).toBeInTheDocument();
+      expect(screen.getByLabelText('Imię')).toBeVisible();
    });
 
    test('surname field', () => {
@@ -50,7 +50,7 @@ describe('SignUp form should have:', () => {
 describe('Field name:', () => {
    const timeToWriteNextCharacterInMS = 50;
 
-   test('should properly change value.', async () => {
+   test('should properly change value of name.', async () => {
       expect(screen.getByPlaceholderText('Imię')).toHaveValue('');
       userEvent.type(
          screen.getByPlaceholderText('Imię'),
@@ -60,7 +60,7 @@ describe('Field name:', () => {
       expect(await screen.findByPlaceholderText('Imię')).toHaveValue('Janek');
    });
 
-   test('should show warning that field is required', async () => {
+   test('should show warning that name field is required', async () => {
       expect(screen.getByPlaceholderText('Imię')).toHaveValue('');
       const button = screen.getByRole('button');
       userEvent.click(button);
@@ -102,7 +102,7 @@ describe('Field name:', () => {
 describe('Surname field:', () => {
    const timeToWriteNextCharacterInMS = 50;
 
-   test('should properly change value.', async () => {
+   test('surname should properly change value.', async () => {
       expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
       userEvent.type(
          screen.getByPlaceholderText('Nazwisko'),
@@ -114,7 +114,7 @@ describe('Surname field:', () => {
       );
    });
 
-   test('should show warning that field is required', async () => {
+   test('surname should show warning that field is required', async () => {
       expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
       const button = screen.getByRole('button');
       userEvent.click(button);
@@ -124,7 +124,7 @@ describe('Surname field:', () => {
       ).toBeInTheDocument();
    });
 
-   test('should show warning if not enough characters.', async () => {
+   test('surname should show warning if not enough characters.', async () => {
       expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
       userEvent.type(
          screen.getByPlaceholderText('Nazwisko'),
@@ -138,7 +138,7 @@ describe('Surname field:', () => {
       ).toBeInTheDocument();
    });
 
-   test('should show warning if too many characters', async () => {
+   test('surname should show warning if too many characters', async () => {
       expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
       userEvent.type(
          screen.getByPlaceholderText('Nazwisko'),

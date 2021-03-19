@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useStyles } from './SignUp.styles';
 import './SignUp.css';
+import TextField from '@material-ui/core/TextField';
 
 const validationSchema = Yup.object({
    name: Yup.string()
@@ -53,7 +54,22 @@ const SignUp = () => {
    return (
       <form onSubmit={formik.handleSubmit} data-testid="sign-up-form">
          <div>
-            <label htmlFor="name">Imię</label>
+            <TextField
+               label="Imię"
+               id="name"
+               name="name"
+               type="text"
+               // placeholder="Imię"
+               onChange={formik.handleChange}
+               onBlur={formik.handleBlur}
+               value={formik.values.name}
+               error={formik.touched.name && formik.errors.name}
+               helperText={formik.errors.name}
+            />
+            {/* {formik.touched.name && formik.errors.name && (
+               <div className="warning">{formik.errors.name}</div>
+            )} */}
+            {/* <label htmlFor="name">Imię</label>
             <input
                id="name"
                name="name"
@@ -65,7 +81,7 @@ const SignUp = () => {
             />
             {formik.touched.name && formik.errors.name && (
                <div className="warning">{formik.errors.name}</div>
-            )}
+            )} */}
          </div>
          <div>
             <label htmlFor="surname">Nazwisko</label>
