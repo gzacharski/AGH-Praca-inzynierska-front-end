@@ -2,9 +2,13 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useStyles } from './SignUp.styles';
-import './SignUp.css';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import { useStyles } from './SignUp.styles';
+import { phoneRegExp } from './phoneRegExp';
+
+const isNotEmpty = (text) => text && text.length !== 0;
 
 const validationSchema = Yup.object({
    name: Yup.string()
@@ -33,6 +37,10 @@ const validationSchema = Yup.object({
          ),
       })
       .required('Hasło jest wymagane'),
+   phone: Yup.string().matches(
+      phoneRegExp,
+      'Podano nieprawidłowy format numeru telefonu.',
+   ),
 });
 
 const SignUp = () => {
@@ -44,6 +52,7 @@ const SignUp = () => {
          email: '',
          password1: '',
          password2: '',
+         phone: '',
       },
       validationSchema,
       onSubmit: (values) => {
@@ -52,98 +61,136 @@ const SignUp = () => {
    });
 
    return (
-      <form onSubmit={formik.handleSubmit} data-testid="sign-up-form">
-         <div>
-            <TextField
-               label="Imię"
-               id="name"
-               name="name"
-               type="text"
-               // placeholder="Imię"
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               value={formik.values.name}
-               error={formik.touched.name && formik.errors.name}
-               helperText={formik.errors.name}
-            />
-            {/* {formik.touched.name && formik.errors.name && (
-               <div className="warning">{formik.errors.name}</div>
-            )} */}
-            {/* <label htmlFor="name">Imię</label>
-            <input
-               id="name"
-               name="name"
-               type="text"
-               placeholder="Imię"
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               value={formik.values.name}
-            />
-            {formik.touched.name && formik.errors.name && (
-               <div className="warning">{formik.errors.name}</div>
-            )} */}
-         </div>
-         <div>
-            <label htmlFor="surname">Nazwisko</label>
-            <input
-               id="surname"
-               name="surname"
-               type="text"
-               placeholder="Nazwisko"
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               value={formik.values.surname}
-            />
-            {formik.touched.surname && formik.errors.surname && (
-               <div className="warning">{formik.errors.surname}</div>
-            )}
-         </div>
-         <div>
-            <label htmlFor="email">Email</label>
-            <input
-               id="email"
-               name="email"
-               type="email"
-               placeholder="Email"
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               value={formik.values.email}
-            />
-            {formik.touched.email && formik.errors.email && (
-               <div className="warning">{formik.errors.email}</div>
-            )}
-         </div>
-         <div>
-            <label htmlFor="password1">Hasło</label>
-            <input
-               id="password1"
-               name="password1"
-               type="password"
-               placeholder="Hasło"
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               value={formik.values.password1}
-            />
-            {formik.touched.password1 && formik.errors.password1 && (
-               <div className="warning">{formik.errors.password1}</div>
-            )}
-         </div>
-         <div>
-            <label htmlFor="password2">Powtórz hasło</label>
-            <input
-               id="password2"
-               name="password2"
-               type="password"
-               placeholder="Powtórz hasło"
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               value={formik.values.password2}
-            />
-            {formik.touched.password2 && formik.errors.password2 && (
-               <div className="warning">{formik.errors.password2}</div>
-            )}
-         </div>
-         <button type="submit">Zarejestruj się</button>
+      <form
+         onSubmit={formik.handleSubmit}
+         data-testid="sign-up-form"
+         className={classes.form}
+      >
+         <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+               <TextField
+                  autoComplete="cc-given-name"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Imię"
+                  id="name"
+                  name="name"
+                  type="text"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.name}
+                  error={formik.touched.name && isNotEmpty(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+               />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+               <TextField
+                  autoComplete="cc-family-name"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="surname"
+                  name="surname"
+                  type="text"
+                  label="Nazwisko"
+                  placeholder="Nazwisko"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.surname}
+                  error={
+                     formik.touched.surname && isNotEmpty(formik.errors.surname)
+                  }
+                  helperText={formik.touched.surname && formik.errors.surname}
+               />
+            </Grid>
+            <Grid item xs={12}>
+               <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  name="email"
+                  type="email"
+                  label="Email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  error={
+                     formik.touched.email && isNotEmpty(formik.errors.email)
+                  }
+                  helperText={formik.touched.email && formik.errors.email}
+               />
+            </Grid>
+            <Grid item xs={12}>
+               <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  label="Telefon"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.phone}
+                  error={
+                     formik.touched.phone && isNotEmpty(formik.errors.phone)
+                  }
+                  helperText={formik.touched.phone && formik.errors.phone}
+               />
+            </Grid>
+            <Grid item xs={12}>
+               <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="password1"
+                  name="password1"
+                  type="password"
+                  label="Hasło"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password1}
+                  error={
+                     formik.touched.password1 &&
+                     isNotEmpty(formik.errors.password1)
+                  }
+                  helperText={
+                     formik.touched.password1 && formik.errors.password1
+                  }
+               />
+            </Grid>
+            <Grid item xs={12}>
+               <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="password2"
+                  name="password2"
+                  type="password"
+                  label="Powtórz hasło"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password2}
+                  error={
+                     formik.touched.password2 &&
+                     isNotEmpty(formik.errors.password2)
+                  }
+                  helperText={
+                     formik.touched.password2 && formik.errors.password2
+                  }
+               />
+            </Grid>
+         </Grid>
+         <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+         >
+            Zarejestruj się
+         </Button>
       </form>
    );
 };

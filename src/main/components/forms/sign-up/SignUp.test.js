@@ -15,28 +15,28 @@ describe('SignUp component', () => {
 
 describe('SignUp form should have:', () => {
    test('name field', () => {
-      expect(screen.getByLabelText('Imię')).toBeInTheDocument();
-      expect(screen.getByLabelText('Imię')).toBeVisible();
+      expect(screen.getByLabelText(/Imię/)).toBeInTheDocument();
+      expect(screen.getByText('Imię')).toBeVisible();
    });
 
    test('surname field', () => {
-      expect(screen.getByPlaceholderText('Nazwisko')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Nazwisko')).toBeVisible();
+      expect(screen.getByLabelText(/Nazwisko/)).toBeInTheDocument();
+      expect(screen.getByText('Nazwisko')).toBeVisible();
    });
 
    test('email field', () => {
-      expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Email')).toBeVisible();
+      expect(screen.getByLabelText(/Email/)).toBeInTheDocument();
+      expect(screen.getByText('Email')).toBeVisible();
    });
 
    test('password field', () => {
-      expect(screen.getByPlaceholderText('Hasło')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Hasło')).toBeVisible();
+      expect(screen.getByLabelText(/Hasło/)).toBeInTheDocument();
+      expect(screen.getByText('Hasło')).toBeVisible();
    });
 
    test('repeated password field', () => {
-      expect(screen.getByPlaceholderText('Powtórz hasło')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Powtórz hasło')).toBeVisible();
+      expect(screen.getByLabelText(/Powtórz hasło/)).toBeInTheDocument();
+      expect(screen.getByText('Powtórz hasło')).toBeVisible();
    });
 
    test('submit button', () => {
@@ -51,46 +51,46 @@ describe('Field name:', () => {
    const timeToWriteNextCharacterInMS = 50;
 
    test('should properly change value of name.', async () => {
-      expect(screen.getByPlaceholderText('Imię')).toHaveValue('');
+      expect(screen.getByLabelText(/Imię/)).toHaveValue('');
       userEvent.type(
-         screen.getByPlaceholderText('Imię'),
+         screen.getByLabelText(/Imię/),
          'Janek',
          timeToWriteNextCharacterInMS,
       );
-      expect(await screen.findByPlaceholderText('Imię')).toHaveValue('Janek');
+      expect(await screen.findByLabelText(/Imię/)).toHaveValue('Janek');
    });
 
    test('should show warning that name field is required', async () => {
-      expect(screen.getByPlaceholderText('Imię')).toHaveValue('');
+      expect(screen.getByLabelText(/Imię/)).toHaveValue('');
       const button = screen.getByRole('button');
       userEvent.click(button);
-      expect(await screen.findByPlaceholderText('Imię')).toHaveValue('');
+      expect(await screen.findByLabelText(/Imię/)).toHaveValue('');
       expect(await screen.findByText('Imię jest wymagane')).toBeInTheDocument();
    });
 
    test('should show warning if not enough characters.', async () => {
-      expect(screen.getByPlaceholderText('Imię')).toHaveValue('');
+      expect(screen.getByLabelText(/Imię/)).toHaveValue('');
       userEvent.type(
-         screen.getByPlaceholderText('Imię'),
+         screen.getByLabelText(/Imię/),
          'X',
          timeToWriteNextCharacterInMS,
       );
       userEvent.click(screen.getByTestId('sign-up-form'));
-      expect(await screen.findByPlaceholderText('Imię')).toHaveValue('X');
+      expect(await screen.findByLabelText(/Imię/)).toHaveValue('X');
       expect(
          await screen.findByText('Podaj minimalnie dwa znaki'),
       ).toBeInTheDocument();
    });
 
    test('should show warning if too many characters', async () => {
-      expect(screen.getByPlaceholderText('Imię')).toHaveValue('');
+      expect(screen.getByLabelText(/Imię/)).toHaveValue('');
       userEvent.type(
-         screen.getByPlaceholderText('Imię'),
+         screen.getByLabelText(/Imię/),
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
          timeToWriteNextCharacterInMS,
       );
       userEvent.click(screen.getByTestId('sign-up-form'));
-      expect(await screen.findByPlaceholderText('Imię')).toHaveValue(
+      expect(await screen.findByLabelText(/Imię/)).toHaveValue(
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
       );
       expect(
@@ -103,50 +103,50 @@ describe('Surname field:', () => {
    const timeToWriteNextCharacterInMS = 50;
 
    test('surname should properly change value.', async () => {
-      expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
+      expect(screen.getByLabelText(/Nazwisko/)).toHaveValue('');
       userEvent.type(
-         screen.getByPlaceholderText('Nazwisko'),
+         screen.getByLabelText(/Nazwisko/),
          'Janek',
          timeToWriteNextCharacterInMS,
       );
-      expect(await screen.findByPlaceholderText('Nazwisko')).toHaveValue(
+      expect(await screen.findByLabelText(/Nazwisko/)).toHaveValue(
          'Janek',
       );
    });
 
    test('surname should show warning that field is required', async () => {
-      expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
+      expect(screen.getByLabelText(/Nazwisko/)).toHaveValue('');
       const button = screen.getByRole('button');
       userEvent.click(button);
-      expect(await screen.findByPlaceholderText('Nazwisko')).toHaveValue('');
+      expect(await screen.findByLabelText(/Nazwisko/)).toHaveValue('');
       expect(
          await screen.findByText('Nazwisko jest wymagane'),
       ).toBeInTheDocument();
    });
 
    test('surname should show warning if not enough characters.', async () => {
-      expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
+      expect(screen.getByLabelText(/Nazwisko/)).toHaveValue('');
       userEvent.type(
-         screen.getByPlaceholderText('Nazwisko'),
+         screen.getByLabelText(/Nazwisko/),
          'X',
          timeToWriteNextCharacterInMS,
       );
       userEvent.click(screen.getByTestId('sign-up-form'));
-      expect(await screen.findByPlaceholderText('Nazwisko')).toHaveValue('X');
+      expect(await screen.findByLabelText(/Nazwisko/)).toHaveValue('X');
       expect(
          await screen.findByText('Podaj minimalnie dwa znaki'),
       ).toBeInTheDocument();
    });
 
    test('surname should show warning if too many characters', async () => {
-      expect(screen.getByPlaceholderText('Nazwisko')).toHaveValue('');
+      expect(screen.getByLabelText(/Nazwisko/)).toHaveValue('');
       userEvent.type(
-         screen.getByPlaceholderText('Nazwisko'),
+         screen.getByLabelText(/Nazwisko/),
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
          timeToWriteNextCharacterInMS,
       );
       userEvent.click(screen.getByTestId('sign-up-form'));
-      expect(await screen.findByPlaceholderText('Nazwisko')).toHaveValue(
+      expect(await screen.findByLabelText(/Nazwisko/)).toHaveValue(
          'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
       );
       expect(
