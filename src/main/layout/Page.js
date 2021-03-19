@@ -9,7 +9,7 @@ import {
   Login,
   News,
   Offer,
-  SingUp
+  SignUp
 } from "../pages";
 
 export default function Page() {
@@ -23,7 +23,7 @@ export default function Page() {
       <Route path="/login" component={Login} />
       <Route path="/news" component={News} />
       <Route path="/offer" component={Offer} />
-      <Route path="/sign-up" component={SingUp}/>
+      <Route path="/sign-up" component={SignUp}/>
       <Redirect to="/" />
     </Switch>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen } from '../../testUtils';
+import { render, screen } from 'src/testUtils';
 import Page from './Page';
 import {
    About,
@@ -11,7 +11,7 @@ import {
    Login,
    News,
    Offer,
-   SingUp,
+   SignUp,
 } from '../pages';
 
 jest.mock('../pages/about/About', () => jest.fn());
@@ -34,7 +34,7 @@ describe('Page', () => {
       ['/login', Login],
       ['/news', News],
       ['/offer', Offer],
-      ['/sign-up', SingUp]
+      ['/sign-up', SignUp],
    ])(
       'with valid path: "%s" should redirect to %p page.',
       (link, component) => {
@@ -63,7 +63,7 @@ describe('Page', () => {
       ['/loginda', Login],
       ['/newsfa', News],
       ['/offerf', Offer],
-      ['/signup',SingUp]
+      ['/signup', SignUp],
    ])(
       'with invalid path: "%s" should redirect to Home page.',
       (link, component) => {
@@ -83,16 +83,4 @@ describe('Page', () => {
          expect(screen.queryByTestId(`${component.name}`)).toBeFalsy();
       },
    );
-
-   // test('contains div with data-testid main-container', () => {
-   //   Home.mockImplementation(() => <div data-testid="home">Home</div>);
-
-   //   render(
-   //     <MemoryRouter>
-   //       <Page />
-   //     </MemoryRouter>
-   //   );
-
-   //   expect(screen.queryByTestId('main-container')).toBeInTheDocument();
-   // })
 });
