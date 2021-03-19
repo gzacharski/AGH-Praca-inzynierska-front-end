@@ -1,3 +1,3 @@
-import LoginFilterRenderer from "./LoginFilterRenderer";
+import FilterRenderer from "./FilterRenderer";
 
-export { LoginFilterRenderer };
+export { FilterRenderer };

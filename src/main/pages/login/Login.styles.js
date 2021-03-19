@@ -3,8 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     fontWeight: "bold",
-    // padding: "30px",
-    // background: "yellow",
     height: "100vh",
   },
   heading: {
@@ -22,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    // minHeight: "90vh",
   },
   avatar: {
     margin: theme.spacing(1),

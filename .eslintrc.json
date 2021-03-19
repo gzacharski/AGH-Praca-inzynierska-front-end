@@ -7,7 +7,8 @@
       "eslint:recommended",
       "airbnb",
       "plugin:react/recommended",
-      "prettier"
+      "prettier",
+      "plugin:testing-library/react"
    ],
    "parserOptions": {
       "ecmaFeatures": {
@@ -16,7 +17,7 @@
       "ecmaVersion": 12,
       "sourceType": "module"
    },
-   "plugins": ["react", "react-hooks", "jest", "import"],
+   "plugins": ["react", "react-hooks", "jest", "import","testing-library"],
    "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "import/no-cycle": [2, { "maxDepth": 1 }],
@@ -25,6 +26,7 @@
          { "devDependencies": true }
       ],
       "react/prop-types": "off",
-      "import/prefer-default-export": "off"
+      "import/prefer-default-export": "off",
+      "import/no-unresolved" : "off"
    }
 }

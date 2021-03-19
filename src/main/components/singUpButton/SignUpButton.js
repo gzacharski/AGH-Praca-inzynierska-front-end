@@ -1,15 +1,15 @@
 import React from 'react';
 import NavLinkButton from '../navLinkButton/NavLinkButton';
-import { useStyles } from './LoginButton.styles';
+import { useStyles } from './SignUpButton.styles';
 
-export default function LoginButton() {
+export default function SignUpButton() {
    const classes = useStyles();
    return (
       <NavLinkButton
-         name="Zaloguj się"
-         link="/login"
+         name="Zarejestruj się"
+         link="/sign-up"
          classes={classes.root}
-         testId="login-btn"
+         testId="header-singUp-button"
       />
    );
 }

@@ -32,8 +32,13 @@ describe("Header component", () => {
   });
 
   test("contains visible log in button", () => {
-    expect(screen.getByTestId("header-login-button")).toBeInTheDocument();
-    expect(screen.getByTestId("header-login-button")).toBeVisible();
+    expect(screen.getByTestId("login-btn")).toBeInTheDocument();
+    expect(screen.getByTestId("login-btn")).toBeVisible();
+  });
+
+  test("contains visible sign up button", () => {
+    expect(screen.getByTestId("header-singUp-button")).toBeInTheDocument();
+    expect(screen.getByTestId("header-singUp-button")).toBeVisible();
   });
 
   test("contains search input", () => {
