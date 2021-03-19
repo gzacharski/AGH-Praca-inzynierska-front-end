@@ -87,7 +87,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/sign-up" variant="body2">
+                <Link href={`${process.env.PUBLIC_URL}/sign-up`} variant="body2">
                   Utwórz konto
                 </Link>
               </Grid>

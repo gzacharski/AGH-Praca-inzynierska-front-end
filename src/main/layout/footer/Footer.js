@@ -21,7 +21,7 @@ export default function Footer() {
             className={classes.footer_title}
             data-testid="footer-title"
          >
-            <Link href="/" color="inherit">
+            <Link href={`${process.env.PUBLIC_URL}/`} color="inherit">
                System do wspomagania zarządzania placówką profilaktyki
                zdrowotnej
             </Link>
