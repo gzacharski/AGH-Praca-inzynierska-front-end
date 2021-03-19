@@ -1,3 +1,7 @@
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gzacharski/AGH-praca-inzynierska/Front-end%20CI)
+![GitHub last commit](https://img.shields.io/github/last-commit/gzacharski/AGH-praca-inzynierska)
+![GitHub contributors](https://img.shields.io/github/contributors/gzacharski/AGH-praca-inzynierska)
+
 # GitHub Pages
 [Link](https://gzacharski.github.io/AGH-praca-inzynierska/)
 
