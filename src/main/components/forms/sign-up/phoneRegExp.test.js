@@ -9,7 +9,7 @@ describe('Phone number (in Poland)', () => {
       });
 
       test('123465876', () => {
-         expect('+48123465876'.match(regExp)).toBeTruthy();
+         expect('123465876'.match(regExp)).toBeTruthy();
       });
 
       test('+48 123 465 876', () => {
