@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import {v4 as uuid4} from 'uuid'
 import { render, screen } from 'src/testUtils';
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -88,17 +90,18 @@ describe('Field name:', () => {
 
    test('should display warning if too many characters', async () => {
       expect(screen.getByLabelText(/Imię/)).toHaveValue('');
+      const longRandomName = [...Array(61)]
+         .map(() => Math.random().toString(36)[2])
+         .join('');
       userEvent.type(
          screen.getByLabelText(/Imię/),
-         'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
+         longRandomName,
          timeToWriteNextCharacterInMS,
       );
       userEvent.click(screen.getByTestId('sign-up-form'));
-      expect(await screen.findByLabelText(/Imię/)).toHaveValue(
-         'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
-      );
+      expect(await screen.findByLabelText(/Imię/)).toHaveValue(longRandomName);
       expect(
-         await screen.findByText('Maksymalna ilość 20 znaków'),
+         await screen.findByText('Maksymalna ilość 60 znaków'),
       ).toBeInTheDocument();
    });
 });
@@ -145,17 +148,20 @@ describe('Surname field:', () => {
 
    test('surname should display warning if too many characters', async () => {
       expect(screen.getByLabelText(/Nazwisko/)).toHaveValue('');
+      const longRandomSurname = [...Array(61)]
+         .map(() => Math.random().toString(36)[2])
+         .join('');
       userEvent.type(
          screen.getByLabelText(/Nazwisko/),
-         'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
+         longRandomSurname,
          timeToWriteNextCharacterInMS,
       );
       userEvent.click(screen.getByTestId('sign-up-form'));
       expect(await screen.findByLabelText(/Nazwisko/)).toHaveValue(
-         'Xfdgfsgashtjryerhyuhjrtjretyerthfgsa',
+         longRandomSurname,
       );
       expect(
-         await screen.findByText('Maksymalna ilość 20 znaków'),
+         await screen.findByText('Maksymalna ilość 60 znaków'),
       ).toBeInTheDocument();
    });
 });
@@ -350,40 +356,120 @@ describe('Phone field:', () => {
    });
 
    test('should display warning if invalid phone number format is provided', async () => {
-      const phoneField=screen.getByLabelText(/Telefon/);
+      const phoneField = screen.getByLabelText(/Telefon/);
       expect(phoneField).toHaveValue('');
       userEvent.type(
          phoneField,
          '+48 665-762682',
-         timeToWriteNextCharacterInMS
+         timeToWriteNextCharacterInMS,
       );
-      await waitFor(()=>{
+      await waitFor(() => {
          expect(phoneField).toHaveValue('+48 665-762682');
          userEvent.click(screen.getByTestId('sign-up-form'));
-         expect(screen.getByText(/Podano nieprawidłowy format numeru telefonu./)).toBeInTheDocument();
-      })
-      
+         expect(
+            screen.getByText(/Podano nieprawidłowy format numeru telefonu./),
+         ).toBeInTheDocument();
+      });
    });
 
    test('should not display warning if valid phone number format is provided', async () => {
-      const phoneField=screen.getByLabelText(/Telefon/);
+      const phoneField = screen.getByLabelText(/Telefon/);
       expect(phoneField).toHaveValue('');
       userEvent.type(
          phoneField,
          '+48 665 762 682',
-         timeToWriteNextCharacterInMS
+         timeToWriteNextCharacterInMS,
       );
       userEvent.click(screen.getByTestId('sign-up-form'));
-      await waitFor(()=>{
+      await waitFor(() => {
          expect(phoneField).toHaveValue('+48 665 762 682');
-         expect(screen.queryByText(/Podano nieprawidłowy format numeru telefonu./)).toBeNull();
-      })
+         expect(
+            screen.queryByText(/Podano nieprawidłowy format numeru telefonu./),
+         ).toBeNull();
+      });
    });
-
 });
 
-describe('Submit button', () => {
-   test('should send request to back-end', () => {});
-   test('should display successful registration message', () => {});
-   test('should display failure registration message', () => {});
+jest.mock('axios');
+
+describe('When back-end validation, then it should display proper message for field:', () => {
+   const timeToWriteNextCharacterInMS = 50;
+   let response;
+
+   beforeEach(() => {
+      response = {
+         id: null,
+         succcess: false,
+         message: 'Rejestracja zakończona niepowodzeniem.',
+         errors: null,
+         timestamp: '2020-12-12',
+      };
+   });
+
+   const mockResponseAndSubmit = async () => {
+      axios.post.mockImplementationOnce(() =>
+         Promise.resolve({ data: response }),
+      );
+      await userEvent.type(
+         screen.getByLabelText(/Imię/),
+         'TestName',
+         timeToWriteNextCharacterInMS,
+      );
+      await userEvent.type(
+         screen.getByLabelText(/Nazwisko/),
+         'TestSurname',
+         timeToWriteNextCharacterInMS,
+      );
+      await userEvent.type(
+         screen.getByLabelText(/Email/),
+         'test@test.com',
+         timeToWriteNextCharacterInMS,
+      );
+      await userEvent.type(
+         screen.getByLabelText(/Hasło/),
+         'password1234',
+         timeToWriteNextCharacterInMS,
+      );
+      await userEvent.type(
+         screen.getByLabelText(/Powtórz hasło/),
+         'password1234',
+         timeToWriteNextCharacterInMS,
+      );
+      await userEvent.click(screen.getByRole('button'));
+   };
+
+   test.each([
+      ['name','Imię powinno mieć od 2 do 60 znaków.'],
+      ['surname','Nazwisko powinno mieć od 2 do 60 znaków.'],
+      ['email','Proszę podać poprawny adres email.'],
+      ['email','Podany address email jest już zajęty'],
+      ['phoneNumber','Niepoprawny format numeru telefonu.'],
+      ['password','Hasło powinno mieć od 8 do 24 znaków.'],
+      ['matchingPassword','Podane hasła powinny być identyczne.']
+   ])('%s', async (field, errorMsg) => {
+      response.errors = {
+         [field]: errorMsg,
+      };
+      mockResponseAndSubmit();
+      expect(await screen.findByText(errorMsg));
+   });
+
+   test('everything is ok', async ()=>{
+      response = {
+         id: uuid4(),
+         succcess: true,
+         message: 'Użytkownik został zarejestrowany.',
+         errors: null,
+         timestamp: '2020-12-12',
+      };
+      mockResponseAndSubmit();
+      await waitFor(()=>{
+         expect(screen.queryByText(/Podaj minimalnie/)).toBeNull();
+         expect(screen.queryByText(/Maksymalna ilość/)).toBeNull();
+         expect(screen.queryByText(/jest wymagane/)).toBeNull();
+         expect(screen.queryByText(/jest wymagany/)).toBeNull();
+         expect(screen.queryByText(/Hasło musi/)).toBeNull();
+         expect(screen.queryByText(/Proszę podać/)).toBeNull();
+      })
+   })
 });
