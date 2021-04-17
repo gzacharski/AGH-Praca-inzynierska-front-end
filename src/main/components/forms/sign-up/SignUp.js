@@ -27,15 +27,7 @@ const validationSchema = Yup.object({
       .max(24, 'Hasło musi zawierać maksymalnie 24 znaki.')
       .required('Hasło jest wymagane'),
    password2: Yup.string()
-      .min(8, 'Hasło musi zawierać conajmniej 8 znaków.')
-      .max(24, 'Hasło musi zawierać maksymalnie 24 znaki.')
-      .when('password1', {
-         is: (password1) => password1 && password1 > 0,
-         then: Yup.string().oneOf(
-            [Yup.ref('password1')],
-            'Niezgodność podanych haseł',
-         ),
-      })
+      .oneOf([Yup.ref('password1'), null], 'Niezgodność podanych haseł')
       .required('Hasło jest wymagane'),
    phone: Yup.string().matches(
       phoneRegExp,
