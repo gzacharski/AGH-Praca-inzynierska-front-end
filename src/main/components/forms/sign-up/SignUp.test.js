@@ -1,13 +1,28 @@
 import React from 'react';
 import axios from 'axios';
-import {v4 as uuid4} from 'uuid'
+import { v4 as uuid4 } from 'uuid';
 import { render, screen } from 'src/testUtils';
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SignUp from './SignUp';
+import SignUpForm from './SignUp';
+
+jest.mock('axios');
 
 beforeEach(() => {
-   render(<SignUp />);
+   const setSuccess = jest.fn();
+   const setDisplayBackdrop = jest.fn();
+   const setDisplaySnackBar = jest.fn();
+   const setResponseMessage = jest.fn();
+   const setError = jest.fn();
+   render(
+      <SignUpForm
+         setSuccess={setSuccess}
+         setDisplayBackdrop={setDisplayBackdrop}
+         setDisplaySnackBar={setDisplaySnackBar}
+         setResponseMessage={setResponseMessage}
+         setError={setError}
+      />,
+   );
 });
 
 describe('SignUp component', () => {
@@ -390,8 +405,6 @@ describe('Phone field:', () => {
    });
 });
 
-jest.mock('axios');
-
 describe('When back-end validation, then it should display proper message for field:', () => {
    const timeToWriteNextCharacterInMS = 50;
    let response;
@@ -439,13 +452,13 @@ describe('When back-end validation, then it should display proper message for fi
    };
 
    test.each([
-      ['name','Imię powinno mieć od 2 do 60 znaków.'],
-      ['surname','Nazwisko powinno mieć od 2 do 60 znaków.'],
-      ['email','Proszę podać poprawny adres email.'],
-      ['email','Podany address email jest już zajęty'],
-      ['phoneNumber','Niepoprawny format numeru telefonu.'],
-      ['password','Hasło powinno mieć od 8 do 24 znaków.'],
-      ['matchingPassword','Podane hasła powinny być identyczne.']
+      ['name', 'Imię powinno mieć od 2 do 60 znaków.'],
+      ['surname', 'Nazwisko powinno mieć od 2 do 60 znaków.'],
+      ['email', 'Proszę podać poprawny adres email.'],
+      ['email', 'Podany address email jest już zajęty'],
+      ['phoneNumber', 'Niepoprawny format numeru telefonu.'],
+      ['password', 'Hasło powinno mieć od 8 do 24 znaków.'],
+      ['matchingPassword', 'Podane hasła powinny być identyczne.'],
    ])('%s', async (field, errorMsg) => {
       response.errors = {
          [field]: errorMsg,
@@ -454,7 +467,7 @@ describe('When back-end validation, then it should display proper message for fi
       expect(await screen.findByText(errorMsg));
    });
 
-   test('everything is ok', async ()=>{
+   test('everything is ok', async () => {
       response = {
          id: uuid4(),
          succcess: true,
@@ -463,13 +476,13 @@ describe('When back-end validation, then it should display proper message for fi
          timestamp: '2020-12-12',
       };
       mockResponseAndSubmit();
-      await waitFor(()=>{
+      await waitFor(() => {
          expect(screen.queryByText(/Podaj minimalnie/)).toBeNull();
          expect(screen.queryByText(/Maksymalna ilość/)).toBeNull();
          expect(screen.queryByText(/jest wymagane/)).toBeNull();
          expect(screen.queryByText(/jest wymagany/)).toBeNull();
          expect(screen.queryByText(/Hasło musi/)).toBeNull();
          expect(screen.queryByText(/Proszę podać/)).toBeNull();
-      })
-   })
+      });
+   });
 });

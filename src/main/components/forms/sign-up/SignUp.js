@@ -37,7 +37,15 @@ const validationSchema = Yup.object({
    ),
 });
 
-const SignUp = () => {
+const SignUp = (props) => {
+   const {
+      setSuccess,
+      setDisplayBackdrop,
+      setDisplaySnackBar,
+      setResponseMessage,
+      setError
+   } = props;
+
    const classes = useStyles();
    const formik = useFormik({
       initialValues: {
@@ -50,8 +58,7 @@ const SignUp = () => {
       },
       validationSchema,
       onSubmit: (values) => {
-         // eslint-disable-next-line no-alert
-         // alert(JSON.stringify(values, null, 2));
+         setDisplayBackdrop(true);
 
          const requestData = {
             name: values.name,
@@ -63,27 +70,36 @@ const SignUp = () => {
          };
 
          axios
-            .post(userServiceURL, requestData)
+            .post(`${userServiceURL}/users`, requestData, {
+               validateStatus: (status) =>status >= 200 && status < 300 || status===409,
+            })
             .then((response) => {
-               if (response.data.success) {
-                  console.log(response);
-               } else {
+               if (!response.data.success) {
                   const { errors } = response.data;
-                  if (errors.name) formik.setErrors({ name: errors.name });
-                  if (errors.surname)
+                  if (errors?.name) formik.setErrors({ name: errors.name });
+                  if (errors?.surname)
                      formik.setErrors({ surname: errors.surname });
-                  if (errors.email) formik.setErrors({ email: errors.email });
-                  if (errors.phoneNumber)
+                  if (errors?.email) formik.setErrors({ email: errors.email });
+                  if (errors?.phoneNumber)
                      formik.setErrors({ phone: errors.phoneNumber });
-                  if (errors.password)
+                  if (errors?.password)
                      formik.setErrors({ password1: errors.password });
-                  if (errors.matchingPassword)
+                  if (errors?.matchingPassword)
                      formik.setErrors({ password2: errors.matchingPassword });
                }
+
+               setSuccess(response.data.success);
+               setError(false);
+               setResponseMessage(response.data.message);
+               setDisplayBackdrop(false);
+               setDisplaySnackBar(true);
             })
             .catch((error) => {
-               console.log("to jest błąd");
-               console.log(error);
+               setSuccess(false);
+               setError(true);
+               setResponseMessage(error.message);
+               setDisplayBackdrop(false);
+               setDisplaySnackBar(true);
             });
       },
    });
