@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProviderImpl } from 'src/main/auth';
 import appStore from './store';
 import { Footer, Header, Navigation, Page } from './layout';
 import { useStyles } from './App.styles';
@@ -13,19 +14,21 @@ export default function App() {
 
    return (
       <div className={classes.root} data-testid="app-container">
-         <Provider store={appStore}>
-            <CssBaseline />
-            <Router basename={process.env.PUBLIC_URL}>
-               <FilterRenderer urls={filteredUrls}>
-                  <Header />
-               </FilterRenderer>
-               <Navigation />
-               <Page />
-               <FilterRenderer urls={filteredUrls}>
-                  <Footer />
-               </FilterRenderer>
-            </Router>
-         </Provider>
+         <AuthProviderImpl>
+            <Provider store={appStore}>
+               <CssBaseline />
+               <Router basename={process.env.PUBLIC_URL}>
+                  <FilterRenderer urls={filteredUrls}>
+                     <Header />
+                  </FilterRenderer>
+                  <Navigation />
+                  <Page />
+                  <FilterRenderer urls={filteredUrls}>
+                     <Footer />
+                  </FilterRenderer>
+               </Router>
+            </Provider>
+         </AuthProviderImpl>
       </div>
    );
 }
