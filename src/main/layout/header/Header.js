@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
 import { connect } from 'react-redux';
-import { LoginButton, SignUpButton } from 'src/main/components';
+import { LoginButton, SignUpButton } from 'src/main/components/buttons';
 import { toggleDrawer } from '../../store/state/action/creators';
 import { useStyles } from './Header.styles';
 
