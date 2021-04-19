@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { MemoryRouter } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
 import { render, screen } from 'src/testUtils';
 import userEvent from '@testing-library/user-event';
@@ -9,7 +10,11 @@ import SignUp from './SignUp';
 jest.mock('axios');
 
 beforeEach(() => {
-   render(<SignUp />);
+   render(
+      <MemoryRouter>
+         <SignUp />
+      </MemoryRouter>,
+   );
 });
 
 test('SingUp page should render without crashing', () => {
@@ -150,24 +155,24 @@ describe('SingUp page on submit', () => {
       });
 
       test('and should have proper text message on success response', async () => {
-          // TODO
-        //  response = {
-        //     id: uuid4(),
-        //     succcess: true,
-        //     message: 'Użytkownik został zarejestrowany.',
-        //     errors: null,
-        //     timestamp: '2020-12-12',
-        //  };
-        //  axios.post.mockImplementationOnce(() =>
-        //     Promise.resolve({ data: response, status: 200 }),
-        //  );
-        //  fillRegistrationForm();
-        //  await userEvent.click(screen.getByRole('button'));
-        //  await waitFor(() => {
-        //     expect(
-        //        screen.queryByText(/Użytkownik został zarejestrowany/),
-        //     ).toBeInTheDocument();
-        //  });
+         // TODO
+         //  response = {
+         //     id: uuid4(),
+         //     succcess: true,
+         //     message: 'Użytkownik został zarejestrowany.',
+         //     errors: null,
+         //     timestamp: '2020-12-12',
+         //  };
+         //  axios.post.mockImplementationOnce(() =>
+         //     Promise.resolve({ data: response, status: 200 }),
+         //  );
+         //  fillRegistrationForm();
+         //  await userEvent.click(screen.getByRole('button'));
+         //  await waitFor(() => {
+         //     expect(
+         //        screen.queryByText(/Użytkownik został zarejestrowany/),
+         //     ).toBeInTheDocument();
+         //  });
       });
       test('and should have proper text message on error response', () => {
          // TODO
