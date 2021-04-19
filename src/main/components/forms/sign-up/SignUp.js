@@ -43,7 +43,7 @@ const SignUp = (props) => {
       setDisplayBackdrop,
       setDisplaySnackBar,
       setResponseMessage,
-      setError
+      setError,
    } = props;
 
    const classes = useStyles();
@@ -71,7 +71,8 @@ const SignUp = (props) => {
 
          axios
             .post(`${userServiceURL}/users`, requestData, {
-               validateStatus: (status) =>status >= 200 && status < 300 || status===409,
+               validateStatus: (status) =>
+                  (status >= 200 && status < 300) || status === 409,
             })
             .then((response) => {
                if (!response.data.success) {
