@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import TextField from '@material-ui/core/TextField';
+import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -20,6 +17,14 @@ const validationSchema = Yup.object({
 });
 
 const LogInForm = (props) => {
+   const {
+      setSuccess,
+      setDisplayBackdrop,
+      setDisplaySnackBar,
+      setResponseMessage,
+      setError,
+   } = props;
+
    const classes = useStyles();
 
    const formik = useFormik({

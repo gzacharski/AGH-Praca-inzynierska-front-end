@@ -142,19 +142,19 @@ describe('When back-end validation, then it should display proper message for fi
    };
 
    // TODO fix test
-//    test.each([
-//       ['email', 'Proszę podać poprawny adres email.'],
-//       ['logIn', 'Podano zły address email lub hasło'],
-//    ])('%s', async (field, errorMsg) => {
-//       response.errors = {
-//          [field]: errorMsg,
-//       };
-//       axios.post.mockImplementationOnce(() =>
-//          Promise.resolve({ data: response, status: 400 }),
-//       );
-//       mockLoginAndSubmit();
-//       expect(await screen.findByText(errorMsg));
-//    });
+   //    test.each([
+   //       ['email', 'Proszę podać poprawny adres email.'],
+   //       ['logIn', 'Podano zły address email lub hasło'],
+   //    ])('%s', async (field, errorMsg) => {
+   //       response.errors = {
+   //          [field]: errorMsg,
+   //       };
+   //       axios.post.mockImplementationOnce(() =>
+   //          Promise.resolve({ data: response, status: 400 }),
+   //       );
+   //       mockLoginAndSubmit();
+   //       expect(await screen.findByText(errorMsg));
+   //    });
 
    test('everything is ok', async () => {
       response = {};
