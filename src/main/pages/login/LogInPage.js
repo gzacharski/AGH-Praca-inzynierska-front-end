@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Footer } from '../../layout';
-import { useStyles } from './Login.styles';
+import { useStyles } from './LogInPage.styles';
 
 export default function Login() {
    const classes = useStyles();

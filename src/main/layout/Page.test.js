@@ -8,7 +8,7 @@ import {
    Client,
    Contact,
    Home,
-   Login,
+   LogInPage,
    News,
    Offer,
    SignUp,
@@ -19,7 +19,7 @@ jest.mock('../pages/blog/Blog', () => jest.fn());
 jest.mock('../pages/client/Client', () => jest.fn());
 jest.mock('../pages/contact/Contact', () => jest.fn());
 jest.mock('../pages/home/Home', () => jest.fn());
-jest.mock('../pages/login/Login', () => jest.fn());
+jest.mock('../pages/login/LogInPage', () => jest.fn());
 jest.mock('../pages/news/News', () => jest.fn());
 jest.mock('../pages/offer/Offer', () => jest.fn());
 jest.mock('../pages/sign-up/SignUp', () => jest.fn());
@@ -31,7 +31,7 @@ describe('Page', () => {
       ['/client', Client],
       ['/contact', Contact],
       ['/', Home],
-      ['/login', Login],
+      ['/login', LogInPage],
       ['/news', News],
       ['/offer', Offer],
       ['/sign-up', SignUp],
@@ -60,7 +60,7 @@ describe('Page', () => {
       ['/client3', Client],
       ['/contact4', Contact],
       ['/fafa', Contact],
-      ['/loginda', Login],
+      ['/loginda', LogInPage],
       ['/newsfa', News],
       ['/offerf', Offer],
       ['/signup', SignUp],

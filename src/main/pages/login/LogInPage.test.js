@@ -4,14 +4,14 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, screen } from 'src/testUtils';
 import { Page } from 'src/main/layout';
-import Login from './Login';
+import LogInPage from './LogInPage';
 
 
-describe('Login page component', () => {
+describe('LogInPage page component', () => {
    beforeEach(() => {
       render(
          <MemoryRouter>
-            <Login />
+            <LogInPage />
          </MemoryRouter>,
       );
    });
