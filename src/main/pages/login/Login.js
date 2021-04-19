@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { Footer } from '../../layout';
 import { useStyles } from './Login.styles';
 
@@ -97,7 +98,8 @@ export default function Login() {
                      </Grid>
                      <Grid item>
                         <Link
-                           href={`${process.env.PUBLIC_URL}/sign-up`}
+                           component={RouterLink}
+                           to="/sign-up" 
                            variant="body2"
                         >
                            Utwórz konto

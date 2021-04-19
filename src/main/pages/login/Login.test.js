@@ -1,40 +1,83 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-// import renderer from "react-test-renderer";
-import configureStore from "redux-mock-store";
-import Login from "./Login";
+import React from 'react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import { render, screen } from 'src/testUtils';
+import { Page } from 'src/main/layout';
+import Login from './Login';
 
-const mockStore = configureStore([]);
 
-describe("Login component rendered in DOM", () => {
-  let container;
-  let store;
+describe('Login page component', () => {
+   beforeEach(() => {
+      render(
+         <MemoryRouter>
+            <Login />
+         </MemoryRouter>,
+      );
+   });
 
-  beforeEach(() => {
-    container = document.createElement("div");
-    store = mockStore({
-      modelData: {
-        users: [],
-      },
-      stateData: {
-        menuIsOpen: false,
-      },
-    });
-  });
+   test('should have log in text', () => {
+      expect(screen.getByText(/Zaloguj się/)).toBeInTheDocument();
+   });
 
-  afterEach(() => {
-    ReactDOM.unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
+   test('should have three links', () => {
+      expect(screen.getAllByRole('link').length).toEqual(3);
+   });
 
-  test("should render", () => {
-    const element = (
-      <Provider store={store}>
-        <Login />
-      </Provider>
-    );
-    ReactDOM.render(element, container);
-  });
+   test('should have proper title', () => {
+      expect(screen.getByText(/Zaloguj się/)).toBeInTheDocument();
+   });
+
+   describe('should have link to reset password page', () => {
+      test('should have proper title', () => {
+         expect(screen.getByText(/Nie pamiętasz hasła?/)).toBeInTheDocument();
+      });
+
+      test('should have proper linkt to the page', () => {
+         // TODO: when reset password page is ready
+      });
+
+      test('once the link clicked, it should route to proper page', () => {
+         // TODO: when reset password page is ready
+      });
+   });
+
+   describe('should have link to sign up page', () => {
+      test('should have proper title', () => {
+         expect(screen.getByText(/Utwórz konto/)).toBeInTheDocument();
+      });
+
+      test('should have proper link', () => {
+         const signUpLinks = screen
+            .getAllByRole('link')
+            .filter((link) => link.getAttribute('href').endsWith('sign-up'));
+         expect(signUpLinks.length).toEqual(1);
+      });
+   });
+});
+
+describe('User clicks link and', () => {
+   test('it should route to the sing up page', () => {
+      const history = createMemoryHistory();
+      history.push('/login');
+      render(
+         <Router history={history}>
+            <Page />
+         </Router>,
+      );
+      expect(screen.getByText(/Zaloguj się/)).toBeInTheDocument();
+
+      userEvent.click(screen.getByText(/Utwórz konto/));
+
+      expect(
+         screen
+            .getAllByRole('heading')
+            .filter((heading) => heading.textContent === 'Zarejestruj się')
+            .length,
+      ).toEqual(1);
+
+      const signUpButton=screen.queryByRole('button');
+      expect(signUpButton).toBeInTheDocument();
+      expect(signUpButton).toHaveTextContent('Zarejestruj się');
+   });
 });
