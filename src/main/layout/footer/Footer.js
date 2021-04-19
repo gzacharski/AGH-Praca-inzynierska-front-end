@@ -1,8 +1,6 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
+import { Container, Divider, Link, Typography } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import { useStyles } from './Footer.styles';
 
 export default function Footer() {
@@ -12,24 +10,26 @@ export default function Footer() {
          maxWidth="xl"
          component="footer"
          className={classes.root}
-         data-testid="footer-container"
       >
          <Divider className={classes.divider} />
          <Typography
             align="center"
             component="h6"
             className={classes.footer_title}
-            data-testid="footer-title"
          >
-            <Link href={`${process.env.PUBLIC_URL}/`} color="inherit">
+            <Link
+               component={RouterLink}
+               to="/"
+               color="inherit"
+            >
                System do wspomagania zarządzania placówką profilaktyki
                zdrowotnej
             </Link>
          </Typography>
-         <Typography align="center" component="p" data-testid="footer-authors">
+         <Typography align="center" component="p">
             Bartosz Kordek Grzegorz Zacharski
          </Typography>
-         <Typography align="center" component="p" data-testid="footer-year">
+         <Typography align="center" component="p">
             2020/2021
          </Typography>
       </Container>
