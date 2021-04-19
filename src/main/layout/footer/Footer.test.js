@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createMemoryHistory } from 'history';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { MemoryRouter, Router, Route } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
 import userEvent from '@testing-library/user-event';
 import Adapter from 'enzyme-adapter-react-16';
@@ -60,7 +60,7 @@ describe('Footer component', () => {
    });
 });
 
-test('once link cliked, it should route to main page', () => {
+test('on login page once link cliked, it should route to main page', () => {
    const history = createMemoryHistory();
    history.push('/login'); // example url
    render(
@@ -80,4 +80,35 @@ test('once link cliked, it should route to main page', () => {
    );
 
    expect(screen.getByText(/Strona główna/)).toBeInTheDocument();
+});
+
+test('when link clicked, it shoud route to main page', () => {
+   render(
+      <MemoryRouter initialEntries={['/footer']}>
+         <Route exact path="/" render={() => <div>Home Page</div>} />
+         <Route path="/footer" component={Footer} />
+      </MemoryRouter>,
+   );
+
+   expect(
+      screen.getByText(
+         /System do wspomagania zarządzania placówką profilaktyki zdrowotnej/,
+      ),
+   ).toBeInTheDocument();
+   expect(screen.queryByText(/Home Page/)).not.toBeInTheDocument();
+
+   const leftClick = { button: 0 };
+   userEvent.click(
+      screen.getByText(
+         /System do wspomagania zarządzania placówką profilaktyki zdrowotnej/i,
+      ),
+      leftClick,
+   );
+
+   expect(
+      screen.queryByText(
+         /System do wspomagania zarządzania placówką profilaktyki zdrowotnej/,
+      ),
+   ).not.toBeInTheDocument();
+   expect(screen.getByText(/Home Page/)).toBeInTheDocument();
 });
