@@ -1,8 +1,8 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { AuthWrapper, AuthPrompt } from 'src/main/auth';
+import { AuthContext } from 'src/main/auth';
 import { useStyles } from './Client.styles';
 
 const Client = () => {
@@ -10,15 +10,19 @@ const Client = () => {
    return (
       <Container maxWidth="xl" component="main" data-testid="main-container">
          <Typography variant="h5" className={classes.root} align="center">
-            Strona prywatna klient
+            Strona prywatna klienta
          </Typography>
       </Container>
    );
 };
 
-export default AuthWrapper((props) => (
-   <Switch>
-      {!props.isAuthenticated && <Route component={AuthPrompt} />}
-      <Client />
-   </Switch>
-));
+export default function AuthClient() {
+   const authContext = useContext(AuthContext);
+   const { token } = authContext.authState;
+   return (
+      <>
+         {token === null && <Redirect to="/login" />}
+         <Client />
+      </>
+   );
+}

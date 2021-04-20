@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, {useContext} from 'react';
 import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { AuthContext } from 'src/main/auth';
 import { userServiceURL } from 'src/main/data/urls';
 import { useStyles } from './LogInForm.styles';
+
 
 const isNotEmpty = (text) => text && text.length !== 0;
 
@@ -19,11 +21,13 @@ const validationSchema = Yup.object({
 const LogInForm = (props) => {
    const {
       setSuccess,
-      setDisplayBackdrop,
+      setDisplayCircularProgress,
       setDisplaySnackBar,
       setResponseMessage,
       setError,
    } = props;
+
+   const authContext = useContext(AuthContext)
 
    const classes = useStyles();
 
@@ -34,28 +38,51 @@ const LogInForm = (props) => {
       },
       validationSchema,
       onSubmit: (values) => {
+         setDisplayCircularProgress(true);
          const { email, password } = values;
 
-         axios
-            .post(`${userServiceURL}/login`, { email, password })
+         axios({
+            method: 'POST',
+            url: `${userServiceURL}/login`,
+            data: { email, password },
+         })
             .then((response) => {
+               console.log(response);
+
                if (response.status !== 200) {
                   const { errors } = response.data;
                   if (errors?.email) {
                      //  formik.setErrors({ email: errors.email });
                      //  formik.setTouched({ email: true });
-                     formik.setFieldError(email, errors.email);
+                     formik.setErrors(email, errors.email);
                   }
                   if (errors?.logIn) formik.setErrors({ email: errors.email });
                } else if (
                   response.status === 200 &&
-                  response.headers.token != null
+                  response.headers.token !== null
                ) {
-                  console.log(response);
+                  localStorage.setItem('token', response.headers.token);
+                  authContext.setAuthState({
+                     token: response.headers.token,
+                     expiresAt: null,
+                     userInfo: {},
+                  })
+                  
                }
+               setSuccess('response.data.success');
+               setError(false);
+               setResponseMessage('response.data.message');
+               setDisplayCircularProgress(false);
+               setDisplaySnackBar(true);
+               
             })
             .catch((error) => {
                console.log(error);
+               setSuccess(false);
+               setError(true);
+               setResponseMessage(error.message);
+               setDisplayCircularProgress(false);
+               setDisplaySnackBar(true);
             });
       },
    });
@@ -75,7 +102,6 @@ const LogInForm = (props) => {
             label="Email"
             name="email"
             autoComplete="email"
-            autoFocus
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}

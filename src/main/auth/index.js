@@ -1,6 +1,4 @@
 import { AuthContext } from './AuthContext';
-import { AuthProviderImpl } from './AuthProviderImpl';
-import { AuthWrapper } from './AuthWrapper';
-import { AuthPrompt } from './AuthPrompt';
+import { AuthProvider } from './AuthProvider';
 
-export { AuthContext, AuthWrapper, AuthProviderImpl, AuthPrompt };
+export { AuthContext, AuthProvider };
