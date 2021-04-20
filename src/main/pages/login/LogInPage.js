@@ -1,24 +1,49 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
    Avatar,
-   Button,
-   Checkbox,
-   FormControlLabel,
+   CircularProgress,
    Grid,
    Link,
    Paper,
+   Snackbar,
    Slide,
-   TextField,
    Typography,
 } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React from 'react';
+import MuiAlert from '@material-ui/lab/Alert';
+// eslint-disable-next-line no-unused-vars
+import { LockOutlined, CheckCircleOutline } from '@material-ui/icons';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Footer } from '../../layout';
+import { LogInForm } from 'src/main/components/forms';
+import { Footer } from 'src/main/layout';
 import { useStyles } from './LogInPage.styles';
 
 export default function Login() {
    const classes = useStyles();
+
+   const [success, setSuccess] = useState(false);
+   const [error, setError] = useState(false);
+   const [responseMessage, setResponseMessage] = useState('');
+   const [displaySnackBar, setDisplaySnackBar] = useState(false);
+   const [displayCircularProgress, setDisplayCircularProgress] = useState(
+      false,
+   );
+
+   const handleCloseSnackBar = (event, reason) => {
+      if (reason === 'clickaway') return;
+      setDisplaySnackBar(false);
+   };
+
+   const handleIconChange = () => {
+      if (displayCircularProgress) return <CircularProgress />;
+      if (success) return <CheckCircleOutline />;
+      return (
+         <Avatar className={classes.avatar}>
+            <LockOutlined />
+         </Avatar>
+      );
+   };
+
    return (
       <Slide direction="right" in mountOnEnter unmountOnExit timeout={400}>
          <Grid container className={classes.root}>
@@ -43,9 +68,7 @@ export default function Login() {
                square
             >
                <div className={classes.paper}>
-                  <Avatar className={classes.avatar}>
-                     <LockOutlinedIcon />
-                  </Avatar>
+                  {handleIconChange()}
                   <Typography
                      variant="h5"
                      className={classes.heading}
@@ -53,44 +76,14 @@ export default function Login() {
                   >
                      Zaloguj się
                   </Typography>
-                  <form className={classes.form} noValidate>
-                     <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                     />
-                     <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Hasło"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                     />
-                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Zapamiętaj mnie"
-                     />
-                     <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                     >
-                        Zaloguj
-                     </Button>
-                  </form>
-                  <Grid container>
+                  <LogInForm
+                     setSuccess={setSuccess}
+                     setDisplayCircularProgress={setDisplayCircularProgress}
+                     setDisplaySnackBar={setDisplaySnackBar}
+                     setResponseMessage={setResponseMessage}
+                     setError={setError}
+                  />
+                  <Grid container alignItems="stretch" >
                      <Grid item xs>
                         <Link href="#" variant="body2">
                            Nie pamiętasz hasła?
@@ -99,7 +92,7 @@ export default function Login() {
                      <Grid item>
                         <Link
                            component={RouterLink}
-                           to="/sign-up" 
+                           to="/sign-up"
                            variant="body2"
                         >
                            Utwórz konto
@@ -107,6 +100,25 @@ export default function Login() {
                      </Grid>
                   </Grid>
                   <Footer />
+                  <Snackbar
+                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                     open={displaySnackBar}
+                     autoHideDuration={3000}
+                     onClose={handleCloseSnackBar}
+                  >
+                     <MuiAlert
+                        elevation={6}
+                        variant="filled"
+                        onClose={handleCloseSnackBar}
+                        severity={
+                           // eslint-disable-next-line no-nested-ternary
+                           error ? 'error' : success ? 'success' : 'warning'
+                        }
+                        data-testid="sign-up-snackbar"
+                     >
+                        {responseMessage}
+                     </MuiAlert>
+                  </Snackbar>
                </div>
             </Grid>
          </Grid>
