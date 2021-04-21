@@ -51,9 +51,7 @@ const LogInForm = (props) => {
                if (response.status === 200) {
                   if (response.headers.token === null)
                      throw new Error('Błąd serwera');
-
-                  // TODO: temporarily, need to change from localStorage to HttpOnly cookie
-                  localStorage.setItem('token', response.headers.token);
+                     
                   authContext.setAuthState({
                      token: response.headers.token,
                      expiresAt: null,
