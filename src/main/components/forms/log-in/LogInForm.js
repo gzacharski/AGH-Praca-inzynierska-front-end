@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 import { AuthContext } from 'src/main/auth';
 import { userServiceURL } from 'src/main/data/urls';
 import { useStyles } from './LogInForm.styles';
-
 
 const isNotEmpty = (text) => text && text.length !== 0;
 
@@ -25,9 +24,10 @@ const LogInForm = (props) => {
       setDisplaySnackBar,
       setResponseMessage,
       setError,
+      setRedirection,
    } = props;
 
-   const authContext = useContext(AuthContext)
+   const authContext = useContext(AuthContext);
 
    const classes = useStyles();
 
@@ -47,37 +47,35 @@ const LogInForm = (props) => {
             data: { email, password },
          })
             .then((response) => {
-               console.log(response);
 
-               if (response.status !== 200) {
-                  const { errors } = response.data;
-                  if (errors?.email) {
-                     //  formik.setErrors({ email: errors.email });
-                     //  formik.setTouched({ email: true });
-                     formik.setErrors(email, errors.email);
-                  }
-                  if (errors?.logIn) formik.setErrors({ email: errors.email });
-               } else if (
-                  response.status === 200 &&
-                  response.headers.token !== null
-               ) {
+               if (response.status === 200) {
+                  if (response.headers.token === null)
+                     throw new Error('Błąd serwera');
+
+                  // TODO: temporarily, need to change from localStorage to HttpOnly cookie
                   localStorage.setItem('token', response.headers.token);
                   authContext.setAuthState({
                      token: response.headers.token,
                      expiresAt: null,
                      userInfo: {},
-                  })
-                  
+                  });
+
+                  setSuccess('response.data.success');
+                  setError(false);
+                  setResponseMessage('response.data.message');
+                  setDisplayCircularProgress(false);
+                  setDisplaySnackBar(true);
+                  setTimeout(() => {
+                     setRedirection(true);
+                  }, 700);
+               } else {
+                  const { errors } = response.data;
+                  if (errors?.email) formik.setErrors({ email: errors.email });
+                  if (errors?.logIn) formik.setErrors({ email: errors.email });
                }
-               setSuccess('response.data.success');
-               setError(false);
-               setResponseMessage('response.data.message');
-               setDisplayCircularProgress(false);
-               setDisplaySnackBar(true);
-               
+
             })
             .catch((error) => {
-               console.log(error);
                setSuccess(false);
                setError(true);
                setResponseMessage(error.message);
