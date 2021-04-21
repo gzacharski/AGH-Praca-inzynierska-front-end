@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { userServiceURL } from 'src/main/data/urls';
 import { useStyles } from './SignUp.styles';
 import { phoneRegExp } from './phoneRegExp';
 
@@ -13,11 +15,11 @@ const isNotEmpty = (text) => text && text.length !== 0;
 const validationSchema = Yup.object({
    name: Yup.string()
       .min(2, 'Podaj minimalnie dwa znaki')
-      .max(20, 'Maksymalna ilość 20 znaków')
+      .max(60, 'Maksymalna ilość 60 znaków')
       .required('Imię jest wymagane'),
    surname: Yup.string()
       .min(2, 'Podaj minimalnie dwa znaki')
-      .max(20, 'Maksymalna ilość 20 znaków')
+      .max(60, 'Maksymalna ilość 60 znaków')
       .required('Nazwisko jest wymagane'),
    email: Yup.string()
       .email('Nieprawidłowy adress email')
@@ -27,15 +29,7 @@ const validationSchema = Yup.object({
       .max(24, 'Hasło musi zawierać maksymalnie 24 znaki.')
       .required('Hasło jest wymagane'),
    password2: Yup.string()
-      .min(8, 'Hasło musi zawierać conajmniej 8 znaków.')
-      .max(24, 'Hasło musi zawierać maksymalnie 24 znaki.')
-      .when('password1', {
-         is: (password1) => password1 && password1 > 0,
-         then: Yup.string().oneOf(
-            [Yup.ref('password1')],
-            'Niezgodność podanych haseł',
-         ),
-      })
+      .oneOf([Yup.ref('password1'), null], 'Niezgodność podanych haseł')
       .required('Hasło jest wymagane'),
    phone: Yup.string().matches(
       phoneRegExp,
@@ -43,7 +37,15 @@ const validationSchema = Yup.object({
    ),
 });
 
-const SignUp = () => {
+const SignUp = (props) => {
+   const {
+      setSuccess,
+      setDisplayBackdrop,
+      setDisplaySnackBar,
+      setResponseMessage,
+      setError,
+   } = props;
+
    const classes = useStyles();
    const formik = useFormik({
       initialValues: {
@@ -56,8 +58,50 @@ const SignUp = () => {
       },
       validationSchema,
       onSubmit: (values) => {
-         // eslint-disable-next-line no-alert
-         alert(JSON.stringify(values, null, 2));
+         setDisplayBackdrop(true);
+
+         const requestData = {
+            name: values.name,
+            surname: values.surname,
+            email: values.email,
+            phone: values.phone,
+            password: values.password1,
+            matchingPassword: values.password2,
+         };
+
+         axios
+            .post(`${userServiceURL}/users`, requestData, {
+               validateStatus: (status) =>
+                  (status >= 200 && status < 300) || status === 409,
+            })
+            .then((response) => {
+               if (!response.data.success) {
+                  const { errors } = response.data;
+                  if (errors?.name) formik.setErrors({ name: errors.name });
+                  if (errors?.surname)
+                     formik.setErrors({ surname: errors.surname });
+                  if (errors?.email) formik.setErrors({ email: errors.email });
+                  if (errors?.phoneNumber)
+                     formik.setErrors({ phone: errors.phoneNumber });
+                  if (errors?.password)
+                     formik.setErrors({ password1: errors.password });
+                  if (errors?.matchingPassword)
+                     formik.setErrors({ password2: errors.matchingPassword });
+               }
+
+               setSuccess(response.data.success);
+               setError(false);
+               setResponseMessage(response.data.message);
+               setDisplayBackdrop(false);
+               setDisplaySnackBar(true);
+            })
+            .catch((error) => {
+               setSuccess(false);
+               setError(true);
+               setResponseMessage(error.message);
+               setDisplayBackdrop(false);
+               setDisplaySnackBar(true);
+            });
       },
    });
 
@@ -66,6 +110,7 @@ const SignUp = () => {
          onSubmit={formik.handleSubmit}
          data-testid="sign-up-form"
          className={classes.form}
+         noValidate
       >
          <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>

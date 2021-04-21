@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 'bold',
       padding: '30px',
    },
+   backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
 }));
 
 export { useStyles };

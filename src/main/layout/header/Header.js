@@ -7,9 +7,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
 import { connect } from 'react-redux';
-import { LoginButton, SignUpButton } from 'src/main/components';
 import { toggleDrawer } from '../../store/state/action/creators';
 import { useStyles } from './Header.styles';
+import {HeaderButtonsRenderer} from "./HeaderButtonsRenderer"
 
 const Header = (props) => {
    const classes = useStyles();
@@ -56,8 +56,7 @@ const Header = (props) => {
                   role="search"
                />
             </div>
-            <LoginButton />
-            <SignUpButton />
+            <HeaderButtonsRenderer/>
          </Toolbar>
       </AppBar>
    );

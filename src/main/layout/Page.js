@@ -6,7 +6,7 @@ import {
   Client,
   Contact,
   Home,
-  Login,
+  LogInPage,
   News,
   Offer,
   SignUp
@@ -20,7 +20,7 @@ export default function Page() {
       <Route path="/blog" component={Blog} />
       <Route path="/client" component={Client} />
       <Route path="/contact" component={Contact} />
-      <Route path="/login" component={Login} />
+      <Route path="/login" component={LogInPage} />
       <Route path="/news" component={News} />
       <Route path="/offer" component={Offer} />
       <Route path="/sign-up" component={SignUp}/>

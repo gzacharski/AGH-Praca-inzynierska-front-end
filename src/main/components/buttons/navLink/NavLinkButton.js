@@ -4,16 +4,18 @@ import { withRouter } from 'react-router-dom';
 import { useStyles } from './NavLinkButton.styles';
 
 const NavLinkButton = (props) => {
-   const handleClick = (history) => history.push(props.link);
-   const { name, history, classes, testId} = props;
-   const btnClasses = { ...classes, ...useStyles().root };
+   const classes=useStyles();
+   const { name,link, testId} = props;
+   const handleClick = (history) => history.push(link);
+   // const btnClasses = { ...classes, ...useStyles().root };
    return (
       <Button
-         color="inherit"
+         color='inherit'
          data-testid={testId}
          role="button"
-         onClick={() => handleClick(history)}
-         className={btnClasses.root}
+         onClick={() => handleClick(props.history)}
+         className={classes.root}
+         variant="contained"
       >
          {name}
       </Button>
