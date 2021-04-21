@@ -14,10 +14,10 @@ export default function App() {
 
    return (
       <div className={classes.root} data-testid="app-container">
-         <AuthProvider>
-            <Provider store={appStore}>
-               <CssBaseline />
-               <Router basename={process.env.PUBLIC_URL}>
+         <Router basename={process.env.PUBLIC_URL}>
+            <AuthProvider>
+               <Provider store={appStore}>
+                  <CssBaseline />
                   <FilterRenderer urls={filteredUrls}>
                      <Header />
                   </FilterRenderer>
@@ -26,9 +26,9 @@ export default function App() {
                   <FilterRenderer urls={filteredUrls}>
                      <Footer />
                   </FilterRenderer>
-               </Router>
-            </Provider>
-         </AuthProvider>
+               </Provider>
+            </AuthProvider>
+         </Router>
       </div>
    );
 }
