@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { AuthContext } from 'src/main/auth';
 import { useStyles } from './LogoutButton.styles';
 
-export default function LoginButton() {
+export default function LogoutButton() {
    const classes = useStyles();
    const authContext = useContext(AuthContext);
 
