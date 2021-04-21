@@ -20,7 +20,7 @@ const validationSchema = Yup.object({
 const LogInForm = (props) => {
    const {
       setSuccess,
-      setDisplayCircularProgress,
+      setCircularProgress,
       setDisplaySnackBar,
       setResponseMessage,
       setError,
@@ -38,14 +38,10 @@ const LogInForm = (props) => {
       },
       validationSchema,
       onSubmit: (values) => {
-         setDisplayCircularProgress(true);
          const { email, password } = values;
 
-         axios({
-            method: 'POST',
-            url: `${userServiceURL}/login`,
-            data: { email, password },
-         })
+         setCircularProgress(true);
+         axios.post(`${userServiceURL}/login`,{ email, password })
             .then((response) => {
 
                if (response.status === 200) {
@@ -54,14 +50,14 @@ const LogInForm = (props) => {
                      
                   authContext.setAuthState({
                      token: response.headers.token,
-                     expiresAt: null,
+                     expiresAt: new Date().getTime()/1000+60*60,
                      userInfo: {},
                   });
 
                   setSuccess('response.data.success');
                   setError(false);
                   setResponseMessage('response.data.message');
-                  setDisplayCircularProgress(false);
+                  setCircularProgress(false);
                   setDisplaySnackBar(true);
                   setTimeout(() => {
                      setRedirection(true);
@@ -77,7 +73,7 @@ const LogInForm = (props) => {
                setSuccess(false);
                setError(true);
                setResponseMessage(error.message);
-               setDisplayCircularProgress(false);
+               setCircularProgress(false);
                setDisplaySnackBar(true);
             });
       },

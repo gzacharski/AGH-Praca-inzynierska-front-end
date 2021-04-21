@@ -23,9 +23,7 @@ export default function Login() {
    const [error, setError] = useState(false);
    const [responseMessage, setResponseMessage] = useState('');
    const [displaySnackBar, setDisplaySnackBar] = useState(false);
-   const [displayCircularProgress, setDisplayCircularProgress] = useState(
-      false,
-   );
+   const [circularProgress, setCircularProgress] = useState(false);
    const [redirection, setRedirection] = useState(false);
 
    const handleCloseSnackBar = (event, reason) => {
@@ -59,10 +57,7 @@ export default function Login() {
                   square
                >
                   <div className={classes.paper}>
-                     <LogInIcon
-                        success={success}
-                        progress={displayCircularProgress}
-                     />
+                     <LogInIcon success={success} progress={circularProgress} />
                      <Typography
                         variant="h5"
                         className={classes.heading}
@@ -72,7 +67,7 @@ export default function Login() {
                      </Typography>
                      <LogInForm
                         setSuccess={setSuccess}
-                        setDisplayCircularProgress={setDisplayCircularProgress}
+                        setCircularProgress={setCircularProgress}
                         setDisplaySnackBar={setDisplaySnackBar}
                         setResponseMessage={setResponseMessage}
                         setError={setError}
