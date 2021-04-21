@@ -14,6 +14,7 @@ export default function LogoutButton() {
          role="button"
          onClick={() => authContext.logout()}
          className={classes.root}
+         variant='contained'
       >
          Wyloguj się
       </Button>

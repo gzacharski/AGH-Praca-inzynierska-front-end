@@ -1,9 +1,12 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
    root: {
-      color: '#1e88e5',
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      '&:hover': {
+         backgroundColor: fade(theme.palette.common.white, 0.25),
+      }
    },
-});
+}));
 
 export { useStyles };
