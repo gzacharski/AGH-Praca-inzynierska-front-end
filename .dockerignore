@@ -1,0 +1,11 @@
+node_modules
+build
+.dockerignore
+Dockerfile
+Dockerfile.prod
+.github
+.husky
+.idea
+.vscode
+coverage
+target
