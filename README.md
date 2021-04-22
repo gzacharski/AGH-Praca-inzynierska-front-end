@@ -21,7 +21,7 @@ Graficzny interfejs użytkownika jako strona typu single-page application z wyko
     ```
 1. Uruchomienie może zająć do kilku minut.
 1. Ostatecznie będą dostępne punkty końcowe:
-    * http://localhost:3000 
+    * http://localhost:3000/AGH-Praca-inzynierska-front-end/
 
 ## Jak zatrzymać?
 1. W głównym folderze projektu wpisz w terminalu:
@@ -43,7 +43,7 @@ User interface as single-page application build with React.
     ```
 1. Startup may last up to a few minutes.
 1. Eventually there will be available page:
-    * http://localhost:3000 
+    * http://localhost:3000/AGH-Praca-inzynierska-front-end/ 
 
 ## How to stop?
 1. In root folder of the project type in terminal:
