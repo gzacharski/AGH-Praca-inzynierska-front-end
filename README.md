@@ -1,77 +1,52 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gzacharski/AGH-praca-inzynierska/Front-end%20CI)
-![GitHub last commit](https://img.shields.io/github/last-commit/gzacharski/AGH-praca-inzynierska)
-![GitHub contributors](https://img.shields.io/github/contributors/gzacharski/AGH-praca-inzynierska)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gzacharski/AGH-Praca-inzynierska-front-end/Front-end%20CI)
+![GitHub last commit](https://img.shields.io/github/last-commit/gzacharski/AGH-Praca-inzynierska-front-end)
+![GitHub contributors](https://img.shields.io/github/contributors/gzacharski/AGH-Praca-inzynierska-front-end)
 
+### [English version below](#en-agh-praca-inzynierska-front-end)
 # GitHub Pages
-[Link](https://gzacharski.github.io/AGH-praca-inzynierska/)
+[Link](https://github.com/gzacharski/AGH-Praca-inzynierska-front-end)
 
-# Getting Started with Create React App
+# AGH-Praca-inżynierska-front-end
+Praca inżynierska "System do wspomagania zarządzania placówką profilaktyki zdrowotnej" autorstwa Bartosza Kordka i Grzegorza Zacharskiego.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Front-end
+Graficzny interfejs użytkownika jako strona typu single-page application z wykorzystaniem biblioteki React.
 
-## Available Scripts
+## Jak uruchomić?
+1. Wymagany jest zainstalowany [Docker](https://www.docker.com/).
+1. Sklonuj projekt.
+1. W głównym folderze projektu wpisz w terminalu:
+    ```shell script
+    docker-compose up --build -d
+    ```
+1. Uruchomienie może zająć do kilku minut.
+1. Ostatecznie będą dostępne punkty końcowe:
+    * http://localhost:3000 
 
-In the project directory, you can run:
+## Jak zatrzymać?
+1. W głównym folderze projektu wpisz w terminalu:
+    ```shell script
+    docker-compose down
+    ```
+# [EN AGH-Praca-inzynierska-front-end](#en-agh-praca-inzynierska-front-end)
+Engineering thesis "System to support management of a health prevention unit" by Bartosz Kordek & Grzegorz Zacharski.
 
-### `npm start`
+## Front-end
+User interface as single-page application build with React.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to start?
+1. You will need [Docker](https://www.docker.com/).
+1. Clone the project.
+1. In root folder of the project type in terminal:
+    ```shell script
+    docker-compose up --build -d
+    ```
+1. Startup may last up to a few minutes.
+1. Eventually there will be available page:
+    * http://localhost:3000 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## How to stop?
+1. In root folder of the project type in terminal:
+    ```shell script
+    docker-compose down
+    ```
