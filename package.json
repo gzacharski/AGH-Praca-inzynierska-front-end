@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@babel/eslint-plugin": "^7.13.16",
-    "@testing-library/dom": "^7.30.3",
+    "@testing-library/dom": "^7.30.4",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.5",
