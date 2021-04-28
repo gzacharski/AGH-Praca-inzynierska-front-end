@@ -28,7 +28,7 @@ Graficzny interfejs użytkownika jako strona typu single-page application z wyko
     ```shell script
     docker-compose down
     ```
-# [EN AGH-Praca-inzynierska-front-end](#en-agh-praca-inzynierska-front-end)
+# EN AGH-Praca-inzynierska-front-end
 Engineering thesis "System to support management of a health prevention unit" by Bartosz Kordek & Grzegorz Zacharski.
 
 ## Front-end
