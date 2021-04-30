@@ -15,7 +15,9 @@ import { useStyles } from './ShowTrainingsForm.styles';
 
 const ShowTrainings = () => {
 
-    const sendRequest  = () => {
+    const statusRequest  = () => {
+
+        console.log("request: ");
         axios
             .get(`http://localhost:8020/trainings/status`, {
                 validateStatus: (status) =>
@@ -23,6 +25,21 @@ const ShowTrainings = () => {
             })
             .then((response) => {
                 console.log("response: ", response.data);
+
+            })
+    }
+
+    const showGroupTrainings  = () => {
+
+        console.log("request: ");
+        axios
+            .get(`http://localhost:8020/trainings/group`, {
+                validateStatus: (status) =>
+                (status >= 200 && status < 300) || status === 409,
+            })
+            .then((response) => {
+                console.log("response: ", response.data);
+
             })
     }
 
@@ -32,6 +49,7 @@ const ShowTrainings = () => {
     return (
         <form>
             <h1>Hello, there will be offers</h1>
+            <h2>{showGroupTrainings()}</h2>
             <Button
                 type="submit"
                 fullWidth
