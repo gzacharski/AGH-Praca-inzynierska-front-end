@@ -8,18 +8,12 @@ import { trainingsServiceURL } from 'src/main/data/urls';
 import { useStyles } from './ShowTrainingsForm.styles';
 
 
-
-
-
-
-
 const ShowTrainings = () => {
 
     const statusRequest  = () => {
-
         console.log("request: ");
         axios
-            .get(`http://localhost:8020/trainings/status`, {
+            .get(`${trainingsServiceURL}/status`, {
                 validateStatus: (status) =>
                 (status >= 200 && status < 300) || status === 409,
             })
@@ -33,7 +27,7 @@ const ShowTrainings = () => {
 
         console.log("request: ");
         axios
-            .get(`http://localhost:8020/trainings/group`, {
+            .get(`${trainingsServiceURL}/group`, {
                 validateStatus: (status) =>
                 (status >= 200 && status < 300) || status === 409,
             })
@@ -42,7 +36,6 @@ const ShowTrainings = () => {
 
             })
     }
-
 
 
     const classes = useStyles();
