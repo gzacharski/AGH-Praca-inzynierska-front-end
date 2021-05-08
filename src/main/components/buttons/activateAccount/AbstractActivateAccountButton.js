@@ -2,25 +2,21 @@ import React from 'react';
 import axios from 'axios';
 import { Button } from '@material-ui/core';
 import { withRouter, useLocation } from 'react-router-dom';
-import { userServiceURL } from 'src/main/data/urls';
-import { useStyles } from './ActivateAccountButton.styles';
 
 function useQuery() {
    return new URLSearchParams(useLocation().search);
 }
 
-const ActivateAccountButton = (props) => {
-   const classes = useStyles();
-   const { setMessage, setSuccess, setOnRequest } = props;
+const AbstractActivateAccountButton = (props) => {
+   const { setMessage, setOnRequest, setStatus, url, text, className } = props;
 
    const params = useQuery();
    const token = params.get('token');
-   const confirmationURL = `${userServiceURL}/users/confirmRegistration`;
 
    const handleClick = () => {
       setOnRequest(true);
       axios
-         .get(confirmationURL, {
+         .get(url, {
             headers: {
                'Accept-Language': 'pl',
             },
@@ -29,18 +25,24 @@ const ActivateAccountButton = (props) => {
             },
          })
          .then((response) => {
-            if (response.status === 200) {
-               setSuccess(true);
-            } else {
-               setSuccess(false);
-            }
+            setStatus(response.status);
             setMessage(response.data.message);
          })
          .catch((error) => {
-            setSuccess(false);
-            setMessage(error);
+            if (error.response === undefined) {
+               setStatus(500);
+               setMessage(
+                  'Wystąpił problem z połączeniem z serwisem. Spróbuj ponownie później lub wypróbuj inne połączenie sieciowe.',
+               );
+            } else {
+               setStatus(error.response?.status);
+               setMessage(error.response?.data?.message);
+            }
          })
-         .finally(() => setOnRequest(false));
+         .finally(() => {
+            // timeout for tests
+            setTimeout(() => setOnRequest(false), 700);
+         });
    };
 
    return (
@@ -48,12 +50,12 @@ const ActivateAccountButton = (props) => {
          color="inherit"
          role="button"
          onClick={() => handleClick()}
-         className={classes.root}
+         className={className}
          variant="contained"
       >
-         Aktywuj konto
+         {text}
       </Button>
    );
 };
 
-export default withRouter(ActivateAccountButton);
+export default withRouter(AbstractActivateAccountButton);
