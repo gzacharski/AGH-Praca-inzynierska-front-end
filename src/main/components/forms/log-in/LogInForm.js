@@ -41,24 +41,24 @@ const LogInForm = (props) => {
          const { email, password } = values;
 
          setCircularProgress(true);
-         axios.post(`${userServiceURL}/login`,{ email, password })
+         axios
+            .post(`${userServiceURL}/login`, { email, password })
             .then((response) => {
-
                if (response.status === 200) {
                   if (response.headers.token === null)
                      throw new Error('Błąd serwera');
-                     
+
                   authContext.setAuthState({
                      token: response.headers.token,
-                     expiresAt: new Date().getTime()/1000+60*60,
+                     expiresAt: new Date().getTime() / 1000 + 60 * 60,
                      userInfo: {},
                   });
 
-                  setSuccess('response.data.success');
+                  setSuccess(response.data.success);
                   setError(false);
-                  setResponseMessage('response.data.message');
+                  setResponseMessage(response.data.message);
                   setCircularProgress(false);
-                  setDisplaySnackBar(true);
+                  setDisplaySnackBar(false);
                   setTimeout(() => {
                      setRedirection(true);
                   }, 700);
@@ -67,12 +67,11 @@ const LogInForm = (props) => {
                   if (errors?.email) formik.setErrors({ email: errors.email });
                   if (errors?.logIn) formik.setErrors({ email: errors.email });
                }
-
             })
             .catch((error) => {
                setSuccess(false);
                setError(true);
-               setResponseMessage(error.message);
+               setResponseMessage(error.response?.data?.message);
                setCircularProgress(false);
                setDisplaySnackBar(true);
             });

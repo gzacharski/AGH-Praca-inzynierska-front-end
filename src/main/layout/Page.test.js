@@ -7,6 +7,7 @@ import {
    Blog,
    Client,
    Contact,
+   ConfirmRegistration,
    Home,
    LogInPage,
    News,
@@ -23,6 +24,9 @@ jest.mock('../pages/login/LogInPage', () => jest.fn());
 jest.mock('../pages/news/News', () => jest.fn());
 jest.mock('../pages/offer/Offer', () => jest.fn());
 jest.mock('../pages/sign-up/SignUp', () => jest.fn());
+jest.mock('../pages/confirmRegistration/ConfirmRegistrationPage', () =>
+   jest.fn(),
+);
 
 describe('Page', () => {
    test.each([
@@ -30,6 +34,7 @@ describe('Page', () => {
       ['/blog', Blog],
       ['/client', Client],
       ['/contact', Contact],
+      ['/confirmRegistration?token=sampleToken', ConfirmRegistration],
       ['/', Home],
       ['/login', LogInPage],
       ['/news', News],
@@ -60,6 +65,7 @@ describe('Page', () => {
       ['/client3', Client],
       ['/contact4', Contact],
       ['/fafa', Contact],
+      ['/confirmregistration', ConfirmRegistration],
       ['/loginda', LogInPage],
       ['/newsfa', News],
       ['/offerf', Offer],
