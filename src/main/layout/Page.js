@@ -5,6 +5,7 @@ import {
   Blog,
   Client,
   Contact,
+  ConfirmRegistration,
   Home,
   LogInPage,
   News,
@@ -24,6 +25,7 @@ export default function Page() {
       <Route path="/news" component={News} />
       <Route path="/offer" component={Offer} />
       <Route path="/sign-up" component={SignUp}/>
+      <Route path="/confirmRegistration" component={ConfirmRegistration}/>
       <Redirect to="/" />
     </Switch>
   );
