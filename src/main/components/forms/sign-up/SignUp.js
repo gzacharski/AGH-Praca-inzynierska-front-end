@@ -44,6 +44,7 @@ const SignUp = (props) => {
       setDisplaySnackBar,
       setResponseMessage,
       setError,
+      setRedirection,
    } = props;
 
    const classes = useStyles();
@@ -92,13 +93,20 @@ const SignUp = (props) => {
                setSuccess(response.data.success);
                setError(false);
                setResponseMessage(response.data.message);
-               setDisplayBackdrop(false);
-               setDisplaySnackBar(true);
+               if (response.status >= 200 && response.status < 300) {
+                  setTimeout(() => {
+                     setRedirection(true);
+                  }, 3000);
+               }
             })
             .catch((error) => {
                setSuccess(false);
                setError(true);
-               setResponseMessage(error.message);
+               setResponseMessage(error.response?.data?.message);
+            })
+            .finally(() => {
+               formik.values.password1 = '';
+               formik.values.password2 = '';
                setDisplayBackdrop(false);
                setDisplaySnackBar(true);
             });
