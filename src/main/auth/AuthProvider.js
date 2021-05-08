@@ -34,12 +34,8 @@ export const AuthProvider = ({ children }) => {
          .get(`${userServiceURL}/logout`, {
             headers: { Authorization: token, 'Accept-Language': 'pl' },
          })
-         .then((response) => {
-            console.log(response);
-         })
-         .catch((error) => {
-            console.log(error);
-         });
+         .then(() => {})
+         .catch(() => {});
 
       localStorage.removeItem('token');
       localStorage.removeItem('userInfo');
