@@ -10,7 +10,7 @@ import FilterRenderer from './renderers/FilterRenderer';
 
 export default function App() {
    const classes = useStyles();
-   const filteredUrls = ['/login', '/sign-up'];
+   const filteredUrls = ['/login', '/sign-up', '/confirmRegistration'];
 
    return (
       <div className={classes.root} data-testid="app-container">
