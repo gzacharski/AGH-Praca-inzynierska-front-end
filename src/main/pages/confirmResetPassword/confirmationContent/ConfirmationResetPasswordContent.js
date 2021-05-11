@@ -3,7 +3,7 @@ import {
    ActivateAccountRefreshButton,
    LoginButton,
 } from 'src/main/components/buttons';
-import { ResetPasswordForm } from 'src/main/components/forms';
+import { ConfirmResetPasswordForm } from 'src/main/components/forms';
 
 const ConfirmationResetPasswordContent = (props) => {
    const { status, setMessage, setOnRequest, setStatus } = props;
@@ -19,7 +19,7 @@ const ConfirmationResetPasswordContent = (props) => {
       );
    if (status === 500) return null;
    return (
-      <ResetPasswordForm
+      <ConfirmResetPasswordForm
          setMessage={setMessage}
          setOnRequest={setOnRequest}
          setStatus={setStatus}

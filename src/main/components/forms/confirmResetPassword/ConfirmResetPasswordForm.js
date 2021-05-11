@@ -6,7 +6,7 @@ import { Button, Grid, TextField } from '@material-ui/core';
 import { withRouter, useLocation } from 'react-router-dom';
 import { userServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
-import { useStyles } from './ResetPasswordForm.styles';
+import { useStyles } from './ConfirmResetPasswordForm.styles';
 
 function useQuery() {
    return new URLSearchParams(useLocation().search);
@@ -24,7 +24,7 @@ const validationSchema = Yup.object({
       .required('Hasło jest wymagane'),
 });
 
-const ResetPasswordForm = (props) => {
+const ConfirmResetPasswordForm = (props) => {
    const { setMessage, setOnRequest, setStatus } = props;
 
    const params = useQuery();
@@ -140,4 +140,4 @@ const ResetPasswordForm = (props) => {
    );
 };
 
-export default withRouter(ResetPasswordForm);
+export default withRouter(ConfirmResetPasswordForm);
