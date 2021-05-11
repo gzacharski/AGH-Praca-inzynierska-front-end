@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button } from '@material-ui/core';
 import { withRouter, useLocation } from 'react-router-dom';
+import { NETWORK_ERROR } from 'src/main/data/messages';
 
 function useQuery() {
    return new URLSearchParams(useLocation().search);
@@ -31,9 +32,7 @@ const AbstractActivateAccountButton = (props) => {
          .catch((error) => {
             if (error.response === undefined) {
                setStatus(500);
-               setMessage(
-                  'Wystąpił problem z połączeniem z serwisem. Spróbuj ponownie później lub wypróbuj inne połączenie sieciowe.',
-               );
+               setMessage(NETWORK_ERROR);
             } else {
                setStatus(error.response?.status);
                setMessage(error.response?.data?.message);
