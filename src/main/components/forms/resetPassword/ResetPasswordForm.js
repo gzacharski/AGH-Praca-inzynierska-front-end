@@ -39,6 +39,7 @@ const ResetPasswordForm = (props) => {
       },
       validationSchema,
       onSubmit: (values) => {
+         setOnRequest(true);
          axios
             .post(
                `${userServiceURL}/confirmNewPassword`,

@@ -95,6 +95,12 @@ describe('ConfirmResetPassword page', () => {
             userEvent.click(screen.getByRole('button'));
          });
 
+         test('should be visible CircularProgress while processing valid token', async () => {
+            await waitFor(() =>
+               expect(screen.getByTestId('circular-progress')).toBeInTheDocument(),
+            );
+         });
+
          test('should be visible CheckCircle icon', async () => {
             await waitFor(() =>
                expect(screen.getByTestId('check-circle')).toBeInTheDocument(),
@@ -139,6 +145,12 @@ describe('ConfirmResetPassword page', () => {
             userEvent.click(screen.getByRole('button'));
          });
 
+         test('should be visible CircularProgress while processing expired token', async () => {
+            await waitFor(() =>
+               expect(screen.getByTestId('circular-progress')).toBeInTheDocument(),
+            );
+         });
+
          test('should be visible ReportProblem icon', async () => {
             await waitFor(() =>
                expect(screen.getByTestId('report-problem')).toBeInTheDocument(),
@@ -181,6 +193,12 @@ describe('ConfirmResetPassword page', () => {
             userEvent.click(screen.getByRole('button'));
          });
 
+         test('should be visible CircularProgress while processing invalid token', async () => {
+            await waitFor(() =>
+               expect(screen.getByTestId('circular-progress')).toBeInTheDocument(),
+            );
+         });
+
          test('should be visible ReportProblem icon when invalid token', async () => {
             await waitFor(() =>
                expect(screen.getByTestId('report-problem')).toBeInTheDocument(),
@@ -205,7 +223,7 @@ describe('ConfirmResetPassword page', () => {
          });
       });
 
-      describe('when user send invalid token', () => {
+      describe('when user send request and server error happens', () => {
          beforeEach(() => {
             axios.post.mockImplementationOnce(() =>
                Promise.resolve({
@@ -222,6 +240,12 @@ describe('ConfirmResetPassword page', () => {
             );
 
             userEvent.click(screen.getByRole('button'));
+         });
+
+         test('should be visible CircularProgress while server error happens', async () => {
+            await waitFor(() =>
+               expect(screen.getByTestId('circular-progress')).toBeInTheDocument(),
+            );
          });
 
          test('should be visible Error icon', async () => {
@@ -253,6 +277,12 @@ describe('ConfirmResetPassword page', () => {
                Promise.reject(new Error('net::ERR_CONNECTION_REFUSED')),
             );
             userEvent.click(screen.getByRole('button'));
+         });
+
+         test('should be visible CircularProgress while no connection error', async () => {
+            await waitFor(() =>
+               expect(screen.getByTestId('circular-progress')).toBeInTheDocument(),
+            );
          });
 
          test('should be visible error icon_', async () => {
