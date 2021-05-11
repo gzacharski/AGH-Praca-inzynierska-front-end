@@ -8,6 +8,7 @@ import {
    Client,
    Contact,
    ConfirmRegistration,
+   ConfirmResetPasswordPage,
    Home,
    LogInPage,
    News,
@@ -27,6 +28,9 @@ jest.mock('../pages/sign-up/SignUp', () => jest.fn());
 jest.mock('../pages/confirmRegistration/ConfirmRegistrationPage', () =>
    jest.fn(),
 );
+jest.mock('../pages/confirmResetPassword/ConfirmResetPasswordPage', () =>
+   jest.fn(),
+);
 
 describe('Page', () => {
    test.each([
@@ -35,6 +39,7 @@ describe('Page', () => {
       ['/client', Client],
       ['/contact', Contact],
       ['/confirmRegistration?token=sampleToken', ConfirmRegistration],
+      ['/confirmNewPassword?token=sampleToken', ConfirmResetPasswordPage],
       ['/', Home],
       ['/login', LogInPage],
       ['/news', News],
@@ -66,6 +71,7 @@ describe('Page', () => {
       ['/contact4', Contact],
       ['/fafa', Contact],
       ['/confirmregistration', ConfirmRegistration],
+      ['/confirmnewpassword', ConfirmResetPasswordPage],
       ['/loginda', LogInPage],
       ['/newsfa', News],
       ['/offerf', Offer],

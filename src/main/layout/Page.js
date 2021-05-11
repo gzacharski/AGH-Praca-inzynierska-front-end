@@ -6,11 +6,12 @@ import {
    Client,
    Contact,
    ConfirmRegistration,
+   ConfirmResetPasswordPage,
    Home,
    LogInPage,
    News,
    Offer,
-   SignUp
+   SignUp,
 } from 'src/main/pages';
 
 export default function Page() {
@@ -29,6 +30,11 @@ export default function Page() {
             path="/confirmRegistration"
             sensitive
             component={ConfirmRegistration}
+         />
+         <Route
+            path="/confirmNewPassword"
+            sensitive
+            component={ConfirmResetPasswordPage}
          />
          <Redirect to="/" />
       </Switch>
