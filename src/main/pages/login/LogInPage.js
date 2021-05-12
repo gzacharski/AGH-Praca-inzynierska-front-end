@@ -75,7 +75,11 @@ export default function Login() {
                      />
                      <Grid container alignItems="stretch">
                         <Grid item xs>
-                           <Link href="#" variant="body2">
+                           <Link
+                              component={RouterLink}
+                              to="/resetPassword"
+                              variant="body2"
+                           >
                               Nie pamiętasz hasła?
                            </Link>
                         </Grid>
