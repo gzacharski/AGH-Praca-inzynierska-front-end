@@ -15,21 +15,30 @@ const ConfirmationIcon = (props) => {
    if (!onRequest) {
       if (status === 200) {
          return (
-            <Avatar className={classes.avatar200} data-testid="confirmation-icon">
+            <Avatar
+               className={classes.avatar200}
+               data-testid="confirmation-icon"
+            >
                <CheckCircle data-testid="check-circle" />
             </Avatar>
          );
       }
-      if (status === 401 || status === 404) {
+      if (status === 401 || status === 403 || status === 404) {
          return (
-            <Avatar className={classes.avatar400} data-testid="confirmation-icon">
+            <Avatar
+               className={classes.avatar400}
+               data-testid="confirmation-icon"
+            >
                <ReportProblem data-testid="report-problem" />
             </Avatar>
          );
       }
       if (status === 500) {
          return (
-            <Avatar className={classes.avatar500} data-testid="confirmation-icon">
+            <Avatar
+               className={classes.avatar500}
+               data-testid="confirmation-icon"
+            >
                <Error data-testid="error" />
             </Avatar>
          );

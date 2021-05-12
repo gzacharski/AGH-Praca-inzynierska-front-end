@@ -23,6 +23,11 @@ describe('When OnRequest is set to true', () => {
       expect(screen.queryByTestId('report-problem')).not.toBeInTheDocument();
    });
 
+   test('should NOT render ReportProblem icon when status 403', () => {
+      render(<ConfirmationIcon onRequest status={403} />);
+      expect(screen.queryByTestId('report-problem')).not.toBeInTheDocument();
+   });
+
    test('should NOT render ReportProblem icon when status 404', () => {
       render(<ConfirmationIcon onRequest status={404} />);
       expect(screen.queryByTestId('report-problem')).not.toBeInTheDocument();
@@ -47,6 +52,11 @@ describe('When OnRequest is set to false', () => {
 
    test('should render ReportProblem icon when status 401', () => {
       render(<ConfirmationIcon onRequest={false} status={401} />);
+      expect(screen.getByTestId('report-problem')).toBeInTheDocument();
+   });
+
+   test('should render ReportProblem icon when status 403', () => {
+      render(<ConfirmationIcon onRequest={false} status={403} />);
       expect(screen.getByTestId('report-problem')).toBeInTheDocument();
    });
 
