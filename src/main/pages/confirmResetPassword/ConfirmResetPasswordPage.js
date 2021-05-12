@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { Container, CircularProgress, Typography } from '@material-ui/core';
-import { Footer } from 'src/main/layout';
 import { ConfirmationIcon } from 'src/main/components/icons';
-import { useStyles } from './ConfirmRegistrationPage.styles';
-import ConfirmationButton from './confirmationButton/ConfirmationButton';
+import { Footer } from 'src/main/layout';
+import { useStyles } from './ConfirmResetPasswordPage.styles';
+import ConfirmationResetPasswordContent from './confirmationContent/ConfirmationResetPasswordContent';
 
 function useQuery() {
    return new URLSearchParams(useLocation().search);
 }
 
-export default function ConfirmRegistration() {
+export default function ConfirmResetPasswordPage() {
    const classes = useStyles();
    const params = useQuery();
    const hasToken = params.has('token');
@@ -27,7 +27,7 @@ export default function ConfirmRegistration() {
       return (
          <>
             {renderMessage()}
-            <ConfirmationButton
+            <ConfirmationResetPasswordContent
                status={status}
                setMessage={setMessage}
                setOnRequest={setOnRequest}
@@ -48,7 +48,7 @@ export default function ConfirmRegistration() {
                   className={classes.heading}
                   align="center"
                >
-                  Potwierdzenie rejestracji
+                  Zresetuj hasło
                </Typography>
                {renderContent()}
                <Footer />

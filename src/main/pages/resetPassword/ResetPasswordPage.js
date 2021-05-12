@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
-import { Container, CircularProgress, Typography } from '@material-ui/core';
-import { Footer } from 'src/main/layout';
+import {
+   Container,
+   CircularProgress,
+   Typography,
+   Slide,
+} from '@material-ui/core';
 import { ConfirmationIcon } from 'src/main/components/icons';
-import { useStyles } from './ConfirmRegistrationPage.styles';
-import ConfirmationButton from './confirmationButton/ConfirmationButton';
+import { useStyles } from './ResetPasswordPage.styles';
+import ResetPasswordContent from './resetPasswordContent/ResetPasswordContent';
 
-function useQuery() {
-   return new URLSearchParams(useLocation().search);
-}
-
-export default function ConfirmRegistration() {
+export default function ResetPasswordPage() {
    const classes = useStyles();
-   const params = useQuery();
-   const hasToken = params.has('token');
    const [status, setStatus] = useState(null);
    const [message, setMessage] = useState(null);
    const [onRequest, setOnRequest] = useState(false);
@@ -27,7 +24,7 @@ export default function ConfirmRegistration() {
       return (
          <>
             {renderMessage()}
-            <ConfirmationButton
+            <ResetPasswordContent
                status={status}
                setMessage={setMessage}
                setOnRequest={setOnRequest}
@@ -38,8 +35,7 @@ export default function ConfirmRegistration() {
    };
 
    return (
-      <>
-         {!hasToken && <Redirect to="/" />}
+      <Slide direction="right" in mountOnEnter unmountOnExit timeout={400}>
          <Container maxWidth="sm" component="main" className={classes.root}>
             <div className={classes.paper}>
                <ConfirmationIcon onRequest={onRequest} status={status} />
@@ -48,12 +44,11 @@ export default function ConfirmRegistration() {
                   className={classes.heading}
                   align="center"
                >
-                  Potwierdzenie rejestracji
+                  Zresetuj hasło
                </Typography>
                {renderContent()}
-               <Footer />
             </div>
          </Container>
-      </>
+      </Slide>
    );
 }
