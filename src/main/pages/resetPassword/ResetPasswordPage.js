@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Container, CircularProgress, Typography } from '@material-ui/core';
+import {
+   Container,
+   CircularProgress,
+   Typography,
+   Slide,
+} from '@material-ui/core';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import { useStyles } from './ResetPasswordPage.styles';
 import ResetPasswordContent from './resetPasswordContent/ResetPasswordContent';
@@ -30,14 +35,20 @@ export default function ResetPasswordPage() {
    };
 
    return (
-      <Container maxWidth="sm" component="main" className={classes.root}>
-         <div className={classes.paper}>
-            <ConfirmationIcon onRequest={onRequest} status={status} />
-            <Typography variant="h5" className={classes.heading} align="center">
-               Zresetuj hasło
-            </Typography>
-            {renderContent()}
-         </div>
-      </Container>
+      <Slide direction="right" in mountOnEnter unmountOnExit timeout={400}>
+         <Container maxWidth="sm" component="main" className={classes.root}>
+            <div className={classes.paper}>
+               <ConfirmationIcon onRequest={onRequest} status={status} />
+               <Typography
+                  variant="h5"
+                  className={classes.heading}
+                  align="center"
+               >
+                  Zresetuj hasło
+               </Typography>
+               {renderContent()}
+            </div>
+         </Container>
+      </Slide>
    );
 }

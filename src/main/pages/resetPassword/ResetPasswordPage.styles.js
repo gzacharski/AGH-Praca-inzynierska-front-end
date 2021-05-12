@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
    root: {
       fontWeight: 'bold',
-      height: '100vh',
+      height: '70vh',
    },
    paper: {
       display: 'flex',
