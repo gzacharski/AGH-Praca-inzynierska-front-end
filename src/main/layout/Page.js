@@ -12,6 +12,7 @@ import {
    News,
    Offer,
    SignUp,
+   ResetPasswordPage,
 } from 'src/main/pages';
 
 export default function Page() {
@@ -36,6 +37,7 @@ export default function Page() {
             sensitive
             component={ConfirmResetPasswordPage}
          />
+         <Route path="/resetPassword" sensitive component={ResetPasswordPage} />
          <Redirect to="/" />
       </Switch>
    );

@@ -9,6 +9,7 @@ import Offer from './offer/Offer';
 import SignUp from './sign-up/SignUp';
 import ConfirmRegistration from './confirmRegistration/ConfirmRegistrationPage';
 import ConfirmResetPasswordPage from './confirmResetPassword/ConfirmResetPasswordPage';
+import ResetPasswordPage from './resetPassword/ResetPasswordPage';
 
 export {
    About,
@@ -22,4 +23,5 @@ export {
    News,
    Offer,
    SignUp,
+   ResetPasswordPage,
 };
