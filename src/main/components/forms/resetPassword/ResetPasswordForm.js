@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Grid, TextField } from '@material-ui/core';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
 import { useStyles } from './ResetPasswordForm.styles';
 
@@ -29,7 +29,7 @@ const ConfirmResetPasswordForm = (props) => {
          setOnRequest(true);
          axios
             .post(
-               `${userServiceURL}/resetPassword`,
+               `${authServiceURL}/resetPassword`,
                {
                   email: values.email,
                },

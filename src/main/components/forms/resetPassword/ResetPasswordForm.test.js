@@ -3,7 +3,7 @@ import axios from 'axios';
 import { render, screen } from 'src/testUtils';
 import { act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import ResetPasswordForm from './ResetPasswordForm';
 
 jest.mock('axios');
@@ -95,7 +95,7 @@ describe('ResetPasswordForm', () => {
 
    describe('When button clicked', () => {
       test('should send post request', async () => {
-         const confirmationURL = `${userServiceURL}/resetPassword`;
+         const confirmationURL = `${authServiceURL}/resetPassword`;
          axios.post.mockImplementationOnce(() =>
             Promise.resolve({ status: 200, data: {} }),
          );

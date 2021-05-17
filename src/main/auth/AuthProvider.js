@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }) => {
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
    const logout = () => {
       axios
-         .get(`${userServiceURL}/logout`, {
+         .get(`${authServiceURL}/logout`, {
             headers: { Authorization: token, 'Accept-Language': 'pl' },
          })
          .then(() => {})

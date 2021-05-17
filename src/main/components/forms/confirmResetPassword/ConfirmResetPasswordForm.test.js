@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
 import { act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import ConfirmResetPasswordForm from './ConfirmResetPasswordForm';
 
 jest.mock('axios');
@@ -195,7 +195,7 @@ describe('ConfirmResetPasswordForm', () => {
 
    describe('When button clicked', () => {
       test('should send post request', async () => {
-         const confirmationURL = `${userServiceURL}/confirmNewPassword`;
+         const confirmationURL = `${authServiceURL}/confirmNewPassword`;
          axios.post.mockImplementationOnce(() =>
             Promise.resolve({ status: 200, data: {} }),
          );

@@ -3,7 +3,7 @@ import axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import ActivateAccountButton from './ActivateAccountButton';
 
 jest.mock('axios');
@@ -32,7 +32,7 @@ describe('Button', () => {
    });
 
    test('when clicked, send get request', async () => {
-      const confirmationURL = `${userServiceURL}/users/confirmRegistration`;
+      const confirmationURL = `${authServiceURL}/users/confirmRegistration`;
       axios.get.mockImplementationOnce(() => Promise.resolve({ data: {} }));
 
       await userEvent.click(screen.getByRole('button'));

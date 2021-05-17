@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { withRouter, useLocation } from 'react-router-dom';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
 import { useStyles } from './ConfirmResetPasswordForm.styles';
 
@@ -42,7 +42,7 @@ const ConfirmResetPasswordForm = (props) => {
          setOnRequest(true);
          axios
             .post(
-               `${userServiceURL}/confirmNewPassword`,
+               `${authServiceURL}/confirmNewPassword`,
                {
                   password: values.password1,
                   matchingPassword: values.password2,
