@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import { useStyles } from './SignUp.styles';
 import { phoneRegExp } from './phoneRegExp';
 
@@ -71,7 +71,7 @@ const SignUp = (props) => {
          };
 
          axios
-            .post(`${userServiceURL}/users`, requestData, {
+            .post(`${authServiceURL}/users`, requestData, {
                validateStatus: (status) =>
                   (status >= 200 && status < 300) || status === 409,
             })

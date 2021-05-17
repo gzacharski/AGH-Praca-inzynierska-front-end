@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from 'src/main/auth';
-import { userServiceURL } from 'src/main/data/urls';
+import { authServiceURL } from 'src/main/data/urls';
 import { useStyles } from './LogInForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -42,7 +42,7 @@ const LogInForm = (props) => {
 
          setCircularProgress(true);
          axios
-            .post(`${userServiceURL}/login`, { email, password })
+            .post(`${authServiceURL}/login`, { email, password })
             .then((response) => {
                if (response.status === 200) {
                   if (response.headers.token === null)
