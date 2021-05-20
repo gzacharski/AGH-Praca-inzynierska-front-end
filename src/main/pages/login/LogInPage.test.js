@@ -80,4 +80,28 @@ describe('User clicks link and', () => {
       expect(signUpButton).toBeInTheDocument();
       expect(signUpButton).toHaveTextContent('Zarejestruj się');
    });
+
+   test('it should route to the reset password page', () => {
+      const history = createMemoryHistory();
+      history.push('/login');
+      render(
+         <Router history={history}>
+            <Page />
+         </Router>,
+      );
+      expect(screen.getByText(/Zaloguj się/)).toBeInTheDocument();
+
+      userEvent.click(screen.getByText(/Nie pamiętasz hasła?/));
+
+      expect(
+         screen
+            .getAllByRole('heading')
+            .filter((heading) => heading.textContent === 'Zresetuj hasło')
+            .length,
+      ).toEqual(1);
+
+      const button=screen.queryByRole('button');
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveTextContent('Wyślij link do zmiany hasła');
+   });
 });

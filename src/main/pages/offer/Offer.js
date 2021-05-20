@@ -1,8 +1,10 @@
+
 import React from "react";
 import { ShowTrainings } from 'src/main/components/forms';
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./Offer.styles";
+
 
 
 export default function Offer() {

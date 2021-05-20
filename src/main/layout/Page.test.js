@@ -7,11 +7,14 @@ import {
    Blog,
    Client,
    Contact,
+   ConfirmRegistration,
+   ConfirmResetPasswordPage,
    Home,
    LogInPage,
    News,
    Offer,
    SignUp,
+   ResetPasswordPage
 } from '../pages';
 
 jest.mock('../pages/about/About', () => jest.fn());
@@ -23,6 +26,13 @@ jest.mock('../pages/login/LogInPage', () => jest.fn());
 jest.mock('../pages/news/News', () => jest.fn());
 jest.mock('../pages/offer/Offer', () => jest.fn());
 jest.mock('../pages/sign-up/SignUp', () => jest.fn());
+jest.mock('../pages/confirmRegistration/ConfirmRegistrationPage', () =>
+   jest.fn(),
+);
+jest.mock('../pages/confirmResetPassword/ConfirmResetPasswordPage', () =>
+   jest.fn(),
+);
+jest.mock('../pages/resetPassword/ResetPasswordPage', () => jest.fn());
 
 describe('Page', () => {
    test.each([
@@ -30,6 +40,9 @@ describe('Page', () => {
       ['/blog', Blog],
       ['/client', Client],
       ['/contact', Contact],
+      ['/confirmRegistration?token=sampleToken', ConfirmRegistration],
+      ['/confirmNewPassword?token=sampleToken', ConfirmResetPasswordPage],
+      ['/resetPassword',ResetPasswordPage],
       ['/', Home],
       ['/login', LogInPage],
       ['/news', News],
@@ -60,6 +73,9 @@ describe('Page', () => {
       ['/client3', Client],
       ['/contact4', Contact],
       ['/fafa', Contact],
+      ['/confirmregistration', ConfirmRegistration],
+      ['/confirmnewpassword', ConfirmResetPasswordPage],
+      ['/resetpassword',ResetPasswordPage],
       ['/loginda', LogInPage],
       ['/newsfa', News],
       ['/offerf', Offer],

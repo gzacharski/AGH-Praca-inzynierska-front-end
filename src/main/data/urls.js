@@ -1,9 +1,11 @@
 const protocol = 'http';
 const hostname = 'localhost';
 const port = 8020;
-const userService = 'user';
+const accountService = 'account';
+const authService = 'auth';
 const trainingsService = 'trainings';
 
-export const userServiceURL = `${protocol}://${hostname}:${port}/${userService}`;
+export const accountServiceURL = `${protocol}://${hostname}:${port}/${accountService}`;
+export const authServiceURL = `${protocol}://${hostname}:${port}/${authService}`;
 export const trainingsServiceURL = `${protocol}://${hostname}:${port}/${trainingsService}`;
 export const apiGateway = `${protocol}://${hostname}:${port}`;
