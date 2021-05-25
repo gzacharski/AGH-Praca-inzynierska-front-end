@@ -1,4 +1,4 @@
-name: Front-end CI
+name: Continuous integration
 on:
   push:
     branches: [ main ]
