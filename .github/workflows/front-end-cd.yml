@@ -1,4 +1,4 @@
-name: Front-end CD
+name: Continuous delivery
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
+        
       - name: Test
         run: npm test
         
@@ -32,4 +32,15 @@ jobs:
         with:
           branch: gh-pages
           folder: build
-
+      
+      - name: Build Docker image
+        run: docker build -t gza73/agh-praca-inzynierska-front-end .
+          
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with: 
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Push to DockerHub
+        run: docker push gza73/agh-praca-inzynierska-front-end:latest
