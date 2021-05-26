@@ -43,12 +43,8 @@ describe('User is NOT authenticated and in header', () => {
       );
    });
 
-   test('should see two buttons', () => {
-      expect(screen.queryAllByRole('button').length).toEqual(2);
-   });
-
-   test('should be sign up button', () => {
-      expect(screen.getByText(/zarejestruj się/i)).toBeInTheDocument();
+   test('should see one button', () => {
+      expect(screen.queryAllByRole('button').length).toEqual(1);
    });
 
    test('should be log in button', () => {
