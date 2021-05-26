@@ -1,8 +1,9 @@
-version: '3'
+version: '3.8'
 
 services:
-   front-end:
+   front:
       container_name: front-end
-      build: .
+      image: gza73/agh-praca-inzynierska-front-end:latest
       ports:
          - 3000:3000
+         
