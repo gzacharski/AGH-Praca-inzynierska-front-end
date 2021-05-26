@@ -1,5 +1,5 @@
 import React from 'react';
-import NavLinkButton from '../navLink/NavLinkButton';
+import NavLinkButton from '../navLinkButton/NavLinkButton';
 import { useStyles } from './LoginButton.styles';
 
 export default function LoginButton() {
