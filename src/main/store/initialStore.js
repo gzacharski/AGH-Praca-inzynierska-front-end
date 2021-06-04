@@ -1,8 +1,9 @@
 export const initialStore = {
-    modelData: {
-        users : []
-    },
-    stateData: {
-        menuIsOpen: false
-    },
+   modelData: {
+      users: [],
+      trainings: [],
+   },
+   stateData: {
+      menuIsOpen: false,
+   },
 };

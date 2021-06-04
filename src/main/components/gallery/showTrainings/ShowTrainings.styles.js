@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
          backgroundColor: '#3ea8f5',
       },
    },
+   table: {
+      minWidth: 650,
+   },
 }));
 
 export { useStyles };
