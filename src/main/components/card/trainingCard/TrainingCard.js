@@ -1,51 +1,54 @@
 /* eslint-disable no-console */
 import React from 'react';
 import {
-   Button,
+   Avatar,
    Card,
    CardMedia,
    CardContent,
-   CardActions,
    Typography,
+   Box,
+   Tooltip,
 } from '@material-ui/core';
 import { useStyles } from './TrainingCard.styles';
 
 const TrainingCard = ({
    imageSource,
    imageTitle,
-   trainingTitle,
-   trainingDescription,
+   title,
+   description,
+   trainer,
+   trainerAvatar,
 }) => {
    const classes = useStyles();
    return (
-      <Card className={classes.card}>
+      <Card
+         className={classes.card}
+         elevation={10}
+         onClick={() => console.log('Card clicked...')}
+      >
          <CardMedia
             className={classes.cardMedia}
             image={imageSource}
             title={imageTitle}
+            data-testid="background-image"
          />
          <CardContent className={classes.cardContent}>
-            <Typography gutterBottom variant="h5" component="h2">
-               {trainingTitle}
+            <Box className={classes.box}>
+               <Typography gutterBottom variant="h5" component="h2">
+                  {title}
+               </Typography>
+               <Tooltip title={trainer}>
+                  <Avatar
+                     alt={trainer}
+                     src={trainerAvatar}
+                     data-testid="avatar"
+                  />
+               </Tooltip>
+            </Box>
+            <Typography className={classes.typography}>
+               {description}
             </Typography>
-            <Typography>{trainingDescription}</Typography>
          </CardContent>
-         <CardActions>
-            <Button
-               size="small"
-               color="primary"
-               onClick={() => console.log('Kliknięto pokaż więcej')}
-            >
-               Pokaż więcej
-            </Button>
-            <Button
-               size="small"
-               color="primary"
-               onClick={() => console.log('Kliknięto dołącz')}
-            >
-               Dołącz
-            </Button>
-         </CardActions>
       </Card>
    );
 };

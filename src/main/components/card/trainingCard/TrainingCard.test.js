@@ -8,8 +8,10 @@ describe('Training card', () => {
          <TrainingCard
             imageSource="test image source"
             imageTitle="test image title"
-            trainingTitle="test training title"
-            trainingDescription="test training description"
+            title="test training title"
+            description="test training description"
+            trainer="Test trainer"
+            trainerAvatar="Trainer avatar"
          />,
       );
    });
@@ -21,23 +23,13 @@ describe('Training card', () => {
       expect(screen.getByText('test training description')).toBeInTheDocument();
    });
 
-   test('Should contain 2 button', () => {
-      expect(screen.queryAllByRole('button').length).toBe(2);
+   test('Should render background image', () => {
+      expect(screen.getByTestId('background-image')).toBeInTheDocument();
    });
 
-   test('Should contain "Pokaż więcej" button', () => {
-      expect(
-         screen
-            .queryAllByRole('button')
-            .filter((button) => button.textContent === 'Pokaż więcej').length,
-      ).toBe(1);
+   test('Should render trainer avatar', () => {
+      expect(screen.getByTestId('avatar')).toBeInTheDocument();
    });
 
-   test('Should contain "Dołącz" button', () => {
-      expect(
-         screen
-            .queryAllByRole('button')
-            .filter((button) => button.textContent === 'Dołącz').length,
-      ).toBe(1);
-   });
+   test('when card clicked, it should render backdrop', () => {});
 });
