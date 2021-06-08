@@ -1,20 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-   form: {
-      width: '100%',
-      marginTop: theme.spacing(1),
+const useStyles = makeStyles({
+   loader: {
+      height: '50vh',
+      display: 'flex',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      alignItems: 'center',
+      justifyContent: 'center',
    },
-   submit: {
-      margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#1e88e5',
-      '&:hover': {
-         backgroundColor: '#3ea8f5',
-      },
-   },
-   table: {
-      minWidth: 650,
-   },
-}));
+});
 
 export { useStyles };
