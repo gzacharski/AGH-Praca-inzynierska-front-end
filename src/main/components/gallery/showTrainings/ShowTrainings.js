@@ -1,186 +1,51 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Grid, CircularProgress } from '@material-ui/core';
+import {
+   Container,
+   Grid,
+   CircularProgress,
+   Typography,
+} from '@material-ui/core';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { TrainingCard } from 'src/main/components/card';
+import { NETWORK_ERROR } from 'src/main/data/messages';
+import { ConfirmationIcon } from 'src/main/components/icons';
 import { useStyles } from './ShowTrainings.styles';
-
-const trainingsTestContent = [
-   {
-      id: '1',
-      name: 'Turpis nulla',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer1',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-   {
-      id: '2',
-      name: 'Praesent pharetra',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer2',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-   {
-      id: '3',
-      name: 'Suspendisse',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer3',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-   {
-      id: '4',
-      name: 'Tpretiu',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer3',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-   {
-      id: '5',
-      name: 'Venenatis',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer3',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-   {
-      id: '6',
-      name: 'Lobortis et dolor',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer3',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-   {
-      id: '7',
-      name: 'Eget elementum',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer3',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-   {
-      id: '8',
-      name: 'Sed nec feugiat',
-      image: 'https://source.unsplash.com/random',
-      description: `Praesent pharetra tincidunt elit at ullamcorper. Nunc elementum, enim venenatis
-         porta pharetra, turpis nulla congue orci, non pretium enim diam id augue. Curabitur
-         nec dolor nibh. Suspendisse volutpat at augue quis vulputate. Nam lobortis et dolor 
-         quis iaculis. Duis auctor bibendum rutrum. Aenean in dignissim ex. Praesent ultricies 
-         euismod dolor sed accumsan. Sed nec feugiat dolor, eget elementum ipsum. Nunc in 
-         sollicitudin leo. Nullam sit amet mattis mauris.`,
-      date: '2020-12-12',
-      duration: '1h',
-      trainer: {
-         id: 'trainer3',
-         name: 'Jan',
-         surname: 'Kowalski',
-         avatar: '/static/images/avatar/1.jpg',
-      },
-   },
-];
 
 const ShowTrainings = () => {
    const classes = useStyles();
 
    const [trainings, setTrainings] = useState([]);
    const [onRequest, setOnRequest] = useState(false);
+   const [message, setMessage] = useState('');
+   const [status, setStatus] = useState(null);
 
    useEffect(() => {
       setOnRequest(true);
       axios
-         .get(`${trainingsServiceURL}/group`)
+         .get(`${trainingsServiceURL}/group`, {
+            headers: {
+               'Accept-Language': 'pl',
+            },
+         })
          .then((response) => {
-            console.log(response);
-            setTrainings(response.data);
-            // setTrainings(trainingsTestContent);
-            // setTrainings([]);
+            if (response.data.trainings.length === 0) {
+               setStatus(401);
+               setMessage(response.data.message);
+            } else {
+               setStatus(response.status);
+               setTrainings(response.data.trainings);
+            }
          })
          .catch((error) => {
-            console.log(error);
-            // setTrainings(trainingsTestContent);
-            setTrainings(error);
+            if (error.response === undefined) {
+               setStatus(500);
+               setMessage(NETWORK_ERROR);
+            } else {
+               setStatus(error.response?.status);
+               setMessage(error.response?.data?.message);
+            }
          })
          .finally(() => {
             setOnRequest(false);
@@ -189,13 +54,16 @@ const ShowTrainings = () => {
 
    if (onRequest)
       return (
-         <Container maxWidth="sm" component="main" className={classes.loader}>
+         <Container maxWidth="sm" className={classes.container}>
             <CircularProgress size={100} data-testid="circular-progress" />
          </Container>
       );
    if (trainings === null || trainings.length === 0)
       return (
-         <div className={classes.message}>Brak wiadomości do wyświetlenia</div>
+         <Container className={classes.container}>
+            <ConfirmationIcon onRequest={onRequest} status={status} />
+            <Typography className={classes.message}>{message}</Typography>
+         </Container>
       );
 
    return (
