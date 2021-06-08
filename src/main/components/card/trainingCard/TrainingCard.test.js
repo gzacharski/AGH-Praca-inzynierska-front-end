@@ -1,5 +1,7 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
+import userEvent from '@testing-library/user-event';
+import { act, waitFor } from '@testing-library/react';
 import TrainingCard from './TrainingCard';
 
 describe('Training card', () => {
@@ -14,21 +16,47 @@ describe('Training card', () => {
          />,
       );
    });
-   test('Should render training title', () => {
+   test('should render training title', () => {
       expect(screen.getByText('test training title')).toBeInTheDocument();
    });
 
-   test('Should render training description', () => {
+   test('should render training description', () => {
       expect(screen.getByText('test training description')).toBeInTheDocument();
    });
 
-   test('Should render background image', () => {
+   test('should render background image', () => {
       expect(screen.getByTestId('background-image')).toBeInTheDocument();
    });
 
-   test('Should render trainer avatar', () => {
+   test('should render trainer avatar', () => {
       expect(screen.getByTestId('avatar')).toBeInTheDocument();
    });
 
-   xtest('when card clicked, it should render backdrop', () => {});
+   test('when card clicked, it should render backdrop', async () => {
+      act(() => {
+         userEvent.click(screen.getByTestId('trainingCard'));
+      });
+
+      await waitFor(() => {
+         expect(screen.getByTestId('backdropcard')).toBeInTheDocument();
+      });
+   });
+
+   test('when close button clicked, it should not render backdrop', async () => {
+      act(() => {
+         userEvent.click(screen.getByTestId('trainingCard'));
+      });
+
+      await waitFor(() => {
+         expect(screen.getByTestId('backdropcard')).toBeInTheDocument();
+      });
+
+      act(() => {
+         userEvent.click(screen.getByTestId('close-button'));
+      });
+
+      await waitFor(() => {
+         expect(screen.queryByTestId('backdropcard')).not.toBeInTheDocument();
+      });
+   });
 });

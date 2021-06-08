@@ -28,6 +28,7 @@ const TrainingCard = ({
             className={classes.card}
             elevation={10}
             onClick={() => setOpen(true)}
+            data-testid="trainingCard"
          >
             <CardMedia
                className={classes.cardMedia}
@@ -53,15 +54,17 @@ const TrainingCard = ({
                </Typography>
             </CardContent>
          </Card>
-         <ShowTrainingsDetails
-            open={open}
-            setOpen={setOpen}
-            image={imageSource}
-            title={title}
-            description={description}
-            trainer={trainer}
-            avatar={trainerAvatar}
-         />
+         {open && (
+            <ShowTrainingsDetails
+               open={open}
+               setOpen={setOpen}
+               image={imageSource}
+               title={title}
+               description={description}
+               trainer={trainer}
+               avatar={trainerAvatar}
+            />
+         )}
       </>
    );
 };
