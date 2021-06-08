@@ -7,7 +7,6 @@ describe('Training card', () => {
       render(
          <TrainingCard
             imageSource="test image source"
-            imageTitle="test image title"
             title="test training title"
             description="test training description"
             trainer="Test trainer"
@@ -31,5 +30,5 @@ describe('Training card', () => {
       expect(screen.getByTestId('avatar')).toBeInTheDocument();
    });
 
-   test('when card clicked, it should render backdrop', () => {});
+   xtest('when card clicked, it should render backdrop', () => {});
 });

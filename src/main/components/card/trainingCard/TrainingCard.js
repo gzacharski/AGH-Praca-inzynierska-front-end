@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import {
    Avatar,
    Card,
@@ -10,46 +10,59 @@ import {
    Tooltip,
 } from '@material-ui/core';
 import { useStyles } from './TrainingCard.styles';
+import ShowTrainingsDetails from '../../gallery/showTrainingDetails/ShowTrainingsDetails';
 
 const TrainingCard = ({
    imageSource,
-   imageTitle,
    title,
    description,
    trainer,
    trainerAvatar,
 }) => {
    const classes = useStyles();
+   const [open, setOpen] = useState(false);
+
    return (
-      <Card
-         className={classes.card}
-         elevation={10}
-         onClick={() => console.log('Card clicked...')}
-      >
-         <CardMedia
-            className={classes.cardMedia}
-            image={imageSource}
-            title={imageTitle}
-            data-testid="background-image"
-         />
-         <CardContent className={classes.cardContent}>
-            <Box className={classes.box}>
-               <Typography gutterBottom variant="h5" component="h2">
-                  {title}
+      <>
+         <Card
+            className={classes.card}
+            elevation={10}
+            onClick={() => setOpen(true)}
+         >
+            <CardMedia
+               className={classes.cardMedia}
+               image={imageSource}
+               title={title}
+               data-testid="background-image"
+            />
+            <CardContent className={classes.cardContent}>
+               <Box className={classes.box}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                     {title}
+                  </Typography>
+                  <Tooltip title={trainer}>
+                     <Avatar
+                        alt={trainer}
+                        src={trainerAvatar}
+                        data-testid="avatar"
+                     />
+                  </Tooltip>
+               </Box>
+               <Typography className={classes.typography}>
+                  {description}
                </Typography>
-               <Tooltip title={trainer}>
-                  <Avatar
-                     alt={trainer}
-                     src={trainerAvatar}
-                     data-testid="avatar"
-                  />
-               </Tooltip>
-            </Box>
-            <Typography className={classes.typography}>
-               {description}
-            </Typography>
-         </CardContent>
-      </Card>
+            </CardContent>
+         </Card>
+         <ShowTrainingsDetails
+            open={open}
+            setOpen={setOpen}
+            image={imageSource}
+            title={title}
+            description={description}
+            trainer={trainer}
+            avatar={trainerAvatar}
+         />
+      </>
    );
 };
 
