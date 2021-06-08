@@ -27,12 +27,17 @@ const ShowTrainingsDetails = ({
    const classes = useStyles();
 
    return (
-      <Backdrop className={classes.backdrop} open={open}>
+      <Backdrop
+         className={classes.backdrop}
+         open={open}
+         data-testid="backdropcard"
+      >
          <Card className={classes.card}>
             <IconButton
                className={classes.close}
                aria-label="Close"
                onClick={() => setOpen(false)}
+               data-testid="close-button"
             >
                <Close />
             </IconButton>
@@ -63,10 +68,10 @@ const ShowTrainingsDetails = ({
                </Typography>
             </CardContent>
             <CardActionArea className={classes.button}>
-               <Button variant="contained" color="primary">
+               <Button variant="contained" color="primary" data-testid="check-button">
                   Sprawdź grafik
                </Button>
-               <Button variant="contained" color="primary">
+               <Button variant="contained" color="primary" data-testid="join-button">
                   Dołącz
                </Button>
             </CardActionArea>
