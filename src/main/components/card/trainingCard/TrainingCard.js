@@ -32,7 +32,7 @@ const TrainingCard = ({
          >
             <CardMedia
                className={classes.cardMedia}
-               image={imageSource}
+               image={`data:image/${imageSource.format};base64, ${imageSource.data}`}
                title={title}
                data-testid="background-image"
             />
@@ -44,7 +44,7 @@ const TrainingCard = ({
                   <Tooltip title={trainer}>
                      <Avatar
                         alt={trainer}
-                        src={trainerAvatar}
+                        src={`data:image/${trainerAvatar.format};base64, ${trainerAvatar.data}`}
                         data-testid="avatar"
                      />
                   </Tooltip>
