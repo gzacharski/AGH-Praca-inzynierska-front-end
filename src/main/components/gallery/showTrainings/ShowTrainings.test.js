@@ -121,10 +121,7 @@ describe('ShowTrainings', () => {
       axios.get.mockImplementationOnce(() =>
          Promise.resolve({
             status: 200,
-            data: {
-               trainings: trainingsTestContent,
-               message: 'OK',
-            },
+            data: trainingsTestContent,
          }),
       );
       render(<ShowTrainings />);
