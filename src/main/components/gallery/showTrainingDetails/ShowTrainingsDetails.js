@@ -43,7 +43,7 @@ const ShowTrainingsDetails = ({
             </IconButton>
             <CardMedia
                className={classes.cardMedia}
-               image={`data:image/${image.format};base64,${image.data}`}
+               image={`data:${image.format};base64,${image.data}`}
                title={title}
                data-testid="background-image"
             />
@@ -57,7 +57,7 @@ const ShowTrainingsDetails = ({
                      <Tooltip title={trainer}>
                         <Avatar
                            alt={trainer}
-                           src={`data:image/${avatar.format};base64, ${avatar.data}`}
+                           src={`data:${avatar.format};base64, ${avatar.data}`}
                            data-testid="avatar"
                         />
                      </Tooltip>

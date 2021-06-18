@@ -4,6 +4,10 @@ import ShowTrainingsDetails from './ShowTrainingsDetails';
 
 describe('Show training details', () => {
    const setOpen = jest.fn();
+   const image = {
+      data: 'https://source.unsplash.com/random',
+      format: 'jpeg',
+   };
 
    beforeEach(() => {
       render(
@@ -14,7 +18,7 @@ describe('Show training details', () => {
             title="test training title"
             description="test training description"
             trainer="Test trainer"
-            avatar="Trainer avatar"
+            avatar={image}
          />,
       );
    });
