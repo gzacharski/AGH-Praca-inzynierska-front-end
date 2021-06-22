@@ -18,7 +18,7 @@ const AvatarButton = (props) => {
          variant="text"
          className={classes.button}
          onClick={() => handleAvatarClick(props.history)}
-         data-testId="avatar-button" 
+         data-testid="avatar-button" 
       >
          {avatar.name}
       </Button>

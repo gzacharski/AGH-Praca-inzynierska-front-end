@@ -9,7 +9,7 @@ import {
 import { avatar } from './buttons/avatar/testAvatar';
 
 const PersonalMenu = () => (
-   <ButtonGroup>
+   <ButtonGroup data-testid="personal-menu">
       <AvatarButton avatar={avatar} />
       <MessageButton />
       <NotificationButton />

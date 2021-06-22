@@ -9,7 +9,7 @@ const NotificationButton = () => {
       <Button
          className={classes.button}
          variant="text"
-         data-testId="notification-button"
+         data-testid="notification-button"
       >
          <Badge badgeContent={1} color="secondary">
             <NotificationsNone />

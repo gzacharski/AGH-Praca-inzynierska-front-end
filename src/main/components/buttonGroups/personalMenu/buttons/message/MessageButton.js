@@ -9,7 +9,7 @@ const MessageButton = () => {
       <Button
          className={classes.button}
          variant="text"
-         data-testId="message-button"
+         data-testid="message-button"
       >
          <Badge badgeContent={2} color="secondary">
             <MailOutline />
