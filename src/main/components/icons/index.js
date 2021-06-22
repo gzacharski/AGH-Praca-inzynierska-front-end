@@ -1,3 +1,4 @@
 import ConfirmationIcon from './confirmationIcon/ConfirmationIcon';
+import { AvatarIcon } from './avatar/AvatarIcon';
 
-export { ConfirmationIcon };
+export { AvatarIcon, ConfirmationIcon };
