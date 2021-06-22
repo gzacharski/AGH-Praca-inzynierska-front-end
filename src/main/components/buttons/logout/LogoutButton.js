@@ -1,22 +1,16 @@
 import React, { useContext } from 'react';
-import Button from '@material-ui/core/Button';
+import { MenuItem } from '@material-ui/core';
 import { AuthContext } from 'src/main/auth';
-import { useStyles } from './LogoutButton.styles';
 
 export default function LogoutButton() {
-   const classes = useStyles();
    const authContext = useContext(AuthContext);
 
    return (
-      <Button
-         color="inherit"
+      <MenuItem
          data-testid="logout-btn"
-         role="button"
          onClick={() => authContext.logout()}
-         className={classes.root}
-         variant='contained'
       >
          Wyloguj się
-      </Button>
+      </MenuItem>
    );
 }

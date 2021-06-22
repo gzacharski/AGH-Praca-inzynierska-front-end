@@ -6,7 +6,11 @@ import { useStyles } from './NotificationButton.styles';
 const NotificationButton = () => {
    const classes = useStyles();
    return (
-      <Button className={classes.button} variant="text">
+      <Button
+         className={classes.button}
+         variant="text"
+         data-testId="notification-button"
+      >
          <Badge badgeContent={1} color="secondary">
             <NotificationsNone />
          </Badge>

@@ -6,7 +6,11 @@ import { useStyles } from './MessageButton.style';
 const MessageButton = () => {
    const classes = useStyles();
    return (
-      <Button className={classes.button} variant="text">
+      <Button
+         className={classes.button}
+         variant="text"
+         data-testId="message-button"
+      >
          <Badge badgeContent={2} color="secondary">
             <MailOutline />
          </Badge>

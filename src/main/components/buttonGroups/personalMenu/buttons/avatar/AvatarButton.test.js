@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, act } from 'src/testUtils';
 import { AuthProvider } from 'src/main/auth';
-import { avatar } from 'src/main/components/buttons/avatar/testAvatar';
+import { avatar } from './testAvatar';
 import AvatarButton from './AvatarButton';
 
 const mockHistoryPush = jest.fn();
