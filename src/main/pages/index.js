@@ -10,8 +10,12 @@ import SignUp from './sign-up/SignUp';
 import ConfirmRegistration from './confirmRegistration/ConfirmRegistrationPage';
 import ConfirmResetPasswordPage from './confirmResetPassword/ConfirmResetPasswordPage';
 import ResetPasswordPage from './resetPassword/ResetPasswordPage';
+import AccountPage from './account/AccountPage';
+import MessagesPage from './account/messages/MessagesPage';
+import SettingsPage from './account/settings/SettingsPage';
 
 export {
+   AccountPage,
    About,
    Blog,
    Client,
@@ -20,8 +24,10 @@ export {
    Contact,
    Home,
    LogInPage,
+   MessagesPage,
    News,
    Offer,
    SignUp,
+   SettingsPage,
    ResetPasswordPage,
 };
