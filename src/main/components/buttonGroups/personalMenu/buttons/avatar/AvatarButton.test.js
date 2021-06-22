@@ -33,7 +33,7 @@ describe('Avatar button', () => {
 
    test('should have proper text content', () => {
       expect(screen.getByRole('button')).toHaveTextContent(
-         'Krzysztof Kowalski',
+         'Krzysztof',
       );
    });
 

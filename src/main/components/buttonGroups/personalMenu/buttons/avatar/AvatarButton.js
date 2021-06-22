@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
-import { AvatarIcon } from 'src/main/components/buttons/avatar/AvatarIcon';
+import { AvatarIcon } from 'src/main/components/icons/avatar/AvatarIcon';
 import { useStyles } from './AvatarButton.styles';
 
 const AvatarButton = (props) => {
@@ -20,7 +20,7 @@ const AvatarButton = (props) => {
          onClick={() => handleAvatarClick(props.history)}
          data-testId="avatar-button" 
       >
-         {avatar.name} {avatar.surname}
+         {avatar.name}
       </Button>
    );
 };
