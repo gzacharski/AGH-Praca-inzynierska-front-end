@@ -1,14 +1,14 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { useStyles } from "./About.styles";
+import { useStyles } from "./EquipmentPage.styles";
 
-export default function About() {
+export default function Blog() {
   const classes = useStyles();
   return (
-    <Container maxWidth="xl" component="main" data-testid="main-container">
+    <Container maxWidth="xl" component="main">
       <Typography variant="h5" className={classes.root} align="center">
-        O nas
+        Sprzęt treningowy
       </Typography>
     </Container>
   );

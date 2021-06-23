@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Container } from '@material-ui/core';
 import { ShowTrainings } from 'src/main/components/gallery';
-import { useStyles } from './Offer.styles';
+import { useStyles } from './WorkoutsPage.styles';
 
 export default function Offer() {
    const classes = useStyles();
