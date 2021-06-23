@@ -1,33 +1,35 @@
-import About from './about/About';
-import Blog from './blog/Blog';
-import Client from './client/Client';
-import Contact from './contact/Contact';
-import Home from './home/Home';
-import LogInPage from './login/LogInPage';
-import News from './news/News';
-import Offer from './offer/Offer';
-import SignUp from './sign-up/SignUp';
+import AccountPage from './account/AccountPage';
+import ClientPage from './client/Client';
 import ConfirmRegistration from './confirmRegistration/ConfirmRegistrationPage';
 import ConfirmResetPasswordPage from './confirmResetPassword/ConfirmResetPasswordPage';
-import ResetPasswordPage from './resetPassword/ResetPasswordPage';
-import AccountPage from './account/AccountPage';
+import ContactPage from './contact/Contact';
+import EquipmentPage from './equipment/EquipmentPage';
+import Home from './home/Home';
+import LogInPage from './login/LogInPage';
 import MessagesPage from './account/messages/MessagesPage';
+import PriceListPage from './priceList/PriceListPage';
+import ResetPasswordPage from './resetPassword/ResetPasswordPage';
 import SettingsPage from './account/settings/SettingsPage';
+import SignUp from './sign-up/SignUp';
+import TimetablePage from './timetable/TimetablePage';
+import TrainersPage from './trainers/TrainersPage';
+import WorkoutsPage from './workouts/WorkoutsPage';
 
 export {
    AccountPage,
-   About,
-   Blog,
-   Client,
+   ClientPage,
    ConfirmRegistration,
    ConfirmResetPasswordPage,
-   Contact,
+   ContactPage,
+   EquipmentPage,
    Home,
    LogInPage,
    MessagesPage,
-   News,
-   Offer,
-   SignUp,
-   SettingsPage,
+   PriceListPage,
    ResetPasswordPage,
+   SettingsPage,
+   SignUp,
+   TimetablePage,
+   TrainersPage,
+   WorkoutsPage,
 };
