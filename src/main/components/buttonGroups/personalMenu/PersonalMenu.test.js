@@ -1,14 +1,17 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
+import { AuthContext } from 'src/main/auth';
 import PersonalMenu from './PersonalMenu';
 
 describe('Personal menu', () => {
    beforeEach(() => {
       render(
-         <MemoryRouter>
-            <PersonalMenu />
-         </MemoryRouter>,
+         <AuthContext.Provider value={{ isAuthenticated: () => true }}>
+            <MemoryRouter>
+               <PersonalMenu />
+            </MemoryRouter>
+         </AuthContext.Provider>,
       );
    });
 
@@ -25,6 +28,6 @@ describe('Personal menu', () => {
    });
 
    test('should contains dropDown button', () => {
-    expect(screen.getByTestId('dropDown-button')).toBeInTheDocument();
- });
+      expect(screen.getByTestId('dropDown-button')).toBeInTheDocument();
+   });
 });

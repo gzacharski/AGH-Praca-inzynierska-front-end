@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ButtonGroup } from '@material-ui/core';
 import {
    AvatarButton,
@@ -6,15 +6,22 @@ import {
    MessageButton,
    NotificationButton,
 } from 'src/main/components/buttonGroups/personalMenu/buttons';
+import { AuthContext } from 'src/main/auth';
 import { avatar } from './buttons/avatar/testAvatar';
 
-const PersonalMenu = () => (
-   <ButtonGroup data-testid="personal-menu">
-      <AvatarButton avatar={avatar} />
-      <MessageButton />
-      <NotificationButton />
-      <DropDownButton />
-   </ButtonGroup>
-);
+const PersonalMenu = () => {
+   const context = useContext(AuthContext);
+
+   return (
+      context.isAuthenticated() && (
+         <ButtonGroup data-testid="personal-menu">
+            <AvatarButton avatar={avatar} />
+            <MessageButton />
+            <NotificationButton />
+            <DropDownButton />
+         </ButtonGroup>
+      )
+   );
+};
 
 export default PersonalMenu;
