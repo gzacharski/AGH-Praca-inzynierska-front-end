@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#1e88e5',
    },
    toolbar: {
+      justifyContent: 'center',
+   },
+   toolbarAuthenticated: {
       justifyContent: 'space-between',
    },
    mainNavlinks :{

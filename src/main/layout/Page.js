@@ -1,77 +1,59 @@
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {
-   About,
    AccountPage,
-   Blog,
-   Client,
-   Contact,
+   ClientPage,
    ConfirmRegistration,
    ConfirmResetPasswordPage,
+   ContactPage,
+   EquipmentPage,
    Home,
    LogInPage,
    MessagesPage,
-   News,
-   Offer,
-   SignUp,
-   SettingsPage,
+   PriceListPage,
    ResetPasswordPage,
+   SettingsPage,
+   SignUp,
+   TimetablePage,
+   TrainersPage,
+   WorkoutsPage,
 } from 'src/main/pages';
-import { AuthContext } from 'src/main/auth';
+import { withAuthFilter } from 'src/main/auth';
 
-export default function Page() {
-   const authContext = useContext(AuthContext);
-   const { token } = authContext.authState;
-   return (
-      <Switch>
-         <Route path="/" exact component={Home} />
-         <Route path="/about" component={About} />
-         <Route
-            path="/account/messages"
-            render={() => (
-               <>
-                  {token === null && <Redirect to="/login" />};
-                  <MessagesPage />
-               </>
-            )}
-         />
-         <Route
-            path="/account/settings"
-            render={() => (
-               <>
-                  {token === null && <Redirect to="/login" />};
-                  <SettingsPage />
-               </>
-            )}
-         />
-         <Route
-            path="/account"
-            render={() => (
-               <>
-                  {token === null && <Redirect to="/login" />};
-                  <AccountPage />
-               </>
-            )}
-         />
-         <Route path="/blog" component={Blog} />
-         <Route path="/client" component={Client} />
-         <Route path="/contact" component={Contact} />
-         <Route path="/login" component={LogInPage} />
-         <Route path="/news" component={News} />
-         <Route path="/offer" component={Offer} />
-         <Route path="/sign-up" component={SignUp} />
-         <Route
-            path="/confirmRegistration"
-            sensitive
-            component={ConfirmRegistration}
-         />
-         <Route
-            path="/confirmNewPassword"
-            sensitive
-            component={ConfirmResetPasswordPage}
-         />
-         <Route path="/resetPassword" sensitive component={ResetPasswordPage} />
-         <Redirect to="/" />
-      </Switch>
-   );
-}
+const Page = () => (
+   <Switch>
+      <Route path="/" exact component={Home} />
+      <Route
+         path="/account/messages"
+         component={() => withAuthFilter(MessagesPage)}
+      />
+      <Route
+         path="/account/settings"
+         component={() => withAuthFilter(SettingsPage)}
+      />
+      <Route path="/account" component={() => withAuthFilter(AccountPage)} />
+      <Route path="/client" component={ClientPage} />
+      <Route path="/contact" component={ContactPage} />
+      <Route
+         path="/confirmRegistration"
+         sensitive
+         component={ConfirmRegistration}
+      />
+      <Route
+         path="/confirmNewPassword"
+         sensitive
+         component={ConfirmResetPasswordPage}
+      />
+      <Route path="/equipment" component={EquipmentPage} />
+      <Route path="/login" component={LogInPage} />
+      <Route path="/price-list" component={PriceListPage} />
+      <Route path="/resetPassword" sensitive component={ResetPasswordPage} />
+      <Route path="/sign-up" component={SignUp} />
+      <Route path="/trainers" component={TrainersPage} />
+      <Route path="/timetable" component={TimetablePage} />
+      <Route path="/workouts" component={WorkoutsPage} />
+      <Redirect to="/" />
+   </Switch>
+);
+
+export default Page;
