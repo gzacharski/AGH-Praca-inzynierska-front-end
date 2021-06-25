@@ -1,44 +1,59 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {
-   About,
-   Blog,
-   Client,
-   Contact,
+   AccountPage,
+   ClientPage,
    ConfirmRegistration,
    ConfirmResetPasswordPage,
+   ContactPage,
+   EquipmentPage,
    Home,
    LogInPage,
-   News,
-   Offer,
-   SignUp,
+   MessagesPage,
+   PriceListPage,
    ResetPasswordPage,
+   SettingsPage,
+   SignUp,
+   TimetablePage,
+   TrainersPage,
+   WorkoutsPage,
 } from 'src/main/pages';
+import { withAuthFilter } from 'src/main/auth';
 
-export default function Page() {
-   return (
-      <Switch>
-         <Route path="/" exact component={Home} />
-         <Route path="/about" component={About} />
-         <Route path="/blog" component={Blog} />
-         <Route path="/client" component={Client} />
-         <Route path="/contact" component={Contact} />
-         <Route path="/login" component={LogInPage} />
-         <Route path="/news" component={News} />
-         <Route path="/offer" component={Offer} />
-         <Route path="/sign-up" component={SignUp} />
-         <Route
-            path="/confirmRegistration"
-            sensitive
-            component={ConfirmRegistration}
-         />
-         <Route
-            path="/confirmNewPassword"
-            sensitive
-            component={ConfirmResetPasswordPage}
-         />
-         <Route path="/resetPassword" sensitive component={ResetPasswordPage} />
-         <Redirect to="/" />
-      </Switch>
-   );
-}
+const Page = () => (
+   <Switch>
+      <Route path="/" exact component={Home} />
+      <Route
+         path="/account/messages"
+         component={() => withAuthFilter(MessagesPage)}
+      />
+      <Route
+         path="/account/settings"
+         component={() => withAuthFilter(SettingsPage)}
+      />
+      <Route path="/account" component={() => withAuthFilter(AccountPage)} />
+      <Route path="/client" component={ClientPage} />
+      <Route path="/contact" component={ContactPage} />
+      <Route
+         path="/confirmRegistration"
+         sensitive
+         component={ConfirmRegistration}
+      />
+      <Route
+         path="/confirmNewPassword"
+         sensitive
+         component={ConfirmResetPasswordPage}
+      />
+      <Route path="/equipment" component={EquipmentPage} />
+      <Route path="/login" component={LogInPage} />
+      <Route path="/price-list" component={PriceListPage} />
+      <Route path="/resetPassword" sensitive component={ResetPasswordPage} />
+      <Route path="/sign-up" component={SignUp} />
+      <Route path="/trainers" component={TrainersPage} />
+      <Route path="/timetable" component={TimetablePage} />
+      <Route path="/workouts" component={WorkoutsPage} />
+      <Redirect to="/" />
+   </Switch>
+);
+
+export default Page;

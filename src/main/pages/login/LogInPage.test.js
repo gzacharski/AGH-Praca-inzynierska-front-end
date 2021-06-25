@@ -4,8 +4,8 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, screen } from 'src/testUtils';
 import { Page } from 'src/main/layout';
+import { AuthProvider } from 'src/main/auth';
 import LogInPage from './LogInPage';
-
 
 describe('LogInPage page component', () => {
    beforeEach(() => {
@@ -61,9 +61,11 @@ describe('User clicks link and', () => {
       const history = createMemoryHistory();
       history.push('/login');
       render(
-         <Router history={history}>
-            <Page />
-         </Router>,
+         <AuthProvider>
+            <Router history={history}>
+               <Page />
+            </Router>
+         </AuthProvider>,
       );
       expect(screen.getByText(/Zaloguj się/)).toBeInTheDocument();
 
@@ -76,7 +78,7 @@ describe('User clicks link and', () => {
             .length,
       ).toEqual(1);
 
-      const signUpButton=screen.queryByRole('button');
+      const signUpButton = screen.queryByRole('button');
       expect(signUpButton).toBeInTheDocument();
       expect(signUpButton).toHaveTextContent('Zarejestruj się');
    });
@@ -85,9 +87,11 @@ describe('User clicks link and', () => {
       const history = createMemoryHistory();
       history.push('/login');
       render(
-         <Router history={history}>
-            <Page />
-         </Router>,
+         <AuthProvider>
+            <Router history={history}>
+               <Page />
+            </Router>
+         </AuthProvider>,
       );
       expect(screen.getByText(/Zaloguj się/)).toBeInTheDocument();
 
@@ -100,7 +104,7 @@ describe('User clicks link and', () => {
             .length,
       ).toEqual(1);
 
-      const button=screen.queryByRole('button');
+      const button = screen.queryByRole('button');
       expect(button).toBeInTheDocument();
       expect(button).toHaveTextContent('Wyślij link do zmiany hasła');
    });

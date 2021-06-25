@@ -16,9 +16,13 @@ jest.mock('react-router-dom', () => ({
 
 describe('Logout button', () => {
    test('should render', () => {
-      render(<LogoutButton />);
-      expect(screen.getByRole('button')).toBeInTheDocument();
-      expect(screen.getByRole('button')).toHaveTextContent('Wyloguj się');
+      render(
+         <AuthProvider>
+            <LogoutButton />
+         </AuthProvider>,
+      );
+      expect(screen.getByRole('menuitem')).toBeInTheDocument();
+      expect(screen.getByRole('menuitem')).toHaveTextContent('Wyloguj się');
    });
 
    test('when clicked, it should logout and route to login page', () => {
