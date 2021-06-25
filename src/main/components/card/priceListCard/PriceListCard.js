@@ -14,7 +14,7 @@ import { useStyles } from './PriceListCard.styles';
 const PriceListCard = (props) => {
    const classes = useStyles();
    const { gymPass } = props;
-   const { id, title, subheader, price, isPremium, description } = gymPass;
+   const { id, title, subheader, price, premium, description } = gymPass;
    const handleBuyClick = (history) =>
       history.push(`/account/gympass/buy/${id}`);
 
@@ -63,10 +63,10 @@ const PriceListCard = (props) => {
          <CardActions>
             <Button
                fullWidth
-               variant={isPremium ? 'contained' : 'outlined'}
+               variant={premium ? 'contained' : 'outlined'}
                className={clsx({
-                  [classes.button]: !isPremium,
-                  [classes.buttonPremium]: isPremium,
+                  [classes.button]: !premium,
+                  [classes.buttonPremium]: premium,
                })}
                onClick={() => handleBuyClick(props.history)}
             >
