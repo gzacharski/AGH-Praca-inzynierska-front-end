@@ -73,7 +73,7 @@
     "husky": "^6.0.0",
     "is-ci": "^3.0.0",
     "jest-config": "^26.6.3",
-    "lint-staged": "^10.5.4",
+    "lint-staged": "^11.0.0",
     "prettier": "2.3.1",
     "react-test-renderer": "^17.0.2",
     "redux-logger": "^3.0.6",
