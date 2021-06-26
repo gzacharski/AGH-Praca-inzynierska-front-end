@@ -1,0 +1,40 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: react-redux
+    versions:
+    - 7.2.4
+  - dependency-name: eslint-plugin-testing-library
+    versions:
+    - 4.1.0
+    - 4.1.1
+  - dependency-name: history
+    versions:
+    - 5.0.0
+  - dependency-name: "@testing-library/user-event"
+    versions:
+    - 13.0.1
+    - 13.0.10
+    - 13.0.13
+    - 13.0.16
+    - 13.0.6
+    - 13.0.7
+    - 13.1.1
+  - dependency-name: eslint-plugin-jest-dom
+    versions:
+    - 3.7.0
+  - dependency-name: eslint
+    versions:
+    - 7.23.0
+  - dependency-name: "@wojtekmaj/enzyme-adapter-react-17"
+    versions:
+    - 0.5.0
+  - dependency-name: react-dev-utils
+    versions:
+    - 11.0.4
