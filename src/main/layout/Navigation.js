@@ -1,47 +1,82 @@
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import React from 'react';
+import React, { useContext } from 'react';
+import clsx from 'clsx';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Drawer, Divider, IconButton } from '@material-ui/core';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import { useTheme } from '@material-ui/core/styles';
+import { AuthContext } from 'src/main/auth';
+import { FilterRenderer } from 'src/main/renderers';
+import {
+   AdminList,
+   ClientList,
+   ManagerList,
+   PublicList,
+   ReceptionEmployeeList,
+   TrainerList,
+} from 'src/main/layout/navigation/lists';
 import { toggleDrawer } from '../store/state/action/creators';
+import { useStyles } from './Navigation.styles';
 
 const Navigation = (props) => {
-   const { menuIsOpen } = props;
+   const authContext = useContext(AuthContext);
+   const { token } = authContext.authState;
+   if (token === null) return null;
+
+   const filteredUrls = [
+      '/login',
+      '/sign-up',
+      '/confirmRegistration',
+      '/confirmNewPassword',
+   ];
+
+   const classes = useStyles();
+   const theme = useTheme();
+
+   const { menuIsOpen, toggle } = props;
+
    return (
-      <nav>
-         <Drawer open={menuIsOpen} onClose={() => props.toggleDrawer()}>
-            <List component="nav" aria-label="About">
-               <ListItem button component={NavLink} to="/" exact>
-                  <ListItemText>Strona główna</ListItemText>
-               </ListItem>
-               <ListItem button component={NavLink} to="/news">
-                  <ListItemText>Aktualności</ListItemText>
-               </ListItem>
-               <ListItem button component={NavLink} to="/about">
-                  <ListItemText>O nas</ListItemText>
-               </ListItem>
-               <ListItem button component={NavLink} to="/blog">
-                  <ListItemText>Blog</ListItemText>
-               </ListItem>
-               <ListItem button component={NavLink} to="/client">
-                  <ListItemText>Klient</ListItemText>
-               </ListItem>
-               <ListItem button component={NavLink} to="/contact">
-                  <ListItemText>Kontakt</ListItemText>
-               </ListItem>
-               <ListItem button component={NavLink} to="/offer">
-                  <ListItemText>Oferta</ListItemText>
-               </ListItem>
-            </List>
+      <FilterRenderer urls={filteredUrls}>
+         <Drawer
+            variant="permanent"
+            className={clsx(classes.drawer, {
+               [classes.drawerOpen]: menuIsOpen,
+               [classes.drawerClose]: !menuIsOpen,
+            })}
+            classes={{
+               paper: clsx({
+                  [classes.drawerOpen]: menuIsOpen,
+                  [classes.drawerClose]: !menuIsOpen,
+               }),
+            }}
+         >
+            <div className={classes.toolbar}>
+               <IconButton onClick={() => toggle()}>
+                  {theme.direction === 'rtl' ? (
+                     <ChevronRight />
+                  ) : (
+                     <ChevronLeft />
+                  )}
+               </IconButton>
+            </div>
+            <Divider />
+            <ClientList />
+            <Divider />
+            <PublicList />
+            <Divider />
+            <ReceptionEmployeeList />
+            <Divider />
+            <TrainerList />
+            <Divider />
+            <ManagerList />
+            <Divider />
+            <AdminList />
          </Drawer>
-      </nav>
+      </FilterRenderer>
    );
 };
 
 const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
 
-const mapDispatchToProps = { toggleDrawer };
+const mapDispatchToProps = { toggle: toggleDrawer };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

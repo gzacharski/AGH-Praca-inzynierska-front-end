@@ -32,7 +32,7 @@ const Page = () => (
          component={() => withAuthFilter(SettingsPage)}
       />
       <Route path="/account" component={() => withAuthFilter(AccountPage)} />
-      <Route path="/client" component={ClientPage} />
+      <Route path="/client" component={() => withAuthFilter(ClientPage)} />
       <Route path="/contact" component={ContactPage} />
       <Route
          path="/confirmRegistration"
