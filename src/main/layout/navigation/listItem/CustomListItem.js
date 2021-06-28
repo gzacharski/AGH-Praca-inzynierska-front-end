@@ -35,7 +35,7 @@ const CustomListItem = (props) => {
             </ListItemIcon>
             <ListItemText
                primary={buttonName}
-               secondary={menuMoreInfo ? secondaryText : null}
+               secondary={menuMoreInfo && menuIsOpen ? secondaryText : null}
                secondaryTypographyProps={{
                   color: 'textSecondary',
                }}

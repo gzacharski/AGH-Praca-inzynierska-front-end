@@ -1,6 +1,12 @@
 import React from 'react';
 import { List, ListSubheader } from '@material-ui/core';
-import { Assignment, AttachMoney, EventNote } from '@material-ui/icons';
+import {
+   Assignment,
+   AttachMoney,
+   EventNote,
+   EventSeat,
+   SupervisorAccount,
+} from '@material-ui/icons';
 import { connect } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 
@@ -35,6 +41,18 @@ const ManagerList = (props) => {
             CustomIcon={AttachMoney}
             pushUrl="/account/manager/tasks"
             secondaryText="Dodaj, modyfikuj lub usuń"
+         />
+         <CustomListItem
+            buttonName="Sprzęt"
+            CustomIcon={EventSeat}
+            pushUrl="/account/manager/equipment"
+            secondaryText="Rejestr sprzętu w systemie"
+         />
+         <CustomListItem
+            buttonName="Użytkownicy"
+            CustomIcon={SupervisorAccount}
+            pushUrl="/account/manager/users"
+            secondaryText="Rejestr użytkowników w systemie"
          />
       </List>
    );

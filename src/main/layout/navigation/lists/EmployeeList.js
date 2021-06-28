@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, ListSubheader } from '@material-ui/core';
-import { Assignment, SupervisorAccount } from '@material-ui/icons';
+import { Assignment, SupervisorAccount, EventSeat } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 
@@ -25,10 +25,16 @@ const ReceptionEmployeeList = (props) => {
             secondaryText="Rejestr użytkowników w systemie"
          />
          <CustomListItem
+            buttonName="Sprzęt"
+            CustomIcon={EventSeat}
+            pushUrl="/account/employee/equipment"
+            secondaryText="Rejestr sprzętu w systemie"
+         />
+         <CustomListItem
             buttonName="Zadania"
             CustomIcon={Assignment}
             pushUrl="/account/employee/users"
-            secondaryText="Rejestr użytkowników w systemie"
+            secondaryText="Moje zadania do wykonania"
          />
       </List>
    );

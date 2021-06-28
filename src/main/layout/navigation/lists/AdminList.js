@@ -8,6 +8,7 @@ import {
    SupervisorAccount,
    PermDataSetting,
    Home,
+   EventSeat,
 } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -50,6 +51,12 @@ const AdminList = (props) => {
             CustomIcon={SupervisorAccount}
             pushUrl="/account/admin/users"
             secondaryText="Rejestr użytkowników w systemie"
+         />
+         <CustomListItem
+            buttonName="Sprzęt"
+            CustomIcon={EventSeat}
+            pushUrl="/account/manager/equipment"
+            secondaryText="Rejestr sprzętu w systemie"
          />
          <CustomListItem
             buttonName="Zarządzaj"
