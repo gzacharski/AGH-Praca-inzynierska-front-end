@@ -7,7 +7,7 @@ const AccountPage = () => {
    return (
       <Container maxWidth="xl" component="main" data-testid="main-container">
          <Typography variant="h5" className={classes.root} align="center">
-            Logi
+            Konfiguruj
          </Typography>
       </Container>
    );
