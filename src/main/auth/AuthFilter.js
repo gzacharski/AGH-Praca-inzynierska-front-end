@@ -20,23 +20,25 @@ export const withAuthFilter = (Component) => {
    );
 };
 
-const withHasRole = (Component, role) => {
+const hasRole = (role) => {
    const authContext = useContext(AuthContext);
    const { userInfo } = authContext.authState;
-   const hasRole = userInfo.roles.includes(role);
-
-   return hasRole && <Component />;
+   return userInfo.roles.includes(role);
 };
 
-export const withAdminRole = (Component) => withHasRole(Component, ROLE_ADMIN);
+export const hasAdminRole = () => hasRole(ROLE_ADMIN);
+export const hasEmployeeRole = () => hasRole(ROLE_EMPLOYEE);
+export const hasManagerRole = () => hasRole(ROLE_MANAGER);
+export const hasTrainerRole = () => hasRole(ROLE_TRAINER);
+export const hasUserRole = () => hasRole(ROLE_USER);
+
+export const withAdminRole = (Component) => hasAdminRole() && <Component />;
 
 export const withEmployeeRole = (Component) =>
-   withHasRole(Component, ROLE_EMPLOYEE);
+   hasEmployeeRole() && <Component />;
 
-export const withManagerRole = (Component) =>
-   withHasRole(Component, ROLE_MANAGER);
+export const withManagerRole = (Component) => hasManagerRole() && <Component />;
 
-export const withTrainerRole = (Component) =>
-   withHasRole(Component, ROLE_TRAINER);
+export const withTrainerRole = (Component) => hasTrainerRole() && <Component />;
 
-export const withUserRole = (Component) => withHasRole(Component, ROLE_USER);
+export const withUserRole = (Component) => hasUserRole() && <Component />;
