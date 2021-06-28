@@ -118,11 +118,13 @@ const ClientList = (props) => {
             buttonName="Statystyki"
             CustomIcon={Timeline}
             pushUrl="/account/stats"
+            secondaryText="Twoja aktywność w klubie"
          />
          <CustomListItem
             buttonName="Ustawienia"
             CustomIcon={Settings}
             pushUrl="/account/settings"
+            secondaryText="Zmień ustawienia swojego konta"
          />
       </List>
    );

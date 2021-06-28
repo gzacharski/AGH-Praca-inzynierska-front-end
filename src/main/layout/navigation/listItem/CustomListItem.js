@@ -9,7 +9,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 const CustomListItem = (props) => {
-   const { buttonName, CustomIcon, menuIsOpen, pushUrl } = props;
+   const {
+      buttonName,
+      CustomIcon,
+      menuIsOpen,
+      pushUrl,
+      menuMoreInfo,
+      secondaryText,
+   } = props;
    const handleClick = (history) => {
       if (pushUrl) history.push(pushUrl);
    };
@@ -26,12 +33,21 @@ const CustomListItem = (props) => {
             <ListItemIcon>
                <CustomIcon />
             </ListItemIcon>
-            <ListItemText primary={buttonName} />
+            <ListItemText
+               primary={buttonName}
+               secondary={menuMoreInfo ? secondaryText : null}
+               secondaryTypographyProps={{
+                  color: 'textSecondary',
+               }}
+            />
          </ListItem>
       </Tooltip>
    );
 };
 
-const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
+const mapStateToProps = (store) => ({
+   menuIsOpen: store.stateData.menuIsOpen,
+   menuMoreInfo: store.stateData.menuMoreInfo,
+});
 
 export default withRouter(connect(mapStateToProps, null)(CustomListItem));

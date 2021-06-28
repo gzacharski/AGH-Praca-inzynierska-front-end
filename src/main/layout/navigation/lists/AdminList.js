@@ -7,7 +7,9 @@ import {
    FileCopy,
    SupervisorAccount,
    PermDataSetting,
+   Home,
 } from '@material-ui/icons';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 
@@ -25,19 +27,52 @@ const AdminList = (props) => {
             )
          }
       >
-         <CustomListItem buttonName="Logi" CustomIcon={Fingerprint} />
-         <CustomListItem buttonName="Statystyki" CustomIcon={BubbleChart} />
+         <CustomListItem
+            buttonName="Strona główna"
+            CustomIcon={Home}
+            pushUrl="/account/admin"
+            secondaryText="Główny panel administratora"
+         />
+         <CustomListItem
+            buttonName="Logi"
+            CustomIcon={Fingerprint}
+            pushUrl="/account/admin/logs"
+            secondaryText="Informacje z poszczególnych serwisów"
+         />
+         <CustomListItem
+            buttonName="Statystyki"
+            CustomIcon={BubbleChart}
+            pushUrl="/account/admin/stats"
+            secondaryText="Monitoruj aktywność użytkowników"
+         />
          <CustomListItem
             buttonName="Użytkownicy"
             CustomIcon={SupervisorAccount}
+            pushUrl="/account/admin/users"
+            secondaryText="Rejestr użytkowników w systemie"
          />
-         <CustomListItem buttonName="Zarządzaj" CustomIcon={Cloud} />
-         <CustomListItem buttonName="Kopia zapasowa" CustomIcon={FileCopy} />
-         <CustomListItem buttonName="Konfiguruj" CustomIcon={PermDataSetting} />
+         <CustomListItem
+            buttonName="Zarządzaj"
+            CustomIcon={Cloud}
+            pushUrl="/account/admin/manage"
+            secondaryText="Zarządzaj mikroserwisami"
+         />
+         <CustomListItem
+            buttonName="Kopia zapasowa"
+            CustomIcon={FileCopy}
+            pushUrl="/account/admin/backup"
+            secondaryText="Zarządzaj kopią zapasową"
+         />
+         <CustomListItem
+            buttonName="Konfiguruj"
+            CustomIcon={PermDataSetting}
+            pushUrl="/account/admin/configure"
+            secondaryText="Konfiguruj ustawienia systemu"
+         />
       </List>
    );
 };
 
 const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
 
-export default connect(mapStateToProps, null)(AdminList);
+export default withRouter(connect(mapStateToProps, null)(AdminList));

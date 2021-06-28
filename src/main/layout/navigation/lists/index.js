@@ -2,7 +2,7 @@ import AdminList from './AdminList';
 import ClientList from './ClientList';
 import ManagerList from './ManagerList';
 import PublicList from './PublicList';
-import ReceptionEmployeeList from './ReceptionEmployeeList';
+import EmployeeList from './EmployeeList';
 import TrainerList from './TrainerList';
 
 export {
@@ -10,6 +10,6 @@ export {
    ClientList,
    ManagerList,
    PublicList,
-   ReceptionEmployeeList,
+   EmployeeList,
    TrainerList,
 };

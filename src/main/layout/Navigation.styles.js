@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
       flexShrink: 0,
       whiteSpace: 'nowrap',
    },
+   drawerMoreInfo: {
+      width: drawerWidth,
+      flexShrink: 0,
+   },
    drawerOpen: {
       width: drawerWidth,
       transition: theme.transitions.create('width', {
@@ -54,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
    toolbar: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
       padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
