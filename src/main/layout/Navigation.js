@@ -3,11 +3,18 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { Drawer, Divider, IconButton } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
-import { AuthContext } from 'src/main/auth';
+import {
+   AuthContext,
+   withAdminRole,
+   withEmployeeRole,
+   withManagerRole,
+   withTrainerRole,
+   withUserRole,
+} from 'src/main/auth';
 import { FilterRenderer } from 'src/main/renderers';
 import {
    AdminList,
-   ClientList,
+   AccountList,
    ManagerList,
    PublicList,
    EmployeeList,
@@ -16,6 +23,54 @@ import {
 import { MenuMoreInfoSwitch } from 'src/main/components/switches';
 import { toggleDrawer } from 'src/main/store/state/action/creators';
 import { useStyles } from './Navigation.styles';
+
+const AdminListAuth = () =>
+   withAdminRole(() => (
+      <>
+         <Divider />
+         <AdminList />
+      </>
+   ));
+
+const AccountListAuth = () =>
+   withUserRole(() => (
+      <>
+         <Divider />
+         <AccountList />
+      </>
+   ));
+
+const PublicListAuth = () =>
+   withUserRole(() => (
+      <>
+         <Divider />
+         <PublicList />
+      </>
+   ));
+
+const EmployeeListAuth = () =>
+   withEmployeeRole(() => (
+      <>
+         <Divider />
+         <EmployeeList />
+      </>
+   ));
+
+const TrainerListAuth = () =>
+   withTrainerRole(() => (
+      <>
+         <Divider />
+         <TrainerList />
+      </>
+   ));
+
+const ManagerListAuth = () =>
+   withManagerRole(() => (
+      <>
+         <Divider />
+         <ManagerList />
+      </>
+   ));
 
 const Navigation = (props) => {
    const authContext = useContext(AuthContext);
@@ -58,18 +113,12 @@ const Navigation = (props) => {
                      {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
                   </IconButton>
                </div>
-               <Divider />
-               <ClientList />
-               <Divider />
-               <PublicList />
-               <Divider />
-               <EmployeeList />
-               <Divider />
-               <TrainerList />
-               <Divider />
-               <ManagerList />
-               <Divider />
-               <AdminList />
+               <AccountListAuth />
+               <EmployeeListAuth />
+               <TrainerListAuth />
+               <ManagerListAuth />
+               <AdminListAuth />
+               <PublicListAuth />
             </Drawer>
          </nav>
       </FilterRenderer>
