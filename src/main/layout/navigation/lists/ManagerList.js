@@ -33,13 +33,13 @@ const ManagerList = (props) => {
          <CustomListItem
             buttonName="Modyfikuj grafik"
             CustomIcon={EventNote}
-            pushUrl="/account/manager/tasks"
+            pushUrl="/account/manager/timetable"
             secondaryText="Zmień aktualne godziny zajęć"
          />
          <CustomListItem
             buttonName="Modyfikuj ofertę"
             CustomIcon={AttachMoney}
-            pushUrl="/account/manager/tasks"
+            pushUrl="/account/manager/pricelist"
             secondaryText="Dodaj, modyfikuj lub usuń"
          />
          <CustomListItem

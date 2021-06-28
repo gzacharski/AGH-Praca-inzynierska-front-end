@@ -8,6 +8,8 @@ describe('SettingsPage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Strona managera')).toBeInTheDocument();
+      expect(
+         screen.getByText('Modyfikuj sprzęt (manager)'),
+      ).toBeInTheDocument();
    });
 });

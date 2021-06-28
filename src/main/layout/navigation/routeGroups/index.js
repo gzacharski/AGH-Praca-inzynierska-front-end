@@ -1,4 +1,5 @@
 import AccountRouteGroup from './AccountRouteGroup';
 import AdminRouteGroup from './AdminRouteGroups';
+import ManagerRouteGroup from './ManagerRouteGroups';
 
-export { AccountRouteGroup, AdminRouteGroup };
+export { AccountRouteGroup, AdminRouteGroup, ManagerRouteGroup };

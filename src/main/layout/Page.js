@@ -19,6 +19,7 @@ import { withAuthFilter } from 'src/main/auth';
 import {
    AccountRouteGroup,
    AdminRouteGroup,
+   ManagerRouteGroup,
 } from 'src/main/layout/navigation/routeGroups';
 
 const Page = () => (
@@ -27,6 +28,10 @@ const Page = () => (
       <Route
          path="/account/admin"
          component={() => withAuthFilter(AdminRouteGroup)}
+      />
+      <Route
+         path="/account/manager"
+         component={() => withAuthFilter(ManagerRouteGroup)}
       />
       <Route
          path="/account"
