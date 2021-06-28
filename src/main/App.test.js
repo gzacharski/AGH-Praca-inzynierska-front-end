@@ -1,68 +1,60 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
 import Adapter from 'enzyme-adapter-react-16';
-import Enzyme,{shallow} from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import App from './App';
-import {Footer,Header,Navigation,Page} from './layout';
+import { Footer, Header, Navigation, Page } from './layout';
 
-Enzyme.configure({adapter: new Adapter()});
+Enzyme.configure({ adapter: new Adapter() });
 
-describe('App renders',()=>{
-  test('wihout crashing', ()=>{
-    const div=document.createElement('div');
-    ReactDOM.render(<App/>,div);
-    ReactDOM.unmountComponentAtNode(div);
-  })
-})
+describe('App renders', () => {
+   test('wihout crashing', () => {
+      const div = document.createElement('div');
+      ReactDOM.render(<App />, div);
+      ReactDOM.unmountComponentAtNode(div);
+   });
+});
 
-describe('App contains',()=>{
-  let wrapper=null;
-  
-  beforeEach(()=>{
-    wrapper=shallow(<App/>);
-  })
+describe('App contains', () => {
+   let wrapper = null;
 
-  test('Footer component', ()=>{
-    const componentExists=wrapper.exists(Footer);
-    expect(componentExists).toBe(true);
-  })
+   beforeEach(() => {
+      wrapper = shallow(<App />);
+   });
 
-  test('Header component', ()=>{
-    const componentExists=wrapper.exists(Header);
-    expect(componentExists).toBe(true);
-  })
+   test('Footer component', () => {
+      const componentExists = wrapper.exists(Footer);
+      expect(componentExists).toBe(true);
+   });
 
-  test('Navigation component', ()=>{
-    const componentExists=wrapper.exists(Navigation);
-    expect(componentExists).toBe(true);
-  })
+   test('Header component', () => {
+      const componentExists = wrapper.exists(Header);
+      expect(componentExists).toBe(true);
+   });
 
-  test('Page component', ()=>{
-    const componentExists=wrapper.exists(Page);
-    expect(componentExists).toBe(true);
-  })
-})
+   test('Navigation component', () => {
+      const componentExists = wrapper.exists(Navigation);
+      expect(componentExists).toBe(true);
+   });
 
-describe('App root div contains:',()=>{
-  beforeEach(()=>render(<App />))
+   test('Page component', () => {
+      const componentExists = wrapper.exists(Page);
+      expect(componentExists).toBe(true);
+   });
+});
 
-  test('main tag', () => {
-    expect(screen.getByRole('main')).toBeInTheDocument();
-  })
+describe('App root div contains:', () => {
+   beforeEach(() => render(<App />));
 
-  test('nav tag', () => {
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
-  })
+   test('main tag', () => {
+      expect(screen.getByRole('main')).toBeInTheDocument();
+   });
+});
 
-  test('div wrapper which contains 4 children',()=>{
-    expect(screen.getByTestId('app-container').children.length).toEqual(4);
-  })
-})
-
-describe('App div root child:',()=>{
-  test('is 1 child elements',()=>{
-    const {container}=render(<App/>);
-    expect(container.childNodes.length).toEqual(1);
-  })
-})
+describe('App div root child:', () => {
+   test('is 1 child elements', () => {
+      const { container } = render(<App />);
+      expect(container.childNodes.length).toEqual(1);
+   });
+});

@@ -8,7 +8,7 @@ const ReceptionEmployeeList = (props) => {
    const { menuIsOpen } = props;
    return (
       <List
-         component="nav"
+         component="div"
          aria-labelledby="nested-list-subheader"
          subheader={
             menuIsOpen && (

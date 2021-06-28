@@ -36,41 +36,43 @@ const Navigation = (props) => {
 
    return (
       <FilterRenderer urls={filteredUrls}>
-         <Drawer
-            variant="permanent"
-            className={clsx(classes.drawer, {
-               [classes.drawerOpen]: menuIsOpen,
-               [classes.drawerClose]: !menuIsOpen,
-            })}
-            classes={{
-               paper: clsx({
+         <nav>
+            <Drawer
+               variant="permanent"
+               className={clsx(classes.drawer, {
                   [classes.drawerOpen]: menuIsOpen,
                   [classes.drawerClose]: !menuIsOpen,
-               }),
-            }}
-         >
-            <div className={classes.toolbar}>
-               <IconButton onClick={() => toggle()}>
-                  {theme.direction === 'rtl' ? (
-                     <ChevronRight />
-                  ) : (
-                     <ChevronLeft />
-                  )}
-               </IconButton>
-            </div>
-            <Divider />
-            <ClientList />
-            <Divider />
-            <PublicList />
-            <Divider />
-            <ReceptionEmployeeList />
-            <Divider />
-            <TrainerList />
-            <Divider />
-            <ManagerList />
-            <Divider />
-            <AdminList />
-         </Drawer>
+               })}
+               classes={{
+                  paper: clsx({
+                     [classes.drawerOpen]: menuIsOpen,
+                     [classes.drawerClose]: !menuIsOpen,
+                  }),
+               }}
+            >
+               <div className={classes.toolbar}>
+                  <IconButton onClick={() => toggle()}>
+                     {theme.direction === 'rtl' ? (
+                        <ChevronRight />
+                     ) : (
+                        <ChevronLeft />
+                     )}
+                  </IconButton>
+               </div>
+               <Divider />
+               <ClientList />
+               <Divider />
+               <PublicList />
+               <Divider />
+               <ReceptionEmployeeList />
+               <Divider />
+               <TrainerList />
+               <Divider />
+               <ManagerList />
+               <Divider />
+               <AdminList />
+            </Drawer>
+         </nav>
       </FilterRenderer>
    );
 };
