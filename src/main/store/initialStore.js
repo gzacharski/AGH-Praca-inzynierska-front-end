@@ -5,5 +5,6 @@ export const initialStore = {
    },
    stateData: {
       menuIsOpen: false,
+      menuMoreInfo: false,
    },
 };
