@@ -3,10 +3,10 @@ import { List, ListSubheader } from '@material-ui/core';
 import {
    Group,
    FitnessCenter,
-   Settings,
    Event,
    ContactPhone,
    Payment,
+   EmojiPeople,
 } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
@@ -29,31 +29,37 @@ const AdminList = (props) => {
             buttonName="Zajęcia"
             CustomIcon={Group}
             menuIsOpen={menuIsOpen}
+            pushUrl="/workouts"
          />
          <CustomListItem
             buttonName="Sprzęt"
             CustomIcon={FitnessCenter}
             menuIsOpen={menuIsOpen}
+            pushUrl="/equipment"
          />
          <CustomListItem
             buttonName="Trenerzy"
-            CustomIcon={Settings}
+            CustomIcon={EmojiPeople}
             menuIsOpen={menuIsOpen}
+            pushUrl="/trainers"
          />
          <CustomListItem
             buttonName="Grafik zajęć"
             CustomIcon={Event}
             menuIsOpen={menuIsOpen}
+            pushUrl="/timetable"
          />
          <CustomListItem
             buttonName="Kontakt"
             CustomIcon={ContactPhone}
             menuIsOpen={menuIsOpen}
+            pushUrl="/contact"
          />
          <CustomListItem
             buttonName="Cennik"
             CustomIcon={Payment}
             menuIsOpen={menuIsOpen}
+            pushUrl="/price-list"
          />
       </List>
    );

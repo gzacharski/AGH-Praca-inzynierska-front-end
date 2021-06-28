@@ -6,9 +6,13 @@ import {
    Tooltip,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 const CustomListItem = (props) => {
-   const { buttonName, CustomIcon, menuIsOpen } = props;
+   const { buttonName, CustomIcon, menuIsOpen, pushUrl } = props;
+   const handleClick = (history) => {
+      if (pushUrl) history.push(pushUrl);
+   };
    return (
       <Tooltip
          title={buttonName}
@@ -18,7 +22,7 @@ const CustomListItem = (props) => {
          disableHoverListener={menuIsOpen}
          disableTouchListener={menuIsOpen}
       >
-         <ListItem button>
+         <ListItem button onClick={() => handleClick(props.history)}>
             <ListItemIcon>
                <CustomIcon />
             </ListItemIcon>
@@ -30,4 +34,4 @@ const CustomListItem = (props) => {
 
 const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
 
-export default connect(mapStateToProps, null)(CustomListItem);
+export default withRouter(connect(mapStateToProps, null)(CustomListItem));

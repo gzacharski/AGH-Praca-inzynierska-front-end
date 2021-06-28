@@ -4,7 +4,7 @@ import {
    List,
    ListItem,
    ListItemIcon,
-   ListSubheader,
+   // ListSubheader,
    ListItemText,
    makeStyles,
    Tooltip,
@@ -18,6 +18,7 @@ import {
    ExpandMore,
 } from '@material-ui/icons';
 import ListIcon from '@material-ui/icons/List';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 import { toggleDrawer } from 'src/main/store/state/action/creators';
@@ -43,18 +44,12 @@ const ClientList = (props) => {
 
    const { menuIsOpen, toggle } = props;
    return (
-      <List
-         component="div"
-         aria-labelledby="nested-list-subheader"
-         subheader={
-            menuIsOpen && (
-               <ListSubheader component="div" disableSticky>
-                  Krzysztof Kowalski
-               </ListSubheader>
-            )
-         }
-      >
-         <CustomListItem buttonName="Moje konto" CustomIcon={AccountCircle} />
+      <List component="div" aria-labelledby="nested-list-subheader">
+         <CustomListItem
+            buttonName="Moje konto"
+            CustomIcon={AccountCircle}
+            pushUrl="/account"
+         />
          <Tooltip
             title="Rezerwacje"
             arrow
@@ -68,7 +63,6 @@ const ClientList = (props) => {
                onClick={() => {
                   handleClick();
                   if (!menuIsOpen) toggle();
-                  console.log('Rezerwacje');
                }}
             >
                <ListItemIcon>
@@ -78,12 +72,13 @@ const ClientList = (props) => {
                {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
          </Tooltip>
-
          <Collapse in={menuIsOpen && open} timeout="auto" unmountOnExit>
             <List
                component="div"
                disablePadding
-               onClick={() => console.log('Rezerwacje zajęć grupowych')}
+               onClick={() =>
+                  props.history.push('/account/reservations/workouts/group')
+               }
             >
                <ListItem button className={classes.nested}>
                   <ListItemText primary="Zajęć grupowych" />
@@ -92,7 +87,11 @@ const ClientList = (props) => {
             <List
                component="div"
                disablePadding
-               onClick={() => console.log('Rezerwacje zajęć indywidualnych')}
+               onClick={() =>
+                  props.history.push(
+                     '/account/reservations/workouts/individual',
+                  )
+               }
             >
                <ListItem button className={classes.nested}>
                   <ListItemText primary="Zajęć indywidualnych" />
@@ -101,16 +100,30 @@ const ClientList = (props) => {
             <List
                component="div"
                disablePadding
-               onClick={() => console.log('Rezerwacje sprzętu')}
+               onClick={() =>
+                  props.history.push('/account/reservations/equipment')
+               }
             >
                <ListItem button className={classes.nested}>
                   <ListItemText primary="Sprzętu" />
                </ListItem>
             </List>
          </Collapse>
-         <CustomListItem buttonName="Wiadomości" CustomIcon={Mail} />
-         <CustomListItem buttonName="Statystyki" CustomIcon={Timeline} />
-         <CustomListItem buttonName="Ustawienia" CustomIcon={Settings} />
+         <CustomListItem
+            buttonName="Wiadomości"
+            CustomIcon={Mail}
+            pushUrl="/account/messages"
+         />
+         <CustomListItem
+            buttonName="Statystyki"
+            CustomIcon={Timeline}
+            pushUrl="/account/stats"
+         />
+         <CustomListItem
+            buttonName="Ustawienia"
+            CustomIcon={Settings}
+            pushUrl="/account/settings"
+         />
       </List>
    );
 };
@@ -119,4 +132,6 @@ const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
 
 const mapDispatchToProps = { toggle: toggleDrawer };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClientList);
+export default withRouter(
+   connect(mapStateToProps, mapDispatchToProps)(ClientList),
+);
