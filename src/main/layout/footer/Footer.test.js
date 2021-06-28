@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
 import { Page } from 'src/main/layout';
+import { AuthContext } from 'src/main/auth';
 import Footer from './Footer';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -63,10 +64,20 @@ describe('Footer component', () => {
 test('on login page once link cliked, it should route to main page', () => {
    const history = createMemoryHistory();
    history.push('/login'); // example url
+   
    render(
-      <Router history={history}>
-         <Page />
-      </Router>,
+      <AuthContext.Provider
+         value={{
+            authState: {
+               token: null,
+               userInfo: { roles: [] },
+            },
+         }}
+      >
+         <Router history={history}>
+            <Page />
+         </Router>
+      </AuthContext.Provider>,
    );
 
    expect(screen.queryByText(/Strona główna/)).not.toBeInTheDocument();
