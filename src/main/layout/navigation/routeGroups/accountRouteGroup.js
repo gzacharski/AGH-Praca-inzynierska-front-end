@@ -1,22 +1,38 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { withAuthFilter } from 'src/main/auth';
-import { AccountPage, MessagesPage, SettingsPage } from 'src/main/pages';
+import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
+import { AccountPage } from 'src/main/pages';
+import {
+   MessagesPage,
+   ReservationsEquipmentPage,
+   ReservationsGroupWorkoutPage,
+   ReservationsIndivudualWorkoutPage,
+   SettingsPage,
+   StatisticsPage,
+} from 'src/main/pages/account';
 
-export const accountRouteGroup = () => [
-   <Route
-      path="/account/messages"
-      key="/account/messages"
-      component={() => withAuthFilter(MessagesPage)}
-   />,
-   <Route
-      path="/account/settings"
-      key="/account/settings"
-      component={() => withAuthFilter(SettingsPage)}
-   />,
-   <Route
-      path="/account"
-      key="/acount"
-      component={() => withAuthFilter(AccountPage)}
-   />,
-];
+const AccountRouteGroup = () => {
+   const { path } = useRouteMatch();
+   return (
+      <Switch>
+         <Route exact path="/account" component={AccountPage} />
+         <Route path={`${path}/messages`} component={MessagesPage} />
+         <Route
+            path={`${path}/reservations/workouts/individual`}
+            component={ReservationsIndivudualWorkoutPage}
+         />
+         <Route
+            path={`${path}/reservations/workouts/group`}
+            component={ReservationsGroupWorkoutPage}
+         />
+         <Route
+            path={`${path}/reservations/equipment`}
+            component={ReservationsEquipmentPage}
+         />
+         <Route path={`${path}/settings`} component={SettingsPage} />
+         <Route path={`${path}/stats`} component={StatisticsPage} />
+         <Redirect to="/account" />
+      </Switch>
+   );
+};
+
+export default AccountRouteGroup;

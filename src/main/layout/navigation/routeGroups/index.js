@@ -1,3 +1,3 @@
-import { accountRouteGroup } from './accountRouteGroup';
+import AccountRouteGroup from './AccountRouteGroup';
 
-export { accountRouteGroup };
+export { AccountRouteGroup };
