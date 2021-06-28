@@ -34,11 +34,11 @@ import {
 const Page = () => {
    const authContext = useContext(AuthContext);
    const { userInfo } = authContext.authState;
-   const hasAdminRole = userInfo.roles.includes(ROLE_ADMIN);
-   const hasEmployeeRole = userInfo.roles.includes(ROLE_EMPLOYEE);
-   const hasManagerRole = userInfo.roles.includes(ROLE_MANAGER);
-   const hasTrainerRole = userInfo.roles.includes(ROLE_TRAINER);
-   const hasUserRole = userInfo.roles.includes(ROLE_USER);
+   const hasAdminRole = userInfo?.roles?.includes(ROLE_ADMIN);
+   const hasEmployeeRole = userInfo?.roles?.includes(ROLE_EMPLOYEE);
+   const hasManagerRole = userInfo?.roles?.includes(ROLE_MANAGER);
+   const hasTrainerRole = userInfo?.roles?.includes(ROLE_TRAINER);
+   const hasUserRole = userInfo?.roles?.includes(ROLE_USER);
 
    return (
       <Switch>
