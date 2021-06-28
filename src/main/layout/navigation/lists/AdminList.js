@@ -55,7 +55,7 @@ const AdminList = (props) => {
          <CustomListItem
             buttonName="Sprzęt"
             CustomIcon={EventSeat}
-            pushUrl="/account/manager/equipment"
+            pushUrl="/account/admin/equipment"
             secondaryText="Rejestr sprzętu w systemie"
          />
          <CustomListItem
