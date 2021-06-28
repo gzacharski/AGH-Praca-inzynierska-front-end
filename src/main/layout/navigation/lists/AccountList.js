@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-const ClientList = (props) => {
+const AccountList = (props) => {
    const classes = useStyles();
    const [open, setOpen] = React.useState(false);
 
@@ -135,5 +135,5 @@ const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
 const mapDispatchToProps = { toggle: toggleDrawer };
 
 export default withRouter(
-   connect(mapStateToProps, mapDispatchToProps)(ClientList),
+   connect(mapStateToProps, mapDispatchToProps)(AccountList),
 );

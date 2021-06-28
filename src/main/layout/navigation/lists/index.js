@@ -1,5 +1,5 @@
 import AdminList from './AdminList';
-import ClientList from './ClientList';
+import AccountList from './AccountList';
 import ManagerList from './ManagerList';
 import PublicList from './PublicList';
 import EmployeeList from './EmployeeList';
@@ -7,7 +7,7 @@ import TrainerList from './TrainerList';
 
 export {
    AdminList,
-   ClientList,
+   AccountList,
    ManagerList,
    PublicList,
    EmployeeList,
