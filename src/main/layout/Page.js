@@ -28,6 +28,7 @@ import {
    AdminRouteGroup,
    EmployeeRouteGroup,
    ManagerRouteGroup,
+   TrainerRouteGroups,
 } from 'src/main/layout/navigation/routeGroups';
 
 const Page = () => {
@@ -52,7 +53,7 @@ const Page = () => {
             <Route path="/account/employee" component={EmployeeRouteGroup} />
          )}
          {hasTrainerRole && (
-            <Route path="/account/trainer" component={AccountRouteGroup} />
+            <Route path="/account/trainer" component={TrainerRouteGroups} />
          )}
          {hasUserRole && (
             <Route path="/account" component={AccountRouteGroup} />
