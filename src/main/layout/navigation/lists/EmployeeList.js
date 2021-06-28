@@ -33,7 +33,7 @@ const ReceptionEmployeeList = (props) => {
          <CustomListItem
             buttonName="Zadania"
             CustomIcon={Assignment}
-            pushUrl="/account/employee/users"
+            pushUrl="/account/employee/tasks"
             secondaryText="Moje zadania do wykonania"
          />
       </List>
