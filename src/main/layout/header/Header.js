@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
@@ -29,24 +29,21 @@ const navLinks = () =>
       />
    ));
 
-const Header = () => {
+const Header = (props) => {
    const classes = useStyles();
    const authContext = useContext(AuthContext);
-   const [open, setOpen] = useState(false);
 
-   const handleDrawerOpen = () => {
-      setOpen(true);
-   };
+   const { menuIsOpen, toggle } = props;
 
    const menuButton = () =>
       authContext.isAuthenticated() && (
          <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => toggle()}
             edge="start"
             className={clsx(classes.menuButton, {
-               [classes.hide]: open,
+               [classes.hide]: menuIsOpen,
             })}
          >
             <Menu />
@@ -67,7 +64,7 @@ const Header = () => {
          position="static"
          className={clsx(classes.root, {
             [classes.appBar]: authContext.isAuthenticated(),
-            [classes.appBarShift]: open,
+            [classes.appBarShift]: menuIsOpen,
          })}
          // eslint-disable-next-line jsx-a11y/aria-role
          role="header"
@@ -85,4 +82,8 @@ const Header = () => {
    );
 };
 
-export default connect(null, { toggleDrawer })(Header);
+const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
+
+const mapDispatchToProps = { toggle: toggleDrawer };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
