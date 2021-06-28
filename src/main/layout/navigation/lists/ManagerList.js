@@ -19,7 +19,7 @@ const ManagerList = (props) => {
          subheader={
             menuIsOpen && (
                <ListSubheader component="div" disableSticky>
-                  Menager
+                  Menadżer
                </ListSubheader>
             )
          }
