@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {
-   AccountPage,
    ClientPage,
    ConfirmRegistration,
    ConfirmResetPasswordPage,
@@ -9,29 +8,20 @@ import {
    EquipmentPage,
    Home,
    LogInPage,
-   MessagesPage,
    PriceListPage,
    ResetPasswordPage,
-   SettingsPage,
    SignUp,
    TimetablePage,
    TrainersPage,
    WorkoutsPage,
 } from 'src/main/pages';
 import { withAuthFilter } from 'src/main/auth';
+import { accountRouteGroup } from 'src/main/layout/navigation/routeGroups';
 
 const Page = () => (
    <Switch>
       <Route path="/" exact component={Home} />
-      <Route
-         path="/account/messages"
-         component={() => withAuthFilter(MessagesPage)}
-      />
-      <Route
-         path="/account/settings"
-         component={() => withAuthFilter(SettingsPage)}
-      />
-      <Route path="/account" component={() => withAuthFilter(AccountPage)} />
+      {accountRouteGroup}
       <Route path="/client" component={() => withAuthFilter(ClientPage)} />
       <Route path="/contact" component={ContactPage} />
       <Route
