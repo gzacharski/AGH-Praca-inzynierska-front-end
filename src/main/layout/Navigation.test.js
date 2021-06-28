@@ -7,7 +7,11 @@ import Navigation from './Navigation';
 describe('Navigation component contains:', () => {
    test('tag nav', () => {
       render(
-         <AuthContext.Provider value={{ authState: { token: 'SampleToken' } }}>
+         <AuthContext.Provider
+            value={{
+               authState: { token: 'SampleToken', userInfo: { roles: [] } },
+            }}
+         >
             <MemoryRouter>
                <Navigation />
             </MemoryRouter>

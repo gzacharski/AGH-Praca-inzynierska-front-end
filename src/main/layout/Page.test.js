@@ -3,6 +3,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
 import { AuthContext } from 'src/main/auth';
+import { ROLE_USER } from 'src/main/data/roles';
 import Page from './Page';
 
 jest.mock('../pages/account/AccountPage', () => ({
@@ -90,7 +91,14 @@ describe('Page', () => {
       ['/workouts', 'Workouts page'],
    ])('with valid path: "%s" should redirect to %p page.', (link, text) => {
       render(
-         <AuthContext.Provider value={{ authState: 'SampleToken' }}>
+         <AuthContext.Provider
+            value={{
+               authState: {
+                  token: 'SampleToken',
+                  userInfo: { roles: [ROLE_USER] },
+               },
+            }}
+         >
             <MemoryRouter initialEntries={[link]}>
                <Page />
             </MemoryRouter>
@@ -117,7 +125,11 @@ describe('Page', () => {
       ['/workout', 'Workouts page'],
    ])('with invalid path: "%s" should redirect to Home page.', (link, text) => {
       render(
-         <AuthContext.Provider value={{ authState: 'SampleToken' }}>
+         <AuthContext.Provider
+            value={{
+               authState: { token: 'SampleToken', userInfo: { roles: [] } },
+            }}
+         >
             <MemoryRouter initialEntries={[link]}>
                <Page />
             </MemoryRouter>
