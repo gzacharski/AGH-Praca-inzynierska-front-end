@@ -16,11 +16,18 @@ import {
    WorkoutsPage,
 } from 'src/main/pages';
 import { withAuthFilter } from 'src/main/auth';
-import { AccountRouteGroup } from 'src/main/layout/navigation/routeGroups';
+import {
+   AccountRouteGroup,
+   AdminRouteGroup,
+} from 'src/main/layout/navigation/routeGroups';
 
 const Page = () => (
    <Switch>
       <Route path="/" exact component={Home} />
+      <Route
+         path="/account/admin"
+         component={() => withAuthFilter(AdminRouteGroup)}
+      />
       <Route
          path="/account"
          component={() => withAuthFilter(AccountRouteGroup)}
