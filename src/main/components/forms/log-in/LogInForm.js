@@ -4,6 +4,7 @@ import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import jwtDecode from 'jwt-decode';
 import { AuthContext } from 'src/main/auth';
 import { authServiceURL } from 'src/main/data/urls';
 import { useStyles } from './LogInForm.styles';
@@ -48,10 +49,20 @@ const LogInForm = (props) => {
                   if (response.headers.token === null)
                      throw new Error('Błąd serwera');
 
+                  const decodedToken = jwtDecode(response.headers.token);
+                  const { sub } = decodedToken;
+                  let { roles } = decodedToken;
+                  if (!roles) roles = [];
+
                   authContext.setAuthState({
                      token: response.headers.token,
                      expiresAt: new Date().getTime() / 1000 + 60 * 60,
-                     userInfo: {},
+                     userInfo: {
+                        userId: sub,
+                        name: null,
+                        surname: null,
+                        roles,
+                     },
                   });
 
                   setSuccess(response.data.success);

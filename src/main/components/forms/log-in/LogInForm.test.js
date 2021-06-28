@@ -8,24 +8,24 @@ import LogInForm from './LogInForm';
 
 jest.mock('axios');
 
-const setSuccess=jest.fn();
-const setCircularProgress=jest.fn();
-const setDisplaySnackBar=jest.fn();
-const setResponseMessage=jest.fn();
-const setError=jest.fn();
-const setRedirection=jest.fn();
+const setSuccess = jest.fn();
+const setCircularProgress = jest.fn();
+const setDisplaySnackBar = jest.fn();
+const setResponseMessage = jest.fn();
+const setError = jest.fn();
+const setRedirection = jest.fn();
 
 beforeEach(() => {
    render(
       <LogInForm
-      setSuccess={setSuccess}
-      setCircularProgress={setCircularProgress}
-      setDisplaySnackBar={setDisplaySnackBar}
-      setResponseMessage={setResponseMessage}
-      setError={setError}
-      setRedirection={setRedirection}
-      data-testid="log-in-form"
-   />
+         setSuccess={setSuccess}
+         setCircularProgress={setCircularProgress}
+         setDisplaySnackBar={setDisplaySnackBar}
+         setResponseMessage={setResponseMessage}
+         setError={setError}
+         setRedirection={setRedirection}
+         data-testid="log-in-form"
+      />,
    );
 });
 
