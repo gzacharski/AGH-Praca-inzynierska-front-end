@@ -8,6 +8,6 @@ describe('SettingsPage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Logi')).toBeInTheDocument();
+      expect(screen.getByText('Konfiguruj')).toBeInTheDocument();
    });
 });
