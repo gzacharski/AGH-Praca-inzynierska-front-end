@@ -43,14 +43,14 @@ const AccountList = (props) => {
       setOpen(!open);
    };
 
-   const { menuIsOpen, toggle } = props;
+   const { menuIsOpen, toggle, user } = props;
    return (
       <List component="div" aria-labelledby="nested-list-subheader">
          <CustomListItem
             buttonName="Moje konto"
             CustomIcon={AccountCircle}
             pushUrl="/account"
-            secondaryText="Krzysztof Nowak"
+            secondaryText={`${user?.name} ${user?.surname}`}
          />
          <Tooltip
             title="Rezerwacje"
@@ -137,7 +137,10 @@ const AccountList = (props) => {
    );
 };
 
-const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
+const mapStateToProps = (store) => ({
+   menuIsOpen: store.stateData.menuIsOpen,
+   user: store.modelData.account.user,
+});
 
 const mapDispatchToProps = { toggle: toggleDrawer };
 

@@ -8,6 +8,7 @@ import {
    MenuItem,
    Divider,
    ClickAwayListener,
+   Tooltip,
 } from '@material-ui/core';
 import { ArrowDropDown, Close } from '@material-ui/icons';
 import { LogoutButton } from 'src/main/components/buttons';
@@ -31,14 +32,20 @@ const DropDownButton = () => {
    return (
       <ClickAwayListener onClickAway={handleClickAway}>
          <div>
-            <Button
-               onClick={handleClick}
-               className={classes.button}
-               variant="text"
-               data-testid="dropDown-button"
+            <Tooltip
+               arrow
+               placement="bottom-end"
+               title={open ? 'Schowaj' : 'Pokaż więcej'}
             >
-               {open ? <Close /> : <ArrowDropDown />}
-            </Button>
+               <Button
+                  onClick={handleClick}
+                  className={classes.button}
+                  variant="text"
+                  data-testid="dropDown-button"
+               >
+                  {open ? <Close /> : <ArrowDropDown />}
+               </Button>
+            </Tooltip>
             <Popper
                open={open}
                anchorEl={anchorEl}

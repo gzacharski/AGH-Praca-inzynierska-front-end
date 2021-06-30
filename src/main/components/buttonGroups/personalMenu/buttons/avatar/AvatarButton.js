@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { AvatarIcon } from 'src/main/components/icons/avatar/AvatarIcon';
 import { useStyles } from './AvatarButton.styles';
@@ -12,17 +12,23 @@ const AvatarButton = (props) => {
    const handleAvatarClick = (history) => history.push('/account');
 
    return (
-      <Button
-         aria-controls="simple-menu"
-         aria-haspopup="true"
-         startIcon={<AvatarIcon avatar={avatar} user={user} />}
-         variant="text"
-         className={classes.button}
-         onClick={() => handleAvatarClick(props.history)}
-         data-testid="avatar-button"
+      <Tooltip
+         arrow
+         title={`${user?.name} ${user?.surname}`}
+         placement="bottom"
       >
-         {user.name}
-      </Button>
+         <Button
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            startIcon={<AvatarIcon avatar={avatar} user={user} />}
+            variant="text"
+            className={classes.button}
+            onClick={() => handleAvatarClick(props.history)}
+            data-testid="avatar-button"
+         >
+            {user?.name}
+         </Button>
+      </Tooltip>
    );
 };
 
