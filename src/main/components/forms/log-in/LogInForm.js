@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -7,6 +8,8 @@ import * as Yup from 'yup';
 import jwtDecode from 'jwt-decode';
 import { AuthContext } from 'src/main/auth';
 import { authServiceURL } from 'src/main/data/urls';
+import { setAvatar, setUserInfo } from 'src/main/store/model/action/creators';
+import { testAvatar } from 'src/main/data/testData/testAvatar';
 import { useStyles } from './LogInForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -26,6 +29,8 @@ const LogInForm = (props) => {
       setResponseMessage,
       setError,
       setRedirection,
+      setAvatarStoreData,
+      setUserInfoStoreData,
    } = props;
 
    const authContext = useContext(AuthContext);
@@ -63,6 +68,16 @@ const LogInForm = (props) => {
                         surname: null,
                         roles,
                      },
+                  });
+
+                  setAvatarStoreData({
+                     data: testAvatar.image.data,
+                     format: testAvatar.image.format,
+                  });
+                  setUserInfoStoreData({
+                     userId: sub,
+                     name: 'Grzegorz',
+                     surname: 'Kowal',
                   });
 
                   setSuccess(response.data.success);
@@ -150,4 +165,9 @@ const LogInForm = (props) => {
    );
 };
 
-export default LogInForm;
+const mapDispatchToProps = {
+   setAvatarStoreData: setAvatar,
+   setUserInfoStoreData: setUserInfo,
+};
+
+export default connect(null, mapDispatchToProps)(LogInForm);

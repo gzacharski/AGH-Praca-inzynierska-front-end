@@ -2,16 +2,17 @@ import React from 'react';
 import { Avatar } from '@material-ui/core';
 import { useStyles } from './AvatarIcon.styles';
 
-export const AvatarIcon = ({ avatar }) => {
+export const AvatarIcon = ({ avatar, user }) => {
    const classes = useStyles();
-   const { name, surname, image } = avatar;
+   const { format, data } = avatar;
+   const { name, surname } = user;
    return (
       <Avatar
-         src={image && `data:${image.format};base64, ${image.data}`}
+         src={format && data && `data:${format};base64, ${data}`}
          className={classes.small}
       >
-         {name[0]}
-         {surname[0]}
+         {name && name[0]}
+         {surname && surname[0]}
       </Avatar>
    );
 };
