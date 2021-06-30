@@ -44,13 +44,14 @@ const AccountList = (props) => {
    };
 
    const { menuIsOpen, toggle, user } = props;
+   const { name, surname } = user;
    return (
       <List component="div" aria-labelledby="nested-list-subheader">
          <CustomListItem
             buttonName="Moje konto"
             CustomIcon={AccountCircle}
             pushUrl="/account"
-            secondaryText={`${user?.name} ${user?.surname}`}
+            secondaryText={name && surname && `${name} ${surname}`}
          />
          <Tooltip
             title="Rezerwacje"

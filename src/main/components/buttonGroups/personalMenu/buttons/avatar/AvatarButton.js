@@ -11,24 +11,25 @@ const AvatarButton = (props) => {
 
    const handleAvatarClick = (history) => history.push('/account');
 
+   const { name, surname } = user;
+
    return (
-      <Tooltip
-         arrow
-         title={`${user?.name} ${user?.surname}`}
-         placement="bottom"
-      >
-         <Button
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-            startIcon={<AvatarIcon avatar={avatar} user={user} />}
-            variant="text"
-            className={classes.button}
-            onClick={() => handleAvatarClick(props.history)}
-            data-testid="avatar-button"
-         >
-            {user?.name}
-         </Button>
-      </Tooltip>
+      name &&
+      surname && (
+         <Tooltip arrow title={`${name} ${surname}`} placement="bottom">
+            <Button
+               aria-controls="simple-menu"
+               aria-haspopup="true"
+               startIcon={<AvatarIcon avatar={avatar} user={user} />}
+               variant="text"
+               className={classes.button}
+               onClick={() => handleAvatarClick(props.history)}
+               data-testid="avatar-button"
+            >
+               {name}
+            </Button>
+         </Tooltip>
+      )
    );
 };
 
