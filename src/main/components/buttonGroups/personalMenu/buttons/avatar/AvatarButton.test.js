@@ -21,7 +21,7 @@ describe('Avatar button', () => {
          <AuthProvider>
             <MemoryRouter>
                <AvatarButton avatar={avatar} />
-               <Route path="/client" render={() => <div>Client Page</div>} />
+               <Route path="/account" render={() => <div>Account Page</div>} />
             </MemoryRouter>
          </AuthProvider>,
       );
@@ -45,8 +45,8 @@ describe('Avatar button', () => {
    });
 
    test('when clicked, it should route to account page', () => {
-      expect(screen.queryByText(/Client Page/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Account Page/)).not.toBeInTheDocument();
       act(() => userEvent.click(screen.getByRole('button')));
-      expect(screen.queryByText(/Client Page/)).toBeInTheDocument();
+      expect(screen.queryByText(/Account Page/)).toBeInTheDocument();
    });
 });

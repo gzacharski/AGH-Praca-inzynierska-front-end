@@ -1,5 +1,4 @@
 import AccountPage from './account/AccountPage';
-import ClientPage from './client/Client';
 import ConfirmRegistration from './confirmRegistration/ConfirmRegistrationPage';
 import ConfirmResetPasswordPage from './confirmResetPassword/ConfirmResetPasswordPage';
 import ContactPage from './contact/Contact';
@@ -17,7 +16,6 @@ import WorkoutsPage from './workouts/WorkoutsPage';
 
 export {
    AccountPage,
-   ClientPage,
    ConfirmRegistration,
    ConfirmResetPasswordPage,
    ContactPage,

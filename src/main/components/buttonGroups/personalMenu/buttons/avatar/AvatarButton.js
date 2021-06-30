@@ -8,7 +8,7 @@ const AvatarButton = (props) => {
    const classes = useStyles();
    const { avatar } = props;
 
-   const handleAvatarClick = (history) => history.push('/client');
+   const handleAvatarClick = (history) => history.push('/account');
 
    return (
       <Button
