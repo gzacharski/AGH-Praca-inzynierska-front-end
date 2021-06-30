@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { useStyles } from "./Help.styles";
+import { useStyles } from "./HelpPage.styles";
 
 export default function Contact() {
   const classes = useStyles();

@@ -3,5 +3,9 @@ import { Help } from '@material-ui/icons';
 import AbstractMenuItem from './abstractMenuItem/AbstractMenuItem';
 
 export const HelpMenuItem = () => (
-   <AbstractMenuItem itemName="Pomoc" CustomIcon={Help} pushUrl="/help" />
+   <AbstractMenuItem
+      itemName="Pomoc"
+      CustomIcon={Help}
+      pushUrl="/account/help"
+   />
 );

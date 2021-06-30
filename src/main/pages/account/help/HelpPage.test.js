@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
-import Help from './Help';
+import Help from './HelpPage';
 
 describe('Help component', () => {
    beforeEach(() => {
