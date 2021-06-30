@@ -55,8 +55,10 @@ const Page = () => {
          {hasTrainerRole && (
             <Route path="/account/trainer" component={TrainerRouteGroups} />
          )}
-         {hasUserRole && (
+         {hasUserRole ? (
             <Route path="/account" component={AccountRouteGroup} />
+         ) : (
+            <Route path="/account" component={() => <Redirect to="/login" />} />
          )}
          <Route path="/client" component={() => withAuthFilter(ClientPage)} />
          <Route path="/contact" component={ContactPage} />
