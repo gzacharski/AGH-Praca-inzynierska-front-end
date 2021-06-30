@@ -30,14 +30,8 @@ describe('Message button', () => {
          expect(screen.getByText(/Pomoc/)).toBeInTheDocument();
       });
 
-      test('should have "Ustawienia prywatności" item', () => {
-         expect(screen.getByText(/Ustawienia prywatności/)).toBeInTheDocument();
-      });
-
-      test('should have "Ustawienia wyświetlania" item', () => {
-         expect(
-            screen.getByText(/Ustawienia wyświetlania/),
-         ).toBeInTheDocument();
+      test('should have "Ustawienia" item', () => {
+         expect(screen.getByText(/Ustawienia/)).toBeInTheDocument();
       });
 
       test('should have "Wyloguj się" item', () => {

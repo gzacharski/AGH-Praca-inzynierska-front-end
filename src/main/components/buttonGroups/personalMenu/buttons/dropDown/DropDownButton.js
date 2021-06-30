@@ -4,14 +4,11 @@ import {
    Button,
    Fade,
    Popper,
-   MenuList,
-   MenuItem,
-   Divider,
    ClickAwayListener,
    Tooltip,
 } from '@material-ui/core';
 import { ArrowDropDown, Close } from '@material-ui/icons';
-import { LogoutButton } from 'src/main/components/buttons';
+import { LogoutList } from 'src/main/components/menuList';
 import { useStyles } from './DropDownButton.styles';
 
 const DropDownButton = () => {
@@ -62,18 +59,8 @@ const DropDownButton = () => {
             >
                {({ TransitionProps }) => (
                   // eslint-disable-next-line react/jsx-props-no-spreading
-                  <Fade {...TransitionProps} timeout={350}>
-                     <div className={classes.paper}>
-                        <MenuList>
-                           <MenuItem>Moje konto</MenuItem>
-                           <Divider />
-                           <MenuItem>Pomoc</MenuItem>
-                           <MenuItem>Ustawienia prywatności</MenuItem>
-                           <MenuItem>Ustawienia wyświetlania</MenuItem>
-                           <Divider />
-                           <LogoutButton />
-                        </MenuList>
-                     </div>
+                  <Fade {...TransitionProps}>
+                     <LogoutList />
                   </Fade>
                )}
             </Popper>
