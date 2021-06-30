@@ -71,8 +71,8 @@ const LogInForm = (props) => {
                   });
 
                   setAvatarStoreData({
-                     data: testAvatar.image.data,
-                     format: testAvatar.image.format,
+                     data: testAvatar.data,
+                     format: testAvatar.format,
                   });
                   setUserInfoStoreData({
                      userId: sub,
