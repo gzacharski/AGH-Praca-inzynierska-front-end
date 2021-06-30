@@ -1,10 +1,13 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { render, screen, act } from 'src/testUtils';
 import { AuthProvider } from 'src/main/auth';
-import { avatar } from './testAvatar';
+import configureStore from 'redux-mock-store';
 import AvatarButton from './AvatarButton';
+
+const mockStore = configureStore([]);
 
 const mockHistoryPush = jest.fn();
 
@@ -17,13 +20,34 @@ jest.mock('react-router-dom', () => ({
 
 describe('Avatar button', () => {
    beforeEach(() => {
+      const store = mockStore({
+         modelData: {
+            account: {
+               user: {
+                  id: 'testId',
+                  name: 'TestName',
+                  surname: 'TestSurname',
+               },
+               avatar: {
+                  data: 'TestImageData',
+                  format: 'TestImageFormat',
+               },
+            },
+         },
+      });
+
       render(
-         <AuthProvider>
-            <MemoryRouter>
-               <AvatarButton avatar={avatar} />
-               <Route path="/account" render={() => <div>Account Page</div>} />
-            </MemoryRouter>
-         </AuthProvider>,
+         <Provider store={store}>
+            <AuthProvider>
+               <MemoryRouter>
+                  <AvatarButton />
+                  <Route
+                     path="/account"
+                     render={() => <div>Account Page</div>}
+                  />
+               </MemoryRouter>
+            </AuthProvider>
+         </Provider>,
       );
    });
 
@@ -32,15 +56,13 @@ describe('Avatar button', () => {
    });
 
    test('should have proper text content', () => {
-      expect(screen.getByRole('button')).toHaveTextContent(
-         'Krzysztof',
-      );
+      expect(screen.getByRole('button')).toHaveTextContent('TestName');
    });
 
    test('should have image avatar', () => {
       expect(screen.getByRole('img')).toBeInTheDocument();
       expect(screen.getByRole('img').getAttribute('src')).toContain(
-         avatar.image.data,
+         'TestImageData',
       );
    });
 
