@@ -3,6 +3,7 @@ import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
 import { AccountPage } from 'src/main/pages';
 import {
    MessagesPage,
+   NotificationsPage,
    ReservationsEquipmentPage,
    ReservationsGroupWorkoutPage,
    ReservationsIndivudualWorkoutPage,
@@ -16,6 +17,7 @@ const AccountRouteGroup = () => {
       <Switch>
          <Route exact path="/account" component={AccountPage} />
          <Route path={`${path}/messages`} component={MessagesPage} />
+         <Route path={`${path}/notifications`} component={NotificationsPage} />
          <Route
             path={`${path}/reservations/workouts/individual`}
             component={ReservationsIndivudualWorkoutPage}

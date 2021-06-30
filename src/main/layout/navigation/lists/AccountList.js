@@ -16,6 +16,7 @@ import {
    Settings,
    ExpandLess,
    ExpandMore,
+   NotificationsNone,
 } from '@material-ui/icons';
 import ListIcon from '@material-ui/icons/List';
 import { withRouter } from 'react-router-dom';
@@ -49,6 +50,7 @@ const AccountList = (props) => {
             buttonName="Moje konto"
             CustomIcon={AccountCircle}
             pushUrl="/account"
+            secondaryText="Krzysztof Nowak"
          />
          <Tooltip
             title="Rezerwacje"
@@ -113,6 +115,11 @@ const AccountList = (props) => {
             buttonName="Wiadomości"
             CustomIcon={Mail}
             pushUrl="/account/messages"
+         />
+         <CustomListItem
+            buttonName="Powiadomienia"
+            CustomIcon={NotificationsNone}
+            pushUrl="/account/notifications"
          />
          <CustomListItem
             buttonName="Statystyki"
