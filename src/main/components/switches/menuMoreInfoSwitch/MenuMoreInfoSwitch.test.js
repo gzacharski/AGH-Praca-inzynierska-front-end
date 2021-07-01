@@ -11,12 +11,9 @@ describe('MenuMoreInfoSwitch', () => {
    describe('should NOT render when menu is closed', () => {
       beforeEach(() => {
          const store = mockStore({
-            modelData: {
-               users: [],
-            },
-            stateData: {
-               menuIsOpen: false,
-               menuMoreInfo: false,
+            drawer: {
+               isOpen: false,
+               moreInfo: false,
             },
          });
 
@@ -35,12 +32,9 @@ describe('MenuMoreInfoSwitch', () => {
    describe('should render when menu is open', () => {
       beforeEach(() => {
          const store = mockStore({
-            modelData: {
-               users: [],
-            },
-            stateData: {
-               menuIsOpen: true,
-               menuMoreInfo: false,
+            drawer: {
+               isOpen: true,
+               moreInfo: false,
             },
          });
 
@@ -67,16 +61,15 @@ describe('MenuMoreInfoSwitch', () => {
       });
 
       test('should have proper text tooltip is on', async () => {
-          // TODO fix test
-        //  userEvent.click(screen.getByRole('checkbox'), { shipHover: true });
-        //  userEvent.hover(screen.getByRole('checkbox'));
-
-        //  await waitFor(() => {
-        //     expect(screen.getByRole('checkbox').checked).toBeTruthy();
-        //     // expect(
-        //     //    screen.getByText('Pokaż mniej informacji w menu'),
-        //     // ).toBeInTheDocument();
-        //  });
+         // TODO fix test
+         //  userEvent.click(screen.getByRole('checkbox'), { shipHover: true });
+         //  userEvent.hover(screen.getByRole('checkbox'));
+         //  await waitFor(() => {
+         //     expect(screen.getByRole('checkbox').checked).toBeTruthy();
+         //     // expect(
+         //     //    screen.getByText('Pokaż mniej informacji w menu'),
+         //     // ).toBeInTheDocument();
+         //  });
       });
    });
 });

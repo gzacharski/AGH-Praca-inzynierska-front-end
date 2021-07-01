@@ -21,17 +21,15 @@ jest.mock('react-router-dom', () => ({
 describe('Avatar button', () => {
    beforeEach(() => {
       const store = mockStore({
-         modelData: {
-            account: {
-               user: {
-                  id: 'testId',
-                  name: 'TestName',
-                  surname: 'TestSurname',
-               },
-               avatar: {
-                  data: 'TestImageData',
-                  format: 'TestImageFormat',
-               },
+         account: {
+            userInfo: {
+               id: 'testId',
+               name: 'TestName',
+               surname: 'TestSurname',
+            },
+            avatar: {
+               data: 'TestImageData',
+               format: 'TestImageFormat',
             },
          },
       });
