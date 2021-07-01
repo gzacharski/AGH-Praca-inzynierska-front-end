@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import clsx from 'clsx';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
+import { selectDrawer } from 'src/main/store/selectors';
+import { toggleDrawer } from 'src/main/store/reducers';
 import { NavLink, LoginButton } from 'src/main/components/buttons';
 import { PersonalMenu } from 'src/main/components/buttonGroups';
-import { toggleDrawer } from 'src/main/store/state/action/creators';
 import { AuthContext } from 'src/main/auth';
 import { useStyles } from './Header.styles';
 
@@ -29,18 +30,18 @@ const navLinks = () =>
       />
    ));
 
-const Header = (props) => {
+const Header = () => {
    const classes = useStyles();
    const authContext = useContext(AuthContext);
-
-   const { menuIsOpen, toggle } = props;
+   const dispatch = useDispatch();
+   const menuIsOpen = useSelector(selectDrawer);
 
    const menuButton = () =>
       authContext.isAuthenticated() && (
          <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={() => toggle()}
+            onClick={() => dispatch(toggleDrawer())}
             edge="start"
             className={clsx(classes.menuButton, {
                [classes.hide]: menuIsOpen,
@@ -82,8 +83,4 @@ const Header = (props) => {
    );
 };
 
-const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
-
-const mapDispatchToProps = { toggle: toggleDrawer };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;
