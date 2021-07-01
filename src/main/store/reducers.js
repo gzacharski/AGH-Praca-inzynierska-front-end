@@ -1,3 +1,10 @@
-import { toggleDrawer } from 'src/main/store/sliceReducers/drawerSlice';
+import {
+   toggleDrawer,
+   toggleDrawerMoreInfo,
+} from 'src/main/store/sliceReducers/drawerSlice';
+import {
+   setAvatar,
+   setUserInfo,
+} from 'src/main/store/sliceReducers/accountSlice';
 
-export { toggleDrawer };
+export { toggleDrawer, toggleDrawerMoreInfo, setAvatar, setUserInfo };
