@@ -5,18 +5,15 @@ import {
    ListItemText,
    Tooltip,
 } from '@material-ui/core';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { selectDrawer, selectDrawerMoreInfo } from 'src/main/store/selectors';
 import { withRouter } from 'react-router-dom';
 
 const CustomListItem = (props) => {
-   const {
-      buttonName,
-      CustomIcon,
-      menuIsOpen,
-      pushUrl,
-      menuMoreInfo,
-      secondaryText,
-   } = props;
+   const menuIsOpen = useSelector(selectDrawer);
+   const menuMoreInfo = useSelector(selectDrawerMoreInfo);
+
+   const { buttonName, CustomIcon, pushUrl, secondaryText } = props;
    const handleClick = (history) => {
       if (pushUrl) history.push(pushUrl);
    };
@@ -45,9 +42,4 @@ const CustomListItem = (props) => {
    );
 };
 
-const mapStateToProps = (store) => ({
-   menuIsOpen: store.stateData.menuIsOpen,
-   menuMoreInfo: store.stateData.menuMoreInfo,
-});
-
-export default withRouter(connect(mapStateToProps, null)(CustomListItem));
+export default withRouter(CustomListItem);

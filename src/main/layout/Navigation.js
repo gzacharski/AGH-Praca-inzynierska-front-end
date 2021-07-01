@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import clsx from 'clsx';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Drawer, Divider, IconButton } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import { selectDrawer, selectDrawerMoreInfo } from 'src/main/store/selectors';
+import { toggleDrawer } from 'src/main/store/reducers';
 import {
    AuthContext,
    withAdminRole,
@@ -21,7 +23,6 @@ import {
    TrainerList,
 } from 'src/main/layout/navigation/lists';
 import { MenuMoreInfoSwitch } from 'src/main/components/switches';
-import { toggleDrawer } from 'src/main/store/state/action/creators';
 import { useStyles } from './Navigation.styles';
 
 const AdminListAuth = () =>
@@ -72,9 +73,13 @@ const ManagerListAuth = () =>
       </>
    ));
 
-const Navigation = (props) => {
+export default function Navigation() {
    const authContext = useContext(AuthContext);
    const { token } = authContext.authState;
+   const dispatch = useDispatch();
+   const menuIsOpen = useSelector(selectDrawer);
+   const menuMoreInfo = useSelector(selectDrawerMoreInfo);
+
    if (token === null) return null;
 
    const filteredUrls = [
@@ -85,8 +90,6 @@ const Navigation = (props) => {
    ];
 
    const classes = useStyles();
-
-   const { menuIsOpen, toggle, menuMoreInfo } = props;
 
    return (
       <FilterRenderer urls={filteredUrls}>
@@ -109,7 +112,7 @@ const Navigation = (props) => {
             >
                <div className={classes.toolbar}>
                   <MenuMoreInfoSwitch />
-                  <IconButton onClick={() => toggle()}>
+                  <IconButton onClick={() => dispatch(toggleDrawer())}>
                      {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
                   </IconButton>
                </div>
@@ -123,15 +126,4 @@ const Navigation = (props) => {
          </nav>
       </FilterRenderer>
    );
-};
-
-const mapStateToProps = (store) => ({
-   menuIsOpen: store.stateData.menuIsOpen,
-   menuMoreInfo: store.stateData.menuMoreInfo,
-});
-
-const mapDispatchToProps = {
-   toggle: toggleDrawer,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+}
