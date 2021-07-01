@@ -8,7 +8,6 @@ import {
    ROLE_USER,
 } from 'src/main/data/roles';
 import {
-   ClientPage,
    ConfirmRegistration,
    ConfirmResetPasswordPage,
    ContactPage,
@@ -22,7 +21,7 @@ import {
    TrainersPage,
    WorkoutsPage,
 } from 'src/main/pages';
-import { withAuthFilter, AuthContext } from 'src/main/auth';
+import { AuthContext } from 'src/main/auth';
 import {
    AccountRouteGroup,
    AdminRouteGroup,
@@ -55,10 +54,11 @@ const Page = () => {
          {hasTrainerRole && (
             <Route path="/account/trainer" component={TrainerRouteGroups} />
          )}
-         {hasUserRole && (
+         {hasUserRole ? (
             <Route path="/account" component={AccountRouteGroup} />
+         ) : (
+            <Route path="/account" component={() => <Redirect to="/login" />} />
          )}
-         <Route path="/client" component={() => withAuthFilter(ClientPage)} />
          <Route path="/contact" component={ContactPage} />
          <Route
             path="/confirmRegistration"

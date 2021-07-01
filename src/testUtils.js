@@ -1,24 +1,22 @@
 import React from 'react';
-import { render as RTLrender } from "@testing-library/react";
-import { createStore, combineReducers } from 'redux';
+import { render as RTLrender } from '@testing-library/react';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import stateReducer from './main/store/state/reducer';
-import modelReducer from './main/store/model/reducer';
+import { reducer } from 'src/main/store/store';
 
 const render = (
-    ui,
-    {
-        initialStore,
-        store = createStore(combineReducers({
-            modelData: modelReducer,
-            stateData: stateReducer,
-        })),
-        ...renderOptions
-    } = {}
+   ui,
+   {
+      preloadedState,
+      store = configureStore({ reducer, preloadedState }),
+      ...renderOptions
+   } = {},
 ) => {
-    const Wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
-    return RTLrender(ui, { wrapper: Wrapper, ...renderOptions });
-}
+   const Wrapper = ({ children }) => (
+      <Provider store={store}>{children}</Provider>
+   );
+   return RTLrender(ui, { wrapper: Wrapper, ...renderOptions });
+};
 
 export * from '@testing-library/react';
-export { render }
+export { render };

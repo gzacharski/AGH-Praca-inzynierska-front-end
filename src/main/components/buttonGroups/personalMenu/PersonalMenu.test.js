@@ -15,10 +15,6 @@ describe('Personal menu', () => {
       );
    });
 
-   test('should contains avatar button', () => {
-      expect(screen.getByTestId('avatar-button')).toBeInTheDocument();
-   });
-
    test('should contains message button', () => {
       expect(screen.getByTestId('message-button')).toBeInTheDocument();
    });

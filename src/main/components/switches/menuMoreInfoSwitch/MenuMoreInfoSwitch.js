@@ -1,11 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Switch, Tooltip } from '@material-ui/core';
-import { toggleMenuMoreInfo } from 'src/main/store/state/action/creators';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectDrawer, selectDrawerMoreInfo } from 'src/main/store/selectors';
+import { toggleDrawerMoreInfo } from 'src/main/store/reducers';
 import { useStyles } from './MenuMoreInfoSwitch.styles';
 
-const MenuMoreInfoSwitch = (props) => {
-   const { toggleMoreInfo, menuIsOpen, menuMoreInfo } = props;
+export default function MenuMoreInfoSwitch() {
+   const dispatch = useDispatch();
+   const menuIsOpen = useSelector(selectDrawer);
+   const menuMoreInfo = useSelector(selectDrawerMoreInfo);
    const classes = useStyles();
 
    const tooltipText = menuMoreInfo
@@ -18,20 +21,9 @@ const MenuMoreInfoSwitch = (props) => {
             <Switch
                checked={menuMoreInfo}
                className={classes.root}
-               onClick={() => toggleMoreInfo()}
+               onClick={() => dispatch(toggleDrawerMoreInfo())}
             />
          </Tooltip>
       )
    );
-};
-
-const mapStateToProps = (store) => ({
-   menuIsOpen: store.stateData.menuIsOpen,
-   menuMoreInfo: store.stateData.menuMoreInfo,
-});
-
-const mapDispatchToProps = {
-   toggleMoreInfo: toggleMenuMoreInfo,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MenuMoreInfoSwitch);
+}

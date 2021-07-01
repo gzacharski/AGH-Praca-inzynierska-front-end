@@ -2,7 +2,9 @@ import React from 'react';
 import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
 import { AccountPage } from 'src/main/pages';
 import {
+   HelpPage,
    MessagesPage,
+   NotificationsPage,
    ReservationsEquipmentPage,
    ReservationsGroupWorkoutPage,
    ReservationsIndivudualWorkoutPage,
@@ -16,6 +18,7 @@ const AccountRouteGroup = () => {
       <Switch>
          <Route exact path="/account" component={AccountPage} />
          <Route path={`${path}/messages`} component={MessagesPage} />
+         <Route path={`${path}/notifications`} component={NotificationsPage} />
          <Route
             path={`${path}/reservations/workouts/individual`}
             component={ReservationsIndivudualWorkoutPage}
@@ -30,6 +33,7 @@ const AccountRouteGroup = () => {
          />
          <Route path={`${path}/settings`} component={SettingsPage} />
          <Route path={`${path}/stats`} component={StatisticsPage} />
+         <Route path={`${path}/help`} component={HelpPage} />
          <Redirect to="/account" />
       </Switch>
    );

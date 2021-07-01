@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
    Collapse,
    List,
    ListItem,
    ListItemIcon,
-   // ListSubheader,
    ListItemText,
    makeStyles,
    Tooltip,
@@ -16,12 +15,14 @@ import {
    Settings,
    ExpandLess,
    ExpandMore,
+   NotificationsNone,
 } from '@material-ui/icons';
 import ListIcon from '@material-ui/icons/List';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
-import { toggleDrawer } from 'src/main/store/state/action/creators';
+import { selectDrawer, selectAccountUserInfo } from 'src/main/store/selectors';
+import { toggleDrawer } from 'src/main/store/reducers';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -36,19 +37,24 @@ const useStyles = makeStyles((theme) => ({
 
 const AccountList = (props) => {
    const classes = useStyles();
-   const [open, setOpen] = React.useState(false);
+   const [open, setOpen] = useState(false);
 
    const handleClick = () => {
       setOpen(!open);
    };
 
-   const { menuIsOpen, toggle } = props;
+   const dispatch = useDispatch();
+   const menuIsOpen = useSelector(selectDrawer);
+   const user = useSelector(selectAccountUserInfo);
+
+   const { name, surname } = user;
    return (
       <List component="div" aria-labelledby="nested-list-subheader">
          <CustomListItem
             buttonName="Moje konto"
             CustomIcon={AccountCircle}
             pushUrl="/account"
+            secondaryText={name && surname && `${name} ${surname}`}
          />
          <Tooltip
             title="Rezerwacje"
@@ -62,7 +68,7 @@ const AccountList = (props) => {
                button
                onClick={() => {
                   handleClick();
-                  if (!menuIsOpen) toggle();
+                  if (!menuIsOpen) dispatch(toggleDrawer());
                }}
             >
                <ListItemIcon>
@@ -115,6 +121,11 @@ const AccountList = (props) => {
             pushUrl="/account/messages"
          />
          <CustomListItem
+            buttonName="Powiadomienia"
+            CustomIcon={NotificationsNone}
+            pushUrl="/account/notifications"
+         />
+         <CustomListItem
             buttonName="Statystyki"
             CustomIcon={Timeline}
             pushUrl="/account/stats"
@@ -130,10 +141,4 @@ const AccountList = (props) => {
    );
 };
 
-const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
-
-const mapDispatchToProps = { toggle: toggleDrawer };
-
-export default withRouter(
-   connect(mapStateToProps, mapDispatchToProps)(AccountList),
-);
+export default withRouter(AccountList);

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -7,6 +8,8 @@ import * as Yup from 'yup';
 import jwtDecode from 'jwt-decode';
 import { AuthContext } from 'src/main/auth';
 import { authServiceURL } from 'src/main/data/urls';
+import { setAvatar, setUserInfo } from 'src/main/store/reducers';
+import { testAvatar } from 'src/main/data/testData/testAvatar';
 import { useStyles } from './LogInForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -18,7 +21,8 @@ const validationSchema = Yup.object({
    password: Yup.string().required('Hasło jest wymagane'),
 });
 
-const LogInForm = (props) => {
+export default function LogInForm(props) {
+   const dispatch = useDispatch();
    const {
       setSuccess,
       setCircularProgress,
@@ -64,6 +68,21 @@ const LogInForm = (props) => {
                         roles,
                      },
                   });
+
+                  dispatch(
+                     setAvatar({
+                        data: testAvatar.data,
+                        format: testAvatar.format,
+                     }),
+                  );
+
+                  dispatch(
+                     setUserInfo({
+                        userId: sub,
+                        name: 'Grzegorz',
+                        surname: 'Kowal',
+                     }),
+                  );
 
                   setSuccess(response.data.success);
                   setError(false);
@@ -148,6 +167,4 @@ const LogInForm = (props) => {
          </Button>
       </form>
    );
-};
-
-export default LogInForm;
+}

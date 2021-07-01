@@ -11,11 +11,12 @@ import {
    EventSeat,
 } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { selectDrawer } from 'src/main/store/selectors';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 
-const AdminList = (props) => {
-   const { menuIsOpen } = props;
+const AdminList = () => {
+   const menuIsOpen = useSelector(selectDrawer);
    return (
       <List
          component="div"
@@ -80,6 +81,4 @@ const AdminList = (props) => {
    );
 };
 
-const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
-
-export default withRouter(connect(mapStateToProps, null)(AdminList));
+export default withRouter(AdminList);

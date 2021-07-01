@@ -13,12 +13,7 @@ describe('Home component', () => {
 
    beforeEach(() => {
       store = mockStore({
-         modelData: {
-            users: [],
-         },
-         stateData: {
-            menuIsOpen: false,
-         },
+         users: [],
       });
 
       component = renderer.create(
@@ -47,12 +42,7 @@ describe('Home component rendered in DOM', () => {
    beforeEach(() => {
       container = document.createElement('div');
       store = mockStore({
-         modelData: {
-            users: [],
-         },
-         stateData: {
-            menuIsOpen: false,
-         },
+         users: [],
       });
    });
 

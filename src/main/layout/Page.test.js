@@ -18,10 +18,6 @@ jest.mock('../pages/account/settings/SettingsPage', () => ({
    __esModule: true,
    default: () => <div>Settings page</div>,
 }));
-jest.mock('../pages/client/Client', () => ({
-   __esModule: true,
-   default: () => <div>Client page</div>,
-}));
 jest.mock('../pages/confirmRegistration/ConfirmRegistrationPage', () => ({
    __esModule: true,
    default: () => <div>Confirm registration page</div>,
@@ -77,7 +73,6 @@ describe('Page', () => {
       ['/account/messages', 'Message page'],
       ['/account/settings', 'Settings page'],
       ['/account', 'Account page'],
-      ['/client', 'Client page'],
       ['/contact', 'Contact page'],
       ['/confirmRegistration?token=sampleToken', 'Confirm registration page'],
       ['/confirmNewPassword?token=sampleToken', 'Confirm reset password page'],
@@ -111,7 +106,6 @@ describe('Page', () => {
       ['/accunt/messagess', 'Message page'],
       ['/acount/settingss', 'Settings page'],
       ['/acount', 'Account page'],
-      ['/client1', 'Client page'],
       ['/contac', 'Contact page'],
       ['/confirmregistration?token=sampleToken', 'Confirm registration page'],
       ['/confirmnewPassword?token=sampleToken', 'Confirm reset password page'],

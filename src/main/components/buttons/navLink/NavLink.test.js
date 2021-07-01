@@ -14,7 +14,7 @@ describe('Link', () => {
                render={() => (
                   <NavLink
                      name="Test link"
-                     link="/client"
+                     link="/account"
                      testId="test-btn-id"
                   />
                )}
@@ -25,7 +25,7 @@ describe('Link', () => {
    });
 
    test.each([
-      ['/client', 'Client Page'],
+      ['/account', 'Account Page'],
       ['/admin', 'Admin Page'],
       ['/manager', 'Manager Page'],
    ])('should route to %s page onClick', (path, textOnPage) => {
@@ -41,7 +41,7 @@ describe('Link', () => {
                   />
                )}
             />
-            <Route path="/client" render={() => <div>Client Page</div>} />
+            <Route path="/account" render={() => <div>Account Page</div>} />
             <Route path="/admin" render={() => <div>Admin Page</div>} />
             <Route path="/manager" render={() => <div>Manager Page</div>} />
          </MemoryRouter>,

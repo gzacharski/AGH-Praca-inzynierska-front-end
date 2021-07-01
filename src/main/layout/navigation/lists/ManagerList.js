@@ -7,11 +7,12 @@ import {
    EventSeat,
    SupervisorAccount,
 } from '@material-ui/icons';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { selectDrawer } from 'src/main/store/selectors';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 
-const ManagerList = (props) => {
-   const { menuIsOpen } = props;
+export default function ManagerList() {
+   const menuIsOpen = useSelector(selectDrawer);
    return (
       <List
          component="div"
@@ -56,8 +57,4 @@ const ManagerList = (props) => {
          />
       </List>
    );
-};
-
-const mapStateToProps = (store) => ({ menuIsOpen: store.stateData.menuIsOpen });
-
-export default connect(mapStateToProps, null)(ManagerList);
+}

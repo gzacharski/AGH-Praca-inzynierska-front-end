@@ -7,7 +7,6 @@ import {
    NotificationButton,
 } from 'src/main/components/buttonGroups/personalMenu/buttons';
 import { AuthContext } from 'src/main/auth';
-import { avatar } from './buttons/avatar/testAvatar';
 
 const PersonalMenu = () => {
    const context = useContext(AuthContext);
@@ -15,7 +14,7 @@ const PersonalMenu = () => {
    return (
       context.isAuthenticated() && (
          <ButtonGroup data-testid="personal-menu">
-            <AvatarButton avatar={avatar} />
+            <AvatarButton />
             <MessageButton />
             <NotificationButton />
             <DropDownButton />

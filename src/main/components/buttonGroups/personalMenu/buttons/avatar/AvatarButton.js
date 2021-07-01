@@ -1,27 +1,40 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {
+   selectAccountAvatar,
+   selectAccountUserInfo,
+} from 'src/main/store/selectors';
 import { AvatarIcon } from 'src/main/components/icons/avatar/AvatarIcon';
 import { useStyles } from './AvatarButton.styles';
 
 const AvatarButton = (props) => {
    const classes = useStyles();
-   const { avatar } = props;
+   const avatar = useSelector(selectAccountAvatar);
+   const user = useSelector(selectAccountUserInfo);
 
-   const handleAvatarClick = (history) => history.push('/client');
+   const handleAvatarClick = (history) => history.push('/account');
+
+   const { name, surname } = user;
 
    return (
-      <Button
-         aria-controls="simple-menu"
-         aria-haspopup="true"
-         startIcon={<AvatarIcon avatar={avatar} />}
-         variant="text"
-         className={classes.button}
-         onClick={() => handleAvatarClick(props.history)}
-         data-testid="avatar-button" 
-      >
-         {avatar.name}
-      </Button>
+      name &&
+      surname && (
+         <Tooltip arrow title={`${name} ${surname}`} placement="bottom">
+            <Button
+               aria-controls="simple-menu"
+               aria-haspopup="true"
+               startIcon={<AvatarIcon avatar={avatar} user={user} />}
+               variant="text"
+               className={classes.button}
+               onClick={() => handleAvatarClick(props.history)}
+               data-testid="avatar-button"
+            >
+               {name}
+            </Button>
+         </Tooltip>
+      )
    );
 };
 
