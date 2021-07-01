@@ -6,5 +6,6 @@ import {
    setAvatar,
    setUserInfo,
 } from 'src/main/store/sliceReducers/accountSlice';
+import { addUser } from 'src/main/store/sliceReducers/usersSlice';
 
-export { toggleDrawer, toggleDrawerMoreInfo, setAvatar, setUserInfo };
+export { addUser, toggleDrawer, toggleDrawerMoreInfo, setAvatar, setUserInfo };
