@@ -74,13 +74,13 @@ const ManagerListAuth = () =>
    ));
 
 export default function Navigation() {
-   const authContext = useContext(AuthContext);
-   const { token } = authContext.authState;
    const dispatch = useDispatch();
    const menuIsOpen = useSelector(selectDrawer);
    const menuMoreInfo = useSelector(selectDrawerMoreInfo);
+   const authContext = useContext(AuthContext);
+   const classes = useStyles();
 
-   if (token === null) return null;
+   const { token } = authContext.authState;
 
    const filteredUrls = [
       '/login',
@@ -89,7 +89,7 @@ export default function Navigation() {
       '/confirmNewPassword',
    ];
 
-   const classes = useStyles();
+   if (token === null) return null;
 
    return (
       <FilterRenderer urls={filteredUrls}>
