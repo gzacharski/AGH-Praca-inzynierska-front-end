@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import jwtDecode from 'jwt-decode';
 import { AuthContext } from 'src/main/auth';
 import { authServiceURL } from 'src/main/data/urls';
-import { setAvatar, setUserInfo } from 'src/main/store/model/action/creators';
+import { setAvatar, setUserInfo } from 'src/main/store/reducers';
 import { testAvatar } from 'src/main/data/testData/testAvatar';
 import { useStyles } from './LogInForm.styles';
 
@@ -21,7 +21,8 @@ const validationSchema = Yup.object({
    password: Yup.string().required('Hasło jest wymagane'),
 });
 
-const LogInForm = (props) => {
+export default function LogInForm(props) {
+   const dispatch = useDispatch();
    const {
       setSuccess,
       setCircularProgress,
@@ -29,8 +30,6 @@ const LogInForm = (props) => {
       setResponseMessage,
       setError,
       setRedirection,
-      setAvatarStoreData,
-      setUserInfoStoreData,
    } = props;
 
    const authContext = useContext(AuthContext);
@@ -70,15 +69,20 @@ const LogInForm = (props) => {
                      },
                   });
 
-                  setAvatarStoreData({
-                     data: testAvatar.data,
-                     format: testAvatar.format,
-                  });
-                  setUserInfoStoreData({
-                     userId: sub,
-                     name: 'Grzegorz',
-                     surname: 'Kowal',
-                  });
+                  dispatch(
+                     setAvatar({
+                        data: testAvatar.data,
+                        format: testAvatar.format,
+                     }),
+                  );
+
+                  dispatch(
+                     setUserInfo({
+                        userId: sub,
+                        name: 'Grzegorz',
+                        surname: 'Kowal',
+                     }),
+                  );
 
                   setSuccess(response.data.success);
                   setError(false);
@@ -163,11 +167,4 @@ const LogInForm = (props) => {
          </Button>
       </form>
    );
-};
-
-const mapDispatchToProps = {
-   setAvatarStoreData: setAvatar,
-   setUserInfoStoreData: setUserInfo,
-};
-
-export default connect(null, mapDispatchToProps)(LogInForm);
+}
