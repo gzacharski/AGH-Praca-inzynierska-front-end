@@ -1,12 +1,12 @@
 import {
    selectDrawer,
    selectDrawerMoreInfo,
-} from 'src/main/store/sliceReducers/drawerSlice';
+} from 'src/main/store/sliceFiles/drawerSlice';
 import {
    selectAccountAvatar,
    selectAccountUserInfo,
-} from 'src/main/store/sliceReducers/accountSlice';
-import { selectUsersFromUser } from 'src/main/store/sliceReducers/usersSlice';
+} from 'src/main/store/sliceFiles/accountSlice';
+import { selectUsersFromUser } from 'src/main/store/sliceFiles/usersSlice';
 
 export {
    selectDrawer,
