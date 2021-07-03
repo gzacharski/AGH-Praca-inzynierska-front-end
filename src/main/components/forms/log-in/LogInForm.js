@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import jwtDecode from 'jwt-decode';
 import { AuthContext } from 'src/main/auth';
 import { authServiceURL } from 'src/main/data/urls';
-import { setAvatar, setUserInfo } from 'src/main/store/reducers';
+import { setAvatar, setUserInfo } from 'src/main/store/actionsCreators';
 import { testAvatar } from 'src/main/data/testData/testAvatar';
 import { useStyles } from './LogInForm.styles';
 

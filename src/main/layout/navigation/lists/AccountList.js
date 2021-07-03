@@ -22,7 +22,7 @@ import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 import { selectDrawer, selectAccountUserInfo } from 'src/main/store/selectors';
-import { toggleDrawer } from 'src/main/store/reducers';
+import { toggleDrawer } from 'src/main/store/actionsCreators';
 
 const useStyles = makeStyles((theme) => ({
    root: {

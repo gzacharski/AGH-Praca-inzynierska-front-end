@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Drawer, Divider, IconButton } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { selectDrawer, selectDrawerMoreInfo } from 'src/main/store/selectors';
-import { toggleDrawer } from 'src/main/store/reducers';
+import { toggleDrawer } from 'src/main/store/actionsCreators';
 import {
    AuthContext,
    withAdminRole,
