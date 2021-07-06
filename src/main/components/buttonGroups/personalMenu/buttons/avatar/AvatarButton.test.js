@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -18,6 +19,8 @@ jest.mock('react-router-dom', () => ({
    }),
 }));
 
+jest.mock('axios');
+
 describe('Avatar button', () => {
    beforeEach(() => {
       const store = mockStore({
@@ -27,12 +30,20 @@ describe('Avatar button', () => {
                name: 'TestName',
                surname: 'TestSurname',
             },
-            avatar: {
+            status: 'idle',
+            error: null,
+         },
+         avatar: {
+            image: {
                data: 'TestImageData',
                format: 'TestImageFormat',
             },
+            status: 'idle',
+            error: null,
          },
       });
+
+      axios.get.mockImplementationOnce(() => Promise.resolve({ data: {} }));
 
       render(
          <Provider store={store}>

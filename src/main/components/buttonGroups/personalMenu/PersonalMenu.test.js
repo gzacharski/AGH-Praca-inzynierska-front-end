@@ -16,6 +16,7 @@ describe('Personal menu', () => {
    });
 
    test('should contains message button', () => {
+      screen.debug()
       expect(screen.getByTestId('message-button')).toBeInTheDocument();
    });
 
