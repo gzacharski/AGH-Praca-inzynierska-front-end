@@ -1,18 +1,35 @@
 import React from 'react';
 import { Avatar } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+import { useSelector } from 'react-redux';
+import { selectStatus as selectAvatarStatus } from 'src/main/store/sliceFiles/avatarSlice';
+import { STATUS } from 'src/main/store/status';
 import { useStyles } from './AvatarIcon.styles';
 
 export const AvatarIcon = ({ avatar, user }) => {
    const classes = useStyles();
-   const { format, data } = avatar;
-   const { name, surname } = user;
+   const status = useSelector(selectAvatarStatus);
+
+   if (user === null || status === STATUS.IDLE || status === STATUS.LOADING) {
+      return (
+         <Skeleton variant="circle">
+            <Avatar className={classes.small} />
+         </Skeleton>
+      );
+   }
+
    return (
       <Avatar
-         src={format && data && `data:${format};base64, ${data}`}
+         alt={user && `${user?.name} ${user?.surname}`}
+         src={
+            avatar?.format &&
+            avatar?.data &&
+            `data:${avatar.format};base64, ${avatar.data}`
+         }
          className={classes.small}
       >
-         {name && name[0]}
-         {surname && surname[0]}
+         {user?.name[0]}
+         {user?.surname[0]}
       </Avatar>
    );
 };

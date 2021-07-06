@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { authServiceURL } from 'src/main/data/urls';
 import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }) => {
-   const history = useHistory();
    const token = localStorage.getItem('token');
    const useInfo = localStorage.getItem('userInfo');
    const expiresAt = localStorage.getItem('expiresAt');
@@ -37,15 +35,8 @@ export const AuthProvider = ({ children }) => {
          .then(() => {})
          .catch(() => {});
 
-      localStorage.removeItem('token');
-      localStorage.removeItem('userInfo');
-      localStorage.removeItem('expiresAt');
-      setAuthState({
-         token: null,
-         expiresAt: null,
-         userInfo: {},
-      });
-      history.push('/login');
+      localStorage.clear();
+      window.location.reload();
    };
 
    return (
