@@ -10,4 +10,10 @@ export const useStyles = makeStyles({
       },
       borderRadius: '25px',
    },
+   skeleton: {
+      margin: '3px',
+      minWidth: '30px',
+      minHeight: '30px',
+      borderRadius: '10px'
+   },
 });
