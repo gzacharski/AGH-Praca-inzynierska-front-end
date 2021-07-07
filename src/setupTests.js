@@ -9,3 +9,10 @@ import { server } from 'src/mocks/server';
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
+
+const localStorageMock = {
+   getItem: jest.fn(),
+   setItem: jest.fn(),
+   clear: jest.fn(),
+};
+global.localStorage = localStorageMock;
