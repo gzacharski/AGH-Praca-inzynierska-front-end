@@ -10,4 +10,7 @@ export const useStyles = makeStyles({
       },
       borderRadius: '25px',
    },
+   skeleton:{
+      minWidth: '150px',
+   }
 });

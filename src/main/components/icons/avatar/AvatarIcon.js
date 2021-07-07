@@ -33,20 +33,25 @@ export const AvatarIcon = () => {
       );
    }
 
+   const name = user?.name;
+   const surname = user?.surname;
+   const shouldRender = Boolean(name) && Boolean(surname);
+
+   const format = avatar?.format;
+   const data = avatar?.data;
+   const shouldRenderData = Boolean(format) && Boolean(data);
+
    return (
-      accountStatus === STATUS.SUCCEEDED && (
+      accountStatus === STATUS.SUCCEEDED &&
+      shouldRender && (
          <Avatar
-            alt={user && `${user?.name} ${user?.surname}`}
-            src={
-               avatar?.format &&
-               avatar?.data &&
-               `data:${avatar.format};base64, ${avatar.data}`
-            }
+            alt={`${name} ${surname}`}
+            src={shouldRenderData && `data:${format};base64, ${data}`}
             className={classes.small}
             data-testid="avatar"
          >
-            {user?.name && user.name[0]}
-            {user?.surname && user.surname[0]}
+            {name[0]}
+            {surname[0]}
          </Avatar>
       )
    );

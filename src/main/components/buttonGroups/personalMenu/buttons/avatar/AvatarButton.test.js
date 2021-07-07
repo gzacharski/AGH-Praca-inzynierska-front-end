@@ -1,83 +1,136 @@
 import React from 'react';
-import axios from 'axios';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { render, screen, act } from 'src/testUtils';
-import { AuthProvider } from 'src/main/auth';
 import configureStore from 'redux-mock-store';
+import { MemoryRouter, Route } from 'react-router-dom';
+import { render, screen, act, waitFor } from 'src/testUtils';
+import { testUser, testAvatar } from 'src/main/data/testData';
+import { STATUS } from 'src/main/store/status';
 import AvatarButton from './AvatarButton';
 
 const mockStore = configureStore([]);
 
-const mockHistoryPush = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-   ...jest.requireActual('react-router-dom'),
-   useHistory: () => ({
-      push: mockHistoryPush,
-   }),
-}));
-
-jest.mock('axios');
+const rendenAvatarButton = (store) =>
+   render(
+      <Provider store={store}>
+         <MemoryRouter>
+            <AvatarButton />
+            <Route path="/account" render={() => <div>Account Page</div>} />
+         </MemoryRouter>
+      </Provider>,
+   );
 
 describe('Avatar button', () => {
-   beforeEach(() => {
-      const store = mockStore({
-         account: {
-            userInfo: {
-               id: 'testId',
-               name: 'TestName',
-               surname: 'TestSurname',
+   describe('should render button', () => {
+      beforeEach(() => {
+         const store = mockStore({
+            account: {
+               status: STATUS.SUCCEEDED,
+               userInfo: testUser,
             },
-            status: 'idle',
-            error: null,
-         },
-         avatar: {
-            image: {
-               data: 'TestImageData',
-               format: 'TestImageFormat',
+            avatar: {
+               status: STATUS.SUCCEEDED,
+               image: testAvatar,
             },
-            status: 'idle',
-            error: null,
-         },
+         });
+         rendenAvatarButton(store);
+         jest.useFakeTimers();
       });
 
-      axios.get.mockImplementationOnce(() => Promise.resolve({ data: {} }));
+      test('should have button', () => {
+         expect(screen.getByRole('button')).toBeInTheDocument();
+      });
 
-      render(
-         <Provider store={store}>
-            <AuthProvider>
-               <MemoryRouter>
-                  <AvatarButton />
-                  <Route
-                     path="/account"
-                     render={() => <div>Account Page</div>}
-                  />
-               </MemoryRouter>
-            </AuthProvider>
-         </Provider>,
-      );
+      test('should have proper text content', () => {
+         expect(screen.getByRole('button')).toHaveTextContent('Krzysztof');
+      });
+
+      test('should have image avatar', () => {
+         expect(screen.getByRole('img')).toBeInTheDocument();
+         expect(screen.getByRole('img').getAttribute('src')).toContain(
+            testAvatar.data,
+         );
+         expect(screen.getByRole('img').getAttribute('src')).toContain(
+            testAvatar.format,
+         );
+      });
+
+      test('when clicked, it should route to account page', () => {
+         expect(screen.queryByText(/Account Page/)).not.toBeInTheDocument();
+         act(() => userEvent.click(screen.getByRole('button')));
+         expect(screen.queryByText(/Account Page/)).toBeInTheDocument();
+      });
+
+      test('when user hover above button it should render user name and surname', () => {
+         const { name, surname } = testUser;
+         const tooltip = `${name} ${surname}`;
+
+         expect(screen.queryByText(tooltip)).not.toBeInTheDocument();
+         act(() => {
+            userEvent.hover(screen.getByRole('button'));
+            jest.runAllTimers();
+         });
+         expect(screen.getByText(tooltip)).toBeInTheDocument();
+      });
    });
 
-   test('should have button', () => {
-      expect(screen.getByRole('button')).toBeInTheDocument();
+   describe('should render skeleton', () => {
+      test('while rendering app for the first time', () => {
+         const store = mockStore({
+            account: {
+               status: STATUS.IDLE,
+            },
+            avatar: {
+               status: STATUS.IDLE,
+            },
+         });
+         rendenAvatarButton(store);
+         expect(
+            screen.getByTestId('avatar-button-skeleton'),
+         ).toBeInTheDocument();
+         expect(
+            screen.getByTestId('avatar-button-skeleton-text'),
+         ).toBeInTheDocument();
+      });
+
+      test('while fetching data', () => {
+         const store = mockStore({
+            account: {
+               status: STATUS.LOADING,
+            },
+            avatar: {
+               status: STATUS.LOADING,
+            },
+         });
+         rendenAvatarButton(store);
+         expect(
+            screen.getByTestId('avatar-button-skeleton'),
+         ).toBeInTheDocument();
+         expect(
+            screen.getByTestId('avatar-button-skeleton-text'),
+         ).toBeInTheDocument();
+      });
    });
 
-   test('should have proper text content', () => {
-      expect(screen.getByRole('button')).toHaveTextContent('TestName');
-   });
+   describe('should not render at all', () => {
+      test('while fetching data an errors occurs', () => {
+         const store = mockStore({
+            account: {
+               status: STATUS.FAILED,
+            },
+         });
+         rendenAvatarButton(store);
+         expect(screen.queryByTestId('avatar-button')).not.toBeInTheDocument();
+      });
 
-   test('should have image avatar', () => {
-      expect(screen.getByRole('img')).toBeInTheDocument();
-      expect(screen.getByRole('img').getAttribute('src')).toContain(
-         'TestImageData',
-      );
-   });
-
-   test('when clicked, it should route to account page', () => {
-      expect(screen.queryByText(/Account Page/)).not.toBeInTheDocument();
-      act(() => userEvent.click(screen.getByRole('button')));
-      expect(screen.queryByText(/Account Page/)).toBeInTheDocument();
+      test('while fetching invalid or no data', () => {
+         const store = mockStore({
+            account: {
+               status: STATUS.SUCCEEDED,
+            },
+         });
+         rendenAvatarButton(store);
+         expect(screen.queryByTestId('avatar-button')).not.toBeInTheDocument();
+      });
    });
 });
