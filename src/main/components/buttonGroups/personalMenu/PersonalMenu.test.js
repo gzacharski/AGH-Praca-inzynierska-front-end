@@ -2,29 +2,63 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
 import { AuthContext } from 'src/main/auth';
+
 import PersonalMenu from './PersonalMenu';
 
 describe('Personal menu', () => {
-   beforeEach(() => {
-      render(
-         <AuthContext.Provider value={{ isAuthenticated: () => true }}>
-            <MemoryRouter>
-               <PersonalMenu />
-            </MemoryRouter>
-         </AuthContext.Provider>,
-      );
+   describe('should be authenticated', () => {
+      beforeEach(() => {
+         global.localStorage.setItem('token', 'testToken');
+         global.localStorage.setItem(
+            'userInfo',
+            JSON.stringify({ userId: 'testId' }),
+         );
+
+         render(
+            <AuthContext.Provider value={{ isAuthenticated: () => true }}>
+               <MemoryRouter>
+                  <PersonalMenu />
+               </MemoryRouter>
+            </AuthContext.Provider>,
+         );
+      });
+
+      test('should contains avatar-button', async () => {
+         expect(await screen.findByTestId('avatar-button')).toBeInTheDocument();
+      });
+
+      test('should contains message button', async () => {
+         expect(
+            await screen.findByTestId('message-button'),
+         ).toBeInTheDocument();
+      });
+
+      test('should contains notification button', async () => {
+         expect(
+            await screen.findByTestId('notification-button'),
+         ).toBeInTheDocument();
+      });
+
+      test('should contains dropDown button', async () => {
+         expect(
+            await screen.findByTestId('dropDown-button'),
+         ).toBeInTheDocument();
+      });
    });
 
-   test('should contains message button', () => {
-      screen.debug()
-      expect(screen.getByTestId('message-button')).toBeInTheDocument();
-   });
+   describe('should not be authenticated', () => {
+      beforeEach(() => {
+         render(
+            <AuthContext.Provider value={{ isAuthenticated: () => false }}>
+               <MemoryRouter>
+                  <PersonalMenu />
+               </MemoryRouter>
+            </AuthContext.Provider>,
+         );
+      });
 
-   test('should contains notification button', () => {
-      expect(screen.getByTestId('notification-button')).toBeInTheDocument();
-   });
-
-   test('should contains dropDown button', () => {
-      expect(screen.getByTestId('dropDown-button')).toBeInTheDocument();
+      test('should not render', () => {
+         expect(screen.queryByTestId('personal-menu')).not.toBeInTheDocument();
+      });
    });
 });
