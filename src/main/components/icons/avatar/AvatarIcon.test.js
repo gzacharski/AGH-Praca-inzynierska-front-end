@@ -2,19 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { screen, render } from 'src/testUtils';
-import { testAvatar } from 'src/main/data/testData/testAvatar';
+import { testAvatar, testUser } from 'src/main/data/testData';
 import { STATUS } from 'src/main/store/status';
 import { AvatarIcon } from './AvatarIcon';
 
 const mockStore = configureStore([]);
-
-const testUser = {
-   id: 'eba1df78-b210-4cd4-b4c6-a247c71e35cd',
-   name: 'Krzysztof',
-   surname: 'Nowalski',
-   email: null,
-   phone: null,
-};
 
 const renderAvatarIcon = (store) =>
    render(
