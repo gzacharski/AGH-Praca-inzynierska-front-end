@@ -16,6 +16,7 @@ const loadAuthData = () => {
 const initialState = {
    userInfo: { id: null, name: null, surname: null, email: null, phone: null },
    status: STATUS.IDLE,
+   message: null,
    error: null,
 };
 
@@ -37,7 +38,10 @@ export const fetchUserInfo = createAsyncThunk(
          const response = await axios.get(url, config);
          return response.data;
       } catch (error) {
-         return rejectWithValue(error.response.data);
+         return rejectWithValue({
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
       }
    },
 );
@@ -56,7 +60,7 @@ export const setUserInfo = createAsyncThunk(
 
       const url = `${accountServiceURL}/changeUserData/${userId}`;
 
-      const data = {
+      const requestData = {
          name,
          surname,
          email,
@@ -64,10 +68,23 @@ export const setUserInfo = createAsyncThunk(
       };
 
       try {
-         const response = await axios.patch(url, data, config);
-         return response.data;
+         const response = await axios.patch(url, requestData, config);
+         const { data } = response;
+         return {
+            userInfo: {
+               id: data?.id,
+               name: data?.name,
+               surname: data?.surname,
+               phone: data?.phone,
+               email: data?.email,
+            },
+            message: data?.message,
+         };
       } catch (error) {
-         return rejectWithValue(error.response.data);
+         return rejectWithValue({
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
       }
    },
 );
@@ -75,7 +92,11 @@ export const setUserInfo = createAsyncThunk(
 export const accountSlice = createSlice({
    name: 'account',
    initialState,
-   reducers: {},
+   reducers: {
+      clearMessage(state, actions) {
+         state.message = null;
+      },
+   },
    extraReducers: {
       [fetchUserInfo.pending]: (state, action) => {
          state.status = STATUS.LOADING;
@@ -87,24 +108,30 @@ export const accountSlice = createSlice({
       },
       [fetchUserInfo.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
-         state.error = action.payload;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
       },
       [setUserInfo.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
       [setUserInfo.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.userInfo = action.payload;
+         state.userInfo = action.payload.userInfo;
+         state.message = action.payload.message;
          state.error = null;
       },
       [setUserInfo.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
-         state.error = action.payload;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
       },
    },
 });
 
+export default accountSlice.reducer;
+
+export const { clearMessage } = accountSlice.actions;
+
 export const selectUserInfo = (state) => state.account.userInfo;
 export const selectStatus = (state) => state.account.status;
-
-export default accountSlice.reducer;
+export const selectMessage = (state) => state.account.message;
