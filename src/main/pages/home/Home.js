@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import { selectUsersFromUser } from 'src/main/store/selectors';
-import { addUser } from 'src/main/store/reducers';
+import { addUser } from 'src/main/store/actionsCreators';
 import { useStyles } from './Home.styles';
 
 export default function Home() {

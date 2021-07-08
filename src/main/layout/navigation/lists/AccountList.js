@@ -21,8 +21,8 @@ import ListIcon from '@material-ui/icons/List';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
-import { selectDrawer, selectAccountUserInfo } from 'src/main/store/selectors';
-import { toggleDrawer } from 'src/main/store/reducers';
+import { selectDrawer, selectUserInfo } from 'src/main/store/selectors';
+import { toggleDrawer } from 'src/main/store/actionsCreators';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -45,7 +45,7 @@ const AccountList = (props) => {
 
    const dispatch = useDispatch();
    const menuIsOpen = useSelector(selectDrawer);
-   const user = useSelector(selectAccountUserInfo);
+   const user = useSelector(selectUserInfo);
 
    const { name, surname } = user;
    return (
