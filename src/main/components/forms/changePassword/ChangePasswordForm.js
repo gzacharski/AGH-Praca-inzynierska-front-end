@@ -12,7 +12,8 @@ import {
    Typography,
 } from '@material-ui/core';
 import { Edit, Save } from '@material-ui/icons';
-import { authServiceURL } from 'src/main/data/urls';
+import { useSnackbar } from 'notistack';
+import { accountServiceURL } from 'src/main/data/urls';
 import { useStyles } from './ChangePasswordForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -28,16 +29,9 @@ const validationSchema = Yup.object({
       .required('Powtórzenie hasła jest wymagane'),
 });
 
-export const ChangePasswordForm = (props) => {
+export const ChangePasswordForm = () => {
    const [editable, toggleEditable] = useState(true);
-   const {
-      setSuccess,
-      setDisplayBackdrop,
-      setDisplaySnackBar,
-      setResponseMessage,
-      setError,
-      setRedirection,
-   } = props;
+   const { enqueueSnackbar } = useSnackbar();
 
    const classes = useStyles();
    const formik = useFormik({
@@ -48,56 +42,63 @@ export const ChangePasswordForm = (props) => {
       },
       validationSchema,
       onSubmit: (values) => {
-         setDisplayBackdrop(true);
-
          const requestData = {
-            name: values.name,
-            surname: values.surname,
-            email: values.email,
-            phone: values.phone,
-            password: values.password1,
-            matchingPassword: values.password2,
+            oldPassword: values.password,
+            newPassword: values.password1,
+            matchingNewPassword: values.password2,
          };
 
-         axios
-            .post(`${authServiceURL}/users`, requestData, {
-               validateStatus: (status) =>
-                  (status >= 200 && status < 300) || status === 409,
-            })
-            .then((response) => {
-               if (!response.data.success) {
-                  const { errors } = response.data;
-                  if (errors?.name) formik.setErrors({ name: errors.name });
-                  if (errors?.surname)
-                     formik.setErrors({ surname: errors.surname });
-                  if (errors?.email) formik.setErrors({ email: errors.email });
-                  if (errors?.phoneNumber)
-                     formik.setErrors({ phone: errors.phoneNumber });
-                  if (errors?.password)
-                     formik.setErrors({ password1: errors.password });
-                  if (errors?.matchingPassword)
-                     formik.setErrors({ password2: errors.matchingPassword });
-               }
+         const token = localStorage.getItem('token');
+         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+         const { userId } = userInfo;
 
-               setSuccess(response.data.success);
-               setError(false);
-               setResponseMessage(response.data.message);
-               if (response.status >= 200 && response.status < 300) {
-                  setTimeout(() => {
-                     setRedirection(true);
-                  }, 3000);
+         const config = {
+            headers: {
+               'Accept-Language': 'pl',
+               Authorization: token,
+            },
+         };
+
+         console.log(requestData);
+         axios
+            .put(
+               `${accountServiceURL}/changePassword/${userId}`,
+               requestData,
+               config,
+            )
+            .then((response) => {
+               formik.setValues(
+                  { password: '', password1: '', password2: '' },
+                  false,
+               );
+               toggleEditable();
+               if (response?.data?.message) {
+                  const { message } = response.data;
+                  enqueueSnackbar(message, {
+                     variant: 'success',
+                     anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                     },
+                  });
                }
             })
             .catch((error) => {
-               setSuccess(false);
-               setError(true);
-               setResponseMessage(error.response?.data?.message);
-            })
-            .finally(() => {
-               formik.values.password1 = '';
-               formik.values.password2 = '';
-               setDisplayBackdrop(false);
-               setDisplaySnackBar(true);
+               if (error?.response?.data) {
+                  const { errors } = error.response.data;
+                  if (errors) {
+                     formik.setErrors({
+                        password: errors?.oldPassword,
+                        password1: errors?.newPassword,
+                        password2: errors?.matchingNewPassword,
+                     });
+                  }
+               }
+               if (error?.response?.status === 400) {
+                  formik.setErrors({
+                     password: error.response.data.message,
+                  });
+               }
             });
       },
    });
@@ -120,12 +121,26 @@ export const ChangePasswordForm = (props) => {
                </Typography>
                <div className={classes.headerButtons}>
                   <Tooltip title="Edytuj" placement="bottom" arrow>
-                     <IconButton onClick={() => toggleEditable(!editable)}>
+                     <IconButton
+                        className={classes.icon}
+                        onClick={() => {
+                           toggleEditable(!editable);
+                           formik.setErrors({
+                              password1: false,
+                              password2: false,
+                              password: false,
+                           });
+                        }}
+                     >
                         <Edit fontSize="large" />
                      </IconButton>
                   </Tooltip>
                   <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
-                     <IconButton type="submit" disabled={editable}>
+                     <IconButton
+                        type="submit"
+                        disabled={editable}
+                        className={classes.icon}
+                     >
                         <Save fontSize="large" />
                      </IconButton>
                   </Tooltip>
@@ -138,8 +153,8 @@ export const ChangePasswordForm = (props) => {
                      required
                      fullWidth
                      disabled={editable}
-                     id="password1"
-                     name="password1"
+                     id="password"
+                     name="password"
                      type="password"
                      label="Stare hasło"
                      onChange={formik.handleChange}

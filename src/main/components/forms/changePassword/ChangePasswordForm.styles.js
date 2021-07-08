@@ -37,7 +37,10 @@ const useStyles = makeStyles((theme) => ({
    title: {
       display: 'block',
       flexDirection: 'column',
-      justifyContent: 'center'
+      justifyContent: 'center',
+   },
+   icon: {
+      color: '#1e88e5',
    },
 }));
 

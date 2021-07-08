@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
-import { ChangeAvatarForm } from './ChangeAvatarForm';
+import { ChangePasswordForm } from './ChangePasswordForm';
 
 describe('Change Avatar Form', () => {
    beforeEach(() => {
-      render(<ChangeAvatarForm />);
+      render(<ChangePasswordForm />);
    });
 
    test('should have proper title', () => {
-      expect(screen.getByText(/Zdjęcie profilowe/)).toBeInTheDocument();
+      expect(screen.getByText(/Zmień hasło/)).toBeInTheDocument();
    });
 });
