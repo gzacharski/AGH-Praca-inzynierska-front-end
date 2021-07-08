@@ -19,7 +19,10 @@ import { useStyles } from './ChangePasswordForm.styles';
 const isNotEmpty = (text) => text && text.length !== 0;
 
 const validationSchema = Yup.object({
-   password: Yup.string().required('Stare hasło jest wymagane'),
+   password: Yup.string()
+      .min(8, 'Hasło musi zawierać conajmniej 8 znaków.')
+      .max(24, 'Hasło musi zawierać maksymalnie 24 znaki.')
+      .required('Stare hasło jest wymagane'),
    password1: Yup.string()
       .min(8, 'Hasło musi zawierać conajmniej 8 znaków.')
       .max(24, 'Hasło musi zawierać maksymalnie 24 znaki.')
