@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { useSelector } from 'react-redux';
+import clsx from 'clsx';
 import {
    selectStatus as selectAvatarStatus,
    selectAvatar,
@@ -13,7 +14,7 @@ import {
 import { STATUS } from 'src/main/store/status';
 import { useStyles } from './AvatarIcon.styles';
 
-export const AvatarIcon = () => {
+export const AvatarIcon = ({ huge, variant }) => {
    const classes = useStyles();
    const avatarStatus = useSelector(selectAvatarStatus);
    const accountStatus = useSelector(selectAccountStatus);
@@ -26,9 +27,23 @@ export const AvatarIcon = () => {
       avatarStatus === STATUS.IDLE ||
       avatarStatus === STATUS.LOADING
    ) {
+      const variant2 = variant || 'circle';
       return (
-         <Skeleton variant="circle" data-testid="avatar-skeleton">
-            <Avatar className={classes.small} />
+         <Skeleton
+            variant={variant2}
+            data-testid="avatar-skeleton"
+            className={clsx({
+               [classes.small]: !huge,
+               [classes.huge]: huge,
+            })}
+         >
+            <Avatar
+               className={clsx({
+                  [classes.small]: !huge,
+                  [classes.huge]: huge,
+               })}
+               variant={variant}
+            />
          </Skeleton>
       );
    }
@@ -42,13 +57,16 @@ export const AvatarIcon = () => {
    const shouldRenderData = Boolean(format) && Boolean(data);
 
    return (
-      accountStatus === STATUS.SUCCEEDED &&
       shouldRender && (
          <Avatar
             alt={`${name} ${surname}`}
             src={shouldRenderData && `data:${format};base64, ${data}`}
-            className={classes.small}
+            className={clsx({
+               [classes.small]: !huge,
+               [classes.huge]: huge,
+            })}
             data-testid="avatar"
+            variant={variant}
          >
             {name[0]}
             {surname[0]}

@@ -114,21 +114,7 @@ describe('Avatar button', () => {
 
    describe('should not render at all', () => {
       test('while fetching data an errors occurs', () => {
-         const store = mockStore({
-            account: {
-               status: STATUS.FAILED,
-            },
-         });
-         rendenAvatarButton(store);
-         expect(screen.queryByTestId('avatar-button')).not.toBeInTheDocument();
-      });
-
-      test('while fetching invalid or no data', () => {
-         const store = mockStore({
-            account: {
-               status: STATUS.SUCCEEDED,
-            },
-         });
+         const store = mockStore({ account: {} });
          rendenAvatarButton(store);
          expect(screen.queryByTestId('avatar-button')).not.toBeInTheDocument();
       });

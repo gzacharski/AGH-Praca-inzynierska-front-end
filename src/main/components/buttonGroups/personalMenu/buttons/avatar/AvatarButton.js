@@ -37,7 +37,6 @@ const AvatarButton = (props) => {
    const shouldRender = Boolean(name) && Boolean(surname);
 
    return (
-      accountStatus === STATUS.SUCCEEDED &&
       shouldRender && (
          <Tooltip arrow title={`${name} ${surname}`} placement="bottom">
             <Button
