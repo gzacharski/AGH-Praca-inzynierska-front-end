@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -63,46 +64,43 @@ export const ChangeUserInfoForm = () => {
       },
       validationSchema,
       onSubmit: (values) => {
-         const data = {
-            name: values.name,
-            surname: values.surname,
-            email: values.email,
-            phone: values.phone,
-         };
+         const { name, surname, email, phone } = values;
 
-         console.log(data);
-         dispatch(setUserInfo(data));
-
-         // axios
-         //    .post(`${authServiceURL}/users`, requestData, {
-         //       validateStatus: (status) =>
-         //          (status >= 200 && status < 300) || status === 409,
-         //    })
-         //    .then((response) => {
-         //       if (!response.data.success) {
-         //          const { errors } = response.data;
-         //          if (errors?.name) formik.setErrors({ name: errors.name });
-         //          if (errors?.surname)
-         //             formik.setErrors({ surname: errors.surname });
-         //          if (errors?.email) formik.setErrors({ email: errors.email });
-         //          if (errors?.phoneNumber)
-         //             formik.setErrors({ phone: errors.phoneNumber });
-         //          if (errors?.password)
-         //             formik.setErrors({ password1: errors.password });
-         //          if (errors?.matchingPassword)
-         //             formik.setErrors({ password2: errors.matchingPassword });
-         //       }
-         //       if (response.status >= 200 && response.status < 300) {
-         //          setTimeout(() => {}, 3000);
-         //       }
-         //    })
-         //    .catch((error) => {})
-         //    .finally(() => {
-         //       formik.values.password1 = '';
-         //       formik.values.password2 = '';
-         //    });
+         dispatch(setUserInfo({ name, surname, email, phone }))
+            .unwrap()
+            .catch((error) => {
+               const { status } = error;
+               if (status === 409) {
+                  formik.setErrors({ email: error.message });
+               } else if (status === 404) {
+                  const { errors } = error;
+                  if (errors?.name) formik.setErrors({ name: errors.name });
+                  if (errors?.surname)
+                     formik.setErrors({ surname: errors.surname });
+                  if (errors?.email) formik.setErrors({ email: errors.email });
+                  if (errors?.phoneNumber)
+                     formik.setErrors({ phone: errors.phoneNumber });
+               }
+            });
       },
    });
+
+   if (formik.values.name === null) {
+      formik.values.name = userInfo.name;
+   }
+
+   if (formik.values.surname === null) {
+      formik.values.surname = userInfo.surname;
+   }
+
+   if (formik.values.email === null) {
+      formik.values.email = userInfo.email;
+   }
+
+   if (formik.values.phone === null) {
+      formik.values.phone = userInfo.phone;
+   }
+
    return (
       <Paper className={classes.paper}>
          <form
@@ -117,16 +115,23 @@ export const ChangeUserInfoForm = () => {
                   color="primary"
                   className={classes.title}
                >
-                  Modyfikuj dane osobowe
+                  Dane osobowe
                </Typography>
                <div className={classes.headerButtons}>
                   <Tooltip title="Edytuj" placement="bottom" arrow>
-                     <IconButton onClick={() => toggleEditable(!editable)}>
+                     <IconButton
+                        onClick={() => toggleEditable(!editable)}
+                        className={classes.icon}
+                     >
                         <Edit fontSize="large" />
                      </IconButton>
                   </Tooltip>
                   <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
-                     <IconButton type="submit" disabled={editable}>
+                     <IconButton
+                        type="submit"
+                        disabled={editable}
+                        className={classes.icon}
+                     >
                         <Save fontSize="large" />
                      </IconButton>
                   </Tooltip>
