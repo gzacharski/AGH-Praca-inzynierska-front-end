@@ -10,14 +10,19 @@ import {
 } from '@material-ui/core';
 import { PhotoCamera, CloudUpload, Delete } from '@material-ui/icons';
 import { Skeleton as MuiSkeleton } from '@material-ui/lab';
+import { useSnackbar } from 'notistack';
 import { Skeleton } from 'src/main/components/utils';
 import {
    setAvatar,
    selectAvatar,
+   selectMessage,
+   clearMessage,
    removeAvatar,
+   selectStatus,
 } from 'src/main/store/sliceFiles/avatarSlice';
 import { selectUserInfo } from 'src/main/store/sliceFiles/accountSlice';
 import { AvatarIcon } from 'src/main/components/icons';
+import { STATUS } from 'src/main/store/status';
 import { useStyles } from './ChangeAvatarForm.styles';
 
 const UserInfo = ({ render, name, surname, phone, email }) => {
@@ -112,8 +117,11 @@ const Avatar = () => (
 export const ChangeAvatarForm = () => {
    const dispatch = useDispatch();
    const [file, setFile] = useState(null);
+   const { enqueueSnackbar } = useSnackbar();
    const user = useSelector(selectUserInfo);
    const avatar = useSelector(selectAvatar);
+   const message = useSelector(selectMessage);
+   const status = useSelector(selectStatus);
    const classes = useStyles();
 
    const handleFormSubmit = (event) => {
@@ -129,6 +137,18 @@ export const ChangeAvatarForm = () => {
 
    const shouldRender =
       Boolean(name) && Boolean(surname) && Boolean(email) && Boolean(phone);
+
+   if (message) {
+      const variant = status === STATUS.SUCCEEDED ? 'success' : 'error';
+      enqueueSnackbar(message, {
+         variant,
+         anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'right',
+         },
+      });
+      dispatch(clearMessage());
+   }
 
    return (
       <Paper className={classes.paper}>

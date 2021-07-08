@@ -12,11 +12,14 @@ import {
 } from '@material-ui/core';
 import { Edit, Save } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import {
    fetchUserInfo,
    selectUserInfo,
    setUserInfo,
    selectStatus,
+   clearMessage,
+   selectMessage,
 } from 'src/main/store/sliceFiles/accountSlice';
 import { STATUS } from 'src/main/store/status';
 import { useStyles } from './ChangeUserInfoForm.styles';
@@ -47,6 +50,8 @@ export const ChangeUserInfoForm = () => {
    const dispatch = useDispatch();
    const userInfo = useSelector(selectUserInfo);
    const userInfoStatus = useSelector(selectStatus);
+   const message = useSelector(selectMessage);
+   const { enqueueSnackbar } = useSnackbar();
 
    useEffect(() => {
       if (userInfoStatus === STATUS.IDLE) {
@@ -69,6 +74,7 @@ export const ChangeUserInfoForm = () => {
          dispatch(setUserInfo({ name, surname, email, phone }))
             .unwrap()
             .catch((error) => {
+               console.log(error);
                const { status } = error;
                if (status === 409) {
                   formik.setErrors({ email: error.message });
@@ -99,6 +105,18 @@ export const ChangeUserInfoForm = () => {
 
    if (formik.values.phone === null) {
       formik.values.phone = userInfo.phone;
+   }
+
+   if (message) {
+      const variant = userInfoStatus === STATUS.SUCCEEDED ? 'success' : 'error';
+      enqueueSnackbar(message, {
+         variant,
+         anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'right',
+         },
+      });
+      dispatch(clearMessage());
    }
 
    return (

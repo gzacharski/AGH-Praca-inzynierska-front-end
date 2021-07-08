@@ -59,7 +59,6 @@ export const ChangePasswordForm = () => {
             },
          };
 
-         console.log(requestData);
          axios
             .put(
                `${accountServiceURL}/changePassword/${userId}`,
@@ -84,6 +83,16 @@ export const ChangePasswordForm = () => {
                }
             })
             .catch((error) => {
+               if (error?.response?.data?.message) {
+                  const { message } = error.response.data;
+                  enqueueSnackbar(message, {
+                     variant: 'error',
+                     anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                     },
+                  });
+               }
                if (error?.response?.data) {
                   const { errors } = error.response.data;
                   if (errors) {

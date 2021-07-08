@@ -20,7 +20,7 @@ export default function App() {
 
    return (
       <div className={classes.root} data-testid="app-container">
-         <SnackbarProvider maxSnack={4}>
+         <SnackbarProvider maxSnack={4} preventDuplicate>
             <Router basename={process.env.PUBLIC_URL}>
                <AuthProvider>
                   <Provider store={store}>
