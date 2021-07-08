@@ -21,7 +21,7 @@ const initialState = {
 
 export const fetchUserInfo = createAsyncThunk(
    'acount/fetchUserInfo',
-   async () => {
+   async (_, { rejectWithValue }) => {
       const { token, userId } = loadAuthData();
 
       const config = {
@@ -37,14 +37,14 @@ export const fetchUserInfo = createAsyncThunk(
          const response = await axios.get(url, config);
          return response.data;
       } catch (error) {
-         return error.data;
+         return rejectWithValue(error.response.data);
       }
    },
 );
 
 export const setUserInfo = createAsyncThunk(
    'acount/setUserInfo',
-   async ({ name, surname, email, phone }) => {
+   async ({ name, surname, email, phone }, { rejectWithValue }) => {
       const { token, userId } = loadAuthData();
 
       const config = {
@@ -65,10 +65,9 @@ export const setUserInfo = createAsyncThunk(
 
       try {
          const response = await axios.patch(url, data, config);
-         console.log(response);
          return response.data;
       } catch (error) {
-         return error.data;
+         return rejectWithValue(error.response.data);
       }
    },
 );
@@ -84,6 +83,7 @@ export const accountSlice = createSlice({
       [fetchUserInfo.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.userInfo = action.payload;
+         state.error = null;
       },
       [fetchUserInfo.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
@@ -95,6 +95,7 @@ export const accountSlice = createSlice({
       [setUserInfo.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.userInfo = action.payload;
+         state.error = null;
       },
       [setUserInfo.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
