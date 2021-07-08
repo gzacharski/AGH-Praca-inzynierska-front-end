@@ -74,7 +74,6 @@ export const ChangeUserInfoForm = () => {
          dispatch(setUserInfo({ name, surname, email, phone }))
             .unwrap()
             .catch((error) => {
-               console.log(error);
                const { status } = error;
                if (status === 409) {
                   formik.setErrors({ email: error.message });
