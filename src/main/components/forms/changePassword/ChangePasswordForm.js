@@ -64,7 +64,7 @@ export const ChangePasswordForm = () => {
 
          axios
             .put(
-               `${accountServiceURL}/changePassword/${userId}`,
+               `${accountServiceURL}/password/${userId}`,
                requestData,
                config,
             )
