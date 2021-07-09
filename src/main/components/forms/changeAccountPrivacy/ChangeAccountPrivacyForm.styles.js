@@ -1,9 +1,8 @@
-import { makeStyles } from '@material-ui/core';
-
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
    root: {
-      width: '80%',
+      width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
       margin: 'auto',
@@ -19,7 +18,7 @@ export const useStyles = makeStyles((theme) => ({
    },
    content: {
       display: 'flex',
-      overflow: 'autos'
+      overflow: 'auto',
    },
    paper: {
       minHeight: 200,
@@ -29,7 +28,26 @@ export const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
    },
    title: {
-      fontWeight: 'bold',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+   },
+   header: {
+      display: 'flex',
+      justifyContent: 'space-between',
       padding: theme.spacing(1),
+   },
+   headerButtons: {
+      marginTop: 'auto',
+      marginBottom: 'auto',
+   },
+   accordionDetails: {
+      alignContent: 'center',
+      flexDirection: 'column',
+   },
+   paragraph: {
+      margin: '5px',
+   },
+   icon: {
+      color: '#1e88e5',
    },
 }));
