@@ -8,7 +8,14 @@ import {
 } from '@material-ui/core';
 import { useStyles } from './SaveChangesDialog.styles';
 
-const SaveChangesDialog = ({ openDialog, setOpenDialog, form, callback }) => {
+const SaveChangesDialog = ({
+   openDialog,
+   setOpenDialog,
+   form,
+   callback,
+   title,
+   buttonText,
+}) => {
    const classes = useStyles();
 
    return (
@@ -20,7 +27,7 @@ const SaveChangesDialog = ({ openDialog, setOpenDialog, form, callback }) => {
       >
          <DialogTitle>
             <Typography variant="h6" color="primary">
-               Czy na pewno chcesz zapisać zmiany?
+               {title || 'Czy na pewno chcesz zapisać zmiany?'}
             </Typography>
          </DialogTitle>
          <DialogActions>
@@ -30,7 +37,7 @@ const SaveChangesDialog = ({ openDialog, setOpenDialog, form, callback }) => {
                onClick={() => !form && callback()}
                className={classes.button}
             >
-               Zapisz
+               {buttonText || 'Zapisz'}
             </Button>
             <Button
                className={classes.button}
