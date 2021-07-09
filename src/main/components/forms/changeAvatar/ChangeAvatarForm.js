@@ -119,6 +119,7 @@ export const ChangeAvatarForm = () => {
    const dispatch = useDispatch();
    const [file, setFile] = useState(null);
    const [openDialog, setOpenDialog] = useState(false);
+   const [openDialog2, setOpenDialog2] = useState(false);
    const { enqueueSnackbar } = useSnackbar();
    const user = useSelector(selectUserInfo);
    const avatar = useSelector(selectAvatar);
@@ -134,7 +135,10 @@ export const ChangeAvatarForm = () => {
    };
    const handleFileChange = (event) => setFile(event.target.files[0]);
 
-   const handleRemoveAvatar = () => dispatch(removeAvatar());
+   const handleRemoveAvatar = () => {
+      setOpenDialog2(false);
+      dispatch(removeAvatar());
+   };
 
    const { name, surname, email, phone } = user;
 
@@ -201,13 +205,20 @@ export const ChangeAvatarForm = () => {
                         <DeleteImageButton
                            classes={classes}
                            disabled={Boolean(!avatar.data)}
-                           handleRemoveAvatar={handleRemoveAvatar}
+                           handleRemoveAvatar={() => setOpenDialog2(true)}
                            render={shouldRender}
                         />
                         <SaveChangesDialog
                            openDialog={openDialog}
                            setOpenDialog={setOpenDialog}
                            form="change-avatar-form"
+                        />
+                        <SaveChangesDialog
+                           openDialog={openDialog2}
+                           setOpenDialog={setOpenDialog2}
+                           callback={handleRemoveAvatar}
+                           title="Czy na pewno chcesz usunąć awatar?"
+                           buttonText="Usuń"
                         />
                      </Grid>
                   </Grid>
