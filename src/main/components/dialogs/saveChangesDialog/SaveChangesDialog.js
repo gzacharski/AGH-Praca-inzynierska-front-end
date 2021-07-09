@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { useStyles } from './SaveChangesDialog.styles';
 
-const SaveChangesDialog = ({ openDialog, setOpenDialog, form }) => {
+const SaveChangesDialog = ({ openDialog, setOpenDialog, form, callback }) => {
    const classes = useStyles();
 
    return (
@@ -24,7 +24,12 @@ const SaveChangesDialog = ({ openDialog, setOpenDialog, form }) => {
             </Typography>
          </DialogTitle>
          <DialogActions>
-            <Button type="submit" form={form} className={classes.button}>
+            <Button
+               type={form && 'submit'}
+               form={form}
+               onClick={() => !form && callback()}
+               className={classes.button}
+            >
                Zapisz
             </Button>
             <Button
