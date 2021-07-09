@@ -62,7 +62,7 @@ const Header = () => {
    return (
       <AppBar
          aria-label="application bar"
-         position="static"
+         position="fixed"
          className={clsx(classes.root, {
             [classes.appBar]: authContext.isAuthenticated(),
             [classes.appBarShift]: menuIsOpen,
