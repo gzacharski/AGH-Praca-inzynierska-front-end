@@ -14,6 +14,7 @@ import {
 import { Edit, Save } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 import { accountServiceURL } from 'src/main/data/urls';
+import { SaveChangesDialog } from 'src/main/components/dialogs';
 import { useStyles } from './ChangePasswordForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -33,6 +34,7 @@ const validationSchema = Yup.object({
 });
 
 export const ChangePasswordForm = () => {
+   const [openDialog, setOpenDialog] = useState(false);
    const [editable, toggleEditable] = useState(true);
    const { enqueueSnackbar } = useSnackbar();
 
@@ -45,6 +47,7 @@ export const ChangePasswordForm = () => {
       },
       validationSchema,
       onSubmit: (values) => {
+         setOpenDialog(false);
          const requestData = {
             oldPassword: values.password,
             newPassword: values.password1,
@@ -63,11 +66,7 @@ export const ChangePasswordForm = () => {
          };
 
          axios
-            .put(
-               `${accountServiceURL}/changePassword/${userId}`,
-               requestData,
-               config,
-            )
+            .put(`${accountServiceURL}/password/${userId}`, requestData, config)
             .then((response) => {
                formik.setValues(
                   { password: '', password1: '', password2: '' },
@@ -121,6 +120,7 @@ export const ChangePasswordForm = () => {
             onSubmit={formik.handleSubmit}
             data-testid="sign-up-form"
             className={classes.form}
+            id="changePasswordForm"
             noValidate
          >
             <div className={classes.header}>
@@ -149,13 +149,18 @@ export const ChangePasswordForm = () => {
                   </Tooltip>
                   <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
                      <IconButton
-                        type="submit"
+                        onClick={() => setOpenDialog(true)}
                         disabled={editable}
                         className={classes.icon}
                      >
                         <Save fontSize="large" />
                      </IconButton>
                   </Tooltip>
+                  <SaveChangesDialog
+                     form="changePasswordForm"
+                     openDialog={openDialog}
+                     setOpenDialog={setOpenDialog}
+                  />
                </div>
             </div>
             <Grid container spacing={2}>

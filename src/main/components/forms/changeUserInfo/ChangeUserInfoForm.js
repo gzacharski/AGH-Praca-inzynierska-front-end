@@ -8,7 +8,7 @@ import {
    Grid,
    TextField,
    Tooltip,
-   Typography,
+   Typography
 } from '@material-ui/core';
 import { Edit, Save } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +21,7 @@ import {
    clearMessage,
    selectMessage,
 } from 'src/main/store/sliceFiles/accountSlice';
+import { SaveChangesDialog } from 'src/main/components/dialogs';
 import { STATUS } from 'src/main/store/status';
 import { useStyles } from './ChangeUserInfoForm.styles';
 import { phoneRegExp } from '../sign-up/phoneRegExp';
@@ -47,6 +48,7 @@ const validationSchema = Yup.object({
 
 export const ChangeUserInfoForm = () => {
    const [editable, toggleEditable] = useState(true);
+   const [openDialog, setOpenDialog] = useState(false);
    const dispatch = useDispatch();
    const userInfo = useSelector(selectUserInfo);
    const userInfoStatus = useSelector(selectStatus);
@@ -69,6 +71,8 @@ export const ChangeUserInfoForm = () => {
       },
       validationSchema,
       onSubmit: (values) => {
+         setOpenDialog(false);
+         toggleEditable(!editable);
          const { name, surname, email, phone } = values;
 
          dispatch(setUserInfo({ name, surname, email, phone }))
@@ -125,6 +129,7 @@ export const ChangeUserInfoForm = () => {
             data-testid="sign-up-form"
             className={classes.form}
             noValidate
+            id="changeUserDataForm"
          >
             <div className={classes.header}>
                <Typography
@@ -145,13 +150,18 @@ export const ChangeUserInfoForm = () => {
                   </Tooltip>
                   <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
                      <IconButton
-                        type="submit"
                         disabled={editable}
                         className={classes.icon}
+                        onClick={() => setOpenDialog(true)}
                      >
                         <Save fontSize="large" />
                      </IconButton>
                   </Tooltip>
+                  <SaveChangesDialog
+                     form="changeUserDataForm"
+                     openDialog={openDialog}
+                     setOpenDialog={setOpenDialog}
+                  />
                </div>
             </div>
             <Grid container spacing={2}>

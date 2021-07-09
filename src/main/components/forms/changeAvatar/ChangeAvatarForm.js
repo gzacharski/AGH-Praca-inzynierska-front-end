@@ -23,6 +23,7 @@ import {
 import { selectUserInfo } from 'src/main/store/sliceFiles/accountSlice';
 import { AvatarIcon } from 'src/main/components/icons';
 import { STATUS } from 'src/main/store/status';
+import { SaveChangesDialog } from 'src/main/components/dialogs';
 import { useStyles } from './ChangeAvatarForm.styles';
 
 const UserInfo = ({ render, name, surname, phone, email }) => {
@@ -47,11 +48,11 @@ const UserInfo = ({ render, name, surname, phone, email }) => {
    );
 };
 
-const UploadImageButton = ({ file, classes, render }) => (
+const UploadImageButton = ({ file, classes, render, setOpenDialog }) => (
    <Skeleton render={render} classes={{ margin: 0, display: 'inline-block' }}>
       <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
          <IconButton
-            type="submit"
+            onClick={() => setOpenDialog(true)}
             disabled={Boolean(!file)}
             className={classes.icon}
             aria-label="upload picture"
@@ -117,6 +118,8 @@ const Avatar = () => (
 export const ChangeAvatarForm = () => {
    const dispatch = useDispatch();
    const [file, setFile] = useState(null);
+   const [openDialog, setOpenDialog] = useState(false);
+   const [openDialog2, setOpenDialog2] = useState(false);
    const { enqueueSnackbar } = useSnackbar();
    const user = useSelector(selectUserInfo);
    const avatar = useSelector(selectAvatar);
@@ -126,17 +129,20 @@ export const ChangeAvatarForm = () => {
 
    const handleFormSubmit = (event) => {
       event.preventDefault();
+      setOpenDialog(false);
       dispatch(setAvatar(file));
       setFile(null);
    };
    const handleFileChange = (event) => setFile(event.target.files[0]);
 
-   const handleRemoveAvatar = () => dispatch(removeAvatar());
+   const handleRemoveAvatar = () => {
+      setOpenDialog2(false);
+      dispatch(removeAvatar());
+   };
 
    const { name, surname, email, phone } = user;
 
-   const shouldRender =
-      Boolean(name) && Boolean(surname) && Boolean(email) && Boolean(phone);
+   const shouldRender = Boolean(name) && Boolean(surname) && Boolean(email);
 
    if (message) {
       const variant = status === STATUS.SUCCEEDED ? 'success' : 'error';
@@ -156,6 +162,7 @@ export const ChangeAvatarForm = () => {
             onSubmit={handleFormSubmit}
             data-testid="change-avatar-form"
             className={classes.form}
+            id="change-avatar-form"
             noValidate
          >
             <div className={classes.header}>
@@ -193,12 +200,25 @@ export const ChangeAvatarForm = () => {
                            file={file}
                            classes={classes}
                            render={shouldRender}
+                           setOpenDialog={setOpenDialog}
                         />
                         <DeleteImageButton
                            classes={classes}
                            disabled={Boolean(!avatar.data)}
-                           handleRemoveAvatar={handleRemoveAvatar}
+                           handleRemoveAvatar={() => setOpenDialog2(true)}
                            render={shouldRender}
+                        />
+                        <SaveChangesDialog
+                           openDialog={openDialog}
+                           setOpenDialog={setOpenDialog}
+                           form="change-avatar-form"
+                        />
+                        <SaveChangesDialog
+                           openDialog={openDialog2}
+                           setOpenDialog={setOpenDialog2}
+                           callback={handleRemoveAvatar}
+                           title="Czy na pewno chcesz usunąć awatar?"
+                           buttonText="Usuń"
                         />
                      </Grid>
                   </Grid>

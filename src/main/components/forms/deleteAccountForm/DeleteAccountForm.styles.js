@@ -1,23 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
-   root: {
-      fontWeight: 'bold',
-      padding: '30px',
-      background: 'yellow',
-      height: '100vh',
-   },
-   form: {
-      width: '100%',
-      marginTop: theme.spacing(3),
-   },
-   submit: {
-      margin: theme.spacing(3, 0, 2),
-      backgroundColor: '#1e88e5',
-      '&:hover': {
-         backgroundColor: '#3ea8f5',
-      },
-   },
    paper: {
       minHeight: 200,
       padding: theme.spacing(2),
@@ -28,18 +11,39 @@ export const useStyles = makeStyles((theme) => ({
    header: {
       display: 'flex',
       justifyContent: 'space-between',
-      verticalAlign: 'middle',
-   },
-   headerButtons: {
-      display: 'flex',
-      justifyContent: 'right',
+      padding: theme.spacing(1),
    },
    title: {
-      display: 'block',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      marginTop: 'auto',
+      marginBottom: 'auto',
    },
-   icon: {
-      color: '#1e88e5',
+   content: {
+      padding: theme.spacing(1),
+      display: 'block',
+   },
+   buttonWrapper: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      padding: theme.spacing(2),
+   },
+   button: {
+      fontSize: '14px',
+      color: 'white',
+      backgroundColor: '#1e88e5',
+      '&:hover': {
+         backgroundColor: '#3ea8f5',
+      },
+      borderRadius: '25px',
+      margin: 'auto',
+   },
+   dialogButton: {
+      fontSize: '14px',
+      color: 'white',
+      backgroundColor: '#1e88e5',
+      '&:hover': {
+         backgroundColor: '#3ea8f5',
+      },
+      margin: 'auto',
    },
 }));

@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
    },
    form: {
       width: '100%',
-      marginTop: theme.spacing(3),
    },
    submit: {
       margin: theme.spacing(3, 0, 2),
@@ -28,16 +27,15 @@ const useStyles = makeStyles((theme) => ({
    header: {
       display: 'flex',
       justifyContent: 'space-between',
-      verticalAlign: 'middle',
+      padding: theme.spacing(1)
    },
    headerButtons: {
-      display: 'flex',
-      justifyContent: 'right',
+      marginTop: 'auto',
+      marginBottom: 'auto',
    },
    title: {
-      display: 'block',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      marginTop: 'auto',
+      marginBottom: 'auto',
    },
    icon: {
       color: '#1e88e5',
