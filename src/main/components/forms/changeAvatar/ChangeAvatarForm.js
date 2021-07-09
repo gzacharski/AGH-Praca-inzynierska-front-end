@@ -135,8 +135,7 @@ export const ChangeAvatarForm = () => {
 
    const { name, surname, email, phone } = user;
 
-   const shouldRender =
-      Boolean(name) && Boolean(surname) && Boolean(email) && Boolean(phone);
+   const shouldRender = Boolean(name) && Boolean(surname) && Boolean(email);
 
    if (message) {
       const variant = status === STATUS.SUCCEEDED ? 'success' : 'error';
