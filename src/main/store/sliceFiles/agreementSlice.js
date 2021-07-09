@@ -13,15 +13,22 @@ const loadAuthData = () => {
    return { token, userId };
 };
 
+const url = (userId) => `${accountServiceURL}/${userId}/privacy`;
+
 const initialState = {
-   userInfo: { name: null, surname: null, email: null, phone: null },
+   data: {
+      regulation: null,
+      training: null,
+      avatar: null,
+      stats: null,
+   },
    status: STATUS.IDLE,
    message: null,
    error: null,
 };
 
-export const fetchUserInfo = createAsyncThunk(
-   'acount/fetchUserInfo',
+export const fetchAgreements = createAsyncThunk(
+   'agreements/fetchAgreements',
    async (_, { rejectWithValue }) => {
       const { token, userId } = loadAuthData();
 
@@ -32,17 +39,15 @@ export const fetchUserInfo = createAsyncThunk(
          },
       };
 
-      const url = `${accountServiceURL}/${userId}`;
-
       try {
-         const response = await axios.get(url, config);
-         const {data}=response;
+         const response = await axios.get(url(userId), config);
+         const { data } = response;
          return {
-            name: data?.name,
-            surname: data?.surname,
-            email: data?.email,
-            phone: data?.phone
-         }
+            regulation: data?.regulationsAccepted,
+            training: data?.allowShowingTrainingsParticipation,
+            stats: data?.allowShowingUserStatistics,
+            avatar: data?.allowShowingAvatar,
+         };
       } catch (error) {
          return rejectWithValue({
             error: error?.response?.data,
@@ -52,9 +57,9 @@ export const fetchUserInfo = createAsyncThunk(
    },
 );
 
-export const setUserInfo = createAsyncThunk(
-   'acount/setUserInfo',
-   async ({ name, surname, email, phone }, { rejectWithValue }) => {
+export const setAgreements = createAsyncThunk(
+   'agreements/setAgreements',
+   async ({ regulation, training, avatar, stats }, { rejectWithValue }) => {
       const { token, userId } = loadAuthData();
 
       const config = {
@@ -64,24 +69,22 @@ export const setUserInfo = createAsyncThunk(
          },
       };
 
-      const url = `${accountServiceURL}/changeUserData/${userId}`;
-
       const requestData = {
-         name,
-         surname,
-         email,
-         phoneNumber: phone,
+         regulationsAccepted: regulation,
+         allowShowingTrainingsParticipation: training,
+         allowShowingUserStatistics: stats,
+         allowShowingAvatar: avatar,
       };
 
       try {
-         const response = await axios.patch(url, requestData, config);
+         const response = await axios.put(url(userId), requestData, config);
          const { data } = response;
          return {
-            userInfo: {
-               name: data?.name,
-               surname: data?.surname,
-               phone: data?.phone,
-               email: data?.email,
+            data: {
+               regulation: data?.regulationsAccepted,
+               training: data?.allowShowingTrainingsParticipation,
+               stats: data?.allowShowingUserStatistics,
+               avatar: data?.allowShowingAvatar,
             },
             message: data?.message,
          };
@@ -94,8 +97,8 @@ export const setUserInfo = createAsyncThunk(
    },
 );
 
-export const accountSlice = createSlice({
-   name: 'account',
+export const agreementSlice = createSlice({
+   name: 'agreements',
    initialState,
    reducers: {
       clearMessage(state, actions) {
@@ -103,29 +106,29 @@ export const accountSlice = createSlice({
       },
    },
    extraReducers: {
-      [fetchUserInfo.pending]: (state, action) => {
+      [fetchAgreements.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
-      [fetchUserInfo.fulfilled]: (state, action) => {
+      [fetchAgreements.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.userInfo = action.payload;
+         state.data = action.payload;
          state.error = null;
       },
-      [fetchUserInfo.rejected]: (state, action) => {
+      [fetchAgreements.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
-      [setUserInfo.pending]: (state, action) => {
+      [setAgreements.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
-      [setUserInfo.fulfilled]: (state, action) => {
+      [setAgreements.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.userInfo = action.payload.userInfo;
+         state.data = action.payload.data;
          state.message = action.payload.message;
          state.error = null;
       },
-      [setUserInfo.rejected]: (state, action) => {
+      [setAgreements.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
@@ -133,10 +136,10 @@ export const accountSlice = createSlice({
    },
 });
 
-export default accountSlice.reducer;
+export default agreementSlice.reducer;
 
-export const { clearMessage } = accountSlice.actions;
+export const { clearMessage } = agreementSlice.actions;
 
-export const selectUserInfo = (state) => state.account.userInfo;
-export const selectStatus = (state) => state.account.status;
-export const selectMessage = (state) => state.account.message;
+export const selectAgreements = (state) => state.agreements.data;
+export const selectStatus = (state) => state.agreements.status;
+export const selectMessage = (state) => state.agreements.message;
