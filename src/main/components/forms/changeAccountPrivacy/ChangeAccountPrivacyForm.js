@@ -24,6 +24,7 @@ import {
    clearMessage,
 } from 'src/main/store/sliceFiles/agreementSlice';
 import { STATUS } from 'src/main/store/status';
+import { SaveChangesDialog } from 'src/main/components/dialogs';
 import { useStyles } from './ChangeAccountPrivacyForm.styles';
 
 const AcceptGeneralRegulations = ({
@@ -238,6 +239,7 @@ export const ChangeAccountPrivacyForm = () => {
    const context = useContext(AuthContext);
    const classes = useStyles();
    const [editable, toggleEditable] = useState(true);
+   const [openDialog, setOpenDialog] = useState(false);
    const [avatarAgreement, setAvatarAgreement] = useState(null);
    const [trainingAgreement, setTrainingAgreement] = useState(null);
    const [statsAgreement, setStatsAgreement] = useState(null);
@@ -276,6 +278,8 @@ export const ChangeAccountPrivacyForm = () => {
    }, [status, dispatch]);
 
    const handleSetAgreements = () => {
+      toggleEditable(!editable);
+      setOpenDialog(false);
       dispatch(
          setAgreements({
             regulation: regulationsAgreement,
@@ -284,7 +288,6 @@ export const ChangeAccountPrivacyForm = () => {
             stats: statsAgreement,
          }),
       );
-      toggleEditable(!editable);
    };
 
    if (message) {
@@ -325,11 +328,16 @@ export const ChangeAccountPrivacyForm = () => {
                   <IconButton
                      disabled={editable}
                      className={classes.icon}
-                     onClick={handleSetAgreements}
+                     onClick={() => setOpenDialog(true)}
                   >
                      <Save fontSize="large" />
                   </IconButton>
                </Tooltip>
+               <SaveChangesDialog
+                  openDialog={openDialog}
+                  setOpenDialog={setOpenDialog}
+                  callback={handleSetAgreements}
+               />
             </div>
          </div>
          <Grid container spacing={2}>
