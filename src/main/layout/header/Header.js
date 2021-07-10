@@ -65,13 +65,11 @@ const Header = () => {
    return (
       <AppBar
          aria-label="application bar"
-         position="sticky"
+         position="fixed"
          className={clsx(classes.root, {
             [classes.appBar]: authContext.isAuthenticated(),
             [classes.appBarShift]: menuIsOpen,
          })}
-         // eslint-disable-next-line jsx-a11y/aria-role
-         role="header"
       >
          <Toolbar
             className={clsx(classes.toolbar, {

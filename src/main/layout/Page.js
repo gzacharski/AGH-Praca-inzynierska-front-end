@@ -29,6 +29,7 @@ import {
    ManagerRouteGroup,
    TrainerRouteGroups,
 } from 'src/main/layout/navigation/routeGroups';
+import { useStyles } from './Page.styles';
 
 const Page = () => {
    const authContext = useContext(AuthContext);
@@ -83,4 +84,14 @@ const Page = () => {
    );
 };
 
-export default Page;
+const PageWrapper = () => {
+   const classes = useStyles();
+   return (
+      <>
+         <div className={classes.appBarSpacer} />
+         <Page />
+      </>
+   );
+};
+
+export default PageWrapper;

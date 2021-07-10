@@ -76,7 +76,7 @@ const ManagerListAuth = () =>
       </>
    ));
 
-export default function Navigation() {
+const Navigation = () => {
    const dispatch = useDispatch();
    const menuIsOpen = useSelector(selectDrawer);
    const menuMoreInfo = useSelector(selectDrawerMoreInfo);
@@ -85,48 +85,52 @@ export default function Navigation() {
 
    const { token } = authContext.authState;
 
+   if (token === null) return null;
+
+   return (
+      <Drawer
+         variant="permanent"
+         className={clsx(classes.drawer, {
+            [classes.drawerOpen]: menuIsOpen,
+            [classes.drawerClose]: !menuIsOpen,
+         })}
+         classes={{
+            paper: clsx({
+               [classes.drawerMoreInfo]: menuMoreInfo,
+               [classes.drawerOpen]: menuIsOpen,
+               [classes.drawerClose]: !menuIsOpen,
+            }),
+         }}
+         open={menuIsOpen}
+      >
+         <div className={classes.toolbar}>
+            <MenuMoreInfoSwitch />
+            <IconButton onClick={() => dispatch(toggleDrawer())}>
+               {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
+            </IconButton>
+         </div>
+         <AccountListAuth />
+         <EmployeeListAuth />
+         <TrainerListAuth />
+         <ManagerListAuth />
+         <AdminListAuth />
+         <PublicListAuth />
+      </Drawer>
+   );
+};
+
+const NavigationFiltered = () => {
    const filteredUrls = [
       '/login',
       '/sign-up',
       '/confirmRegistration',
       '/confirmNewPassword',
    ];
-
-   if (token === null) return null;
-
    return (
       <FilterRenderer urls={filteredUrls}>
-         <nav>
-            <Drawer
-               variant="permanent"
-               className={clsx({
-                  [classes.drawer]: !menuMoreInfo,
-                  [classes.drawerMoreInfo]: menuMoreInfo,
-                  [classes.drawerOpen]: menuIsOpen,
-                  [classes.drawerClose]: !menuIsOpen,
-               })}
-               classes={{
-                  paper: clsx({
-                     [classes.drawerMoreInfo]: menuMoreInfo,
-                     [classes.drawerOpen]: menuIsOpen,
-                     [classes.drawerClose]: !menuIsOpen,
-                  }),
-               }}
-            >
-               <div className={classes.toolbar}>
-                  <MenuMoreInfoSwitch />
-                  <IconButton onClick={() => dispatch(toggleDrawer())}>
-                     {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
-                  </IconButton>
-               </div>
-               <AccountListAuth />
-               <EmployeeListAuth />
-               <TrainerListAuth />
-               <ManagerListAuth />
-               <AdminListAuth />
-               <PublicListAuth />
-            </Drawer>
-         </nav>
+         <Navigation />
       </FilterRenderer>
    );
-}
+};
+
+export default NavigationFiltered;

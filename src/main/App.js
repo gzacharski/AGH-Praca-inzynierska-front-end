@@ -6,21 +6,29 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from 'src/main/auth';
 import { store } from 'src/main/store';
 import { Footer, Header, Navigation, Page } from 'src/main/layout';
+import { useStyles } from './App.styles';
 
-const App = () => (
-   <SnackbarProvider maxSnack={4} preventDuplicate>
-      <Router basename={process.env.PUBLIC_URL}>
-         <AuthProvider>
-            <Provider store={store}>
-               <CssBaseline />
-               <Header />
-               <Navigation />
-               <Page />
-               <Footer />
-            </Provider>
-         </AuthProvider>
-      </Router>
-   </SnackbarProvider>
-);
+const App = () => {
+   const classes = useStyles();
+   return (
+      <SnackbarProvider maxSnack={4} preventDuplicate>
+         <Router basename={process.env.PUBLIC_URL}>
+            <AuthProvider>
+               <Provider store={store}>
+                  <div className={classes.root}>
+                     <CssBaseline />
+                     <Header />
+                     <Navigation />
+                     <main className={classes.content}>
+                        <Page />
+                        <Footer />
+                     </main>
+                  </div>
+               </Provider>
+            </AuthProvider>
+         </Router>
+      </SnackbarProvider>
+   );
+};
 
 export default App;

@@ -1,8 +1,5 @@
 import React from 'react';
 import { Container, Grid, Typography } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import clsx from 'clsx';
-import { selectDrawer } from 'src/main/store/sliceFiles/drawerSlice';
 import {
    ChangeUserInfoForm,
    ChangePasswordForm,
@@ -13,17 +10,13 @@ import {
 import { useStyles } from './SettingsPage.styles';
 
 const SettingsPage = () => {
-   const drawer = useSelector(selectDrawer);
    const classes = useStyles();
    return (
       <Container
          maxWidth="xl"
          component="main"
          data-testid="main-container"
-         className={clsx({
-            [classes.root]: !drawer,
-            [classes.rootMinimized]: drawer,
-         })}
+         className={classes.root}
       >
          <Typography variant="h5" align="center" className={classes.title}>
             Ustawienia konta
