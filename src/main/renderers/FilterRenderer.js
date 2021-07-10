@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { startsWithAny } from './str-checker';
+import { startsWithAny } from 'src/main/utils';
 
 const FilterRenderer = (props) => {
    const { location, urls, children } = props;
