@@ -3,11 +3,15 @@ import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
-import { selectDrawer } from 'src/main/store/selectors';
-import { toggleDrawer } from 'src/main/store/actionsCreators';
+import {
+   selectDrawer,
+   toggleDrawer,
+} from 'src/main/store/sliceFiles/drawerSlice';
 import { NavLink, LoginButton } from 'src/main/components/buttons';
 import { PersonalMenu } from 'src/main/components/buttonGroups';
 import { AuthContext } from 'src/main/auth';
+import { FilterRenderer } from 'src/main/components/utils';
+import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Header.styles';
 
 const links = [
@@ -62,13 +66,11 @@ const Header = () => {
    return (
       <AppBar
          aria-label="application bar"
-         position="sticky"
+         position="fixed"
          className={clsx(classes.root, {
             [classes.appBar]: authContext.isAuthenticated(),
             [classes.appBarShift]: menuIsOpen,
          })}
-         // eslint-disable-next-line jsx-a11y/aria-role
-         role="header"
       >
          <Toolbar
             className={clsx(classes.toolbar, {
@@ -83,4 +85,10 @@ const Header = () => {
    );
 };
 
-export default Header;
+export default function HeaderFiltered() {
+   return (
+      <FilterRenderer urls={filteredUrls}>
+         <Header />
+      </FilterRenderer>
+   );
+}

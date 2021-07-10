@@ -1,8 +1,6 @@
 import React from 'react';
-import { Container, Grid, Typography } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import clsx from 'clsx';
-import { selectDrawer } from 'src/main/store/sliceFiles/drawerSlice';
+import { Grid, Typography } from '@material-ui/core';
+import { PageWrapper } from 'src/main/components/utils';
 import {
    ChangeUserInfoForm,
    ChangePasswordForm,
@@ -13,18 +11,9 @@ import {
 import { useStyles } from './SettingsPage.styles';
 
 const SettingsPage = () => {
-   const drawer = useSelector(selectDrawer);
    const classes = useStyles();
    return (
-      <Container
-         maxWidth="xl"
-         component="main"
-         data-testid="main-container"
-         className={clsx({
-            [classes.root]: !drawer,
-            [classes.rootMinimized]: drawer,
-         })}
-      >
+      <PageWrapper>
          <Typography variant="h5" align="center" className={classes.title}>
             Ustawienia konta
          </Typography>
@@ -47,7 +36,7 @@ const SettingsPage = () => {
                </Grid>
             </Grid>
          </div>
-      </Container>
+      </PageWrapper>
    );
 };
 

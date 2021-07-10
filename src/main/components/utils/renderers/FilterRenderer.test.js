@@ -2,7 +2,7 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 import { unmountComponentAtNode } from "react-dom";
-import { render, screen } from "../../testUtils";
+import { render, screen } from "src/testUtils";
 import FilterRenderer from "./FilterRenderer";
 
 const TestComponent = () => <div data-testid="test-component">Component</div>;

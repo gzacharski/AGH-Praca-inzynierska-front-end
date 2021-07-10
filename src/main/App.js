@@ -1,42 +1,34 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { CssBaseline } from '@material-ui/core';
 import { SnackbarProvider } from 'notistack';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from 'src/main/auth';
-import store from 'src/main/store/store';
-import { Footer, Header, Navigation, Page } from './layout';
+import { store } from 'src/main/store';
+import { Footer, Header, Navigation, Page } from 'src/main/layout';
 import { useStyles } from './App.styles';
-import FilterRenderer from './renderers/FilterRenderer';
 
-export default function App() {
+const App = () => {
    const classes = useStyles();
-   const filteredUrls = [
-      '/login',
-      '/sign-up',
-      '/confirmRegistration',
-      '/confirmNewPassword',
-   ];
-
    return (
-      <div className={classes.root} data-testid="app-container">
-         <SnackbarProvider maxSnack={4} preventDuplicate>
-            <Router basename={process.env.PUBLIC_URL}>
-               <AuthProvider>
-                  <Provider store={store}>
+      <SnackbarProvider maxSnack={4} preventDuplicate>
+         <Router basename={process.env.PUBLIC_URL}>
+            <AuthProvider>
+               <Provider store={store}>
+                  <div className={classes.root}>
                      <CssBaseline />
-                     <FilterRenderer urls={filteredUrls}>
-                        <Header />
-                     </FilterRenderer>
+                     <Header />
                      <Navigation />
-                     <Page />
-                     <FilterRenderer urls={filteredUrls}>
+                     <main className={classes.content}>
+                        <Page />
                         <Footer />
-                     </FilterRenderer>
-                  </Provider>
-               </AuthProvider>
-            </Router>
-         </SnackbarProvider>
-      </div>
+                     </main>
+                  </div>
+               </Provider>
+            </AuthProvider>
+         </Router>
+      </SnackbarProvider>
    );
-}
+};
+
+export default App;

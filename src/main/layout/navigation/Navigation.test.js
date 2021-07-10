@@ -17,6 +17,21 @@ describe('Navigation component contains:', () => {
             </MemoryRouter>
          </AuthContext.Provider>,
       );
-      expect(screen.getByRole('navigation')).toBeInTheDocument();
+      expect(screen.getByTestId('navigation')).toBeInTheDocument();
+   });
+
+   test('tag nav', () => {
+      render(
+         <AuthContext.Provider
+            value={{
+               authState: { token: null, userInfo: { roles: [] } },
+            }}
+         >
+            <MemoryRouter>
+               <Navigation />
+            </MemoryRouter>
+         </AuthContext.Provider>,
+      );
+      expect(screen.queryByTestId('navigation')).not.toBeInTheDocument();
    });
 });

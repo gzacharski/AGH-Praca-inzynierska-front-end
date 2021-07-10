@@ -12,7 +12,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import { LogInForm } from 'src/main/components/forms';
-import { Footer } from 'src/main/layout';
+import { Footer } from 'src/main/layout/footer/Footer';
 import { useStyles } from './LogInPage.styles';
 import { LogInIcon } from './LogInIcon';
 

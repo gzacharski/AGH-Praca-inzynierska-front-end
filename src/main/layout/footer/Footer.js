@@ -1,27 +1,21 @@
 import React from 'react';
 import { Container, Divider, Link, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
+import { FilterRenderer } from 'src/main/components/utils';
+import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Footer.styles';
 
-export default function Footer() {
+export const Footer = () => {
    const classes = useStyles();
    return (
-      <Container
-         maxWidth="xl"
-         component="footer"
-         className={classes.root}
-      >
+      <Container maxWidth="xl" component="footer" className={classes.root}>
          <Divider className={classes.divider} />
          <Typography
             align="center"
             component="h6"
             className={classes.footer_title}
          >
-            <Link
-               component={RouterLink}
-               to="/"
-               color="inherit"
-            >
+            <Link component={RouterLink} to="/" color="inherit">
                System do wspomagania zarządzania placówką profilaktyki
                zdrowotnej
             </Link>
@@ -34,4 +28,10 @@ export default function Footer() {
          </Typography>
       </Container>
    );
-}
+};
+
+export const FilteredFooter = () => (
+   <FilterRenderer urls={filteredUrls}>
+      <Footer />
+   </FilterRenderer>
+);

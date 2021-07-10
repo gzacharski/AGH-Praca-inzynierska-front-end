@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { Container, CircularProgress, Typography } from '@material-ui/core';
 import { ConfirmationIcon } from 'src/main/components/icons';
-import { Footer } from 'src/main/layout';
+import { Footer } from 'src/main/layout/footer/Footer';
 import { useStyles } from './ConfirmResetPasswordPage.styles';
 import ConfirmationResetPasswordContent from './confirmationContent/ConfirmationResetPasswordContent';
 

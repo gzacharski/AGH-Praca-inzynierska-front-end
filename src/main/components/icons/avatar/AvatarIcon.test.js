@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { screen, render } from 'src/testUtils';
 import { testAvatar, testUser } from 'src/main/data/testData';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { AvatarIcon } from './AvatarIcon';
 
 const mockStore = configureStore([]);

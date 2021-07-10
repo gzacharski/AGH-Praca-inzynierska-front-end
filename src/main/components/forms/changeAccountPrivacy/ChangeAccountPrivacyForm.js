@@ -23,7 +23,7 @@ import {
    setAgreements,
    clearMessage,
 } from 'src/main/store/sliceFiles/agreementSlice';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { SaveChangesDialog } from 'src/main/components/dialogs';
 import { useStyles } from './ChangeAccountPrivacyForm.styles';
 

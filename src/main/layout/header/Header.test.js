@@ -5,22 +5,6 @@ import { AuthContext } from 'src/main/auth';
 import Header from './Header';
 
 describe('Header', () => {
-   describe('Header component should', () => {
-      beforeEach(() => {
-         render(
-            <AuthContext.Provider value={{ isAuthenticated: () => jest.fn() }}>
-               <MemoryRouter>
-                  <Header />
-               </MemoryRouter>
-            </AuthContext.Provider>,
-         );
-      });
-
-      test('render tag "header"', () => {
-         expect(screen.getByRole('header')).toBeInTheDocument();
-      });
-   });
-
    describe('Header component if user not authenticated', () => {
       beforeEach(() => {
          render(

@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, act, waitFor } from 'src/testUtils';
 import { testUser, testAvatar } from 'src/main/data/testData';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import AvatarButton from './AvatarButton';
 
 const mockStore = configureStore([]);

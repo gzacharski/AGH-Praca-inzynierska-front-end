@@ -3,8 +3,11 @@ import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { Drawer, Divider, IconButton } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
-import { selectDrawer, selectDrawerMoreInfo } from 'src/main/store/selectors';
-import { toggleDrawer } from 'src/main/store/actionsCreators';
+import {
+   selectDrawer,
+   selectDrawerMoreInfo,
+   toggleDrawer,
+} from 'src/main/store/sliceFiles/drawerSlice';
 import {
    AuthContext,
    withAdminRole,
@@ -13,7 +16,7 @@ import {
    withTrainerRole,
    withUserRole,
 } from 'src/main/auth';
-import { FilterRenderer } from 'src/main/renderers';
+import { FilterRenderer } from 'src/main/components/utils';
 import {
    AdminList,
    AccountList,
@@ -23,6 +26,7 @@ import {
    TrainerList,
 } from 'src/main/layout/navigation/lists';
 import { MenuMoreInfoSwitch } from 'src/main/components/switches';
+import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Navigation.styles';
 
 const AdminListAuth = () =>
@@ -73,7 +77,7 @@ const ManagerListAuth = () =>
       </>
    ));
 
-export default function Navigation() {
+const Navigation = () => {
    const dispatch = useDispatch();
    const menuIsOpen = useSelector(selectDrawer);
    const menuMoreInfo = useSelector(selectDrawerMoreInfo);
@@ -82,48 +86,45 @@ export default function Navigation() {
 
    const { token } = authContext.authState;
 
-   const filteredUrls = [
-      '/login',
-      '/sign-up',
-      '/confirmRegistration',
-      '/confirmNewPassword',
-   ];
-
-   if (token === null) return null;
-
    return (
-      <FilterRenderer urls={filteredUrls}>
-         <nav>
-            <Drawer
-               variant="permanent"
-               className={clsx({
-                  [classes.drawer]: !menuMoreInfo,
+      token && (
+         <Drawer
+            variant="permanent"
+            className={clsx(classes.drawer, {
+               [classes.drawerOpen]: menuIsOpen,
+               [classes.drawerClose]: !menuIsOpen,
+            })}
+            classes={{
+               paper: clsx({
                   [classes.drawerMoreInfo]: menuMoreInfo,
                   [classes.drawerOpen]: menuIsOpen,
                   [classes.drawerClose]: !menuIsOpen,
-               })}
-               classes={{
-                  paper: clsx({
-                     [classes.drawerMoreInfo]: menuMoreInfo,
-                     [classes.drawerOpen]: menuIsOpen,
-                     [classes.drawerClose]: !menuIsOpen,
-                  }),
-               }}
-            >
-               <div className={classes.toolbar}>
-                  <MenuMoreInfoSwitch />
-                  <IconButton onClick={() => dispatch(toggleDrawer())}>
-                     {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
-                  </IconButton>
-               </div>
-               <AccountListAuth />
-               <EmployeeListAuth />
-               <TrainerListAuth />
-               <ManagerListAuth />
-               <AdminListAuth />
-               <PublicListAuth />
-            </Drawer>
-         </nav>
-      </FilterRenderer>
+               }),
+            }}
+            open={menuIsOpen}
+            data-testid="navigation"
+         >
+            <div className={classes.toolbar}>
+               <MenuMoreInfoSwitch />
+               <IconButton onClick={() => dispatch(toggleDrawer())}>
+                  {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
+               </IconButton>
+            </div>
+            <AccountListAuth />
+            <EmployeeListAuth />
+            <TrainerListAuth />
+            <ManagerListAuth />
+            <AdminListAuth />
+            <PublicListAuth />
+         </Drawer>
+      )
    );
-}
+};
+
+const NavigationFiltered = () => (
+   <FilterRenderer urls={filteredUrls}>
+      <Navigation />
+   </FilterRenderer>
+);
+
+export default NavigationFiltered;

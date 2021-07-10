@@ -5,7 +5,7 @@ import { Skeleton } from '@material-ui/lab';
 import { NotificationsNone } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { selectStatus as selectAccountStatus } from 'src/main/store/sliceFiles/accountSlice';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { useStyles } from './NotificationButton.styles';
 
 const NotificationButton = (props) => {

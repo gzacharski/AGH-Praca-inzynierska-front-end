@@ -6,7 +6,10 @@ import {
    Tooltip,
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { selectDrawer, selectDrawerMoreInfo } from 'src/main/store/selectors';
+import {
+   selectDrawer,
+   selectDrawerMoreInfo,
+} from 'src/main/store/sliceFiles/drawerSlice';
 import { withRouter } from 'react-router-dom';
 
 const CustomListItem = (props) => {

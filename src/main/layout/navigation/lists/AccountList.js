@@ -21,8 +21,11 @@ import ListIcon from '@material-ui/icons/List';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
-import { selectDrawer, selectUserInfo } from 'src/main/store/selectors';
-import { toggleDrawer } from 'src/main/store/actionsCreators';
+import {
+   selectDrawer,
+   toggleDrawer,
+} from 'src/main/store/sliceFiles/drawerSlice';
+import { selectUserInfo } from 'src/main/store/sliceFiles/accountSlice';
 
 const useStyles = makeStyles((theme) => ({
    root: {

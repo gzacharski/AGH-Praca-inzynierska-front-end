@@ -1,11 +1,14 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100vh",
-  },
+export const useStyles = makeStyles({
+   root: {
+      display: 'flex',
+   },
+   content: {
+      height: '100vh',
+      overflow: 'auto',
+      flexGrow: 1,
+      display: 'flex',
+      flexDirection: 'column',
+   },
 });
-
-export { useStyles };

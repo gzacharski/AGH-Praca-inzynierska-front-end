@@ -6,63 +6,63 @@ import { AuthContext } from 'src/main/auth';
 import { ROLE_USER } from 'src/main/data/roles';
 import Page from './Page';
 
-jest.mock('../pages/account/AccountPage', () => ({
+jest.mock('../../pages/account/AccountPage', () => ({
    __esModule: true,
    default: () => <div>Account page</div>,
 }));
-jest.mock('../pages/account/messages/MessagesPage', () => ({
+jest.mock('../../pages/account/messages/MessagesPage', () => ({
    __esModule: true,
    default: () => <div>Message page</div>,
 }));
-jest.mock('../pages/account/settings/SettingsPage', () => ({
+jest.mock('../../pages/account/settings/SettingsPage', () => ({
    __esModule: true,
    default: () => <div>Settings page</div>,
 }));
-jest.mock('../pages/confirmRegistration/ConfirmRegistrationPage', () => ({
+jest.mock('../../pages/confirmRegistration/ConfirmRegistrationPage', () => ({
    __esModule: true,
    default: () => <div>Confirm registration page</div>,
 }));
-jest.mock('../pages/confirmResetPassword/ConfirmResetPasswordPage', () => ({
+jest.mock('../../pages/confirmResetPassword/ConfirmResetPasswordPage', () => ({
    __esModule: true,
    default: () => <div>Confirm reset password page</div>,
 }));
-jest.mock('../pages/contact/Contact', () => ({
+jest.mock('../../pages/contact/Contact', () => ({
    __esModule: true,
    default: () => <div>Contact page</div>,
 }));
-jest.mock('../pages/equipment/EquipmentPage', () => ({
+jest.mock('../../pages/equipment/EquipmentPage', () => ({
    __esModule: true,
    default: () => <div>Equipment page</div>,
 }));
-jest.mock('../pages/home/Home', () => ({
+jest.mock('../../pages/home/Home', () => ({
    __esModule: true,
    default: () => <div>Home page</div>,
 }));
-jest.mock('../pages/login/LogInPage', () => ({
+jest.mock('../../pages/login/LogInPage', () => ({
    __esModule: true,
    default: () => <div>LogIn page</div>,
 }));
-jest.mock('../pages/priceList/PriceListPage', () => ({
+jest.mock('../../pages/priceList/PriceListPage', () => ({
    __esModule: true,
    default: () => <div>Price list page</div>,
 }));
-jest.mock('../pages/resetPassword/ResetPasswordPage', () => ({
+jest.mock('../../pages/resetPassword/ResetPasswordPage', () => ({
    __esModule: true,
    default: () => <div>Reset password page</div>,
 }));
-jest.mock('../pages/sign-up/SignUp', () => ({
+jest.mock('../../pages/sign-up/SignUp', () => ({
    __esModule: true,
    default: () => <div>SignUp page</div>,
 }));
-jest.mock('../pages/timetable/TimetablePage', () => ({
+jest.mock('../../pages/timetable/TimetablePage', () => ({
    __esModule: true,
    default: () => <div>Timetable page</div>,
 }));
-jest.mock('../pages/trainers/TrainersPage', () => ({
+jest.mock('../../pages/trainers/TrainersPage', () => ({
    __esModule: true,
    default: () => <div>Trainers page</div>,
 }));
-jest.mock('../pages/workouts/WorkoutsPage', () => ({
+jest.mock('../../pages/workouts/WorkoutsPage', () => ({
    __esModule: true,
    default: () => <div>Workouts page</div>,
 }));
