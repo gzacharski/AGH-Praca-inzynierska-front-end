@@ -16,7 +16,7 @@ import {
    withTrainerRole,
    withUserRole,
 } from 'src/main/auth';
-import { FilterRenderer } from 'src/main/renderers';
+import { FilterRenderer } from 'src/main/components/utils';
 import {
    AdminList,
    AccountList,
