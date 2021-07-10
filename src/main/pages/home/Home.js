@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import { selectUsersFromUser } from 'src/main/store/selectors';
-import { addUser } from 'src/main/store/actionsCreators';
+import { selectUsersFromUser, addUser } from 'src/main/store/sliceFiles/usersSlice';
 import { useStyles } from './Home.styles';
 
 export default function Home() {

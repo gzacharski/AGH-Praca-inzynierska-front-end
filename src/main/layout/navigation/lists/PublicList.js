@@ -9,7 +9,7 @@ import {
    EmojiPeople,
 } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
-import { selectDrawer } from 'src/main/store/selectors';
+import { selectDrawer } from 'src/main/store/sliceFiles/drawerSlice';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 
 export default function AdminList() {

@@ -3,9 +3,11 @@ import { Button, Tooltip } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
-import { selectUserInfo } from 'src/main/store/selectors';
 import { AvatarIcon } from 'src/main/components/icons/avatar/AvatarIcon';
-import { selectStatus as selectAccountStatus } from 'src/main/store/sliceFiles/accountSlice';
+import {
+   selectStatus as selectAccountStatus,
+   selectUserInfo,
+} from 'src/main/store/sliceFiles/accountSlice';
 import { STATUS } from 'src/main/store/status';
 import { useStyles } from './AvatarButton.styles';
 

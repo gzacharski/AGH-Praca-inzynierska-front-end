@@ -1,8 +1,11 @@
 import React from 'react';
 import { Switch, Tooltip } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectDrawer, selectDrawerMoreInfo } from 'src/main/store/selectors';
-import { toggleDrawerMoreInfo } from 'src/main/store/actionsCreators';
+import {
+   selectDrawer,
+   selectDrawerMoreInfo,
+   toggleDrawerMoreInfo
+} from 'src/main/store/sliceFiles/drawerSlice';
 import { useStyles } from './MenuMoreInfoSwitch.styles';
 
 export default function MenuMoreInfoSwitch() {

@@ -3,8 +3,10 @@ import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
-import { selectDrawer } from 'src/main/store/selectors';
-import { toggleDrawer } from 'src/main/store/actionsCreators';
+import {
+   selectDrawer,
+   toggleDrawer,
+} from 'src/main/store/sliceFiles/drawerSlice';
 import { NavLink, LoginButton } from 'src/main/components/buttons';
 import { PersonalMenu } from 'src/main/components/buttonGroups';
 import { AuthContext } from 'src/main/auth';
