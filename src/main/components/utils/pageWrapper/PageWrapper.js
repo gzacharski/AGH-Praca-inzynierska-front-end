@@ -8,7 +8,7 @@ export const PageWrapper = (props) => {
    return (
       <Container
          maxWidth="xl"
-         data-testid="main-container"
+         data-testid="page-container"
          className={classes.root}
       >
          {children}

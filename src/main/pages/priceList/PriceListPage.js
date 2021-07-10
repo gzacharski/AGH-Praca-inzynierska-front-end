@@ -10,6 +10,7 @@ import { PriceListCard } from 'src/main/components/card';
 import { gymPassServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
 import { ConfirmationIcon } from 'src/main/components/icons';
+import { PageWrapper } from 'src/main/components/utils';
 import { useStyles } from './PriceListPage.styles';
 
 const ShowPriceList = ({ gymPasses }) => (
@@ -73,12 +74,8 @@ const PriceListPage = () => {
    }
 
    return (
-      <>
-         <Container
-            maxWidth="sm"
-            component="main"
-            className={classes.pageTitle}
-         >
+      <PageWrapper>
+         <Container maxWidth="sm" className={classes.pageTitle}>
             <Typography
                variant="h3"
                align="center"
@@ -96,14 +93,10 @@ const PriceListPage = () => {
                Wybierz odpowiedni dla siebie typ karnetu i zacznij ćwiczyć!
             </Typography>
          </Container>
-         <Container
-            maxWidth="xl"
-            component="main"
-            className={{ alignItems: 'center' }}
-         >
+         <Container maxWidth="xl" className={{ alignItems: 'center' }}>
             <ShowPriceList gymPasses={gymPasses} />
          </Container>
-      </>
+      </PageWrapper>
    );
 };
 

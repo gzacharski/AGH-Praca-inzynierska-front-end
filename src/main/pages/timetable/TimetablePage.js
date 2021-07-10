@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import {
-   Container,
    Paper,
    Typography,
    IconButton,
@@ -23,6 +22,7 @@ import {
    TodayButton,
    AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { PageWrapper } from 'src/main/components/utils';
 import { useStyles } from './TimetablePage.styles';
 
 const schedulerData = [
@@ -104,7 +104,7 @@ const Content = withStyles(style)(
 export default function News() {
    const classes = useStyles();
    return (
-      <Container maxWidth="xl" component="main" data-testid="main-container">
+      <PageWrapper>
          <Typography variant="h5" className={classes.root} align="center">
             Aktualny grafik zajęć
          </Typography>
@@ -118,7 +118,7 @@ export default function News() {
                />
                <DayView startDayHour={9} endDayHour={22} displayName="Dzień" />
                <Toolbar />
-               <TodayButton messages={{today:'Dzisiaj'}}/>
+               <TodayButton messages={{ today: 'Dzisiaj' }} />
                <DateNavigator />
                <ViewSwitcher />
                <Appointments />
@@ -129,6 +129,6 @@ export default function News() {
                />
             </Scheduler>
          </Paper>
-      </Container>
+      </PageWrapper>
    );
 }

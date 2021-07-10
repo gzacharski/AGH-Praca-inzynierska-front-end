@@ -1,9 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import { selectUsersFromUser, addUser } from 'src/main/store/sliceFiles/usersSlice';
+import { Typography, Button } from '@material-ui/core';
+import { PageWrapper } from 'src/main/components/utils';
+import {
+   selectUsersFromUser,
+   addUser,
+} from 'src/main/store/sliceFiles/usersSlice';
 import { useStyles } from './Home.styles';
 
 export default function Home() {
@@ -17,7 +19,7 @@ export default function Home() {
    const users = useSelector(selectUsersFromUser);
 
    return (
-      <Container maxWidth="xl" component="main" data-testid="main-container">
+      <PageWrapper>
          <Typography variant="h5" className={classes.root} align="center">
             Strona główna
             <br />
@@ -30,6 +32,6 @@ export default function Home() {
             </Button>
             {users && userList(users)}
          </Typography>
-      </Container>
+      </PageWrapper>
    );
 }

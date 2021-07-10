@@ -5,7 +5,7 @@ import { render, screen } from 'src/testUtils';
 import userEvent from '@testing-library/user-event';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
-import Footer from './Footer';
+import { Footer } from './Footer';
 
 Enzyme.configure({ adapter: new Adapter() });
 

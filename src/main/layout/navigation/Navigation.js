@@ -86,37 +86,38 @@ const Navigation = () => {
 
    const { token } = authContext.authState;
 
-   if (token === null) return null;
-
    return (
-      <Drawer
-         variant="permanent"
-         className={clsx(classes.drawer, {
-            [classes.drawerOpen]: menuIsOpen,
-            [classes.drawerClose]: !menuIsOpen,
-         })}
-         classes={{
-            paper: clsx({
-               [classes.drawerMoreInfo]: menuMoreInfo,
+      token && (
+         <Drawer
+            variant="permanent"
+            className={clsx(classes.drawer, {
                [classes.drawerOpen]: menuIsOpen,
                [classes.drawerClose]: !menuIsOpen,
-            }),
-         }}
-         open={menuIsOpen}
-      >
-         <div className={classes.toolbar}>
-            <MenuMoreInfoSwitch />
-            <IconButton onClick={() => dispatch(toggleDrawer())}>
-               {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
-            </IconButton>
-         </div>
-         <AccountListAuth />
-         <EmployeeListAuth />
-         <TrainerListAuth />
-         <ManagerListAuth />
-         <AdminListAuth />
-         <PublicListAuth />
-      </Drawer>
+            })}
+            classes={{
+               paper: clsx({
+                  [classes.drawerMoreInfo]: menuMoreInfo,
+                  [classes.drawerOpen]: menuIsOpen,
+                  [classes.drawerClose]: !menuIsOpen,
+               }),
+            }}
+            open={menuIsOpen}
+            data-testid="navigation"
+         >
+            <div className={classes.toolbar}>
+               <MenuMoreInfoSwitch />
+               <IconButton onClick={() => dispatch(toggleDrawer())}>
+                  {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
+               </IconButton>
+            </div>
+            <AccountListAuth />
+            <EmployeeListAuth />
+            <TrainerListAuth />
+            <ManagerListAuth />
+            <AdminListAuth />
+            <PublicListAuth />
+         </Drawer>
+      )
    );
 };
 
