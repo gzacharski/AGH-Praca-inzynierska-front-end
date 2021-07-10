@@ -29,7 +29,7 @@ export const Footer = () => {
    );
 };
 
-export default function FilteredFooter() {
+export const FilteredFooter = () => {
    const filteredUrls = [
       '/login',
       '/sign-up',
@@ -41,4 +41,4 @@ export default function FilteredFooter() {
          <Footer />
       </FilterRenderer>
    );
-}
+};
