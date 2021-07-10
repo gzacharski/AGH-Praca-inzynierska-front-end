@@ -26,6 +26,7 @@ import {
    TrainerList,
 } from 'src/main/layout/navigation/lists';
 import { MenuMoreInfoSwitch } from 'src/main/components/switches';
+import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Navigation.styles';
 
 const AdminListAuth = () =>
@@ -119,18 +120,10 @@ const Navigation = () => {
    );
 };
 
-const NavigationFiltered = () => {
-   const filteredUrls = [
-      '/login',
-      '/sign-up',
-      '/confirmRegistration',
-      '/confirmNewPassword',
-   ];
-   return (
-      <FilterRenderer urls={filteredUrls}>
-         <Navigation />
-      </FilterRenderer>
-   );
-};
+const NavigationFiltered = () => (
+   <FilterRenderer urls={filteredUrls}>
+      <Navigation />
+   </FilterRenderer>
+);
 
 export default NavigationFiltered;

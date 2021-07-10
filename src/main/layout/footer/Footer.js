@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Divider, Link, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { FilterRenderer } from 'src/main/components/utils';
+import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Footer.styles';
 
 export const Footer = () => {
@@ -29,16 +30,8 @@ export const Footer = () => {
    );
 };
 
-export const FilteredFooter = () => {
-   const filteredUrls = [
-      '/login',
-      '/sign-up',
-      '/confirmRegistration',
-      '/confirmNewPassword',
-   ];
-   return (
-      <FilterRenderer urls={filteredUrls}>
-         <Footer />
-      </FilterRenderer>
-   );
-};
+export const FilteredFooter = () => (
+   <FilterRenderer urls={filteredUrls}>
+      <Footer />
+   </FilterRenderer>
+);
