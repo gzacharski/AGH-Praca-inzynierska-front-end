@@ -5,7 +5,7 @@ import { MailOutline } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectStatus as selectAccountStatus } from 'src/main/store/sliceFiles/accountSlice';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { useStyles } from './MessageButton.style';
 
 const MessageButton = (props) => {

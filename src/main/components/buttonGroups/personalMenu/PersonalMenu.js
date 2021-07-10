@@ -15,7 +15,7 @@ import {
    MessageButton,
    NotificationButton,
 } from 'src/main/components/buttonGroups/personalMenu/buttons';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
 
 const PersonalMenu = () => {

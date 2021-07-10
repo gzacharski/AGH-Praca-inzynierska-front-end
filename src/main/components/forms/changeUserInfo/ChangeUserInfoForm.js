@@ -22,7 +22,7 @@ import {
    selectMessage,
 } from 'src/main/store/sliceFiles/accountSlice';
 import { SaveChangesDialog } from 'src/main/components/dialogs';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { useStyles } from './ChangeUserInfoForm.styles';
 import { phoneRegExp } from '../sign-up/phoneRegExp';
 

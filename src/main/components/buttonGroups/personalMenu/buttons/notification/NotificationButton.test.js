@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act } from 'src/testUtils';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import NotificationButton from './NotificationButton';
 
 const mockStore = configureStore([]);

@@ -8,7 +8,7 @@ import {
    selectStatus as selectAccountStatus,
    selectUserInfo,
 } from 'src/main/store/sliceFiles/accountSlice';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { useStyles } from './AvatarButton.styles';
 
 const AvatarButton = (props) => {

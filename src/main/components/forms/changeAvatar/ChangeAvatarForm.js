@@ -22,7 +22,7 @@ import {
 } from 'src/main/store/sliceFiles/avatarSlice';
 import { selectUserInfo } from 'src/main/store/sliceFiles/accountSlice';
 import { AvatarIcon } from 'src/main/components/icons';
-import { STATUS } from 'src/main/store/status';
+import { STATUS } from 'src/main/store';
 import { SaveChangesDialog } from 'src/main/components/dialogs';
 import { useStyles } from './ChangeAvatarForm.styles';
 

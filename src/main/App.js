@@ -4,7 +4,7 @@ import { CssBaseline } from '@material-ui/core';
 import { SnackbarProvider } from 'notistack';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from 'src/main/auth';
-import store from 'src/main/store/store';
+import { store } from 'src/main/store';
 import { Footer, Header, Navigation, Page } from 'src/main/layout';
 
 const App = () => (
