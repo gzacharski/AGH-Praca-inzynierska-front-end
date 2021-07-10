@@ -55,6 +55,6 @@ describe('App root div contains:', () => {
 describe('App div root child:', () => {
    test('is 1 child elements', () => {
       const { container } = render(<App />);
-      expect(container.childNodes.length).toEqual(1);
+      expect(container.childNodes.length).toEqual(3);
    });
 });

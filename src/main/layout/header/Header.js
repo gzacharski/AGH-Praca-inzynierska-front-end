@@ -10,6 +10,7 @@ import {
 import { NavLink, LoginButton } from 'src/main/components/buttons';
 import { PersonalMenu } from 'src/main/components/buttonGroups';
 import { AuthContext } from 'src/main/auth';
+import { FilterRenderer } from 'src/main/components/utils';
 import { useStyles } from './Header.styles';
 
 const links = [
@@ -85,4 +86,17 @@ const Header = () => {
    );
 };
 
-export default Header;
+export default function HeaderFiltered() {
+   const filteredUrls = [
+      '/login',
+      '/sign-up',
+      '/confirmRegistration',
+      '/confirmNewPassword',
+   ];
+
+   return (
+      <FilterRenderer urls={filteredUrls}>
+         <Header />
+      </FilterRenderer>
+   );
+}

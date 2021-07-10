@@ -61,38 +61,6 @@ describe('Footer component', () => {
    });
 });
 
-test('on login page once link cliked, it should route to main page', () => {
-   const history = createMemoryHistory();
-   history.push('/login'); // example url
-   
-   render(
-      <AuthContext.Provider
-         value={{
-            authState: {
-               token: null,
-               userInfo: { roles: [] },
-            },
-         }}
-      >
-         <Router history={history}>
-            <Page />
-         </Router>
-      </AuthContext.Provider>,
-   );
-
-   expect(screen.queryByText(/Strona główna/)).not.toBeInTheDocument();
-
-   const leftClick = { button: 0 };
-   userEvent.click(
-      screen.getByText(
-         /System do wspomagania zarządzania placówką profilaktyki zdrowotnej/i,
-      ),
-      leftClick,
-   );
-
-   expect(screen.getByText(/Strona główna/)).toBeInTheDocument();
-});
-
 test('when link clicked, it shoud route to main page', () => {
    render(
       <MemoryRouter initialEntries={['/footer']}>
