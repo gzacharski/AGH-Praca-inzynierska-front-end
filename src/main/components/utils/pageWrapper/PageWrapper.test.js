@@ -14,8 +14,6 @@ describe('Page Wrapper', () => {
          </PageWrapper>,
       );
 
-      screen.debug();
-      expect(screen.getByRole('main')).toBeInTheDocument();
       expect(screen.getByText('Test Component1')).toBeInTheDocument();
       expect(screen.getByText('Test Component2')).toBeInTheDocument();
    });
