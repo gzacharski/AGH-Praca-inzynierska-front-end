@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { FilterRenderer } from 'src/main/components/utils';
 import { useStyles } from './Footer.styles';
 
-const Footer = () => {
+export const Footer = () => {
    const classes = useStyles();
    return (
       <Container maxWidth="xl" component="footer" className={classes.root}>

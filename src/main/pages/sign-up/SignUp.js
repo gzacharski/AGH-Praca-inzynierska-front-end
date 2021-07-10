@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { SingUpForm } from 'src/main/components/forms';
-import { Footer } from 'src/main/layout';
+import { Footer } from 'src/main/layout/footer/Footer';
 import { useStyles } from './SignUp.styles';
 
 export default function SingUp() {

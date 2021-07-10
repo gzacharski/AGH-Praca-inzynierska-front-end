@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { Container, CircularProgress, Typography } from '@material-ui/core';
-import { Footer } from 'src/main/layout';
+import { Footer } from 'src/main/layout/footer/Footer';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import { useStyles } from './ConfirmRegistrationPage.styles';
 import ConfirmationButton from './confirmationButton/ConfirmationButton';
