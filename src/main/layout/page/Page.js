@@ -29,6 +29,8 @@ import {
    ManagerRouteGroup,
    TrainerRouteGroups,
 } from 'src/main/layout/navigation/routeGroups';
+import { FilterRenderer } from 'src/main/components/utils';
+import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Page.styles';
 
 const Page = () => {
@@ -88,7 +90,9 @@ const PageWrapper = () => {
    const classes = useStyles();
    return (
       <>
-         <div className={classes.appBarSpacer} />
+         <FilterRenderer urls={filteredUrls}>
+            <div className={classes.appBarSpacer} />
+         </FilterRenderer>
          <Page />
       </>
    );
