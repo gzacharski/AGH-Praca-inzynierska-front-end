@@ -70,7 +70,7 @@ const style = ({ palette }) => ({
 
 const Header = ({ appointmentData, ...restProps }) => (
    <AppointmentTooltip.Header {...restProps} appointmentData={appointmentData}>
-      <IconButton onClick={() => console.log('Clicked')}>
+      <IconButton>
          <MoreVert />
       </IconButton>
    </AppointmentTooltip.Header>
