@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createMemoryHistory } from 'history';
-import { MemoryRouter, Router, Route } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
 import userEvent from '@testing-library/user-event';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
-import { Page } from 'src/main/layout';
-import { AuthContext } from 'src/main/auth';
 import Footer from './Footer';
 
 Enzyme.configure({ adapter: new Adapter() });
