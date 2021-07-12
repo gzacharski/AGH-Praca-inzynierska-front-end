@@ -1,17 +1,17 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './ReservationsEquipmentPage.styles';
+import { useSelector } from 'react-redux';
+import { selectData } from 'src/main/store/sliceFiles/timetable/equipmentReservationSlice';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
+import { AccountEquipmentTimetable } from 'src/main/components/timetable';
 
-const SettingsPage = () => {
-   const classes = useStyles;
+const ReservationsEquipmentPage = () => {
+   const data = useSelector(selectData);
    return (
       <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Twoje rezerwacje sprzętu
-         </Typography>
+         <PageTitle>Twoje rezerwacje sprzętu</PageTitle>
+         <AccountEquipmentTimetable data={data} />
       </PageWrapper>
    );
 };
 
-export default SettingsPage;
+export default ReservationsEquipmentPage;
