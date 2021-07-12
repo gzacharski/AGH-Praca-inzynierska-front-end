@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { PageWrapper } from 'src/main/components/utils';
-import { Timetable } from 'src/main/components/timetable';
+import { PublicTimetable } from 'src/main/components/timetable';
 import {
    selectData,
    addAppointment,
@@ -24,8 +24,8 @@ export default function TimetablePage() {
                   addAppointment({
                      id: 'brzuchy',
                      title: 'Brzuch',
-                     startDate: '2021-07-11T12:45',
-                     endDate: '2021-07-11T14:00',
+                     startDate: '2021-07-17T12:45',
+                     endDate: '2021-07-17T14:00',
                      location: 'Sala nr 4',
                      allDay: false,
                   }),
@@ -34,7 +34,7 @@ export default function TimetablePage() {
          >
             Test
          </Button>
-         <Timetable data={data} />
+         <PublicTimetable data={data} />
       </PageWrapper>
    );
 }
