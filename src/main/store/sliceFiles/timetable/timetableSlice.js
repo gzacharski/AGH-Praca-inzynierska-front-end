@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { STATUS } from '../status';
+import { STATUS } from '../../status';
 
 const initialState = {
    data: [

@@ -4,7 +4,7 @@ import accountReducer from 'src/main/store/sliceFiles/accountSlice';
 import userReducer from 'src/main/store/sliceFiles/usersSlice';
 import avatarReducer from 'src/main/store/sliceFiles/avatarSlice';
 import agreementSlice from 'src/main/store/sliceFiles/agreementSlice';
-import timetableSlice from 'src/main/store/sliceFiles/timetableSlice';
+import timetableSlice from 'src/main/store/sliceFiles/timetable/timetableSlice';
 
 export const reducer = {
    drawer: drawerReducer,
