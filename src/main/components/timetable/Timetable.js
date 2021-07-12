@@ -10,12 +10,10 @@ import {
    ViewSwitcher,
    DateNavigator,
    TodayButton,
-   AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { ContentTooltip, HeaderTooltip } from 'src/main/components/timetable';
 import { useStyles } from './Timetable.styles';
 
-export const Timetable = ({ data }) => {
+export const Timetable = ({data, children}) => {
    const classes = useStyles();
    return (
       <Paper className={classes.paper}>
@@ -23,16 +21,12 @@ export const Timetable = ({ data }) => {
             <ViewState defaultCurrentViewName="Week" />
             <WeekView startDayHour={7} endDayHour={22} displayName="Tydzień" />
             <DayView startDayHour={7} endDayHour={22} displayName="Dzień" />
-            <Toolbar />
+            <Toolbar/>
             <TodayButton messages={{ today: 'Dzisiaj' }} />
             <DateNavigator />
             <ViewSwitcher />
             <Appointments />
-            <AppointmentTooltip
-               showCloseButton
-               headerComponent={HeaderTooltip}
-               contentComponent={ContentTooltip}
-            />
+            {children}
          </Scheduler>
       </Paper>
    );
