@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
    },
    content: {
       display: 'flex',
-      overflow: 'autos'
+      overflow: 'autos',
    },
    paper: {
       minHeight: 200,
@@ -18,9 +18,5 @@ export const useStyles = makeStyles((theme) => ({
       display: 'flex',
       overflow: 'auto',
       flexDirection: 'column',
-   },
-   title: {
-      fontWeight: 'bold',
-      padding: theme.spacing(1),
    },
 }));
