@@ -204,7 +204,7 @@ export const ChangeAvatarForm = () => {
                         />
                         <DeleteImageButton
                            classes={classes}
-                           disabled={Boolean(!avatar.data)}
+                           disabled={Boolean(!avatar?.data)}
                            handleRemoveAvatar={() => setOpenDialog2(true)}
                            render={shouldRender}
                         />
