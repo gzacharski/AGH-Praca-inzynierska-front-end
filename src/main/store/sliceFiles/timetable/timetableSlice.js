@@ -11,6 +11,15 @@ const initialState = {
          endDate: '2021-07-17T11:00',
          location: 'Sala nr 1',
          allDay: false,
+         trainer: {
+            id: 'testTrainer',
+            name: 'Jan',
+            surname: 'Kowalski',
+            avatar: {
+               data: 'data',
+               format: 'image/jpeg',
+            },
+         },
       },
       {
          id: 'testid2',
