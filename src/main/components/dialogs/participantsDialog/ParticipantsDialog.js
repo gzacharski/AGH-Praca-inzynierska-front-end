@@ -62,6 +62,8 @@ export const ParticipantList = ({ users, title }) => (
 
 export const ParticipantsDialog = ({ users, open, setOpen }) => {
    const classes = useStyles();
+   const { trainers = [] } = users;
+   const { basicList = [], reserveList = [] } = users?.partipants;
    return (
       <Dialog
          open={open}
@@ -79,10 +81,10 @@ export const ParticipantsDialog = ({ users, open, setOpen }) => {
             </IconButton>
          </DialogTitle>
          <DialogContent dividers>
-            <TrainerList trainer={users[0]} />
+            <TrainerList trainers={trainers} />
             <div className={classes.dialog}>
-               <ParticipantList users={users} title="Lista podstawowa" />
-               <ParticipantList users={users} title="Lista rezerwowa" />
+               <ParticipantList users={basicList} title="Lista podstawowa" />
+               <ParticipantList users={reserveList} title="Lista rezerwowa" />
             </div>
          </DialogContent>
       </Dialog>
