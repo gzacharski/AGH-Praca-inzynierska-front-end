@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import {
@@ -10,11 +11,12 @@ import {
    makeStyles,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { AvatarGroup } from '@material-ui/lab';
+import { AvatarGroup, Rating } from '@material-ui/lab';
 import {
    Room as RoomIcon,
    People as PeopleIcon,
    EmojiPeople as EmojiPeopleIcon,
+   ThumbsUpDown as ThumbsUpDownIcon,
 } from '@material-ui/icons';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { ParticipantsDialog } from 'src/main/components/dialogs';
@@ -33,13 +35,17 @@ const style = ({ palette }) => ({
    },
 });
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
    group: {
       '&:hover': {
          cursor: 'pointer',
       },
    },
-});
+   grid: {
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+   },
+}));
 
 const UserAvatars2 = ({ users, setOpen }) => {
    const classes = useStyles();
@@ -74,20 +80,24 @@ const UserAvatars2 = ({ users, setOpen }) => {
          })}
       </AvatarGroup>
    ) : (
-      <Typography>Brak uczestników. Zapisz się pierwszy.</Typography>
+      <Typography>Brak uczestników.</Typography>
    );
 };
 
 export const ContentTooltip = withStyles(style)(
    ({ appointmentData, classes, ...restProps }) => {
-      const { location = '', trainers = [], partipants = {} } = appointmentData;
+      const {
+         location = '',
+         trainers = [],
+         partipants = {},
+         rating,
+      } = appointmentData;
       const { basicList = [] } = partipants;
 
       const [open, setOpen] = useState(false);
 
       return (
          <AppointmentTooltip.Content
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...restProps}
             appointmentData={appointmentData}
          >
@@ -104,10 +114,31 @@ export const ContentTooltip = withStyles(style)(
                               <RoomIcon className={classes.icon} />
                            </Tooltip>
                         </Grid>
-                        <Grid item xs={10}>
+                        <Grid item xs={4}>
                            <Link href="#" color="inherit">
                               {location}
                            </Link>
+                        </Grid>
+                     </>
+                  )}
+                  {rating && (
+                     <>
+                        <Grid item xs={2} className={classes.textCenter}>
+                           <Tooltip
+                              title={`Ocena: ${rating}`}
+                              placement="bottom"
+                              arrow
+                           >
+                              <ThumbsUpDownIcon className={classes.icon} />
+                           </Tooltip>
+                        </Grid>
+                        <Grid item xs={4}>
+                           <Rating
+                              name="rating"
+                              precision={0.5}
+                              value={rating}
+                              readOnly
+                           />
                         </Grid>
                      </>
                   )}
@@ -122,7 +153,7 @@ export const ContentTooltip = withStyles(style)(
                               <EmojiPeopleIcon className={classes.icon} />
                            </Tooltip>
                         </Grid>
-                        <Grid item xs={10}>
+                        <Grid item xs={4}>
                            <UserAvatars2 users={trainers} setOpen={setOpen} />
                         </Grid>
                      </>
@@ -132,7 +163,7 @@ export const ContentTooltip = withStyles(style)(
                         <PeopleIcon className={classes.icon} />
                      </Tooltip>
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={4}>
                      <UserAvatars2 users={basicList} setOpen={setOpen} />
                   </Grid>
                </Grid>

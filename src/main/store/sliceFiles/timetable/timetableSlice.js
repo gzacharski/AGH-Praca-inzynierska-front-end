@@ -12,6 +12,7 @@ const initialState = {
          endDate: '2021-07-17T11:00',
          allDay: false,
          location: 'Sala nr 1',
+         rating: 3.5,
          trainers: [
             {
                userId: nanoid(),
