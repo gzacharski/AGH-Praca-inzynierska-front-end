@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { rest } from 'msw';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
@@ -7,16 +8,35 @@ export const handlers = [
       console.log(req);
       return res(ctx.status(200), ctx.delay(), ctx.json({ test: 'hello' }));
    }),
-   rest.get(`${trainingsServiceURL}/group/public`, (req, res, ctx) =>
-      res(
+   rest.get(`${trainingsServiceURL}/group/public`, (req, res, ctx) => {
+      const startDate = req.url.searchParams.get('startDate');
+      const endDate = req.url.searchParams.get('endDate');
+
+      // console.log(startDate);
+      // console.log(endDate);
+
+      // if (startDate && endDate) {
+      //    return res(
+      //       ctx.status(404),
+      //       ctx.delay(2000),
+      //       ctx.json({
+      //          message: 'Nie znaleziono wybranych treningów',
+      //          error: 'Test error',
+      //          status: 404,
+      //          timestamp: Date.now(),
+      //       }),
+      //    );
+      // }
+
+      return res(
          ctx.status(200),
-         ctx.delay(),
+         ctx.delay(2000),
          ctx.json([
             {
                id: nanoid(),
                title: 'Joga',
-               startDate: '2021-07-17T09:45',
-               endDate: '2021-07-17T11:00',
+               startDate: '2021-07-16T09:45',
+               endDate: '2021-07-16T11:00',
                allDay: false,
                location: 'Sala nr 1',
                rating: 3.5,
@@ -143,6 +163,6 @@ export const handlers = [
                allDay: false,
             },
          ]),
-      ),
-   ),
+      );
+   }),
 ];

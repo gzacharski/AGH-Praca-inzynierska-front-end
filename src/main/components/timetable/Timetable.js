@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Paper, LinearProgress } from '@material-ui/core';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
@@ -14,22 +12,20 @@ import {
    TodayButton,
    ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { formatDate, getEndOfWeek, getStartOfWeek } from 'src/main/utils';
+import { useDispatch } from 'react-redux';
+import { getEndOfWeek, getStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { useStyles } from './Timetable.styles';
 
-const CustonDateNavigator = ({ children, ...restProps }) => (
-   <DateNavigator.NavigationButton
-      {...restProps}
-      onClick={() => console.log('test')}
-      type="back"
-   >
-      {children}
-   </DateNavigator.NavigationButton>
-);
-
-export const Timetable = ({ data, status, children }) => {
+export const Timetable = ({
+   data,
+   status,
+   fetchData,
+   fetchedDates,
+   children,
+}) => {
    const classes = useStyles();
+   const dispatch = useDispatch();
    const shouldRenderProgress =
       status === STATUS.IDLE || status === STATUS.LOADING;
    return (
@@ -39,9 +35,11 @@ export const Timetable = ({ data, status, children }) => {
             <ViewState
                defaultCurrentViewName="Week"
                onCurrentDateChange={(currentDate) => {
-                  console.log(getStartOfWeek(currentDate));
-                  console.log(formatDate(currentDate));
-                  console.log(getEndOfWeek(currentDate));
+                  const startOfWeek = getStartOfWeek(currentDate);
+                  const endOfWeek = getEndOfWeek(currentDate);
+                  if (fetchedDates[startOfWeek] !== endOfWeek) {
+                     dispatch(fetchData({ startOfWeek, endOfWeek }));
+                  }
                }}
             />
             <EditingState />

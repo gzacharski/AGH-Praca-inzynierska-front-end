@@ -4,8 +4,13 @@ import { Timetable } from 'src/main/components/timetable';
 import { ContentTooltip } from './appointmentTooltip/ContentTooltip';
 import { HeaderTooltip } from './appointmentTooltip/HeaderTooltip';
 
-export const PublicTimetable = ({ data }) => (
-   <Timetable data={data}>
+export const PublicTimetable = ({ data, status, fetchData, fetchedDates }) => (
+   <Timetable
+      data={data}
+      status={status}
+      fetchData={fetchData}
+      fetchedDates={fetchedDates}
+   >
       <AppointmentTooltip
          showCloseButton
          headerComponent={HeaderTooltip}
