@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Paper } from '@material-ui/core';
+import { Paper, LinearProgress } from '@material-ui/core';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import {
    Scheduler,
@@ -15,6 +15,7 @@ import {
    ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { formatDate, getEndOfWeek, getStartOfWeek } from 'src/main/utils';
+import { STATUS } from 'src/main/store';
 import { useStyles } from './Timetable.styles';
 
 const CustonDateNavigator = ({ children, ...restProps }) => (
@@ -27,10 +28,13 @@ const CustonDateNavigator = ({ children, ...restProps }) => (
    </DateNavigator.NavigationButton>
 );
 
-export const Timetable = ({ data, children }) => {
+export const Timetable = ({ data, status, children }) => {
    const classes = useStyles();
+   const shouldRenderProgress =
+      status === STATUS.IDLE || status === STATUS.LOADING;
    return (
       <Paper className={classes.paper}>
+         {shouldRenderProgress && <LinearProgress />}
          <Scheduler data={data} locale="pl-PL" firstDayOfWeek={1}>
             <ViewState
                defaultCurrentViewName="Week"
