@@ -51,7 +51,7 @@ export const timetableSlice = createSlice({
       },
       [fetchPublicTimetableData.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.data = action.payload.data;
+         state.data.push(...action.payload.data);
          state.error = null;
          state.fetchedDates = {
             ...state.fetchedDates,
