@@ -1,6 +1,6 @@
 import { setupWorker } from 'msw';
-import { handlers } from './handlers';
+import { handlers as accountGroupTimetableHandlers } from './handlers/accountGroupTimetable';
 
-const worker = setupWorker(...handlers);
+const worker = setupWorker(...accountGroupTimetableHandlers);
 
 export { worker };
