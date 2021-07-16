@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 
 export const userGroupTimetableHandlers = [
    rest.get(
-      `${trainingsServiceURL}/timetable/:userId/groupWorakouts`,
+      `${trainingsServiceURL}/timetable/:userId/groupWorkouts`,
       (req, res, ctx) => {
          const { userId } = req.params;
          const startDate = req.url.searchParams.get('startDate');
