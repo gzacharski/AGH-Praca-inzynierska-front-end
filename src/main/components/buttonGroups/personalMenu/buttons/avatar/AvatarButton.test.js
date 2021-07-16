@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, screen, act, waitFor } from 'src/testUtils';
-import { testUser, testAvatar } from 'src/main/data/testData';
+import { render, screen, act } from 'src/testUtils';
+import { testUser } from 'src/main/data/testData';
 import { STATUS } from 'src/main/store';
 import AvatarButton from './AvatarButton';
 
@@ -30,7 +30,7 @@ describe('Avatar button', () => {
             },
             avatar: {
                status: STATUS.SUCCEEDED,
-               image: testAvatar,
+               image: 'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
             },
          });
          rendenAvatarButton(store);
@@ -48,10 +48,7 @@ describe('Avatar button', () => {
       test('should have image avatar', () => {
          expect(screen.getByRole('img')).toBeInTheDocument();
          expect(screen.getByRole('img').getAttribute('src')).toContain(
-            testAvatar.data,
-         );
-         expect(screen.getByRole('img').getAttribute('src')).toContain(
-            testAvatar.format,
+            'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
          );
       });
 
