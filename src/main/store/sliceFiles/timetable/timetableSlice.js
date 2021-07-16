@@ -15,7 +15,7 @@ const initialState = {
 
 export const fetchPublicTimetableData = createAsyncThunk(
    'timetable/fetchPublicTimetableData',
-   async ({ startOfWeek, endOfWeek }, { rejectWithValue, getState }) => {
+   async ({ startOfWeek, endOfWeek }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/group/public?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       const config = {
