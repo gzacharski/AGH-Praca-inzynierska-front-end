@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { rest } from 'msw';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
-import { formatDate } from 'src/main/utils';
-import { addDays } from 'date-fns';
 
 export const handlers = [
    rest.get(`${trainingsServiceURL}/test`, (req, res, ctx) =>
@@ -13,7 +10,7 @@ export const handlers = [
       const startDate = req.url.searchParams.get('startDate');
       const endDate = req.url.searchParams.get('endDate');
 
-      if (startDate === '2021-07-19')
+      if (startDate === '2021-07-19' && endDate === '2021-07-25')
          return res(
             ctx.status(200),
             ctx.delay(1500),
@@ -72,14 +69,14 @@ export const handlers = [
             ]),
          );
 
-      if (startDate === '2021-07-26')
+      if (startDate === '2021-07-26' && endDate === '2021-08-01')
          return res(
             ctx.status(404),
             ctx.delay(),
             ctx.json({ message: 'Brak treningów do wyświetlenia' }),
          );
 
-      if (startDate === '2021-07-12')
+      if (startDate === '2021-07-12' && endDate === '2021-07-18')
          return res(
             ctx.status(200),
             ctx.delay(2000),
