@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
 
-export const handlers = [
+export const publicTimetableHandlers = [
    rest.get(`${trainingsServiceURL}/group/public`, (req, res, ctx) => {
       const startDate = req.url.searchParams.get('startDate');
       const endDate = req.url.searchParams.get('endDate');

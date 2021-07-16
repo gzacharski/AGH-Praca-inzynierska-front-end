@@ -4,6 +4,7 @@ import { priceListHandlers } from './handlers/priceListHandler';
 import { userEquipmentTimetableHandlers } from './handlers/timetableHandlers/userEquipmentTimetableHandler';
 import { userGroupTimetableHandlers } from './handlers/timetableHandlers/userGroupTimetableHandler';
 import { userIndividualTimetableHandler } from './handlers/timetableHandlers/userIndividualTimetableHandler';
+import { publicTimetableHandlers } from './handlers/timetableHandlers/publicTimetableHandler';
 
 const worker = setupWorker(
    ...loginHandlers,
@@ -11,6 +12,7 @@ const worker = setupWorker(
    ...userGroupTimetableHandlers,
    ...userEquipmentTimetableHandlers,
    ...userIndividualTimetableHandler,
+   ...publicTimetableHandlers,
 );
 
 export { worker };
