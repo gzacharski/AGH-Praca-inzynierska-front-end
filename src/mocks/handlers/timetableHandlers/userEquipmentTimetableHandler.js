@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { equipmentServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
 
-export const handlers = [
+export const userEquipmentTimetableHandlers = [
    rest.get(
       `${equipmentServiceURL}/timetable/equipment/:equipmentId/reservation`,
       (req, res, ctx) => {
