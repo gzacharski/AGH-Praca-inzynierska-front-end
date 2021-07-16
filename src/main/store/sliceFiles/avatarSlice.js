@@ -21,27 +21,6 @@ const initialState = {
    error: null,
 };
 
-export const fetchAvatar = createAsyncThunk(
-   'avatar/fetchAvatar',
-   async (_, { rejectWithValue }) => {
-      const { token, userId } = loadAuthData();
-
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-            Authorization: token,
-         },
-      };
-
-      try {
-         const response = await axios.get(url(userId), config);
-         return response.data;
-      } catch (error) {
-         return rejectWithValue(error?.response?.data);
-      }
-   },
-);
-
 export const setAvatar = createAsyncThunk(
    'avatar/setAvatar',
    async (file, { rejectWithValue }) => {
@@ -97,23 +76,16 @@ const avatarSlice = createSlice({
    name: 'avatar',
    initialState,
    reducers: {
-      clearMessage(state, actions) {
+      getAvatar(state, action) {
+         state.status = STATUS.SUCCEEDED;
+         state.image = url(loadAuthData().userId);
+         state.error = null;
+      },
+      clearMessage(state, action) {
          state.message = null;
       },
    },
    extraReducers: {
-      [fetchAvatar.pending]: (state, action) => {
-         state.status = STATUS.LOADING;
-      },
-      [fetchAvatar.fulfilled]: (state, action) => {
-         state.status = STATUS.SUCCEEDED;
-         state.image = action.payload.avatar;
-         state.error = null;
-      },
-      [fetchAvatar.rejected]: (state, action) => {
-         state.status = STATUS.FAILED;
-         state.error = action.payload.error;
-      },
       [setAvatar.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
@@ -147,7 +119,7 @@ const avatarSlice = createSlice({
 
 export default avatarSlice.reducer;
 
-export const { clearMessage } = avatarSlice.actions;
+export const { clearMessage, getAvatar } = avatarSlice.actions;
 
 export const selectAvatar = (state) => state.avatar.image;
 export const selectStatus = (state) => state.avatar.status;

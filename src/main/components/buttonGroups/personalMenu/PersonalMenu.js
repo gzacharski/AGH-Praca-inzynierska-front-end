@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { ButtonGroup } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-   fetchAvatar,
+   getAvatar,
    selectStatus as selectAvatarStatus,
 } from 'src/main/store/sliceFiles/avatarSlice';
 import {
@@ -28,7 +28,7 @@ const PersonalMenu = () => {
 
    useEffect(() => {
       if (isAuthenticated && avatarStatus === STATUS.IDLE) {
-         dispatch(fetchAvatar());
+         dispatch(getAvatar({}));
       }
    }, [avatarStatus, dispatch]);
 
