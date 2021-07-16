@@ -6,12 +6,20 @@ import { gymPassServiceURL } from '../../main/data/urls';
 export const priceListHandlers = [
    rest.get(`${gymPassServiceURL}/offer`, (req, res, ctx) => {
       const error = req.url.searchParams.get('error');
-
       if (error === 'noConnection') {
          return res(
             ctx.status(500),
             ctx.delay(1500),
             ctx.json({ message: NETWORK_ERROR }),
+         );
+      }
+
+      const status = req.url.searchParams.get('status');
+      if (status === 'noPriceList') {
+         return res(
+            ctx.status(404),
+            ctx.delay(1500),
+            ctx.json({ message: 'Brak aktulanej oferty' }),
          );
       }
 
