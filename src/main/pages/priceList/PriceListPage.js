@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import {
    Typography,
    Container,
    Grid,
    CircularProgress,
 } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import {
+   fetchPriceList,
+   selectError,
+   selectMessage,
+   selectPriceList,
+   selectStatus,
+} from 'src/main/store/sliceFiles/priceListSlice';
 import { PriceListCard } from 'src/main/components/card';
-import { gymPassServiceURL } from 'src/main/data/urls';
-import { NETWORK_ERROR } from 'src/main/data/messages';
+import { STATUS } from 'src/main/store';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import { PageWrapper } from 'src/main/components/utils';
 import { useStyles } from './PriceListPage.styles';
@@ -25,49 +32,24 @@ const ShowPriceList = ({ gymPasses }) => (
 
 const PriceListPage = () => {
    const classes = useStyles();
-   const [gymPasses, setGymPasses] = useState([]);
-   const [onRequest, setOnRequest] = useState(false);
-   const [message, setMessage] = useState(null);
-   const [status, setStatus] = useState(null);
+   const dispatch = useDispatch();
+   const status = useSelector(selectStatus);
+   const priceList = useSelector(selectPriceList);
+   const message = useSelector(selectMessage);
+   const error = useSelector(selectError);
+   const location = useLocation();
 
    useEffect(() => {
-      setOnRequest(true);
-      axios
-         .get(`${gymPassServiceURL}/offer`, {
-            headers: {
-               'Accept-Language': 'pl',
-            },
-         })
-         .then((response) => {
-            setStatus(response.status);
-            setGymPasses(response.data);
-         })
-         .catch((error) => {
-            if (error.response === undefined) {
-               setStatus(500);
-               setMessage(NETWORK_ERROR);
-            } else {
-               setStatus(error.response?.status);
-               setMessage(error.response?.data?.message);
-            }
-         })
-         .finally(() => {
-            setOnRequest(false);
-         });
-   }, []);
+      if (status === STATUS.IDLE) {
+         const { search = '' } = location;
+         dispatch(fetchPriceList({ search }));
+      }
+   }, [status, dispatch]);
 
-   if (onRequest) {
-      return (
-         <Container maxWidth="sm" className={classes.container}>
-            <CircularProgress size={100} data-testid="circular-progress" />
-         </Container>
-      );
-   }
-
-   if (message !== null) {
+   if (status === STATUS.FAILED) {
       return (
          <Container className={classes.container}>
-            <ConfirmationIcon onRequest={onRequest} status={status} />
+            <ConfirmationIcon onRequest={false} status={error?.status} />
             <Typography className={classes.message}>{message}</Typography>
          </Container>
       );
@@ -93,9 +75,16 @@ const PriceListPage = () => {
                Wybierz odpowiedni dla siebie typ karnetu i zacznij ćwiczyć!
             </Typography>
          </Container>
-         <Container maxWidth="xl" className={{ alignItems: 'center' }}>
-            <ShowPriceList gymPasses={gymPasses} />
-         </Container>
+         {status === STATUS.SUCCEEDED && (
+            <Container maxWidth="xl" className={{ alignItems: 'center' }}>
+               <ShowPriceList gymPasses={priceList} />
+            </Container>
+         )}
+         {status === STATUS.LOADING && (
+            <Container maxWidth="sm" className={classes.container}>
+               <CircularProgress size={100} data-testid="circular-progress" />
+            </Container>
+         )}
       </PageWrapper>
    );
 };

@@ -1,12 +1,23 @@
 import { rest } from 'msw';
 import { nanoid } from 'nanoid';
+import { NETWORK_ERROR } from 'src/main/data/messages';
 import { gymPassServiceURL } from '../../main/data/urls';
 
 export const priceListHandlers = [
-   rest.get(`${gymPassServiceURL}/offer`, (req, res, ctx) =>
-      res(
+   rest.get(`${gymPassServiceURL}/offer`, (req, res, ctx) => {
+      const error = req.url.searchParams.get('error');
+
+      if (error === 'noConnection') {
+         return res(
+            ctx.status(500),
+            ctx.delay(1500),
+            ctx.json({ message: NETWORK_ERROR }),
+         );
+      }
+
+      return res(
          ctx.status(200),
-         ctx.delay(),
+         ctx.delay(1500),
          ctx.json([
             {
                documentId: nanoid(),
@@ -103,6 +114,6 @@ export const priceListHandlers = [
                },
             },
          ]),
-      ),
-   ),
+      );
+   }),
 ];
