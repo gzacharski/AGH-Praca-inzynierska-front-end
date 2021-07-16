@@ -18,7 +18,7 @@ import { useStyles } from './ParticipantsDialog.styles';
 const UserListItem = ({ user, isTrainer }) => {
    const { name = ' ', surname = ' ', avatar = '' } = user;
    return (
-      <ListItem onClick={() => console.log(user)}>
+      <ListItem>
          <ListItemAvatar>
             <Avatar alt={`${name} ${surname}`} src={avatar}>
                {`${name[0]}${surname[0]}`}

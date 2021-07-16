@@ -9,11 +9,7 @@ export const HeaderTooltip = ({ appointmentData, ...restProps }) => {
    const { enqueueSnackbar } = useSnackbar();
    const [anchorEl, setAnchorEl] = useState(null);
 
-   const handleClick = (event) => {
-      console.log(event);
-      console.log(event.currentTarget);
-      setAnchorEl(event.currentTarget);
-   };
+   const handleClick = (event) => setAnchorEl(event.currentTarget);
 
    const handleClose = () => setAnchorEl(null);
 
@@ -45,15 +41,8 @@ export const HeaderTooltip = ({ appointmentData, ...restProps }) => {
             onClose={handleClose}
             TransitionComponent={Fade}
          >
-            <MenuItem onClick={() => console.log('Dołącz')}>Dołącz</MenuItem>
-            <MenuItem
-               onClick={() => {
-                  console.log('Oceń');
-                  console.log(appointmentData);
-               }}
-            >
-               Oceń
-            </MenuItem>
+            <MenuItem>Dołącz</MenuItem>
+            <MenuItem>Oceń</MenuItem>
          </Menu>
       </AppointmentTooltip.Header>
    );
