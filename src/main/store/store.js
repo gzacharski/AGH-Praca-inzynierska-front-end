@@ -9,6 +9,7 @@ import equipmentReservationSlice from 'src/main/store/sliceFiles/timetable/equip
 import trainerSlice from 'src/main/store/sliceFiles/timetable/trainerSlice';
 import priceListSlice from 'src/main/store/sliceFiles/priceListSlice';
 import userGroupReservationSlice from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
+import userIndividualReservationSlice from 'src/main/store/sliceFiles/timetable/userIndividualReservationSlice';
 
 export const reducer = {
    drawer: drawerReducer,
@@ -21,6 +22,7 @@ export const reducer = {
    trainer: trainerSlice,
    priceList: priceListSlice,
    userGroupReservation: userGroupReservationSlice,
+   userIndividualReservation: userIndividualReservationSlice,
 };
 
 export default configureStore({ reducer });
