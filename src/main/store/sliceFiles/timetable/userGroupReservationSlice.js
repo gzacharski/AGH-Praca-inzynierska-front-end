@@ -13,10 +13,10 @@ const initialState = {
    error: null,
 };
 
-export const fetchPublicTimetableData = createAsyncThunk(
-   'timetable/fetchPublicTimetableData',
-   async ({ startOfWeek, endOfWeek }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}/group/public?startDate=${startOfWeek}&endDate=${endOfWeek}`;
+export const fetchUserGroupReservation = createAsyncThunk(
+   'userGroupReservation/fetchUserGroupReservation',
+   async ({ userId, startOfWeek, endOfWeek }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/timetable/${userId}/groupWorkouts?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       const config = {
          headers: {
@@ -26,19 +26,19 @@ export const fetchPublicTimetableData = createAsyncThunk(
 
       try {
          const response = await axios.get(url, config);
-         const { data = [] } = response;
-         return { data, startOfWeek, endOfWeek };
+         const { data = [], message = null } = response?.data;
+         return { data, startOfWeek, endOfWeek, message };
       } catch (error) {
          return rejectWithValue({
-            error: error?.response?.data,
+            error: error?.response,
             message: error?.response?.data?.message,
          });
       }
    },
 );
 
-export const timetableSlice = createSlice({
-   name: 'timetable',
+export const userGroupReservationSlice = createSlice({
+   name: 'userGroupReservation',
    initialState,
    reducers: {
       clearMessage(state) {
@@ -46,19 +46,20 @@ export const timetableSlice = createSlice({
       },
    },
    extraReducers: {
-      [fetchPublicTimetableData.pending]: (state, action) => {
+      [fetchUserGroupReservation.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
-      [fetchPublicTimetableData.fulfilled]: (state, action) => {
+      [fetchUserGroupReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.data.push(...action.payload.data);
+         state.message = action.payload.message;
          state.error = null;
          state.fetchedDates = {
             ...state.fetchedDates,
             [action.payload.startOfWeek]: action.payload.endOfWeek,
          };
       },
-      [fetchPublicTimetableData.rejected]: (state, action) => {
+      [fetchUserGroupReservation.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
@@ -66,11 +67,12 @@ export const timetableSlice = createSlice({
    },
 });
 
-export const { clearMessage } = timetableSlice.actions;
+export const { clearMessage } = userGroupReservationSlice.actions;
 
-export const selectData = (state) => state.timetable.data;
-export const selectStatus = (state) => state.timetable.status;
-export const selectMessage = (state) => state.timetable.message;
-export const selectFetchedDates = (state) => state.timetable.fetchedDates;
+export const selectData = (state) => state.userGroupReservation.data;
+export const selectStatus = (state) => state.userGroupReservation.status;
+export const selectMessage = (state) => state.userGroupReservation.message;
+export const selectFetchedDates = (state) =>
+   state.userGroupReservation.fetchedDates;
 
-export default timetableSlice.reducer;
+export default userGroupReservationSlice.reducer;
