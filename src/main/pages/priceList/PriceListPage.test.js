@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { MemoryRouter } from 'react-router-dom';
 import { render, screen, waitFor } from 'src/testUtils';
 import { gymPassServiceURL } from 'src/main/data/urls';
 import PriceListPage from './PriceListPage';
@@ -10,7 +11,11 @@ jest.mock('axios');
 describe('PriceList page component', () => {
    test('should render error message when no internet connection', async () => {
       axios.get.mockRejectedValueOnce(new Error('net::ERR_CONNECTION_REFUSED'));
-      render(<PriceListPage />);
+      render(
+         <MemoryRouter>
+            <PriceListPage />
+         </MemoryRouter>,
+      );
       await waitFor(() => {
          expect(
             screen.getByText(
@@ -20,12 +25,6 @@ describe('PriceList page component', () => {
       });
    });
 
-   test('should render circular progress when loading content', () => {
-      axios.get.mockImplementationOnce(() => Promise.resolve({}));
-      render(<PriceListPage />);
-      expect(screen.getByTestId('circular-progress')).toBeInTheDocument();
-   });
-
    test('when loaded it should send get request to training service', async () => {
       axios.get.mockImplementationOnce(() =>
          Promise.resolve({
@@ -33,7 +32,11 @@ describe('PriceList page component', () => {
             data: testGymPasses,
          }),
       );
-      render(<PriceListPage />);
+      render(
+         <MemoryRouter>
+            <PriceListPage />
+         </MemoryRouter>,
+      );
       Promise.all([
          waitFor(() => expect(axios.get).toBeCalled()),
          waitFor(() =>
@@ -53,7 +56,11 @@ describe('PriceList page component', () => {
             data: testGymPasses,
          }),
       );
-      render(<PriceListPage />);
+      render(
+         <MemoryRouter>
+            <PriceListPage />
+         </MemoryRouter>,
+      );
       await waitFor(
          () => expect(screen.getByText(/Oferta karnetów/)).toBeInTheDocument(),
          expect(
