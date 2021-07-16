@@ -6,10 +6,9 @@ import { formatDate } from 'src/main/utils';
 import { addDays } from 'date-fns';
 
 export const handlers = [
-   rest.get(`${trainingsServiceURL}/test`, (req, res, ctx) => {
-      console.log(req);
-      return res(ctx.status(200), ctx.delay(), ctx.json({ test: 'hello' }));
-   }),
+   rest.get(`${trainingsServiceURL}/test`, (req, res, ctx) =>
+      res(ctx.status(200), ctx.delay(), ctx.json({ test: 'hello' })),
+   ),
    rest.get(`${trainingsServiceURL}/group/public`, (req, res, ctx) => {
       const startDate = req.url.searchParams.get('startDate');
       const endDate = req.url.searchParams.get('endDate');

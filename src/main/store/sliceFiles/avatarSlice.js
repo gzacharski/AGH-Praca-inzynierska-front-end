@@ -78,7 +78,7 @@ const avatarSlice = createSlice({
    reducers: {
       getAvatar(state, action) {
          state.status = STATUS.SUCCEEDED;
-         state.image = url(loadAuthData().userId);
+         state.image = url(action.payload.userId);
          state.error = null;
       },
       clearMessage(state, action) {

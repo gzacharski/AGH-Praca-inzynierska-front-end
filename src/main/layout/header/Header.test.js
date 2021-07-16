@@ -29,7 +29,12 @@ describe('Header', () => {
    describe('Header component if user authenticated', () => {
       beforeEach(() => {
          render(
-            <AuthContext.Provider value={{ isAuthenticated: () => true }}>
+            <AuthContext.Provider
+               value={{
+                  isAuthenticated: () => true,
+                  authState: { userInfo: { userId: 'test' } },
+               }}
+            >
                <MemoryRouter>
                   <Header />
                </MemoryRouter>

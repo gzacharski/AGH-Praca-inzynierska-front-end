@@ -28,7 +28,9 @@ const PersonalMenu = () => {
 
    useEffect(() => {
       if (isAuthenticated && avatarStatus === STATUS.IDLE) {
-         dispatch(getAvatar({}));
+         const { userInfo } = context.authState;
+         const { userId } = userInfo;
+         dispatch(getAvatar({ userId }));
       }
    }, [avatarStatus, dispatch]);
 
