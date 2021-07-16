@@ -15,7 +15,12 @@ describe('Personal menu', () => {
          );
 
          render(
-            <AuthContext.Provider value={{ isAuthenticated: () => true }}>
+            <AuthContext.Provider
+               value={{
+                  isAuthenticated: () => true,
+                  authState: { userInfo: { userId: 'test' } },
+               }}
+            >
                <MemoryRouter>
                   <PersonalMenu />
                </MemoryRouter>

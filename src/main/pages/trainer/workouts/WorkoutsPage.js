@@ -1,15 +1,24 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './WorkoutsPage.styles';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
+import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
+import { useSelector } from 'react-redux';
+import { selectData } from 'src/main/store/sliceFiles/timetable/trainerSlice';
+import { Timetable } from 'src/main/components/timetable';
+import { ContentTooltip } from 'src/main/components/timetable/appointmentTooltip/ContentTooltip';
+import { HeaderTooltip } from 'src/main/components/timetable/appointmentTooltip/HeaderTooltip';
 
 const WorkoutsPage = () => {
-   const classes = useStyles;
+   const data = useSelector(selectData);
    return (
       <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Zajęcia trenera
-         </Typography>
+         <PageTitle>Aktualny grafik zajęć indywidualnych i grupowych</PageTitle>
+         <Timetable data={data}>
+            <AppointmentTooltip
+               showCloseButton
+               headerComponent={HeaderTooltip}
+               contentComponent={ContentTooltip}
+            />
+         </Timetable>
       </PageWrapper>
    );
 };

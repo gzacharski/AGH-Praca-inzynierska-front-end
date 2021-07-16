@@ -52,15 +52,11 @@ export const AvatarIcon = ({ huge, variant }) => {
    const surname = user?.surname;
    const shouldRender = Boolean(name) && Boolean(surname);
 
-   const format = avatar?.format;
-   const data = avatar?.data;
-   const shouldRenderData = Boolean(format) && Boolean(data);
-
    return (
       shouldRender && (
          <Avatar
             alt={`${name} ${surname}`}
-            src={shouldRenderData && `data:${format};base64, ${data}`}
+            src={avatar}
             className={clsx({
                [classes.small]: !huge,
                [classes.huge]: huge,

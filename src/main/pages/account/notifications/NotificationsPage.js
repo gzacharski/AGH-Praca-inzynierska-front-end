@@ -1,17 +1,10 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './NotificationsPage.styles';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
 
-const MessagesPage = () => {
-   const classes = useStyles;
-   return (
-      <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Powiadomienia (użytkownik)
-         </Typography>
-      </PageWrapper>
-   );
-};
+const MessagesPage = () => (
+   <PageWrapper>
+      <PageTitle>Powiadomienia (użytkownik)</PageTitle>
+   </PageWrapper>
+);
 
 export default MessagesPage;

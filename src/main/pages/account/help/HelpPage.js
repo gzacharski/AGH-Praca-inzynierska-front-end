@@ -1,15 +1,10 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './HelpPage.styles';
+import { PageTitle, PageWrapper } from 'src/main/components/utils';
 
 export default function Contact() {
-   const classes = useStyles();
    return (
       <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Pomoc
-         </Typography>
+         <PageTitle>Pomoc</PageTitle>
       </PageWrapper>
    );
 }

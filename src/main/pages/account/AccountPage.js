@@ -1,17 +1,10 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './AccountPage.styles';
+import { PageTitle, PageWrapper } from 'src/main/components/utils';
 
-const AccountPage = () => {
-   const classes = useStyles;
-   return (
-      <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Konto użytkownika
-         </Typography>
-      </PageWrapper>
-   );
-};
+const AccountPage = () => (
+   <PageWrapper>
+      <PageTitle>Konto użytkownika</PageTitle>
+   </PageWrapper>
+);
 
 export default AccountPage;

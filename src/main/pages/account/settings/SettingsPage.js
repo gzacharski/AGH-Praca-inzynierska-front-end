@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
+import { Grid } from '@material-ui/core';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import {
    ChangeUserInfoForm,
    ChangePasswordForm,
@@ -14,9 +14,7 @@ const SettingsPage = () => {
    const classes = useStyles();
    return (
       <PageWrapper>
-         <Typography variant="h5" align="center" className={classes.title}>
-            Ustawienia konta
-         </Typography>
+         <PageTitle>Ustawienia konta</PageTitle>
          <div className={classes.content}>
             <Grid container spacing={3} justify="center">
                <Grid item xs={12} sm={9}>

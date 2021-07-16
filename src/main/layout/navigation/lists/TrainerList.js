@@ -1,6 +1,11 @@
 import React from 'react';
 import { List, ListSubheader } from '@material-ui/core';
-import { Assignment, Group, NotificationsNone } from '@material-ui/icons';
+import {
+   Assignment as AssignmentIcon,
+   Group as GroupIcon,
+   NotificationsNone as NotificationsNoneIcon,
+   Home as HomeIcon,
+} from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { selectDrawer } from 'src/main/store/sliceFiles/drawerSlice';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
@@ -20,20 +25,26 @@ export default function TrainerList() {
          }
       >
          <CustomListItem
+            buttonName="Strona główna"
+            CustomIcon={HomeIcon}
+            pushUrl="/account/trainer"
+            secondaryText="Plan zajęć w aktualnym tygodniu"
+         />
+         <CustomListItem
             buttonName="Zajęcia"
-            CustomIcon={Group}
+            CustomIcon={GroupIcon}
             pushUrl="/account/trainer/workouts"
             secondaryText="Plan zajęć w aktualnym tygodniu"
          />
          <CustomListItem
             buttonName="Powiadomienia"
-            CustomIcon={NotificationsNone}
+            CustomIcon={NotificationsNoneIcon}
             pushUrl="/account/trainer/notifications"
             secondaryText="Akceptuj lub odrzuć zapytania o trening"
          />
          <CustomListItem
             buttonName="Zadania"
-            CustomIcon={Assignment}
+            CustomIcon={AssignmentIcon}
             pushUrl="/account/trainer/tasks"
             secondaryText="Moje zadania do wykonania"
          />

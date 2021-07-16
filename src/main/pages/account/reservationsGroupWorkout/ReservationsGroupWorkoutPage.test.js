@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
-import Statistics from './ReservationsGroupWorkoutPage';
+import ReservationsGroupWorkout from './ReservationsGroupWorkoutPage';
 
 describe('SettingsPage', () => {
    beforeEach(() => {
-      render(<Statistics />);
+      render(<ReservationsGroupWorkout />);
    });
 
    test('should contain ', () => {

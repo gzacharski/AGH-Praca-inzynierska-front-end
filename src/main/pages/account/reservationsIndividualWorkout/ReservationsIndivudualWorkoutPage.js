@@ -1,17 +1,10 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './ReservationsIndivudualWorkoutPage.styles';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
 
-const SettingsPage = () => {
-   const classes = useStyles;
-   return (
-      <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Twoje rezerwacje zajęć indywidualnych
-         </Typography>
-      </PageWrapper>
-   );
-};
+const SettingsPage = () => (
+   <PageWrapper>
+      <PageTitle>Twoje rezerwacje zajęć indywidualnych</PageTitle>
+   </PageWrapper>
+);
 
 export default SettingsPage;

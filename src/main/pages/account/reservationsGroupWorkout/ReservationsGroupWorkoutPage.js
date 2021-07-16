@@ -1,17 +1,12 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './ReservationsGroupWorkoutPage.styles';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
+import { AccountGroupTimetable } from 'src/main/components/timetable/AccountGroupTimetable';
 
-const SettingsPage = () => {
-   const classes = useStyles;
-   return (
-      <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Twoje rezerwacje zajęć grupowych
-         </Typography>
-      </PageWrapper>
-   );
-};
+const ReservationGroupWorkoutPage = () => (
+   <PageWrapper>
+      <PageTitle>Twoje rezerwacje zajęć grupowych</PageTitle>
+      <AccountGroupTimetable />
+   </PageWrapper>
+);
 
-export default SettingsPage;
+export default ReservationGroupWorkoutPage;

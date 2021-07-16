@@ -9,7 +9,12 @@ describe('HeaderRenderer', () => {
       beforeEach(() => {
          render(
             <MemoryRouter>
-               <AuthContext.Provider value={{ isAuthenticated: () => true }}>
+               <AuthContext.Provider
+                  value={{
+                     isAuthenticated: () => true,
+                     authState: { userInfo: { userId: 'test' } },
+                  }}
+               >
                   <HeaderButtonsRenderer />
                </AuthContext.Provider>
             </MemoryRouter>,
