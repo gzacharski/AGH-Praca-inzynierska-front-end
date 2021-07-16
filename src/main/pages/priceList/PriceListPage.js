@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { Typography, Container, Grid } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
-   Typography,
-   Container,
-   Grid,
-   CircularProgress,
-} from '@material-ui/core';
-import { PriceListCard } from 'src/main/components/card';
-import { gymPassServiceURL } from 'src/main/data/urls';
-import { NETWORK_ERROR } from 'src/main/data/messages';
+   fetchPriceList,
+   selectError,
+   selectMessage,
+   selectPriceList,
+   selectStatus,
+} from 'src/main/store/sliceFiles/priceListSlice';
+import { PriceListCard, PriceListCardSkeleton } from 'src/main/components/card';
+import { STATUS } from 'src/main/store';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import { PageWrapper } from 'src/main/components/utils';
 import { useStyles } from './PriceListPage.styles';
@@ -23,51 +25,40 @@ const ShowPriceList = ({ gymPasses }) => (
    </Grid>
 );
 
+const ShowPriceListSkeleton = () => (
+   <Grid container spacing={5} justify="center" alignItems="center">
+      {[
+         { id: 1, isSmall: true },
+         { id: 2, isSmall: false },
+         { id: 3, isSmall: true },
+      ].map((card) => (
+         <Grid item key={card.id} xs={12} sm={6} md={4} lg={3}>
+            <PriceListCardSkeleton isSmall={card.isSmall} />
+         </Grid>
+      ))}
+   </Grid>
+);
+
 const PriceListPage = () => {
    const classes = useStyles();
-   const [gymPasses, setGymPasses] = useState([]);
-   const [onRequest, setOnRequest] = useState(false);
-   const [message, setMessage] = useState(null);
-   const [status, setStatus] = useState(null);
+   const dispatch = useDispatch();
+   const status = useSelector(selectStatus);
+   const priceList = useSelector(selectPriceList);
+   const message = useSelector(selectMessage);
+   const error = useSelector(selectError);
+   const location = useLocation();
 
    useEffect(() => {
-      setOnRequest(true);
-      axios
-         .get(`${gymPassServiceURL}/offer`, {
-            headers: {
-               'Accept-Language': 'pl',
-            },
-         })
-         .then((response) => {
-            setStatus(response.status);
-            setGymPasses(response.data);
-         })
-         .catch((error) => {
-            if (error.response === undefined) {
-               setStatus(500);
-               setMessage(NETWORK_ERROR);
-            } else {
-               setStatus(error.response?.status);
-               setMessage(error.response?.data?.message);
-            }
-         })
-         .finally(() => {
-            setOnRequest(false);
-         });
-   }, []);
+      if (status === STATUS.IDLE) {
+         const { search = '' } = location;
+         dispatch(fetchPriceList({ search }));
+      }
+   }, [status, dispatch]);
 
-   if (onRequest) {
-      return (
-         <Container maxWidth="sm" className={classes.container}>
-            <CircularProgress size={100} data-testid="circular-progress" />
-         </Container>
-      );
-   }
-
-   if (message !== null) {
+   if (status === STATUS.FAILED) {
       return (
          <Container className={classes.container}>
-            <ConfirmationIcon onRequest={onRequest} status={status} />
+            <ConfirmationIcon onRequest={false} status={error?.status} />
             <Typography className={classes.message}>{message}</Typography>
          </Container>
       );
@@ -94,7 +85,10 @@ const PriceListPage = () => {
             </Typography>
          </Container>
          <Container maxWidth="xl" className={{ alignItems: 'center' }}>
-            <ShowPriceList gymPasses={gymPasses} />
+            {status === STATUS.SUCCEEDED && (
+               <ShowPriceList gymPasses={priceList} />
+            )}
+            {status === STATUS.LOADING && <ShowPriceListSkeleton />}
          </Container>
       </PageWrapper>
    );

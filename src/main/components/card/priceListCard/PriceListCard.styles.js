@@ -14,8 +14,20 @@ export const useStyles = makeStyles((theme) => ({
             ? theme.palette.grey[200]
             : theme.palette.grey[700],
    },
+   cardHeaderSkeleton: {
+      backgroundColor:
+         theme.palette.type === 'light'
+            ? theme.palette.grey[200]
+            : theme.palette.grey[700],
+      minHeight: '60px',
+   },
    cardPricing: {
       display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'baseline',
+      marginBottom: theme.spacing(2),
+   },
+   cardPricingSkeleton: {
       justifyContent: 'center',
       alignItems: 'baseline',
       marginBottom: theme.spacing(2),
@@ -37,5 +49,11 @@ export const useStyles = makeStyles((theme) => ({
          backgroundColor: '#3ea8f5',
       },
       color: 'white',
+   },
+   textSkeleton: {
+      margin: 'auto',
+   },
+   buttonSkeleton: {
+      minHeight: '60px',
    },
 }));
