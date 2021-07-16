@@ -10,8 +10,12 @@ import {
 import { Skeleton } from '@material-ui/lab';
 import { useStyles } from './PriceListCard.styles';
 
-const PriceListCardSkeleton = () => {
+const PriceListCardSkeleton = ({ isSmall }) => {
    const classes = useStyles();
+
+   const sizes = isSmall
+      ? ['80%', '70%', '85%', '76%']
+      : ['80%', '70%', '85%', '76%', '80%', '60%'];
 
    return (
       <Card>
@@ -43,7 +47,7 @@ const PriceListCardSkeleton = () => {
                   ))}
                </div>
                <ul>
-                  {['80%', '70%', '85%', '76%', '80%'].map((width) => (
+                  {sizes.map((width) => (
                      <Typography
                         key={width}
                         component="li"
