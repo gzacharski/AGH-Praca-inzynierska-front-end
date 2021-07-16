@@ -52,17 +52,11 @@ export const AvatarIcon = ({ huge, variant }) => {
    const surname = user?.surname;
    const shouldRender = Boolean(name) && Boolean(surname);
 
-   const format = avatar?.format;
-   const data = avatar?.data;
-   // eslint-disable-next-line no-unused-vars
-   const shouldRenderData = Boolean(format) && Boolean(data);
-
    return (
       shouldRender && (
          <Avatar
             alt={`${name} ${surname}`}
-            // src={shouldRenderData && `data:${format};base64, ${data}`}
-            src="http://localhost:8020/account/photos/b05a850c-8827-4805-aecd-3a893d58668b/avatar"
+            src={avatar}
             className={clsx({
                [classes.small]: !huge,
                [classes.huge]: huge,

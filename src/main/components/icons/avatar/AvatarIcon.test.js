@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { screen, render } from 'src/testUtils';
-import { testAvatar, testUser } from 'src/main/data/testData';
+import { testUser } from 'src/main/data/testData';
 import { STATUS } from 'src/main/store';
 import { AvatarIcon } from './AvatarIcon';
 
@@ -47,7 +47,7 @@ describe('Avatar icon', () => {
       test('should render', () => {
          const store = mockStore({
             avatar: {
-               image: testAvatar,
+               image: 'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
                status: STATUS.SUCCEEDED,
             },
             account: {
@@ -58,7 +58,7 @@ describe('Avatar icon', () => {
          renderAvatarIcon(store);
          expect(screen.getByRole('img')).toBeInTheDocument();
          expect(screen.getByRole('img').getAttribute('src')).toContain(
-            testAvatar.data,
+            'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
          );
       });
 

@@ -15,7 +15,7 @@ const loadAuthData = () => {
 };
 
 const initialState = {
-   image: { data: null, format: null },
+   image: null,
    status: STATUS.IDLE,
    message: null,
    error: null,
@@ -83,15 +83,7 @@ export const removeAvatar = createAsyncThunk(
 
       try {
          const response = await axios.delete(url(userId), config);
-         const { avatar, message } = response.data;
-
-         return {
-            avatar: {
-               data: avatar?.data ? avatar.data : null,
-               format: avatar?.format ? avatar.format : null,
-            },
-            message,
-         };
+         return response.data;
       } catch (error) {
          return rejectWithValue({
             error: error?.response?.data,
