@@ -1,0 +1,108 @@
+import { rest } from 'msw';
+import { nanoid } from 'nanoid';
+import { gymPassServiceURL } from '../../main/data/urls';
+
+export const offerHandlers = [
+   rest.get(`${gymPassServiceURL}/offer`, (req, res, ctx) =>
+      res(
+         ctx.status(200),
+         ctx.delay(),
+         ctx.json([
+            {
+               documentId: nanoid(),
+               id: nanoid(),
+               title: 'Wejście jednorazowe',
+               subheader: null,
+               price: {
+                  amount: 19.99,
+                  currency: 'zł',
+                  period: 'wejście',
+               },
+               isPremium: false,
+               description: {
+                  synopsis:
+                     'Gdy potrzebujesz skorzystać jednorazowo z naszej siłowni',
+                  features: [
+                     'dostęp do każdego sprzętu fitness',
+                     'dowolne godziny wejścia',
+                     'nieograniczony czas wejścia',
+                     'dostęp do sauny',
+                  ],
+               },
+            },
+            {
+               documentId: nanoid(),
+               id: nanoid(),
+               title: 'Karnet 4 wejścia',
+               subheader: 'Najpopularniejszy dla ograniczonej liczby wejść',
+               price: {
+                  amount: 69.99,
+                  currency: 'zł',
+                  period: '4 wejścia',
+               },
+               isPremium: true,
+               description: {
+                  synopsis:
+                     'Karnet idealny dla osób o nieregularnym trybie życia',
+                  features: [
+                     'dostęp do każdego sprzętu fitness',
+                     'grupowe i indywidualne zajęcia fitness',
+                     'dowolne godziny wejścia',
+                     'nieograniczony czas wejścia',
+                     'nieograniczona ważność karnetu',
+                     'dostęp do sauny',
+                  ],
+               },
+            },
+            {
+               documentId: nanoid(),
+               id: nanoid(),
+               title: 'Karnet 8 wejść',
+               subheader: null,
+               price: {
+                  amount: 108.99,
+                  currency: 'zł',
+                  period: '8 wejść',
+               },
+               isPremium: false,
+               description: {
+                  synopsis:
+                     'Karnet idealny dla osób o nieregularnym trybie życia',
+                  features: [
+                     'dostęp do każdego sprzętu fitness',
+                     'grupowe i indywidualne zajęcia fitness',
+                     'dowolne godziny wejścia',
+                     'nieograniczony czas wejścia',
+                     'nieograniczona ważność karnetu',
+                     'dostęp do sauny',
+                  ],
+               },
+            },
+            {
+               documentId: nanoid(),
+               id: nanoid(),
+               title: 'Standardowy',
+               subheader: 'Najpopularniejszy',
+               price: {
+                  amount: 139.99,
+                  currency: 'zł',
+                  period: 'miesiąc',
+               },
+               isPremium: true,
+               description: {
+                  synopsis: 'Najlepszy wybór dla osób regularnie ćwiczących',
+                  features: [
+                     'dostęp do każdego sprzętu fitness',
+                     'grupowe i indywidualne zajęcia fitness',
+                     'dowolne godziny wejścia',
+                     'nieograniczony czas wejścia',
+                     'nieograniczona liczba wejść',
+                     'ważność 30 dni',
+                     'dostęp do sauny',
+                  ],
+               },
+            },
+         ]),
+      ),
+   ),
+];
