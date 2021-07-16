@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { nanoid } from 'nanoid';
 import { gymPassServiceURL } from '../../main/data/urls';
 
-export const offerHandlers = [
+export const priceListHandlers = [
    rest.get(`${gymPassServiceURL}/offer`, (req, res, ctx) =>
       res(
          ctx.status(200),
