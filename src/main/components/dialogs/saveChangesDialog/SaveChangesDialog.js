@@ -34,7 +34,12 @@ const SaveChangesDialog = ({
             <Button
                type={form && 'submit'}
                form={form}
-               onClick={() => !form && callback()}
+               onClick={() => {
+                  if (!form) {
+                     callback();
+                     setOpenDialog(false);
+                  }
+               }}
                className={classes.button}
             >
                {buttonText || 'Zapisz'}
