@@ -15,7 +15,7 @@ const PriceListCardSkeleton = ({ isSmall }) => {
 
    const sizes = isSmall
       ? ['80%', '70%', '85%', '76%']
-      : ['80%', '70%', '85%', '76%', '80%', '60%'];
+      : ['80%', '70%', '85%', '76%', '82%', '60%'];
 
    return (
       <Card>

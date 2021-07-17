@@ -92,7 +92,7 @@ export const DeleteAccountForm = () => {
             open={openDialog}
             maxWidth="sm"
             fullWidth
-            onBackdropClick={() => setOpenDialog(false)}
+            onClose={() => setOpenDialog(false)}
          >
             <DialogTitle>
                <Typography variant="h6" color="primary">
