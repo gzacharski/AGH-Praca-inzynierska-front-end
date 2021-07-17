@@ -3,6 +3,21 @@ import { trainingsServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
 
 export const userGroupTimetableHandlers = [
+   rest.delete(
+      `${trainingsServiceURL}/groupWorkout/:trainingId/enroll`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const clientId = req.url.searchParams.get('clientId');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: `Anulowano rezerwacje w wydarzeniu o id: ${trainingId} dla klienta o id: ${clientId}`,
+            }),
+         );
+      },
+   ),
    rest.get(
       `${trainingsServiceURL}/timetable/:userId/groupWorkouts`,
       (req, res, ctx) => {
