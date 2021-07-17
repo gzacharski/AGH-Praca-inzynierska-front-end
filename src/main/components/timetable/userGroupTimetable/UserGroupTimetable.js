@@ -1,10 +1,10 @@
 import React from 'react';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
-import { ContentTooltip } from './appointmentTooltip/ContentTooltip';
-import { HeaderTooltip } from './appointmentTooltip/HeaderTooltip';
+import { ContentTooltip } from './ContentTooltip';
+import { HeaderTooltip } from './HeaderTooltip';
 
-export const AccountGroupTimetable = ({
+export const UserGroupTimetable = ({
    data,
    status,
    fetchData,
