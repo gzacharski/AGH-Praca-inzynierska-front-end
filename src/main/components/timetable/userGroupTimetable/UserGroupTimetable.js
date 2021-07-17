@@ -1,8 +1,8 @@
 import React from 'react';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
-import { ContentTooltip } from './ContentTooltip';
-import { HeaderTooltip } from './HeaderTooltip';
+import { UserGroupContentTooltip } from './UserGroupContentTooltip';
+import { UserGroupHeaderTooltip } from './UserGroupHeaderTooltip';
 
 export const UserGroupTimetable = ({
    data,
@@ -18,8 +18,9 @@ export const UserGroupTimetable = ({
    >
       <AppointmentTooltip
          showCloseButton
-         headerComponent={HeaderTooltip}
-         contentComponent={ContentTooltip}
+         headerComponent={UserGroupHeaderTooltip}
+         contentComponent={UserGroupContentTooltip}
+         onVisibilityChange={() => console.log('Visibility test')}
       />
    </Timetable>
 );
