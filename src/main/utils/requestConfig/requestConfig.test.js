@@ -46,4 +46,50 @@ describe('Request configuration', () => {
 
       expect(config).toStrictEqual(expectedConfig);
    });
+
+   test('should return proper Authorization and Accept-language when only token provided with locale undefined', () => {
+      const config = requestConfig('testToken', undefined);
+      const expectedConfig = {
+         headers: {
+            'Accept-Language': 'pl',
+            Authorization: 'testToken',
+         },
+      };
+
+      expect(config).toStrictEqual(expectedConfig);
+   });
+
+   test('should return proper Authorization and Accept-language when only token provided with locale null', () => {
+      const config = requestConfig('testToken', null);
+      const expectedConfig = {
+         headers: {
+            'Accept-Language': 'pl',
+            Authorization: 'testToken',
+         },
+      };
+
+      expect(config).toStrictEqual(expectedConfig);
+   });
+
+   test('should return default Accept-language when both null provided', () => {
+      const config = requestConfig(null, null);
+      const expectedConfig = {
+         headers: {
+            'Accept-Language': 'pl',
+         },
+      };
+
+      expect(config).toStrictEqual(expectedConfig);
+   });
+
+   test('should return default Accept-language when both undefined provided', () => {
+      const config = requestConfig(undefined, undefined);
+      const expectedConfig = {
+         headers: {
+            'Accept-Language': 'pl',
+         },
+      };
+
+      expect(config).toStrictEqual(expectedConfig);
+   });
 });
