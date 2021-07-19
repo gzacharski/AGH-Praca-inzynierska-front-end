@@ -10,10 +10,11 @@ import {
    selectStatus,
 } from 'src/main/store/sliceFiles/timetable/userIndividualReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { AccountIndividualTimetable } from 'src/main/components/timetable/AccountIndividualTimetable';
+import { UserIndividualTimetable } from 'src/main/components/timetable/userIndividualTimetable/UserIndividualTimetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
+import { IndividualWorkoutContextProvider } from 'src/main/components/timetable/userIndividualTimetable/IndividualWorkoutContex';
 
 const SettingsPage = () => {
    const data = useSelector(selectData);
@@ -59,12 +60,14 @@ const SettingsPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Twoje rezerwacje zajęć indywidualnych</PageTitle>
-         <AccountIndividualTimetable
-            data={data}
-            status={status}
-            fetchData={fetchUserIndividualReservation}
-            fetchedDates={fetchedDates}
-         />
+         <IndividualWorkoutContextProvider>
+            <UserIndividualTimetable
+               data={data}
+               status={status}
+               fetchData={fetchUserIndividualReservation}
+               fetchedDates={fetchedDates}
+            />
+         </IndividualWorkoutContextProvider>
       </PageWrapper>
    );
 };

@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-const UserAvatars2 = ({ users, setOpen }) => {
+const UserAvatars = ({ users, setOpen }) => {
    const classes = useStyles();
    return users && users.length > 0 ? (
       <AvatarGroup
@@ -154,7 +154,7 @@ export const ContentTooltip = withStyles(style)(
                            </Tooltip>
                         </Grid>
                         <Grid item xs={4}>
-                           <UserAvatars2 users={trainers} setOpen={setOpen} />
+                           <UserAvatars users={trainers} setOpen={setOpen} />
                         </Grid>
                      </>
                   )}
@@ -164,7 +164,7 @@ export const ContentTooltip = withStyles(style)(
                      </Tooltip>
                   </Grid>
                   <Grid item xs={4}>
-                     <UserAvatars2 users={basicList} setOpen={setOpen} />
+                     <UserAvatars users={basicList} setOpen={setOpen} />
                   </Grid>
                </Grid>
                <ParticipantsDialog

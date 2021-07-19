@@ -1,23 +1,21 @@
 import React from 'react';
 import {
-   Typography,
-   Button,
    Dialog,
    DialogTitle,
    DialogActions,
+   Typography,
+   Button,
 } from '@material-ui/core';
-import { useStyles } from './SaveChangesDialog.styles';
+import { useStyles } from './CancelParticipationDialog.styles';
 
-const SaveChangesDialog = ({
+const CancelParticipationDialog = ({
    openDialog,
    setOpenDialog,
-   form,
    callback,
-   title,
-   buttonText,
+   dialogTitle,
+   eventTitle,
 }) => {
    const classes = useStyles();
-
    return (
       <Dialog
          open={openDialog}
@@ -27,22 +25,21 @@ const SaveChangesDialog = ({
       >
          <DialogTitle>
             <Typography variant="h6" color="primary">
-               {title || 'Czy na pewno chcesz zapisać zmiany?'}
+               {dialogTitle}
+            </Typography>
+            <Typography variant="subtitle1" color="primary">
+               {eventTitle}
             </Typography>
          </DialogTitle>
          <DialogActions>
             <Button
-               type={form && 'submit'}
-               form={form}
                onClick={() => {
-                  if (!form) {
-                     callback();
-                     setOpenDialog(false);
-                  }
+                  setOpenDialog(false);
+                  callback();
                }}
                className={classes.button}
             >
-               {buttonText || 'Zapisz'}
+               Zrezygnuj
             </Button>
             <Button
                className={classes.button}
@@ -55,4 +52,4 @@ const SaveChangesDialog = ({
    );
 };
 
-export { SaveChangesDialog };
+export { CancelParticipationDialog };

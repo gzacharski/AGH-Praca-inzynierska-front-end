@@ -11,9 +11,22 @@ import {
    Typography,
    IconButton,
    Badge,
+   withStyles,
 } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 import { useStyles } from './ParticipantsDialog.styles';
+
+const StyledBadge = withStyles({
+   badge: {
+      right: -15,
+      top: 12,
+      color: 'white',
+      backgroundColor: '#1e88e5',
+      '&:hover': {
+         backgroundColor: '#3ea8f5',
+      },
+   },
+})(Badge);
 
 const UserListItem = ({ user, isTrainer }) => {
    const { name = ' ', surname = ' ', avatar = '' } = user;
@@ -45,9 +58,9 @@ export const TrainerList = ({ trainers }) =>
 
 export const ParticipantList = ({ users, title }) => (
    <div>
-      <Badge color="secondary" badgeContent={users && users.length}>
+      <StyledBadge color="inherit" badgeContent={users && users.length}>
          <Typography>{title}</Typography>
-      </Badge>
+      </StyledBadge>
       {users && users.length > 0 ? (
          <List>
             {users.map((user) => (

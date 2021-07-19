@@ -6,6 +6,7 @@ import {
    getCurrentEndOfWeek,
    getCurrentStartOfWeek,
 } from './dateManipulator/dateManipulator';
+import { requestConfig } from './requestConfig/requestConfig';
 
 export {
    startsWithAny,
@@ -14,4 +15,5 @@ export {
    getStartOfWeek,
    getCurrentEndOfWeek,
    getCurrentStartOfWeek,
+   requestConfig,
 };
