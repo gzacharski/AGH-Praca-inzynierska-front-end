@@ -1,6 +1,11 @@
 import React from 'react';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
+import {
+   Appointments,
+   AppointmentTooltip,
+   Toolbar,
+   TodayButton,
+} from '@devexpress/dx-react-scheduler-material-ui';
 import { useSelector } from 'react-redux';
 import { selectData } from 'src/main/store/sliceFiles/timetable/trainerSlice';
 import { Timetable } from 'src/main/components/timetable';
@@ -13,6 +18,9 @@ const WorkoutsPage = () => {
       <PageWrapper>
          <PageTitle>Aktualny grafik zajęć indywidualnych i grupowych</PageTitle>
          <Timetable data={data}>
+            <Toolbar />
+            <TodayButton messages={{ today: 'Dzisiaj' }} />
+            <Appointments />
             <AppointmentTooltip
                showCloseButton
                headerComponent={HeaderTooltip}

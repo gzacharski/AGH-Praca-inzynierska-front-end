@@ -8,6 +8,8 @@ describe('SettingsPage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Aktualny grafik zajęć indywidualnych i grupowych')).toBeInTheDocument();
+      expect(
+         screen.getByText('Aktualny grafik zajęć indywidualnych i grupowych'),
+      ).toBeInTheDocument();
    });
 });
