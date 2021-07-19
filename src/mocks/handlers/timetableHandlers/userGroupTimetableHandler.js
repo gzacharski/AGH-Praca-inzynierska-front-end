@@ -11,9 +11,25 @@ export const userGroupTimetableHandlers = [
 
          return res(
             ctx.status(200),
-            ctx.delay(),
+            ctx.delay(2000),
             ctx.json({
                message: `Anulowano rezerwacje w wydarzeniu o id: ${trainingId} dla klienta o id: ${clientId}`,
+            }),
+         );
+      },
+   ),
+   rest.post(
+      `${trainingsServiceURL}/groupWorkout/:trainingId/rate`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const clientId = req.url.searchParams.get('clientId');
+         const rating = req.url.searchParams.get('rating');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(2000),
+            ctx.json({
+               message: `Oceniono na ${rating} wydarzenie (id: ${trainingId}) przez klienta (id: ${clientId})`,
             }),
          );
       },

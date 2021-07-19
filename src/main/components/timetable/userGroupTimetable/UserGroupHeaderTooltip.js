@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
    isPast,
    isFuture,
@@ -11,11 +11,15 @@ import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { IconButton, Menu, MenuItem, Fade, Tooltip } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
+import { AuthContext } from 'src/main/auth';
 import {
    RatingDialog,
    CancelParticipationDialog,
 } from 'src/main/components/dialogs';
-import { cancelUserGroupReservation } from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
+import {
+   cancelUserGroupReservation,
+   rateUserGroupEvent,
+} from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
 
 const cancelParticipationTitle = (startDate) => {
    const difference = differenceInMinutes(Date.parse(startDate), Date.now());
@@ -103,6 +107,9 @@ export const CustomHeaderContent = ({ appointmentData, onHide }) => {
    const [openDialog, setOpenDialog] = useState(false);
    const [ratingDialog, setRatingDialog] = useState(false);
    const dispatch = useDispatch();
+   const context = useContext(AuthContext);
+   const { token = '', userInfo = {} } = context.authState;
+   const { userId = '' } = userInfo;
 
    const handleClick = (event) => setAnchorEl(event.currentTarget);
    const handleClose = () => setAnchorEl(null);
@@ -113,6 +120,7 @@ export const CustomHeaderContent = ({ appointmentData, onHide }) => {
       startDate = '',
       rating = 2.5,
    } = appointmentData;
+
    const workoutDate = formatRelative(Date.parse(startDate), Date.now(), {
       locale: pl,
       weekStartsOn: 1,
@@ -148,7 +156,16 @@ export const CustomHeaderContent = ({ appointmentData, onHide }) => {
             setOpenDialog={setRatingDialog}
             dialogTitle="Oceń zajęcia"
             eventTitle={`${title}, ${workoutDate}`}
-            callback={(value) => console.log(`Ocena: ${value}`)}
+            callback={(value) =>
+               dispatch(
+                  rateUserGroupEvent({
+                     trainingId: id,
+                     rating: value,
+                     userId,
+                     token,
+                  }),
+               )
+            }
             rating={rating}
          />
       </>

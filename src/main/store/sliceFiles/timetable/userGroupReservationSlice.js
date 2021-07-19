@@ -73,6 +73,31 @@ export const cancelUserGroupReservation = createAsyncThunk(
    },
 );
 
+export const rateUserGroupEvent = createAsyncThunk(
+   'userGroupReservation/rateUserGroupEvent',
+   async ({ trainingId, rating, userId, token }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/groupWorkout/${trainingId}/rate?clientId=${userId}&rating=${rating}`;
+
+      const config = {
+         headers: {
+            'Accept-Language': 'pl',
+            Authorization: token,
+         },
+      };
+
+      try {
+         const response = await axios.post(url, config);
+         const { message = null } = response?.data;
+         return { message };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 export const userGroupReservationSlice = createSlice({
    name: 'userGroupReservation',
    initialState,
@@ -112,6 +137,19 @@ export const userGroupReservationSlice = createSlice({
          state.error = null;
       },
       [cancelUserGroupReservation.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+      [rateUserGroupEvent.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [rateUserGroupEvent.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [rateUserGroupEvent.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
