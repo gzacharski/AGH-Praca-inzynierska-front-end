@@ -38,7 +38,6 @@ const WorkoutRequestDialog = () => {
             <Button
                onClick={() => {
                   setOpenDialog(false);
-                  console.log('Test');
                }}
                className={classes.button}
             >
