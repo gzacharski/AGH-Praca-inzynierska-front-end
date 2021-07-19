@@ -28,7 +28,7 @@ export const userGroupTimetableHandlers = [
          if (startDate === '2021-07-19' && endDate === '2021-07-25') {
             return res(
                ctx.status(200),
-               ctx.delay(1500),
+               ctx.delay(),
                ctx.json({
                   data: [
                      {
@@ -243,7 +243,7 @@ export const userGroupTimetableHandlers = [
          if (startDate === '2021-07-12' && endDate === '2021-07-18') {
             return res(
                ctx.status(200),
-               ctx.delay(2000),
+               ctx.delay(),
                ctx.json({
                   data: [
                      {
