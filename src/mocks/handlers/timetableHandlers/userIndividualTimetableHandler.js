@@ -3,6 +3,37 @@ import { trainingsServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
 
 export const userIndividualTimetableHandler = [
+   rest.delete(
+      `${trainingsServiceURL}/individualWorkout/:trainingId/enroll`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const clientId = req.url.searchParams.get('clientId');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(2000),
+            ctx.json({
+               message: `Anulowano trening personalny o id: ${trainingId} dla klienta o id: ${clientId}`,
+            }),
+         );
+      },
+   ),
+   rest.post(
+      `${trainingsServiceURL}/individualWorkout/:trainingId/rate`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const clientId = req.url.searchParams.get('clientId');
+         const rating = req.url.searchParams.get('rating');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(2000),
+            ctx.json({
+               message: `Oceniono na ${rating} trening personalny (id: ${trainingId}) przez klienta (id: ${clientId})`,
+            }),
+         );
+      },
+   ),
    rest.get(
       `${trainingsServiceURL}/timetable/:userId/individualWorkouts`,
       (req, res, ctx) => {
