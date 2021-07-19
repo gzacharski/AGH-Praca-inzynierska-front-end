@@ -12,7 +12,7 @@ const UserAvatars = ({ users, callback }) => {
          spacing="small"
          onClick={() => callback && callback()}
          className={clsx({
-            [classes.group]: Boolean(users),
+            [classes.group]: Boolean(users) && Boolean(callback),
          })}
       >
          {users.map((user) => {
