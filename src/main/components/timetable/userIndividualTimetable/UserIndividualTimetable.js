@@ -1,22 +1,58 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+/* eslintT-disable react/jsx-props-no-spreading */
+import React, { useContext } from 'react';
 import {
    Appointments,
    AppointmentTooltip,
    Toolbar,
    TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { Button } from '@material-ui/core';
+import { makeStyles, IconButton, Tooltip } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 import { Timetable } from 'src/main/components/timetable';
+import { WorkoutRequestDialog } from 'src/main/components/dialogs';
 import { UserIndividualContentTooltip } from './UserIndividualContentTooltip';
 import { UserIndividualHeaderTooltip } from './UserIndividualHeaderTooltip';
-import { IndividualWorkoutContextProvider } from './IndividualWorkoutContex';
+import { IndividualWorkoutContext } from './IndividualWorkoutContex';
 
-const ToolbarButtons = ({ ...restProps }) => (
-   <Toolbar.FlexibleSpace {...restProps}>
-      <Button variant="contained">Test</Button>
-   </Toolbar.FlexibleSpace>
-);
+const useStyles = makeStyles(({ spacing }) => ({
+   flexibleSpace: {
+      marginBottom: 'auto',
+      marginTop: 'auto',
+      marginLeft: spacing(2),
+      marginRight: 'auto',
+   },
+   button: {
+      color: 'white',
+      backgroundColor: '#1e88e5',
+      '&:hover': {
+         backgroundColor: '#3ea8f5',
+      },
+   },
+}));
+
+const ToolbarButtons = ({ ...restProps }) => {
+   const context = useContext(IndividualWorkoutContext);
+   const { setOpenDialog } = context;
+   const classes = useStyles();
+   return (
+      <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
+         <Tooltip
+            title="Zapytanie o trening personalny"
+            arrow
+            placement="right"
+         >
+            <IconButton
+               size="small"
+               onClick={() => setOpenDialog((prevstate) => !prevstate)}
+               className={classes.button}
+            >
+               <AddIcon />
+            </IconButton>
+         </Tooltip>
+      </Toolbar.FlexibleSpace>
+   );
+};
 
 export const UserIndividualTimetable = ({
    data,
@@ -24,7 +60,7 @@ export const UserIndividualTimetable = ({
    fetchData,
    fetchedDates,
 }) => (
-   <IndividualWorkoutContextProvider>
+   <>
       <Timetable
          data={data}
          status={status}
@@ -40,5 +76,6 @@ export const UserIndividualTimetable = ({
             contentComponent={UserIndividualContentTooltip}
          />
       </Timetable>
-   </IndividualWorkoutContextProvider>
+      <WorkoutRequestDialog />
+   </>
 );

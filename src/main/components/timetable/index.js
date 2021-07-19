@@ -1,7 +1,7 @@
 import { Timetable } from './Timetable';
 import { AccountEquipmentTimetable } from './AccountEquipmentTimetable';
 import { UserGroupTimetable } from './userGroupTimetable/UserGroupTimetable';
-import { UserIndividualTimetable } from './userIndividualTimetable.js/UserIndividualTimetable';
+import { UserIndividualTimetable } from './userIndividualTimetable/UserIndividualTimetable';
 import { ManagerTimetable } from './ManagerTimetable';
 import { PublicTimetable } from './PublicTimetable';
 import { TrainerTimetable } from './TrainerTimetable';
