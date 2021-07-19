@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, LinearProgress } from '@material-ui/core';
-import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
+import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
    Scheduler,
    DayView,
@@ -10,7 +10,6 @@ import {
    ViewSwitcher,
    DateNavigator,
    TodayButton,
-   ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useDispatch } from 'react-redux';
 import { getEndOfWeek, getStartOfWeek } from 'src/main/utils';
@@ -42,8 +41,6 @@ export const Timetable = ({
                   }
                }}
             />
-            <EditingState />
-            <ConfirmationDialog />
             <WeekView startDayHour={7} endDayHour={22} displayName="Tydzień" />
             <DayView startDayHour={7} endDayHour={22} displayName="Dzień" />
             <Toolbar />
