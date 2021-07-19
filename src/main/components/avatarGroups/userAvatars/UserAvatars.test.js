@@ -57,4 +57,22 @@ describe('UserAvatars', () => {
       render(<UserAvatars />);
       expect(screen.getByText('Brak uczestników.')).toBeInTheDocument();
    });
+
+   test('when clicked should fire provided callback', () => {
+      const callback = jest.fn();
+      render(<UserAvatars users={testUsers} callback={callback} />);
+      userEvent.click(screen.getByAltText('Joaquin Phoenix'));
+      expect(callback).toHaveBeenCalled();
+
+      expect(screen.getByAltText('Joaquin Phoenix')).toBeInTheDocument();
+      expect(screen.getByAltText('Jack Nicholson')).toBeInTheDocument();
+   });
+
+   test('when clicked should NOT crash when no callback provided', async () => {
+      render(<UserAvatars users={testUsers} />);
+      userEvent.click(screen.getByAltText('Joaquin Phoenix'));
+
+      expect(screen.getByAltText('Joaquin Phoenix')).toBeInTheDocument();
+      expect(screen.getByAltText('Jack Nicholson')).toBeInTheDocument();
+   });
 });

@@ -4,13 +4,13 @@ import clsx from 'clsx';
 import { AvatarGroup } from '@material-ui/lab';
 import { useStyles } from './UserAvatars.styles';
 
-const UserAvatars = ({ users, setOpen }) => {
+const UserAvatars = ({ users, callback }) => {
    const classes = useStyles();
    return users && users.length > 0 ? (
       <AvatarGroup
          max={4}
          spacing="small"
-         onClick={() => Boolean(users) && setOpen((prevState) => !prevState)}
+         onClick={() => callback && callback()}
          className={clsx({
             [classes.group]: Boolean(users),
          })}
