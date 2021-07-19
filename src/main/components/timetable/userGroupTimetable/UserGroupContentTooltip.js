@@ -1,17 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
-import {
-   Grid,
-   withStyles,
-   Link,
-   Avatar,
-   Tooltip,
-   Typography,
-   makeStyles,
-} from '@material-ui/core';
-import clsx from 'clsx';
-import { AvatarGroup, Rating } from '@material-ui/lab';
+import { Grid, withStyles, Link, Tooltip } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
 import {
    Room as RoomIcon,
    People as PeopleIcon,
@@ -20,6 +11,7 @@ import {
 } from '@material-ui/icons';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { ParticipantsDialog } from 'src/main/components/dialogs';
+import { UserAvatars } from 'src/main/components/avatarGroups';
 
 const style = ({ palette }) => ({
    icon: {
@@ -34,55 +26,6 @@ const style = ({ palette }) => ({
       },
    },
 });
-
-const useStyles = makeStyles((theme) => ({
-   group: {
-      '&:hover': {
-         cursor: 'pointer',
-      },
-   },
-   grid: {
-      paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
-   },
-}));
-
-const UserAvatars = ({ users, setOpen }) => {
-   const classes = useStyles();
-   return users && users.length > 0 ? (
-      <AvatarGroup
-         max={4}
-         spacing="small"
-         onClick={() => Boolean(users) && setOpen((prevState) => !prevState)}
-         className={clsx({
-            [classes.group]: Boolean(users),
-         })}
-      >
-         {users.map((user) => {
-            const {
-               name = ' ',
-               surname = ' ',
-               avatar = '',
-               userId = '',
-            } = user;
-            return (
-               <Tooltip
-                  key={userId}
-                  title={`${name} ${surname}`}
-                  placement="bottom"
-                  arrow
-               >
-                  <Avatar alt={`${name} ${surname}`} src={avatar}>
-                     {`${name[0]}${surname[0]}`}
-                  </Avatar>
-               </Tooltip>
-            );
-         })}
-      </AvatarGroup>
-   ) : (
-      <Typography>Brak uczestników.</Typography>
-   );
-};
 
 export const CustomContentTooltip = withStyles(style)(
    ({ appointmentData, classes }) => {
@@ -146,7 +89,10 @@ export const CustomContentTooltip = withStyles(style)(
                         </Tooltip>
                      </Grid>
                      <Grid item xs={4}>
-                        <UserAvatars users={trainers} setOpen={setOpen} />
+                        <UserAvatars
+                           users={trainers}
+                           callback={() => setOpen((prevState) => !prevState)}
+                        />
                      </Grid>
                   </>
                )}
@@ -156,7 +102,10 @@ export const CustomContentTooltip = withStyles(style)(
                   </Tooltip>
                </Grid>
                <Grid item xs={4}>
-                  <UserAvatars users={basicList} setOpen={setOpen} />
+                  <UserAvatars
+                     users={basicList}
+                     callback={() => setOpen((prevState) => !prevState)}
+                  />
                </Grid>
             </Grid>
             <ParticipantsDialog
