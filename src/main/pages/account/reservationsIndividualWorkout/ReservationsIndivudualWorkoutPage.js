@@ -10,7 +10,7 @@ import {
    selectStatus,
 } from 'src/main/store/sliceFiles/timetable/userIndividualReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { AccountIndividualTimetable } from 'src/main/components/timetable/AccountIndividualTimetable';
+import { UserIndividualTimetable } from 'src/main/components/timetable/userIndividualTimetable.js/UserIndividualTimetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
@@ -59,7 +59,7 @@ const SettingsPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Twoje rezerwacje zajęć indywidualnych</PageTitle>
-         <AccountIndividualTimetable
+         <UserIndividualTimetable
             data={data}
             status={status}
             fetchData={fetchUserIndividualReservation}

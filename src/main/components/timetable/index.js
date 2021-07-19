@@ -1,7 +1,7 @@
 import { Timetable } from './Timetable';
 import { AccountEquipmentTimetable } from './AccountEquipmentTimetable';
 import { UserGroupTimetable } from './userGroupTimetable/UserGroupTimetable';
-import { AccountIndividualTimetable } from './AccountIndividualTimetable';
+import { UserIndividualTimetable } from './userIndividualTimetable.js/UserIndividualTimetable';
 import { ManagerTimetable } from './ManagerTimetable';
 import { PublicTimetable } from './PublicTimetable';
 import { TrainerTimetable } from './TrainerTimetable';
@@ -10,7 +10,7 @@ export {
    Timetable,
    AccountEquipmentTimetable,
    UserGroupTimetable,
-   AccountIndividualTimetable,
+   UserIndividualTimetable,
    ManagerTimetable,
    PublicTimetable,
    TrainerTimetable,
