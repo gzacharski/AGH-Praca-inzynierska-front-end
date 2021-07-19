@@ -1,14 +1,24 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
-import { isPast, isFuture } from 'date-fns';
+import { isPast, isFuture, formatRelative } from 'date-fns';
+import { pl } from 'date-fns/locale';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { IconButton, Menu, MenuItem, Fade } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { SaveChangesDialog } from 'src/main/components/dialogs';
+import {
+   RatingDialog,
+   CancelParticipationDialog,
+} from 'src/main/components/dialogs';
 import { cancelUserGroupReservation } from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
 
-const EventMenu = ({ appointmentData, onClose, anchorEl, setOpenDialog }) => {
+const EventMenu = ({
+   appointmentData,
+   onClose,
+   anchorEl,
+   setOpenDialog,
+   setRatingDialog,
+}) => {
    const { startDate, endDate } = appointmentData;
    const cancelParticipationDisabled = isPast(Date.parse(startDate));
    const ratingDisabled = isFuture(Date.parse(endDate));
@@ -24,26 +34,47 @@ const EventMenu = ({ appointmentData, onClose, anchorEl, setOpenDialog }) => {
             TransitionComponent={Fade}
          >
             <MenuItem
-               onClick={() => setOpenDialog((prevState) => !prevState)}
+               onClick={() => {
+                  setOpenDialog((prevState) => !prevState);
+                  onClose();
+               }}
                disabled={cancelParticipationDisabled}
             >
                Zrezygnuj
             </MenuItem>
-            <MenuItem disabled={ratingDisabled}>Oceń</MenuItem>
+            <MenuItem
+               onClick={() => {
+                  setRatingDialog((prevState) => !prevState);
+                  onClose();
+               }}
+               disabled={ratingDisabled}
+            >
+               Oceń
+            </MenuItem>
          </Menu>
       </>
    );
 };
 
-const CustomHeaderContent = ({ appointmentData }) => {
+export const CustomHeaderContent = ({ appointmentData, onHide }) => {
    const [anchorEl, setAnchorEl] = useState(null);
    const [openDialog, setOpenDialog] = useState(false);
+   const [ratingDialog, setRatingDialog] = useState(false);
    const dispatch = useDispatch();
 
    const handleClick = (event) => setAnchorEl(event.currentTarget);
    const handleClose = () => setAnchorEl(null);
 
-   const { id = '' } = appointmentData;
+   const {
+      id = '',
+      title = '',
+      startDate = '',
+      rating = 2.5,
+   } = appointmentData;
+   const workoutDate = formatRelative(Date.parse(startDate), Date.now(), {
+      locale: pl,
+      weekStartsOn: 1,
+   });
 
    return (
       <>
@@ -58,32 +89,45 @@ const CustomHeaderContent = ({ appointmentData }) => {
             appointmentData={appointmentData}
             onClose={handleClose}
             setOpenDialog={setOpenDialog}
+            setRatingDialog={setRatingDialog}
          />
-         <SaveChangesDialog
-            buttonText="Zrezygnuj"
-            title="Czy na pewno chcesz zrezygnować z rezerwacji?"
-            callback={() => {
-               console.log(`Zrezygnowano z rezerwacji id: ${id}`);
-               handleClose();
-               dispatch(cancelUserGroupReservation({ trainingId: id }));
-            }}
+         <CancelParticipationDialog
             openDialog={openDialog}
             setOpenDialog={setOpenDialog}
+            dialogTitle="Czy na pewno chcesz zrezygnować z rezerwacji na zajęcia?"
+            eventTitle={`${title}, ${workoutDate}`}
+            callback={() => {
+               onHide();
+               dispatch(cancelUserGroupReservation({ trainingId: id }));
+            }}
+         />
+         <RatingDialog
+            openDialog={ratingDialog}
+            setOpenDialog={setRatingDialog}
+            dialogTitle="Oceń zajęcia"
+            eventTitle={`${title}, ${workoutDate}`}
+            callback={(value) => console.log(`Ocena: ${value}`)}
+            rating={rating}
          />
       </>
    );
 };
 
-export const UserGroupHeaderTooltip = ({ appointmentData, ...restProps }) => {
-   const { id = '' } = appointmentData;
-   console.log(id);
-   return (
+export const UserGroupHeaderTooltip = ({
+   appointmentData,
+   onHide,
+   ...restProps
+}) => (
+   <>
       <AppointmentTooltip.Header
          {...restProps}
+         onHide={onHide}
          appointmentData={appointmentData}
-         showDeleteButton
       >
-         <CustomHeaderContent appointmentData={appointmentData} />
+         <CustomHeaderContent
+            appointmentData={appointmentData}
+            onHide={onHide}
+         />
       </AppointmentTooltip.Header>
-   );
-};
+   </>
+);

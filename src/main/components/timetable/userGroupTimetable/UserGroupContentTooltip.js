@@ -84,8 +84,8 @@ const UserAvatars = ({ users, setOpen }) => {
    );
 };
 
-export const UserGroupContentTooltip = withStyles(style)(
-   ({ appointmentData, classes, ...restProps }) => {
+export const CustomContentTooltip = withStyles(style)(
+   ({ appointmentData, classes }) => {
       const {
          location = '',
          trainers = [],
@@ -97,83 +97,88 @@ export const UserGroupContentTooltip = withStyles(style)(
       const [open, setOpen] = useState(false);
 
       return (
-         <AppointmentTooltip.Content
-            {...restProps}
-            appointmentData={appointmentData}
-         >
-            <>
-               <Grid container alignItems="center">
-                  {location && (
-                     <>
-                        <Grid item xs={2} className={classes.textCenter}>
-                           <Tooltip
-                              title="Lokalizacja"
-                              placement="bottom"
-                              arrow
-                           >
-                              <RoomIcon className={classes.icon} />
-                           </Tooltip>
-                        </Grid>
-                        <Grid item xs={4}>
-                           <Link href="#" color="inherit">
-                              {location}
-                           </Link>
-                        </Grid>
-                     </>
-                  )}
-                  {rating && (
-                     <>
-                        <Grid item xs={2} className={classes.textCenter}>
-                           <Tooltip
-                              title={`Ocena: ${rating}`}
-                              placement="bottom"
-                              arrow
-                           >
-                              <ThumbsUpDownIcon className={classes.icon} />
-                           </Tooltip>
-                        </Grid>
-                        <Grid item xs={4}>
-                           <Rating
-                              name="rating"
-                              precision={0.5}
-                              value={rating}
-                              readOnly
-                           />
-                        </Grid>
-                     </>
-                  )}
-                  {trainers.length > 0 && (
-                     <>
-                        <Grid item xs={2} className={classes.textCenter}>
-                           <Tooltip
-                              title="Prowadzący zajęcia"
-                              placement="bottom"
-                              arrow
-                           >
-                              <EmojiPeopleIcon className={classes.icon} />
-                           </Tooltip>
-                        </Grid>
-                        <Grid item xs={4}>
-                           <UserAvatars users={trainers} setOpen={setOpen} />
-                        </Grid>
-                     </>
-                  )}
-                  <Grid item xs={2} className={classes.textCenter}>
-                     <Tooltip title="Uczestnicy" placement="bottom" arrow>
-                        <PeopleIcon className={classes.icon} />
-                     </Tooltip>
-                  </Grid>
-                  <Grid item xs={4}>
-                     <UserAvatars users={basicList} setOpen={setOpen} />
-                  </Grid>
+         <>
+            <Grid container alignItems="center">
+               {location && (
+                  <>
+                     <Grid item xs={2} className={classes.textCenter}>
+                        <Tooltip title="Lokalizacja" placement="bottom" arrow>
+                           <RoomIcon className={classes.icon} />
+                        </Tooltip>
+                     </Grid>
+                     <Grid item xs={4}>
+                        <Link href="#" color="inherit">
+                           {location}
+                        </Link>
+                     </Grid>
+                  </>
+               )}
+               {rating && (
+                  <>
+                     <Grid item xs={2} className={classes.textCenter}>
+                        <Tooltip
+                           title={`Ocena: ${rating}`}
+                           placement="bottom"
+                           arrow
+                        >
+                           <ThumbsUpDownIcon className={classes.icon} />
+                        </Tooltip>
+                     </Grid>
+                     <Grid item xs={4}>
+                        <Rating
+                           name="rating"
+                           precision={0.5}
+                           value={rating}
+                           readOnly
+                        />
+                     </Grid>
+                  </>
+               )}
+               {trainers.length > 0 && (
+                  <>
+                     <Grid item xs={2} className={classes.textCenter}>
+                        <Tooltip
+                           title="Prowadzący zajęcia"
+                           placement="bottom"
+                           arrow
+                        >
+                           <EmojiPeopleIcon className={classes.icon} />
+                        </Tooltip>
+                     </Grid>
+                     <Grid item xs={4}>
+                        <UserAvatars users={trainers} setOpen={setOpen} />
+                     </Grid>
+                  </>
+               )}
+               <Grid item xs={2} className={classes.textCenter}>
+                  <Tooltip title="Uczestnicy" placement="bottom" arrow>
+                     <PeopleIcon className={classes.icon} />
+                  </Tooltip>
                </Grid>
-               <ParticipantsDialog
-                  users={{ trainers, partipants }}
-                  open={open}
-                  setOpen={setOpen}
-               />
-            </>
-         </AppointmentTooltip.Content>
+               <Grid item xs={4}>
+                  <UserAvatars users={basicList} setOpen={setOpen} />
+               </Grid>
+            </Grid>
+            <ParticipantsDialog
+               users={{ trainers, partipants }}
+               open={open}
+               setOpen={setOpen}
+            />
+         </>
       );
    },
+);
+
+export const UserGroupContentTooltip = withStyles(style)(
+   ({ appointmentData, classes, ...restProps }) => (
+      <AppointmentTooltip.Content
+         {...restProps}
+         appointmentData={appointmentData}
+      >
+         <CustomContentTooltip
+            appointmentData={appointmentData}
+            classes={classes}
+         />
+      </AppointmentTooltip.Content>
+   ),
 );
