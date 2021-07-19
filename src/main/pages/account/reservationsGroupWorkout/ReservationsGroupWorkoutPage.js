@@ -10,7 +10,7 @@ import {
    selectStatus,
 } from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { AccountGroupTimetable } from 'src/main/components/timetable/AccountGroupTimetable';
+import { UserGroupTimetable } from 'src/main/components/timetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
@@ -59,7 +59,7 @@ const ReservationGroupWorkoutPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Twoje rezerwacje zajęć grupowych</PageTitle>
-         <AccountGroupTimetable
+         <UserGroupTimetable
             data={data}
             status={status}
             fetchData={fetchUserGroupReservation}

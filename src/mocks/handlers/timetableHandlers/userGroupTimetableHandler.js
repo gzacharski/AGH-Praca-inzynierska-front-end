@@ -3,6 +3,37 @@ import { trainingsServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
 
 export const userGroupTimetableHandlers = [
+   rest.delete(
+      `${trainingsServiceURL}/groupWorkout/:trainingId/enroll`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const clientId = req.url.searchParams.get('clientId');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(2000),
+            ctx.json({
+               message: `Anulowano rezerwacje w wydarzeniu o id: ${trainingId} dla klienta o id: ${clientId}`,
+            }),
+         );
+      },
+   ),
+   rest.post(
+      `${trainingsServiceURL}/groupWorkout/:trainingId/rate`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const clientId = req.url.searchParams.get('clientId');
+         const rating = req.url.searchParams.get('rating');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(2000),
+            ctx.json({
+               message: `Oceniono na ${rating} wydarzenie (id: ${trainingId}) przez klienta (id: ${clientId})`,
+            }),
+         );
+      },
+   ),
    rest.get(
       `${trainingsServiceURL}/timetable/:userId/groupWorkouts`,
       (req, res, ctx) => {
@@ -13,7 +44,7 @@ export const userGroupTimetableHandlers = [
          if (startDate === '2021-07-19' && endDate === '2021-07-25') {
             return res(
                ctx.status(200),
-               ctx.delay(1500),
+               ctx.delay(),
                ctx.json({
                   data: [
                      {
@@ -228,7 +259,7 @@ export const userGroupTimetableHandlers = [
          if (startDate === '2021-07-12' && endDate === '2021-07-18') {
             return res(
                ctx.status(200),
-               ctx.delay(2000),
+               ctx.delay(),
                ctx.json({
                   data: [
                      {
