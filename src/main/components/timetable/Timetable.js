@@ -5,11 +5,8 @@ import {
    Scheduler,
    DayView,
    WeekView,
-   Appointments,
-   Toolbar,
    ViewSwitcher,
    DateNavigator,
-   TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useDispatch } from 'react-redux';
 import { getEndOfWeek, getStartOfWeek } from 'src/main/utils';
@@ -43,12 +40,9 @@ export const Timetable = ({
             />
             <WeekView startDayHour={7} endDayHour={22} displayName="Tydzień" />
             <DayView startDayHour={7} endDayHour={22} displayName="Dzień" />
-            <Toolbar />
-            <TodayButton messages={{ today: 'Dzisiaj' }} />
+            {children}
             <DateNavigator />
             <ViewSwitcher />
-            <Appointments />
-            {children}
          </Scheduler>
       </Paper>
    );
