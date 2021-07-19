@@ -10,6 +10,7 @@ import { Button } from '@material-ui/core';
 import { Timetable } from 'src/main/components/timetable';
 import { UserIndividualContentTooltip } from './UserIndividualContentTooltip';
 import { UserIndividualHeaderTooltip } from './UserIndividualHeaderTooltip';
+import { IndividualWorkoutContextProvider } from './IndividualWorkoutContex';
 
 const ToolbarButtons = ({ ...restProps }) => (
    <Toolbar.FlexibleSpace {...restProps}>
@@ -23,19 +24,21 @@ export const UserIndividualTimetable = ({
    fetchData,
    fetchedDates,
 }) => (
-   <Timetable
-      data={data}
-      status={status}
-      fetchData={fetchData}
-      fetchedDates={fetchedDates}
-   >
-      <Toolbar flexibleSpaceComponent={ToolbarButtons} />
-      <TodayButton messages={{ today: 'Dzisiaj' }} />
-      <Appointments />
-      <AppointmentTooltip
-         showCloseButton
-         headerComponent={UserIndividualHeaderTooltip}
-         contentComponent={UserIndividualContentTooltip}
-      />
-   </Timetable>
+   <IndividualWorkoutContextProvider>
+      <Timetable
+         data={data}
+         status={status}
+         fetchData={fetchData}
+         fetchedDates={fetchedDates}
+      >
+         <Toolbar flexibleSpaceComponent={ToolbarButtons} />
+         <TodayButton messages={{ today: 'Dzisiaj' }} />
+         <Appointments />
+         <AppointmentTooltip
+            showCloseButton
+            headerComponent={UserIndividualHeaderTooltip}
+            contentComponent={UserIndividualContentTooltip}
+         />
+      </Timetable>
+   </IndividualWorkoutContextProvider>
 );
