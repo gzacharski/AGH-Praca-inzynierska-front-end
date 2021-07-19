@@ -20,7 +20,6 @@ export const UserGroupTimetable = ({
          showCloseButton
          headerComponent={UserGroupHeaderTooltip}
          contentComponent={UserGroupContentTooltip}
-         onVisibilityChange={() => console.log('Visibility test')}
       />
    </Timetable>
 );
