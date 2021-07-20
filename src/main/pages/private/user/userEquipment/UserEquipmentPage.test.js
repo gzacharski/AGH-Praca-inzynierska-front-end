@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
 import { AuthContext } from 'src/main/auth';
-import ReservationsEquipmentPage from './ReservationsEquipmentPage';
+import ReservationsEquipmentPage from './UserEquipmentPage';
 
 describe('SettingsPage', () => {
    beforeEach(() => {

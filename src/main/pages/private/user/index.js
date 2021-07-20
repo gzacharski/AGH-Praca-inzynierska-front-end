@@ -1,7 +1,7 @@
 import HelpPage from './help/HelpPage';
 import MessagesPage from './messages/MessagesPage';
 import NotificationsPage from './notifications/NotificationsPage';
-import ReservationsEquipmentPage from './reservationsEquipment/ReservationsEquipmentPage';
+import UserEquipmentPage from './userEquipment/UserEquipmentPage';
 import ReservationsGroupWorkoutPage from './reservationsGroupWorkout/ReservationsGroupWorkoutPage';
 import ReservationsIndivudualWorkoutPage from './reservationsIndividualWorkout/ReservationsIndivudualWorkoutPage';
 import SettingsPage from './settings/SettingsPage';
@@ -13,7 +13,7 @@ export {
    HelpPage,
    MessagesPage,
    NotificationsPage,
-   ReservationsEquipmentPage,
+   UserEquipmentPage,
    ReservationsGroupWorkoutPage,
    ReservationsIndivudualWorkoutPage,
    SettingsPage,
