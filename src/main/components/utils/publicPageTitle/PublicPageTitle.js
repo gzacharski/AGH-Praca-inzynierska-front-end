@@ -7,7 +7,7 @@ const PublicPageTitle = ({ header = '', subheader = '' }) => {
    return (
       <Container maxWidth="md" className={classes.pageTitle}>
          <Typography
-            variant="h3"
+            variant="h4"
             align="center"
             color="textPrimary"
             gutterBottom
@@ -15,7 +15,7 @@ const PublicPageTitle = ({ header = '', subheader = '' }) => {
             {header}
          </Typography>
          <Typography
-            variant="h4"
+            variant="h5"
             align="center"
             color="textSecondary"
             gutterBottom
