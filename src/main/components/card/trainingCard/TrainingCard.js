@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
    Avatar,
    Card,
@@ -9,17 +9,20 @@ import {
    Tooltip,
    Grid,
 } from '@material-ui/core';
+import { TrainingDetailsDialog } from 'src/main/components/dialogs';
 import { useStyles } from './TrainingCard.styles';
-// import ShowTrainingsDetails from '../../gallery/showTrainingDetails/ShowTrainingsDetails';
 
 const TrainingCard = ({
    image = '',
    title = '',
    description = '',
    trainer = {},
+   rating = 2.5,
+   duration = '',
+   comments = [],
 }) => {
    const classes = useStyles();
-   // const [open, setOpen] = useState(false);
+   const [open, setOpen] = useState(false);
 
    const { name = '', surname = '', avatar = '' } = trainer;
    const trainerName = `${name} ${surname}`;
@@ -29,7 +32,7 @@ const TrainingCard = ({
          <Card
             className={classes.card}
             elevation={10}
-            // onClick={() => setOpen(true)}
+            onClick={() => setOpen(true)}
             data-testid="trainingCard"
          >
             <CardMedia
@@ -56,17 +59,19 @@ const TrainingCard = ({
                </Typography>
             </CardContent>
          </Card>
-         {/* {open && (
-            <ShowTrainingsDetails
+         {open && (
+            <TrainingDetailsDialog
                open={open}
                setOpen={setOpen}
-               image={imageSource}
+               image={image}
                title={title}
                description={description}
                trainer={trainer}
-               avatar={trainerAvatar}
+               rating={rating}
+               duration={duration}
+               comments={comments}
             />
-         )} */}
+         )}
       </Grid>
    );
 };

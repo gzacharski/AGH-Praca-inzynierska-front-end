@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
-import ShowTrainingsDetails from './TrainingDetailsDialog';
+import TrainingDetailsDialog from './TrainingDetailsDialog';
 
 describe('Show training details', () => {
    const setOpen = jest.fn();
@@ -11,7 +11,7 @@ describe('Show training details', () => {
 
    beforeEach(() => {
       render(
-         <ShowTrainingsDetails
+         <TrainingDetailsDialog
             open
             setOpen={setOpen}
             image="test image source"

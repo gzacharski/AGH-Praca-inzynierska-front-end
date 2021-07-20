@@ -40,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: '100px',
       paddingRight: '100px',
    },
+   typography: {
+      marginBottom: 'auto',
+      marginTop: 'auto',
+      marginRight: theme.spacing(2),
+   },
 }));
 
 export { useStyles };
