@@ -6,8 +6,10 @@ import ReservationsGroupWorkoutPage from './reservationsGroupWorkout/Reservation
 import ReservationsIndivudualWorkoutPage from './reservationsIndividualWorkout/ReservationsIndivudualWorkoutPage';
 import SettingsPage from './settings/SettingsPage';
 import StatisticsPage from './statistics/StatisticsPage';
+import AccountPage from './AccountPage';
 
 export {
+   AccountPage,
    HelpPage,
    MessagesPage,
    NotificationsPage,

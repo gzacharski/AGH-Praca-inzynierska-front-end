@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
-import { AccountPage } from 'src/main/pages';
 import {
+   AccountPage,
    HelpPage,
    MessagesPage,
    NotificationsPage,
