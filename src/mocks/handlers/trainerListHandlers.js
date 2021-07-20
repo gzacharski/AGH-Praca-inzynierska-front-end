@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { NETWORK_ERROR } from 'src/main/data/messages';
 import { accountServiceURL } from 'src/main/data/urls';
 
-export const priceListHandlers = [
+export const trainerListHandlers = [
    rest.get(`${accountServiceURL}/trainers`, (req, res, ctx) => {
       const error = req.url.searchParams.get('error');
       if (error === 'noConnection') {
