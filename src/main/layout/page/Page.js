@@ -20,7 +20,7 @@ import {
    TimetablePage,
    TrainersPage,
    WorkoutsPage,
-} from 'src/main/pages';
+} from 'src/main/pages/public';
 import { AuthContext } from 'src/main/auth';
 import {
    AccountRouteGroup,
