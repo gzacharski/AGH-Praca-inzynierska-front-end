@@ -10,7 +10,7 @@ import {
    ReservationsIndivudualWorkoutPage,
    SettingsPage,
    StatisticsPage,
-} from 'src/main/pages/private/account';
+} from 'src/main/pages/private/user';
 
 const AccountRouteGroup = () => {
    const { path } = useRouteMatch();
