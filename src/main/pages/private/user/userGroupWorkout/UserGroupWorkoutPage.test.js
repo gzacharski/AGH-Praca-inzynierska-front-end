@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
 import { AuthContext } from 'src/main/auth';
-import ReservationsGroupWorkout from './ReservationsGroupWorkoutPage';
+import UserGroupWorkoutPage from './UserGroupWorkoutPage';
 
 describe('SettingsPage', () => {
    beforeEach(() => {
@@ -12,7 +12,7 @@ describe('SettingsPage', () => {
                authState: { userInfo: { userId: 'test' } },
             }}
          >
-            <ReservationsGroupWorkout />
+            <UserGroupWorkoutPage />
          </AuthContext.Provider>,
       );
    });

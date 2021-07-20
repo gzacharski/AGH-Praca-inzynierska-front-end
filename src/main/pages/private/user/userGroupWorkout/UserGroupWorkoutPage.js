@@ -15,7 +15,7 @@ import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
 
-const ReservationGroupWorkoutPage = () => {
+const UserGroupWorkoutPage = () => {
    const data = useSelector(selectData);
    const dispatch = useDispatch();
    const status = useSelector(selectStatus);
@@ -69,4 +69,4 @@ const ReservationGroupWorkoutPage = () => {
    );
 };
 
-export default ReservationGroupWorkoutPage;
+export default UserGroupWorkoutPage;
