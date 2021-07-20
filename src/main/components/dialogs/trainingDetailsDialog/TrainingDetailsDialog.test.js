@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
-import ShowTrainingsDetails from './ShowTrainingsDetails';
+import ShowTrainingsDetails from './TrainingDetailsDialog';
 
 describe('Show training details', () => {
    const setOpen = jest.fn();

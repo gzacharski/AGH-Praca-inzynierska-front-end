@@ -13,7 +13,7 @@ import {
    IconButton,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { useStyles } from './ShowTrainingsDetails.style';
+import { useStyles } from './TrainingDetailsDialog.style';
 
 const ShowTrainingsDetails = ({
    open,
