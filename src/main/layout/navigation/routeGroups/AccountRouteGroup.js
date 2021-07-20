@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
-import { AccountPage } from 'src/main/pages';
 import {
+   AccountPage,
    HelpPage,
    MessagesPage,
    NotificationsPage,
-   ReservationsEquipmentPage,
-   ReservationsGroupWorkoutPage,
-   ReservationsIndivudualWorkoutPage,
+   UserEquipmentPage,
+   UserGroupWorkoutPage,
+   UserIndividualWorkoutPage,
    SettingsPage,
    StatisticsPage,
-} from 'src/main/pages/account';
+} from 'src/main/pages/private/user';
 
 const AccountRouteGroup = () => {
    const { path } = useRouteMatch();
@@ -21,15 +21,15 @@ const AccountRouteGroup = () => {
          <Route path={`${path}/notifications`} component={NotificationsPage} />
          <Route
             path={`${path}/reservations/workouts/individual`}
-            component={ReservationsIndivudualWorkoutPage}
+            component={UserIndividualWorkoutPage}
          />
          <Route
             path={`${path}/reservations/workouts/group`}
-            component={ReservationsGroupWorkoutPage}
+            component={UserGroupWorkoutPage}
          />
          <Route
             path={`${path}/reservations/equipment`}
-            component={ReservationsEquipmentPage}
+            component={UserEquipmentPage}
          />
          <Route path={`${path}/settings`} component={SettingsPage} />
          <Route path={`${path}/stats`} component={StatisticsPage} />

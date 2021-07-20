@@ -5,14 +5,16 @@ import { userEquipmentTimetableHandlers } from './handlers/timetableHandlers/use
 import { userGroupTimetableHandlers } from './handlers/timetableHandlers/userGroupTimetableHandler';
 import { userIndividualTimetableHandler } from './handlers/timetableHandlers/userIndividualTimetableHandler';
 import { publicTimetableHandlers } from './handlers/timetableHandlers/publicTimetableHandler';
+import { trainerListHandlers } from './handlers/trainerListHandlers';
 
 const worker = setupWorker(
-   ...loginHandlers,
    ...priceListHandlers,
    ...userGroupTimetableHandlers,
    ...userEquipmentTimetableHandlers,
    ...userIndividualTimetableHandler,
    ...publicTimetableHandlers,
+   ...trainerListHandlers,
+   ...loginHandlers,
 );
 
 export { worker };

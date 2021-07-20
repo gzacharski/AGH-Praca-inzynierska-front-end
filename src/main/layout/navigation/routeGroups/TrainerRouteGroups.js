@@ -5,7 +5,7 @@ import {
    TasksPage,
    TrainerPage,
    WorkoutsPage,
-} from 'src/main/pages/trainer';
+} from 'src/main/pages/private/trainer';
 
 const ManagerRouteGroup = () => {
    const { path } = useRouteMatch();

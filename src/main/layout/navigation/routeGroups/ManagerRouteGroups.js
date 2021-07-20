@@ -7,7 +7,7 @@ import {
    TasksPage,
    TimetablePage,
    UsersPage,
-} from 'src/main/pages/manager';
+} from 'src/main/pages/private/manager';
 
 const ManagerRouteGroup = () => {
    const { path } = useRouteMatch();
