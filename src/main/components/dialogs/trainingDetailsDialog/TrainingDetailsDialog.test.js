@@ -1,24 +1,25 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 import { render, screen } from 'src/testUtils';
-import ShowTrainingsDetails from './ShowTrainingsDetails';
+import TrainingDetailsDialog from './TrainingDetailsDialog';
 
 describe('Show training details', () => {
    const setOpen = jest.fn();
-   const image = {
-      data: 'https://source.unsplash.com/random',
-      format: 'jpeg',
-   };
 
    beforeEach(() => {
       render(
-         <ShowTrainingsDetails
+         <TrainingDetailsDialog
             open
             setOpen={setOpen}
-            image="test image source"
+            image="https://images.unsplash.com/photo-1520877880798-5ee004e3f11e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjB8fGZpdG5lc3MlMjBlcXVpcG1lbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             title="test training title"
             description="test training description"
-            trainer="Test trainer"
-            avatar={image}
+            trainer={{
+               trainerId: nanoid(),
+               name: 'Redford',
+               surname: 'Bowdry',
+               avatar: 'https://fwcdn.pl/ppo/71/04/57104/449672.2.jpg',
+            }}
          />,
       );
    });
@@ -49,13 +50,5 @@ describe('Show training details', () => {
 
    test('should "Sprawdź grafik" button', () => {
       expect(screen.getByText('Sprawdź grafik')).toBeInTheDocument();
-   });
-
-   test('should "Dołącz" button', () => {
-      expect(screen.getByTestId('check-button')).toBeInTheDocument();
-   });
-
-   test('should "Dołącz" button', () => {
-      expect(screen.getByTestId('join-button')).toBeInTheDocument();
    });
 });

@@ -7,22 +7,28 @@ import {
    Typography,
    Box,
    Tooltip,
+   Grid,
 } from '@material-ui/core';
+import { TrainingDetailsDialog } from 'src/main/components/dialogs';
 import { useStyles } from './TrainingCard.styles';
-import ShowTrainingsDetails from '../../gallery/showTrainingDetails/ShowTrainingsDetails';
 
 const TrainingCard = ({
-   imageSource,
-   title,
-   description,
-   trainer,
-   trainerAvatar,
+   image = '',
+   title = '',
+   description = '',
+   trainer = {},
+   rating = 2.5,
+   duration = '',
+   comments = [],
 }) => {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
 
+   const { name = '', surname = '', avatar = '' } = trainer;
+   const trainerName = `${name} ${surname}`;
+
    return (
-      <>
+      <Grid item xs={12} sm={6} md={5} lg={4} xl={3}>
          <Card
             className={classes.card}
             elevation={10}
@@ -31,7 +37,7 @@ const TrainingCard = ({
          >
             <CardMedia
                className={classes.cardMedia}
-               image={`data:image/${imageSource.format};base64, ${imageSource.data}`}
+               image={image}
                title={title}
                data-testid="background-image"
             />
@@ -40,10 +46,10 @@ const TrainingCard = ({
                   <Typography gutterBottom variant="h5" component="h2">
                      {title}
                   </Typography>
-                  <Tooltip title={trainer}>
+                  <Tooltip title={trainerName}>
                      <Avatar
-                        alt={trainer}
-                        src={`data:image/${trainerAvatar.format};base64, ${trainerAvatar.data}`}
+                        alt={trainerName}
+                        src={avatar}
                         data-testid="avatar"
                      />
                   </Tooltip>
@@ -54,17 +60,19 @@ const TrainingCard = ({
             </CardContent>
          </Card>
          {open && (
-            <ShowTrainingsDetails
+            <TrainingDetailsDialog
                open={open}
                setOpen={setOpen}
-               image={imageSource}
+               image={image}
                title={title}
                description={description}
                trainer={trainer}
-               avatar={trainerAvatar}
+               rating={rating}
+               duration={duration}
+               comments={comments}
             />
          )}
-      </>
+      </Grid>
    );
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
    Avatar,
@@ -13,18 +14,21 @@ import {
    IconButton,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { useStyles } from './ShowTrainingsDetails.style';
+import { useStyles } from './TrainingDetailsDialog.style';
 
-const ShowTrainingsDetails = ({
+const TrainingDetailsDialog = ({
    open,
    setOpen,
    image,
    title,
    description,
    trainer,
-   avatar,
+   rating,
+   duration,
+   comments,
 }) => {
    const classes = useStyles();
+   const { name, surname, avatar } = trainer;
 
    return (
       <Backdrop
@@ -43,7 +47,7 @@ const ShowTrainingsDetails = ({
             </IconButton>
             <CardMedia
                className={classes.cardMedia}
-               image={`data:${image.format};base64,${image.data}`}
+               image={image}
                title={title}
                data-testid="background-image"
             />
@@ -53,13 +57,19 @@ const ShowTrainingsDetails = ({
                      {title}
                   </Typography>
                   <Box className={classes.box}>
-                     <Typography>Prowadzący:</Typography>
-                     <Tooltip title={trainer}>
+                     <Typography className={classes.typography}>Prowadzący:</Typography>
+                     <Tooltip
+                        title={`${name} ${surname}`}
+                        arrow
+                        placement="bottom"
+                     >
                         <Avatar
-                           alt={trainer}
-                           src={`data:${avatar.format};base64, ${avatar.data}`}
+                           alt={`${name} ${surname}`}
+                           src={avatar}
                            data-testid="avatar"
-                        />
+                        >
+                           `${name[0]}${surname[0]}`
+                        </Avatar>
                      </Tooltip>
                   </Box>
                </Box>
@@ -88,4 +98,4 @@ const ShowTrainingsDetails = ({
    );
 };
 
-export default ShowTrainingsDetails;
+export default TrainingDetailsDialog;
