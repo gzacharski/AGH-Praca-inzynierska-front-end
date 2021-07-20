@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Contact from './Contact';
-import { render, screen } from '../../../testUtils';
+import { render, screen } from '../../../../testUtils';
 
 describe('Contact component', () => {
    let container;
