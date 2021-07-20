@@ -8,7 +8,7 @@ import {
    ManagementPage,
    StatisticsPage,
    UsersPage,
-} from 'src/main/pages/admin';
+} from 'src/main/pages/private/admin';
 
 const AdminRouteGroup = () => {
    const { path } = useRouteMatch();
