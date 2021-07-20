@@ -5,7 +5,7 @@ import {
    EmployeePage,
    TasksPage,
    UsersPage,
-} from 'src/main/pages/employee';
+} from 'src/main/pages/private/employee';
 
 const EmployeeRouteGroup = () => {
    const { path } = useRouteMatch();
