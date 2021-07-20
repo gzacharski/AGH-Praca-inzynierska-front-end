@@ -1,5 +1,5 @@
-import ConfirmRegistration from './confirmRegistration/ConfirmRegistrationPage';
-import ConfirmResetPasswordPage from './confirmResetPassword/ConfirmResetPasswordPage';
+import ConfirmRegistration from './public/confirmRegistration/ConfirmRegistrationPage';
+import ConfirmResetPasswordPage from './public/confirmResetPassword/ConfirmResetPasswordPage';
 import ContactPage from './public/contact/Contact';
 import EquipmentPage from './public/equipment/EquipmentPage';
 import Home from './public/home/Home';
