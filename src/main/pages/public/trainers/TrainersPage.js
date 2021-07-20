@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { STATUS } from 'src/main/store';
 import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
-import { TrainerCard, PriceListCardSkeleton } from 'src/main/components/card';
+import { TrainerCard, TrainerCardSkeleton } from 'src/main/components/card';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import {
    fetchTrainerList,
@@ -33,16 +33,10 @@ const ShowTrainerList = ({ trainers = [] }) => (
    </Grid>
 );
 
-const ShowPriceListSkeleton = () => (
+const TrainerListCardSkeleton = () => (
    <Grid container spacing={5} justify="center" alignItems="center">
-      {[
-         { id: 1, isSmall: true },
-         { id: 2, isSmall: false },
-         { id: 3, isSmall: true },
-      ].map((card) => (
-         <Grid item key={card.id} xs={12} sm={6} md={4} lg={3}>
-            <PriceListCardSkeleton isSmall={card.isSmall} />
-         </Grid>
+      {[{ id: 1 }, { id: 2 }, { id: 3 }].map((card) => (
+         <TrainerCardSkeleton key={card.id} />
       ))}
    </Grid>
 );
@@ -82,7 +76,7 @@ const TrainersPage = () => {
             {status === STATUS.SUCCEEDED && (
                <ShowTrainerList trainers={trainers} />
             )}
-            {status === STATUS.LOADING && <ShowPriceListSkeleton />}
+            {status === STATUS.LOADING && <TrainerListCardSkeleton />}
          </Container>
       </PageWrapper>
    );

@@ -25,7 +25,7 @@ export const trainerListHandlers = [
 
       return res(
          ctx.status(200),
-         ctx.delay(),
+         ctx.delay(1500),
          ctx.json([
             {
                userId: nanoid(),
