@@ -11,6 +11,7 @@ import priceListSlice from 'src/main/store/sliceFiles/priceListSlice';
 import userGroupReservationSlice from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
 import userIndividualReservationSlice from 'src/main/store/sliceFiles/timetable/userIndividualReservationSlice';
 import trainerListSlice from 'src/main/store/sliceFiles/trainerListSlice';
+import equipmentListSlice from 'src/main/store/sliceFiles/equipmentSlice';
 
 export const reducer = {
    drawer: drawerReducer,
@@ -25,6 +26,7 @@ export const reducer = {
    userGroupReservation: userGroupReservationSlice,
    userIndividualReservation: userIndividualReservationSlice,
    trainerList: trainerListSlice,
+   equipmentList: equipmentListSlice,
 };
 
 export default configureStore({ reducer });
