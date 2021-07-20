@@ -1,15 +1,13 @@
-import React from "react";
-import { Typography } from '@material-ui/core';
-import { PageWrapper} from "src/main/components/utils"
-import { useStyles } from "./Contact.styles";
+import React from 'react';
+import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 
-export default function Contact() {
-  const classes = useStyles();
-  return (
-    <PageWrapper>
-      <Typography variant="h5" className={classes.root} align="center">
-        Kontakt
-      </Typography>
-    </PageWrapper>
-  );
-}
+const ContactPage = () => (
+   <PageWrapper>
+      <PublicPageTitle
+         header="Skontaktuj się z nami"
+         subheader="Zadzwoń lub napisz do nas wiadomość!"
+      />
+   </PageWrapper>
+);
+
+export default ContactPage;

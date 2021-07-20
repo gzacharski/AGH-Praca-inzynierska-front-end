@@ -1,15 +1,13 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './EquipmentPage.styles';
+import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 
-export default function Blog() {
-   const classes = useStyles();
-   return (
-      <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Sprzęt treningowy
-         </Typography>
-      </PageWrapper>
-   );
-}
+const EquipmentPage = () => (
+   <PageWrapper>
+      <PublicPageTitle
+         header="Sprzęt treningowy"
+         subheader="Odpowiedni dobór sprzętu fitness poprawia efektywność Twoich treningów"
+      />
+   </PageWrapper>
+);
+
+export default EquipmentPage;

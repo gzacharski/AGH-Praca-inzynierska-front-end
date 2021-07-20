@@ -1,17 +1,15 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import { ShowTrainings } from 'src/main/components/gallery';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './WorkoutsPage.styles';
+import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 
-export default function Offer() {
-   const classes = useStyles();
-   return (
-      <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Oferta zajęć grupowych
-         </Typography>
-         <ShowTrainings />
-      </PageWrapper>
-   );
-}
+const WorkoutsPage = () => (
+   <PageWrapper>
+      <PublicPageTitle
+         header="Oferta zajęć grupowych"
+         subheader="Dobierz odpowiedni trening dla siebie"
+      />
+      <ShowTrainings />
+   </PageWrapper>
+);
+
+export default WorkoutsPage;
