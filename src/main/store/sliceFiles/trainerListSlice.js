@@ -21,7 +21,6 @@ export const fetchTrainerList = createAsyncThunk(
 
       try {
          const response = await axios.get(url, config());
-         console.log(response);
          return response.data;
       } catch (error) {
          if (error.response === undefined) {
