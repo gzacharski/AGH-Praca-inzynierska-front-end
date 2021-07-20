@@ -1,14 +1,23 @@
-import React from "react";
-import { render, screen } from "src/testUtils";
-import EquipmentPage from "./EquipmentPage";
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { render, screen } from 'src/testUtils';
+import EquipmentPage from './EquipmentPage';
 
-describe("Equipment page component", () => {
+describe('Equipment page component', () => {
+   beforeEach(() => {
+      render(
+         <MemoryRouter>
+            <EquipmentPage />
+         </MemoryRouter>,
+      );
+   });
 
-  beforeEach(() => {
-    render(<EquipmentPage/>);
-  });
-
-  test("should contain proper text", () => {
-    expect(screen.getByText(/Sprzęt treningowy/)).toBeInTheDocument();
-  });
+   test('should contain proper text', () => {
+      expect(screen.getByText(/Sprzęt treningowy/)).toBeInTheDocument();
+      expect(
+         screen.getByText(
+            /Odpowiedni dobór sprzętu fitness poprawia efektywność Twoich treningów/,
+         ),
+      ).toBeInTheDocument();
+   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 import { render, screen } from 'src/testUtils';
 import userEvent from '@testing-library/user-event';
 import { act, waitFor } from '@testing-library/react';
@@ -8,11 +9,15 @@ describe('Training card', () => {
    beforeEach(() => {
       render(
          <TrainingCard
-            imageSource="test image source"
+            image="https://images.unsplash.com/photo-1520877880798-5ee004e3f11e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjB8fGZpdG5lc3MlMjBlcXVpcG1lbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             title="test training title"
             description="test training description"
-            trainer="Test trainer"
-            trainerAvatar="Trainer avatar"
+            trainer={{
+               trainerId: nanoid(),
+               name: 'TestName',
+               surname: 'TestSurname',
+               avatar: 'https://fwcdn.pl/ppo/71/04/57104/449672.2.jpg',
+            }}
          />,
       );
    });
