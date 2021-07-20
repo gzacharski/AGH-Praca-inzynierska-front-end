@@ -44,7 +44,7 @@ export const EquipmentCard = ({ title = '', images, description }) => {
                      {title}
                   </Typography>
                   <div className={classes.icons}>
-                     {Boolean(full) && (
+                     {Boolean(synopsis) && (
                         <div className={classes.icon}>
                            <Tooltip
                               title={expand ? 'Pokaż mniej' : 'Pokaż więcej'}
@@ -64,9 +64,11 @@ export const EquipmentCard = ({ title = '', images, description }) => {
                   </div>
                </Box>
                {Boolean(synopsis) && (
-                  <Typography className={classes.typography}>
-                     {synopsis}
-                  </Typography>
+                  <Collapse in={expand} timeout={500} collapsedSize={30}>
+                     <Typography className={classes.typography}>
+                        {synopsis}
+                     </Typography>
+                  </Collapse>
                )}
                {Boolean(full) && (
                   <Collapse in={expand} timeout={500}>

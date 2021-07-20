@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { STATUS } from 'src/main/store';
 import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
-import { TrainerCardSkeleton, EquipmentCard } from 'src/main/components/card';
+import { EquipmentCard, EquipmentCardSkeleton } from 'src/main/components/card';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import {
    fetchEquipmentList,
@@ -34,7 +34,7 @@ const ShowEquipmentList = ({ equipment = [] }) => (
 const TrainerListCardSkeleton = () => (
    <Grid container spacing={5} justify="center" alignItems="center">
       {[{ id: 1 }, { id: 2 }, { id: 3 }].map((card) => (
-         <TrainerCardSkeleton key={card.id} />
+         <EquipmentCardSkeleton key={card.id} />
       ))}
    </Grid>
 );

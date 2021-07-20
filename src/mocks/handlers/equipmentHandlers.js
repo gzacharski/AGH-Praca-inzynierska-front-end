@@ -15,7 +15,7 @@ export const equipmentListHandlers = [
       }
 
       const status = req.url.searchParams.get('status');
-      if (status === 'noTrainers') {
+      if (status === 'noEquipment') {
          return res(
             ctx.status(404),
             ctx.delay(1500),

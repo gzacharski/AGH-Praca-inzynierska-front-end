@@ -18,9 +18,6 @@ const useStyles = makeStyles(({ spacing }) => ({
       flexGrow: 1,
    },
    typography: {
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
       maxLines: 3,
       lineHeight: '1.4rem',
       maxHeight: 200,
