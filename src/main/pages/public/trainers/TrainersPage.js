@@ -1,15 +1,13 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './TrainersPage.styles';
+import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 
 export default function TrainersPage() {
-   const classes = useStyles();
    return (
       <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Trenerzy
-         </Typography>
+         <PublicPageTitle
+            header="Nasi trenerzy"
+            subheader="Dowiedz się więcej o prowadzących zajęcia fitness"
+         />
       </PageWrapper>
    );
 }

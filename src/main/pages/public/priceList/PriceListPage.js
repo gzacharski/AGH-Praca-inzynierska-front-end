@@ -12,7 +12,7 @@ import {
 import { PriceListCard, PriceListCardSkeleton } from 'src/main/components/card';
 import { STATUS } from 'src/main/store';
 import { ConfirmationIcon } from 'src/main/components/icons';
-import { PageWrapper } from 'src/main/components/utils';
+import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 import { useStyles } from './PriceListPage.styles';
 
 const ShowPriceList = ({ gymPasses }) => (
@@ -66,24 +66,10 @@ const PriceListPage = () => {
 
    return (
       <PageWrapper>
-         <Container maxWidth="sm" className={classes.pageTitle}>
-            <Typography
-               variant="h3"
-               align="center"
-               color="textPrimary"
-               gutterBottom
-            >
-               Oferta karnetów
-            </Typography>
-            <Typography
-               variant="h4"
-               align="center"
-               color="textSecondary"
-               gutterBottom
-            >
-               Wybierz odpowiedni dla siebie typ karnetu i zacznij ćwiczyć!
-            </Typography>
-         </Container>
+         <PublicPageTitle
+            header="Oferta karnetów"
+            subheader="Wybierz odpowiedni dla siebie typ karnetu i zacznij ćwiczyć!"
+         />
          <Container maxWidth="xl" className={{ alignItems: 'center' }}>
             {status === STATUS.SUCCEEDED && (
                <ShowPriceList gymPasses={priceList} />
