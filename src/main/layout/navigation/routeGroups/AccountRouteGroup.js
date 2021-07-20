@@ -7,7 +7,7 @@ import {
    NotificationsPage,
    UserEquipmentPage,
    ReservationsGroupWorkoutPage,
-   ReservationsIndivudualWorkoutPage,
+   UserIndividualWorkoutPage,
    SettingsPage,
    StatisticsPage,
 } from 'src/main/pages/private/user';
@@ -21,7 +21,7 @@ const AccountRouteGroup = () => {
          <Route path={`${path}/notifications`} component={NotificationsPage} />
          <Route
             path={`${path}/reservations/workouts/individual`}
-            component={ReservationsIndivudualWorkoutPage}
+            component={UserIndividualWorkoutPage}
          />
          <Route
             path={`${path}/reservations/workouts/group`}

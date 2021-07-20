@@ -16,7 +16,7 @@ import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
 import { IndividualWorkoutContextProvider } from 'src/main/components/timetable/userIndividualTimetable/IndividualWorkoutContex';
 
-const SettingsPage = () => {
+const UserIndividualWorkoutPage = () => {
    const data = useSelector(selectData);
    const dispatch = useDispatch();
    const status = useSelector(selectStatus);
@@ -72,4 +72,4 @@ const SettingsPage = () => {
    );
 };
 
-export default SettingsPage;
+export default UserIndividualWorkoutPage;
