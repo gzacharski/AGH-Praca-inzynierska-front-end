@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
    Avatar,
    Card,
@@ -7,31 +7,34 @@ import {
    Typography,
    Box,
    Tooltip,
+   Grid,
 } from '@material-ui/core';
 import { useStyles } from './TrainingCard.styles';
-import ShowTrainingsDetails from '../../gallery/showTrainingDetails/ShowTrainingsDetails';
+// import ShowTrainingsDetails from '../../gallery/showTrainingDetails/ShowTrainingsDetails';
 
 const TrainingCard = ({
-   imageSource,
-   title,
-   description,
-   trainer,
-   trainerAvatar,
+   image = '',
+   title = '',
+   description = '',
+   trainer = {},
 }) => {
    const classes = useStyles();
-   const [open, setOpen] = useState(false);
+   // const [open, setOpen] = useState(false);
+
+   const { name = '', surname = '', avatar = '' } = trainer;
+   const trainerName = `${name} ${surname}`;
 
    return (
-      <>
+      <Grid item xs={12} sm={6} md={5} lg={4} xl={3}>
          <Card
             className={classes.card}
             elevation={10}
-            onClick={() => setOpen(true)}
+            // onClick={() => setOpen(true)}
             data-testid="trainingCard"
          >
             <CardMedia
                className={classes.cardMedia}
-               image={`data:image/${imageSource.format};base64, ${imageSource.data}`}
+               image={image}
                title={title}
                data-testid="background-image"
             />
@@ -40,10 +43,10 @@ const TrainingCard = ({
                   <Typography gutterBottom variant="h5" component="h2">
                      {title}
                   </Typography>
-                  <Tooltip title={trainer}>
+                  <Tooltip title={trainerName}>
                      <Avatar
-                        alt={trainer}
-                        src={`data:image/${trainerAvatar.format};base64, ${trainerAvatar.data}`}
+                        alt={trainerName}
+                        src={avatar}
                         data-testid="avatar"
                      />
                   </Tooltip>
@@ -53,7 +56,7 @@ const TrainingCard = ({
                </Typography>
             </CardContent>
          </Card>
-         {open && (
+         {/* {open && (
             <ShowTrainingsDetails
                open={open}
                setOpen={setOpen}
@@ -63,8 +66,8 @@ const TrainingCard = ({
                trainer={trainer}
                avatar={trainerAvatar}
             />
-         )}
-      </>
+         )} */}
+      </Grid>
    );
 };
 
