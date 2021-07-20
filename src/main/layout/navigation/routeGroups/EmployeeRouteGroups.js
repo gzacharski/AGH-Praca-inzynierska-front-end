@@ -2,16 +2,16 @@ import React from 'react';
 import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
 import {
    EquipmentPage,
-   ManagerPage,
+   EmployeePage,
    TasksPage,
    UsersPage,
-} from 'src/main/pages/manager';
+} from 'src/main/pages/employee';
 
-const ManagerRouteGroup = () => {
+const EmployeeRouteGroup = () => {
    const { path } = useRouteMatch();
    return (
       <Switch>
-         <Route exact path="/account/employee" component={ManagerPage} />
+         <Route exact path="/account/employee" component={EmployeePage} />
          <Route path={`${path}/tasks`} component={TasksPage} />
          <Route path={`${path}/equipment`} component={EquipmentPage} />
          <Route path={`${path}/users`} component={UsersPage} />
@@ -20,4 +20,4 @@ const ManagerRouteGroup = () => {
    );
 };
 
-export default ManagerRouteGroup;
+export default EmployeeRouteGroup;
