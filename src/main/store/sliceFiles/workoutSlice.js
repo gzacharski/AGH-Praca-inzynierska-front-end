@@ -17,7 +17,7 @@ const initialState = {
 export const fetchWorkoutList = createAsyncThunk(
    'workoutList/fetchWorkoutList',
    async ({ search }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}${search}`;
+      const url = `${trainingsServiceURL}/trainingType${search}`;
 
       try {
          const response = await axios.get(url, config());
@@ -68,5 +68,5 @@ export const { clearMessage } = workoutListSlice.actions;
 
 export const selectMessage = (state) => state.workoutList.message;
 export const selectStatus = (state) => state.workoutList.status;
-export const selectWorkout = (state) => state.workoutList.data;
+export const selectWorkouts = (state) => state.workoutList.data;
 export const selectError = (state) => state.workoutList.error;

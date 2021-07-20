@@ -30,7 +30,7 @@ export const workoutHandlers = [
             {
                trainingTypeId: nanoid(),
                title: 'Rowery',
-               image: 'https://images.unsplash.com/photo-1591741535018-d042766c62eb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDd8fGZpdG5lc3MlMjBlcXVpcG1lbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+               image: 'https://images.unsplash.com/photo-1520877880798-5ee004e3f11e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjB8fGZpdG5lc3MlMjBlcXVpcG1lbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
                description:
                   'Sed eget velit tortor. Duis vestibulum est in arcu tempus pulvinar. Donec semper rhoncus leo, at pellentesque dui malesuada sed. Ut eu odio ac urna cursus finibus.',
                trainer: {
