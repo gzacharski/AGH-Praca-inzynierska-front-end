@@ -59,42 +59,8 @@ const Page = () => {
       <Switch>
          <HomeRoute path="/" exact />
 
-         <PrivateRoute path="/messages">
-            <MessagesPage />
-         </PrivateRoute>
-         <PrivateRoute path="/notifications">
-            <NotificationsPage />
-         </PrivateRoute>
-         <PrivateRoute path="/reservations/workouts/individual">
-            <UserIndividualWorkoutPage />
-         </PrivateRoute>
-         <PrivateRoute path="/reservations/workouts/group">
-            <UserGroupWorkoutPage />
-         </PrivateRoute>
-         <PrivateRoute path="/reservations/equipment">
-            <UserEquipmentPage />
-         </PrivateRoute>
-         <PrivateRoute path="/settings">
-            <SettingsPage />
-         </PrivateRoute>
-         <PrivateRoute path="/stats">
-            <StatisticsPage />
-         </PrivateRoute>
-         <PrivateRoute path="/help">
-            <HelpPage />
-         </PrivateRoute>
-
          <PrivateRouteWithRole path="/admin" hasRole={hasAdminRole}>
             <AdminRouteGroup />
-         </PrivateRouteWithRole>
-         <PrivateRouteWithRole path="/manager" hasRole={hasManagerRole}>
-            <ManagerRouteGroup />
-         </PrivateRouteWithRole>
-         <PrivateRouteWithRole path="/employee" hasRole={hasEmployeeRole}>
-            <EmployeeRouteGroup />
-         </PrivateRouteWithRole>
-         <PrivateRouteWithRole path="/trainer" hasRole={hasTrainerRole}>
-            <TrainerRouteGroups />
          </PrivateRouteWithRole>
 
          <PublicRouteOnly path="/confirmRegistration" sensitive>
@@ -103,31 +69,73 @@ const Page = () => {
          <PublicRouteOnly path="/confirmNewPassword" sensitive>
             <ConfirmResetPasswordPage />
          </PublicRouteOnly>
-         <PublicRouteOnly path="/login">
-            <LogInPage />
-         </PublicRouteOnly>
-         <PublicRouteOnly path="/resetPassword" sensitive>
-            <ResetPasswordPage />
-         </PublicRouteOnly>
-         <PublicRouteOnly path="/sign-up">
-            <SignUp />
-         </PublicRouteOnly>
-
          <Route path="/contact">
             <ContactPage />
          </Route>
+
+         <PrivateRouteWithRole path="/employee" hasRole={hasEmployeeRole}>
+            <EmployeeRouteGroup />
+         </PrivateRouteWithRole>
          <Route path="/equipment">
             <EquipmentPage />
          </Route>
+
+         <PrivateRoute path="/help">
+            <HelpPage />
+         </PrivateRoute>
+
+         <PublicRouteOnly path="/login">
+            <LogInPage />
+         </PublicRouteOnly>
+
+         <PrivateRouteWithRole path="/manager" hasRole={hasManagerRole}>
+            <ManagerRouteGroup />
+         </PrivateRouteWithRole>
+         <PrivateRoute path="/messages">
+            <MessagesPage />
+         </PrivateRoute>
+
+         <PrivateRoute path="/notifications">
+            <NotificationsPage />
+         </PrivateRoute>
+
          <Route path="/price-list">
             <PriceListPage />
          </Route>
+
+         <PrivateRoute path="/reservations/equipment">
+            <UserEquipmentPage />
+         </PrivateRoute>
+         <PrivateRoute path="/reservations/workouts/group">
+            <UserGroupWorkoutPage />
+         </PrivateRoute>
+         <PrivateRoute path="/reservations/workouts/individual">
+            <UserIndividualWorkoutPage />
+         </PrivateRoute>
+         <PublicRouteOnly path="/resetPassword" sensitive>
+            <ResetPasswordPage />
+         </PublicRouteOnly>
+
+         <PrivateRoute path="/settings">
+            <SettingsPage />
+         </PrivateRoute>
+         <PublicRouteOnly path="/sign-up">
+            <SignUp />
+         </PublicRouteOnly>
+         <PrivateRoute path="/stats">
+            <StatisticsPage />
+         </PrivateRoute>
+
+         <PrivateRouteWithRole path="/trainer" hasRole={hasTrainerRole}>
+            <TrainerRouteGroups />
+         </PrivateRouteWithRole>
          <Route path="/trainers">
             <TrainersPage />
          </Route>
          <Route path="/timetable">
             <TimetablePage />
          </Route>
+
          <Route path="/workouts">
             <WorkoutsPage />
          </Route>
