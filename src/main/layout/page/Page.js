@@ -6,14 +6,22 @@ import {
    ROLE_EMPLOYEE,
    ROLE_MANAGER,
    ROLE_TRAINER,
-   ROLE_USER,
 } from 'src/main/data/roles';
+import {
+   HelpPage,
+   MessagesPage,
+   NotificationsPage,
+   UserEquipmentPage,
+   UserGroupWorkoutPage,
+   UserIndividualWorkoutPage,
+   SettingsPage,
+   StatisticsPage,
+} from 'src/main/pages/private/user';
 import {
    ConfirmRegistration,
    ConfirmResetPasswordPage,
    ContactPage,
    EquipmentPage,
-   Home,
    LogInPage,
    PriceListPage,
    ResetPasswordPage,
@@ -22,9 +30,8 @@ import {
    TrainersPage,
    WorkoutsPage,
 } from 'src/main/pages/public';
-import { AuthContext, useAuth } from 'src/main/auth';
+import { AuthContext } from 'src/main/auth';
 import {
-   AccountRouteGroup,
    AdminRouteGroup,
    EmployeeRouteGroup,
    ManagerRouteGroup,
@@ -33,6 +40,12 @@ import {
 import { FilterRenderer } from 'src/main/components/utils';
 import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Page.styles';
+import {
+   HomeRoute,
+   PrivateRoute,
+   PrivateRouteWithRole,
+   PublicRouteOnly,
+} from './RouteUtils';
 
 const Page = () => {
    const authContext = useContext(AuthContext);
@@ -41,28 +54,48 @@ const Page = () => {
    const hasEmployeeRole = userInfo?.roles?.includes(ROLE_EMPLOYEE);
    const hasManagerRole = userInfo?.roles?.includes(ROLE_MANAGER);
    const hasTrainerRole = userInfo?.roles?.includes(ROLE_TRAINER);
-   const hasUserRole = userInfo?.roles?.includes(ROLE_USER);
 
    return (
       <Switch>
-         <Route path="/" exact component={Home} />
-         {hasAdminRole && (
-            <Route path="/account/admin" component={AdminRouteGroup} />
-         )}
-         {hasManagerRole && (
-            <Route path="/account/manager" component={ManagerRouteGroup} />
-         )}
-         {hasEmployeeRole && (
-            <Route path="/account/employee" component={EmployeeRouteGroup} />
-         )}
-         {hasTrainerRole && (
-            <Route path="/account/trainer" component={TrainerRouteGroups} />
-         )}
-         {hasUserRole ? (
-            <Route path="/account" component={AccountRouteGroup} />
-         ) : (
-            <Route path="/account" component={() => <Redirect to="/login" />} />
-         )}
+         <HomeRoute path="/" exact />
+
+         <PrivateRoute path="/messages">
+            <MessagesPage />
+         </PrivateRoute>
+         <PrivateRoute path="/notifications">
+            <NotificationsPage />
+         </PrivateRoute>
+         <PrivateRoute path="/reservations/workouts/individual">
+            <UserIndividualWorkoutPage />
+         </PrivateRoute>
+         <PrivateRoute path="/reservations/workouts/group">
+            <UserGroupWorkoutPage />
+         </PrivateRoute>
+         <PrivateRoute path="/reservations/equipment">
+            <UserEquipmentPage />
+         </PrivateRoute>
+         <PrivateRoute path="/settings">
+            <SettingsPage />
+         </PrivateRoute>
+         <PrivateRoute path="/stats">
+            <StatisticsPage />
+         </PrivateRoute>
+         <PrivateRoute path="/help">
+            <HelpPage />
+         </PrivateRoute>
+
+         <PrivateRouteWithRole path="/admin" hasRole={hasAdminRole}>
+            <AdminRouteGroup />
+         </PrivateRouteWithRole>
+         <PrivateRouteWithRole path="/manager" hasRole={hasManagerRole}>
+            <ManagerRouteGroup />
+         </PrivateRouteWithRole>
+         <PrivateRouteWithRole path="/employee" hasRole={hasEmployeeRole}>
+            <EmployeeRouteGroup />
+         </PrivateRouteWithRole>
+         <PrivateRouteWithRole path="/trainer" hasRole={hasTrainerRole}>
+            <TrainerRouteGroups />
+         </PrivateRouteWithRole>
 
          <PublicRouteOnly path="/confirmRegistration" sensitive>
             <ConfirmRegistration />
@@ -101,22 +134,6 @@ const Page = () => {
 
          <Redirect to="/" />
       </Switch>
-   );
-};
-
-const PublicRouteOnly = ({ children, ...rest }) => {
-   const auth = useAuth();
-   return (
-      <Route
-         {...rest}
-         render={({ location }) =>
-            auth.isAuthenticated() ? (
-               <Redirect to={{ pathname: '/', state: { from: location } }} />
-            ) : (
-               children
-            )
-         }
-      />
    );
 };
 

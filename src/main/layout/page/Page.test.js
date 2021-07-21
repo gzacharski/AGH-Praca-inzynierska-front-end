@@ -76,8 +76,8 @@ jest.mock('../../pages/public/workouts/WorkoutsPage', () => ({
 describe('Page', () => {
    test.each([
       ['/', 'Home page'],
-      ['/account/messages', 'Message page'],
-      ['/account/settings', 'Settings page'],
+      ['/messages', 'Message page'],
+      ['/settings', 'Settings page'],
       ['/account', 'Account page'],
       ['/contact', 'Contact page'],
       ['/confirmRegistration?token=sampleToken', 'Confirm registration page'],
