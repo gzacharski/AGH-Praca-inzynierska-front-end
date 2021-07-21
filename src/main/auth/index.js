@@ -1,4 +1,4 @@
-import { AuthContext } from './AuthContext';
+import { AuthContext, useAuth } from './AuthContext';
 import { AuthProvider } from './AuthProvider';
 import { AuthFetchContext } from './AuthFetchContext';
 import {
@@ -20,4 +20,5 @@ export {
    withManagerRole,
    withTrainerRole,
    withUserRole,
+   useAuth,
 };
