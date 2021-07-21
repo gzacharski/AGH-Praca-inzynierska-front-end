@@ -36,6 +36,21 @@ export const timetableHandlers = [
                      },
                   ],
                },
+               {
+                  id: nanoid(),
+                  title: 'Pilates',
+                  startDate: '2021-07-23T12:00',
+                  endDate: '2021-07-23T13:30',
+                  location: 'Sala nr 2',
+                  allDay: false,
+               },
+               {
+                  id: nanoid(),
+                  title: 'Rowery',
+                  startDate: '2021-07-24T13:00',
+                  endDate: '2021-07-24T15:30',
+                  allDay: false,
+               },
             ]),
          );
 
@@ -44,6 +59,54 @@ export const timetableHandlers = [
             ctx.status(404),
             ctx.delay(),
             ctx.json({ message: 'Brak treningów do wyświetlenia' }),
+         );
+
+      if (startDate === '2021-08-02' && endDate === '2021-08-08')
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json([
+               {
+                  id: nanoid(),
+                  title: 'Joga',
+                  startDate: '2021-08-02T09:45',
+                  endDate: '2021-08-02T11:00',
+                  allDay: false,
+                  location: 'Sala nr 1',
+                  trainers: [
+                     {
+                        userId: nanoid(),
+                        name: 'Toddie',
+                        surname: 'Makuaa',
+                        avatar:
+                           'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
+                     },
+                     {
+                        userId: nanoid(),
+                        name: 'Toddie2',
+                        surname: 'Makuaa2',
+                        avatar:
+                           'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
+                     },
+                  ],
+               },
+               {
+                  id: nanoid(),
+                  title: 'Pilates',
+                  startDate: '2021-08-07T12:00',
+                  endDate: '2021-08-07T13:30',
+                  location: 'Sala nr 2',
+                  allDay: false,
+               },
+               {
+                  id: nanoid(),
+                  title: 'Rowery',
+                  startDate: '2021-08-06T13:00',
+                  endDate: '2021-08-06T15:30',
+                  location: 'Sala nr 2',
+                  allDay: false,
+               },
+            ]),
          );
 
       if (startDate === '2021-07-12' && endDate === '2021-07-18')
