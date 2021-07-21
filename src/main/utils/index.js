@@ -7,6 +7,7 @@ import {
    getCurrentStartOfWeek,
 } from './dateManipulator/dateManipulator';
 import { requestConfig } from './requestConfig/requestConfig';
+import { getRedirectionParam } from './getRedirectionParam/getRedirectionParam';
 
 export {
    startsWithAny,
@@ -16,4 +17,5 @@ export {
    getCurrentEndOfWeek,
    getCurrentStartOfWeek,
    requestConfig,
+   getRedirectionParam,
 };
