@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { nanoid } from 'nanoid';
 
-export const publicTimetableHandlers = [
+export const timetableHandlers = [
    rest.get(`${trainingsServiceURL}/group/public`, (req, res, ctx) => {
       const startDate = req.url.searchParams.get('startDate');
       const endDate = req.url.searchParams.get('endDate');
@@ -10,7 +10,111 @@ export const publicTimetableHandlers = [
       if (startDate === '2021-07-19' && endDate === '2021-07-25')
          return res(
             ctx.status(200),
-            ctx.delay(1500),
+            ctx.delay(),
+            ctx.json([
+               {
+                  id: nanoid(),
+                  title: 'Joga',
+                  startDate: '2021-07-20T09:45',
+                  endDate: '2021-07-20T11:00',
+                  allDay: false,
+                  location: 'Sala nr 1',
+                  trainers: [
+                     {
+                        userId: nanoid(),
+                        name: 'Toddie',
+                        surname: 'Makuaa',
+                        avatar:
+                           'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
+                     },
+                     {
+                        userId: nanoid(),
+                        name: 'Toddie2',
+                        surname: 'Makuaa2',
+                        avatar:
+                           'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
+                     },
+                  ],
+               },
+            ]),
+         );
+
+      if (startDate === '2021-07-26' && endDate === '2021-08-01')
+         return res(
+            ctx.status(404),
+            ctx.delay(),
+            ctx.json({ message: 'Brak treningów do wyświetlenia' }),
+         );
+
+      if (startDate === '2021-07-12' && endDate === '2021-07-18')
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json([
+               {
+                  id: nanoid(),
+                  title: 'Joga',
+                  startDate: '2021-07-16T09:45',
+                  endDate: '2021-07-16T11:00',
+                  allDay: false,
+                  location: 'Sala nr 1',
+                  trainers: [
+                     {
+                        userId: nanoid(),
+                        name: 'Toddie',
+                        surname: 'Makuaa',
+                        avatar:
+                           'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
+                     },
+                     {
+                        userId: nanoid(),
+                        name: 'Toddie2',
+                        surname: 'Makuaa2',
+                        avatar:
+                           'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
+                     },
+                  ],
+               },
+               {
+                  id: nanoid(),
+                  title: 'Pilates',
+                  startDate: '2021-07-12T12:00',
+                  endDate: '2021-07-12T13:30',
+                  location: 'Sala nr 2',
+                  allDay: false,
+               },
+               {
+                  id: nanoid(),
+                  title: 'Rowery',
+                  startDate: '2021-07-16T13:00',
+                  endDate: '2021-07-16T15:30',
+                  allDay: false,
+               },
+               {
+                  id: nanoid(),
+                  title: 'TRX',
+                  startDate: '2021-07-14T14:00',
+                  endDate: '2021-07-14T15:00',
+                  location: 'Przed budynkiem',
+                  allDay: false,
+               },
+            ]),
+         );
+
+      return res(
+         ctx.status(404),
+         ctx.delay(),
+         ctx.json({ message: 'Brak dostępnej oferty' }),
+      );
+   }),
+   rest.get(`${trainingsServiceURL}/group`, (req, res, ctx) => {
+      const startDate = req.url.searchParams.get('startDate');
+      const endDate = req.url.searchParams.get('endDate');
+
+      if (startDate === '2021-07-19' && endDate === '2021-07-25')
+         return res(
+            ctx.status(200),
+            ctx.delay(),
             ctx.json([
                {
                   id: nanoid(),
@@ -76,7 +180,7 @@ export const publicTimetableHandlers = [
       if (startDate === '2021-07-12' && endDate === '2021-07-18')
          return res(
             ctx.status(200),
-            ctx.delay(2000),
+            ctx.delay(),
             ctx.json([
                {
                   id: nanoid(),

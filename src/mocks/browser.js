@@ -4,7 +4,7 @@ import { priceListHandlers } from './handlers/priceListHandler';
 import { userEquipmentTimetableHandlers } from './handlers/timetableHandlers/userEquipmentTimetableHandler';
 import { userGroupTimetableHandlers } from './handlers/timetableHandlers/userGroupTimetableHandler';
 import { userIndividualTimetableHandler } from './handlers/timetableHandlers/userIndividualTimetableHandler';
-import { publicTimetableHandlers } from './handlers/timetableHandlers/publicTimetableHandler';
+import { timetableHandlers } from './handlers/timetableHandlers/timetableHandler';
 import { trainerListHandlers } from './handlers/trainerListHandlers';
 import { equipmentListHandlers } from './handlers/equipmentHandlers';
 import { workoutHandlers } from './handlers/workoutHandlers';
@@ -14,7 +14,7 @@ const worker = setupWorker(
    ...userGroupTimetableHandlers,
    ...userEquipmentTimetableHandlers,
    ...userIndividualTimetableHandler,
-   ...publicTimetableHandlers,
+   ...timetableHandlers,
    ...trainerListHandlers,
    ...loginHandlers,
    ...equipmentListHandlers,
