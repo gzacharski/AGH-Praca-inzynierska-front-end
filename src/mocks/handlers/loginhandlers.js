@@ -19,9 +19,9 @@ export const handlers = [
          ctx.status(200),
          ctx.json({
             id: userId,
-            name: 'TestName',
-            surname: 'TestSurname',
-            email: 'test@email.com',
+            name: 'Grzegorz',
+            surname: 'Zacharski',
+            email: 'test.email@email.com',
             phone: '555 666 777',
          }),
       );

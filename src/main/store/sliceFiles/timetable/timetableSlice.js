@@ -57,6 +57,13 @@ export const timetableSlice = createSlice({
       clearMessage(state) {
          state.message = null;
       },
+      reset(state) {
+         state.data = [];
+         state.fetchedDates = {};
+         state.status = STATUS.IDLE;
+         state.message = null;
+         state.error = null;
+      },
    },
    extraReducers: {
       [fetchPublicTimetableData.pending]: (state, action) => {
@@ -96,7 +103,7 @@ export const timetableSlice = createSlice({
    },
 });
 
-export const { clearMessage } = timetableSlice.actions;
+export const { clearMessage, reset } = timetableSlice.actions;
 
 export const selectData = (state) => state.timetable.data;
 export const selectStatus = (state) => state.timetable.status;
