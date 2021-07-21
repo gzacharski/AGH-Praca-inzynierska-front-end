@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import {
    EquipmentPage,
    ManagerPage,
@@ -9,19 +9,28 @@ import {
    UsersPage,
 } from 'src/main/pages/private/manager';
 
-const ManagerRouteGroup = () => {
-   const { path } = useRouteMatch();
-   return (
-      <Switch>
-         <Route exact path="/manager" component={ManagerPage} />
-         <Route path={`${path}/tasks`} component={TasksPage} />
-         <Route path={`${path}/timetable`} component={TimetablePage} />
-         <Route path={`${path}/pricelist`} component={PriceListPage} />
-         <Route path={`${path}/equipment`} component={EquipmentPage} />
-         <Route path={`${path}/users`} component={UsersPage} />
-         <Redirect to="/manager" />
-      </Switch>
-   );
-};
+const ManagerRouteGroup = () => (
+   <Switch>
+      <Route exact path="/manager">
+         <ManagerPage />
+      </Route>
+      <Route path="/manager/tasks">
+         <TasksPage />
+      </Route>
+      <Route path="/manager/timetable">
+         <TimetablePage />
+      </Route>
+      <Route path="/manager/pricelist">
+         <PriceListPage />
+      </Route>
+      <Route path="/manager/equipment">
+         <EquipmentPage />
+      </Route>
+      <Route path="/manager/users">
+         <UsersPage />
+      </Route>
+      <Redirect to="/manager" />
+   </Switch>
+);
 
 export default ManagerRouteGroup;
