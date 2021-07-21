@@ -84,9 +84,9 @@ const Page = () => {
             <HelpPage />
          </PrivateRoute>
 
-         <PublicRouteOnly path="/login">
+         <Route path="/login">
             <LogInPage />
-         </PublicRouteOnly>
+         </Route>
 
          <PrivateRouteWithRole path="/manager" hasRole={hasManagerRole}>
             <ManagerRouteGroup />
