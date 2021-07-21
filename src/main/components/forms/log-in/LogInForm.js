@@ -72,6 +72,7 @@ export default function LogInForm(props) {
                   setDisplaySnackBar(false);
                   setTimeout(() => {
                      setRedirection(true);
+                     window.location.reload();
                   }, 700);
                } else {
                   const { errors } = response.data;

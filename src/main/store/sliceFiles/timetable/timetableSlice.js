@@ -3,6 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
+import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
 
 const initialState = {
@@ -18,14 +19,26 @@ export const fetchPublicTimetableData = createAsyncThunk(
    async ({ startOfWeek, endOfWeek }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/group/public?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-         },
-      };
+      try {
+         const response = await axios.get(url, config());
+         const { data = [] } = response;
+         return { data, startOfWeek, endOfWeek };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const fetchPrivateTimetableData = createAsyncThunk(
+   'timetable/fetchPrivateTimetableData',
+   async ({ startOfWeek, endOfWeek }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/group?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       try {
-         const response = await axios.get(url, config);
+         const response = await axios.get(url, config());
          const { data = [] } = response;
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
@@ -59,6 +72,23 @@ export const timetableSlice = createSlice({
          };
       },
       [fetchPublicTimetableData.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+      [fetchPrivateTimetableData.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [fetchPrivateTimetableData.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.data.push(...action.payload.data);
+         state.error = null;
+         state.fetchedDates = {
+            ...state.fetchedDates,
+            [action.payload.startOfWeek]: action.payload.endOfWeek,
+         };
+      },
+      [fetchPrivateTimetableData.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
