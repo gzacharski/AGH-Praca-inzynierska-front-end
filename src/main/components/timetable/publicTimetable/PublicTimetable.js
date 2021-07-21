@@ -6,8 +6,8 @@ import {
    TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
-import { ContentTooltip } from './appointmentTooltip/ContentTooltip';
-import { HeaderTooltip } from './appointmentTooltip/HeaderTooltip';
+import { PublicContentTooltip } from './PublicContentTooltip';
+import { PublicHeaderTooltip } from './PublicHeaderTooltip';
 
 export const PublicTimetable = ({ data, status, fetchData, fetchedDates }) => (
    <Timetable
@@ -21,8 +21,8 @@ export const PublicTimetable = ({ data, status, fetchData, fetchedDates }) => (
       <Appointments />
       <AppointmentTooltip
          showCloseButton
-         headerComponent={HeaderTooltip}
-         contentComponent={ContentTooltip}
+         headerComponent={PublicHeaderTooltip}
+         contentComponent={PublicContentTooltip}
       />
    </Timetable>
 );
