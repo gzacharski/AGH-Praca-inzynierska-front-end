@@ -16,7 +16,7 @@ const PriceListCard = (props) => {
    const { gymPass } = props;
    const { id, title, subheader, price, premium, description } = gymPass;
    const handleBuyClick = (history) =>
-      history.push(`/account/gympass/buy/${id}`);
+      history.push(`login?gympass=buy&client=${id}`);
 
    return (
       <Card>

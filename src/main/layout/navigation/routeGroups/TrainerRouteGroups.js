@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import {
    NotificationsPage,
    TasksPage,
@@ -7,17 +7,22 @@ import {
    WorkoutsPage,
 } from 'src/main/pages/private/trainer';
 
-const ManagerRouteGroup = () => {
-   const { path } = useRouteMatch();
-   return (
-      <Switch>
-         <Route exact path="/account/trainer" component={TrainerPage} />
-         <Route path={`${path}/workouts`} component={WorkoutsPage} />
-         <Route path={`${path}/notifications`} component={NotificationsPage} />
-         <Route path={`${path}/tasks`} component={TasksPage} />
-         <Redirect to="/account/trainer" />
-      </Switch>
-   );
-};
+const ManagerRouteGroup = () => (
+   <Switch>
+      <Route exact path="/trainer">
+         <TrainerPage />
+      </Route>
+      <Route path="/trainer/workouts">
+         <WorkoutsPage />
+      </Route>
+      <Route path="/trainer/notifications">
+         <NotificationsPage />
+      </Route>
+      <Route path="/trainer/tasks">
+         <TasksPage />
+      </Route>
+      <Redirect to="/trainer" />
+   </Switch>
+);
 
 export default ManagerRouteGroup;

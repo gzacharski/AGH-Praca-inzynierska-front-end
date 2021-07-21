@@ -21,9 +21,9 @@ describe('Settings menu item', () => {
             <AbstractMenuItem
                itemName="Strona testowa"
                CustomIcon={AccountCircle}
-               pushUrl="/account/test"
+               pushUrl="/test"
             />
-            <Route path="/account/test" render={() => <div>Test Page</div>} />
+            <Route path="/test" render={() => <div>Test Page</div>} />
          </MemoryRouter>,
       );
    });

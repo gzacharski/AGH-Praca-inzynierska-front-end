@@ -6,6 +6,6 @@ export const AccountMenuItem = () => (
    <AbstractMenuItem
       itemName="Moje konto"
       CustomIcon={AccountCircle}
-      pushUrl="/account"
+      pushUrl="/"
    />
 );

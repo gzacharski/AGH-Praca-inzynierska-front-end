@@ -11,7 +11,7 @@ import { useStyles } from './MessageButton.style';
 const MessageButton = (props) => {
    const accountStatus = useSelector(selectAccountStatus);
    const classes = useStyles();
-   const handleClick = (history) => history.push('/account/messages');
+   const handleClick = (history) => history.push('/messages');
 
    if (accountStatus === STATUS.IDLE || accountStatus === STATUS.LOADING) {
       return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import userEvent from '@testing-library/user-event';
-// import { waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from 'src/testUtils';
 import ConfirmRegistration from './ConfirmRegistrationPage';

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {
@@ -5,14 +6,22 @@ import {
    ROLE_EMPLOYEE,
    ROLE_MANAGER,
    ROLE_TRAINER,
-   ROLE_USER,
 } from 'src/main/data/roles';
+import {
+   HelpPage,
+   MessagesPage,
+   NotificationsPage,
+   UserEquipmentPage,
+   UserGroupWorkoutPage,
+   UserIndividualWorkoutPage,
+   SettingsPage,
+   StatisticsPage,
+} from 'src/main/pages/private/user';
 import {
    ConfirmRegistration,
    ConfirmResetPasswordPage,
    ContactPage,
    EquipmentPage,
-   Home,
    LogInPage,
    PriceListPage,
    ResetPasswordPage,
@@ -23,7 +32,6 @@ import {
 } from 'src/main/pages/public';
 import { AuthContext } from 'src/main/auth';
 import {
-   AccountRouteGroup,
    AdminRouteGroup,
    EmployeeRouteGroup,
    ManagerRouteGroup,
@@ -32,6 +40,12 @@ import {
 import { FilterRenderer } from 'src/main/components/utils';
 import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Page.styles';
+import {
+   HomeRoute,
+   PrivateRoute,
+   PrivateRouteWithRole,
+   PublicRouteOnly,
+} from './RouteUtils';
 
 const Page = () => {
    const authContext = useContext(AuthContext);
@@ -40,47 +54,92 @@ const Page = () => {
    const hasEmployeeRole = userInfo?.roles?.includes(ROLE_EMPLOYEE);
    const hasManagerRole = userInfo?.roles?.includes(ROLE_MANAGER);
    const hasTrainerRole = userInfo?.roles?.includes(ROLE_TRAINER);
-   const hasUserRole = userInfo?.roles?.includes(ROLE_USER);
 
    return (
       <Switch>
-         <Route path="/" exact component={Home} />
-         {hasAdminRole && (
-            <Route path="/account/admin" component={AdminRouteGroup} />
-         )}
-         {hasManagerRole && (
-            <Route path="/account/manager" component={ManagerRouteGroup} />
-         )}
-         {hasEmployeeRole && (
-            <Route path="/account/employee" component={EmployeeRouteGroup} />
-         )}
-         {hasTrainerRole && (
-            <Route path="/account/trainer" component={TrainerRouteGroups} />
-         )}
-         {hasUserRole ? (
-            <Route path="/account" component={AccountRouteGroup} />
-         ) : (
-            <Route path="/account" component={() => <Redirect to="/login" />} />
-         )}
-         <Route path="/contact" component={ContactPage} />
-         <Route
-            path="/confirmRegistration"
-            sensitive
-            component={ConfirmRegistration}
-         />
-         <Route
-            path="/confirmNewPassword"
-            sensitive
-            component={ConfirmResetPasswordPage}
-         />
-         <Route path="/equipment" component={EquipmentPage} />
-         <Route path="/login" component={LogInPage} />
-         <Route path="/price-list" component={PriceListPage} />
-         <Route path="/resetPassword" sensitive component={ResetPasswordPage} />
-         <Route path="/sign-up" component={SignUp} />
-         <Route path="/trainers" component={TrainersPage} />
-         <Route path="/timetable" component={TimetablePage} />
-         <Route path="/workouts" component={WorkoutsPage} />
+         <HomeRoute path="/" exact />
+
+         <PrivateRouteWithRole path="/admin" hasRole={hasAdminRole}>
+            <AdminRouteGroup />
+         </PrivateRouteWithRole>
+
+         <PublicRouteOnly path="/confirmRegistration" sensitive>
+            <ConfirmRegistration />
+         </PublicRouteOnly>
+         <PublicRouteOnly path="/confirmNewPassword" sensitive>
+            <ConfirmResetPasswordPage />
+         </PublicRouteOnly>
+         <Route path="/contact">
+            <ContactPage />
+         </Route>
+
+         <PrivateRouteWithRole path="/employee" hasRole={hasEmployeeRole}>
+            <EmployeeRouteGroup />
+         </PrivateRouteWithRole>
+         <Route path="/equipment">
+            <EquipmentPage />
+         </Route>
+
+         <PrivateRoute path="/help">
+            <HelpPage />
+         </PrivateRoute>
+
+         <PublicRouteOnly path="/login">
+            <LogInPage />
+         </PublicRouteOnly>
+
+         <PrivateRouteWithRole path="/manager" hasRole={hasManagerRole}>
+            <ManagerRouteGroup />
+         </PrivateRouteWithRole>
+         <PrivateRoute path="/messages">
+            <MessagesPage />
+         </PrivateRoute>
+
+         <PrivateRoute path="/notifications">
+            <NotificationsPage />
+         </PrivateRoute>
+
+         <Route path="/price-list">
+            <PriceListPage />
+         </Route>
+
+         <PrivateRoute path="/reservations/equipment">
+            <UserEquipmentPage />
+         </PrivateRoute>
+         <PrivateRoute path="/reservations/workouts/group">
+            <UserGroupWorkoutPage />
+         </PrivateRoute>
+         <PrivateRoute path="/reservations/workouts/individual">
+            <UserIndividualWorkoutPage />
+         </PrivateRoute>
+         <PublicRouteOnly path="/resetPassword" sensitive>
+            <ResetPasswordPage />
+         </PublicRouteOnly>
+
+         <PrivateRoute path="/settings">
+            <SettingsPage />
+         </PrivateRoute>
+         <PublicRouteOnly path="/sign-up">
+            <SignUp />
+         </PublicRouteOnly>
+         <PrivateRoute path="/stats">
+            <StatisticsPage />
+         </PrivateRoute>
+
+         <PrivateRouteWithRole path="/trainer" hasRole={hasTrainerRole}>
+            <TrainerRouteGroups />
+         </PrivateRouteWithRole>
+         <Route path="/trainers">
+            <TrainersPage />
+         </Route>
+         <Route path="/timetable">
+            <TimetablePage />
+         </Route>
+
+         <Route path="/workouts">
+            <WorkoutsPage />
+         </Route>
+
          <Redirect to="/" />
       </Switch>
    );

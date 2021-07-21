@@ -16,7 +16,7 @@ const AvatarButton = (props) => {
    const accountStatus = useSelector(selectAccountStatus);
    const user = useSelector(selectUserInfo);
 
-   const handleAvatarClick = (history) => history.push('/account');
+   const handleAvatarClick = (history) => history.push('/');
 
    if (accountStatus === STATUS.IDLE || accountStatus === STATUS.LOADING) {
       return (

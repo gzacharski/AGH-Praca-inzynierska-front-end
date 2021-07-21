@@ -32,49 +32,49 @@ const AdminList = () => {
          <CustomListItem
             buttonName="Strona główna"
             CustomIcon={Home}
-            pushUrl="/account/admin"
+            pushUrl="/admin"
             secondaryText="Główny panel administratora"
          />
          <CustomListItem
             buttonName="Logi"
             CustomIcon={Fingerprint}
-            pushUrl="/account/admin/logs"
+            pushUrl="/admin/logs"
             secondaryText="Informacje z poszczególnych serwisów"
          />
          <CustomListItem
             buttonName="Statystyki"
             CustomIcon={BubbleChart}
-            pushUrl="/account/admin/stats"
+            pushUrl="/admin/stats"
             secondaryText="Monitoruj aktywność użytkowników"
          />
          <CustomListItem
             buttonName="Użytkownicy"
             CustomIcon={SupervisorAccount}
-            pushUrl="/account/admin/users"
+            pushUrl="/admin/users"
             secondaryText="Rejestr użytkowników w systemie"
          />
          <CustomListItem
             buttonName="Sprzęt"
             CustomIcon={EventSeat}
-            pushUrl="/account/admin/equipment"
+            pushUrl="/admin/equipment"
             secondaryText="Rejestr sprzętu w systemie"
          />
          <CustomListItem
             buttonName="Zarządzaj"
             CustomIcon={Cloud}
-            pushUrl="/account/admin/manage"
+            pushUrl="/admin/manage"
             secondaryText="Zarządzaj mikroserwisami"
          />
          <CustomListItem
             buttonName="Kopia zapasowa"
             CustomIcon={FileCopy}
-            pushUrl="/account/admin/backup"
+            pushUrl="/admin/backup"
             secondaryText="Zarządzaj kopią zapasową"
          />
          <CustomListItem
             buttonName="Konfiguruj"
             CustomIcon={PermDataSetting}
-            pushUrl="/account/admin/configure"
+            pushUrl="/admin/configure"
             secondaryText="Konfiguruj ustawienia systemu"
          />
       </List>
