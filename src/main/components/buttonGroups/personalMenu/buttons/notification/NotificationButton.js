@@ -11,7 +11,7 @@ import { useStyles } from './NotificationButton.styles';
 const NotificationButton = (props) => {
    const accountStatus = useSelector(selectAccountStatus);
    const classes = useStyles();
-   const handleClick = (history) => history.push('/account/notifications');
+   const handleClick = (history) => history.push('/notifications');
 
    if (accountStatus === STATUS.IDLE || accountStatus === STATUS.LOADING) {
       return (
