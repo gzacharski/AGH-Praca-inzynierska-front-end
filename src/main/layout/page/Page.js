@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import {
@@ -21,7 +22,7 @@ import {
    TrainersPage,
    WorkoutsPage,
 } from 'src/main/pages/public';
-import { AuthContext } from 'src/main/auth';
+import { AuthContext, useAuth } from 'src/main/auth';
 import {
    AccountRouteGroup,
    AdminRouteGroup,
@@ -62,27 +63,60 @@ const Page = () => {
          ) : (
             <Route path="/account" component={() => <Redirect to="/login" />} />
          )}
-         <Route path="/contact" component={ContactPage} />
-         <Route
-            path="/confirmRegistration"
-            sensitive
-            component={ConfirmRegistration}
-         />
-         <Route
-            path="/confirmNewPassword"
-            sensitive
-            component={ConfirmResetPasswordPage}
-         />
-         <Route path="/equipment" component={EquipmentPage} />
-         <Route path="/login" component={LogInPage} />
-         <Route path="/price-list" component={PriceListPage} />
-         <Route path="/resetPassword" sensitive component={ResetPasswordPage} />
-         <Route path="/sign-up" component={SignUp} />
-         <Route path="/trainers" component={TrainersPage} />
-         <Route path="/timetable" component={TimetablePage} />
-         <Route path="/workouts" component={WorkoutsPage} />
+
+         <PublicRouteOnly path="/confirmRegistration" sensitive>
+            <ConfirmRegistration />
+         </PublicRouteOnly>
+         <PublicRouteOnly path="/confirmNewPassword" sensitive>
+            <ConfirmResetPasswordPage />
+         </PublicRouteOnly>
+         <PublicRouteOnly path="/login">
+            <LogInPage />
+         </PublicRouteOnly>
+         <PublicRouteOnly path="/resetPassword" sensitive>
+            <ResetPasswordPage />
+         </PublicRouteOnly>
+         <PublicRouteOnly path="/sign-up">
+            <SignUp />
+         </PublicRouteOnly>
+
+         <Route path="/contact">
+            <ContactPage />
+         </Route>
+         <Route path="/equipment">
+            <EquipmentPage />
+         </Route>
+         <Route path="/price-list">
+            <PriceListPage />
+         </Route>
+         <Route path="/trainers">
+            <TrainersPage />
+         </Route>
+         <Route path="/timetable">
+            <TimetablePage />
+         </Route>
+         <Route path="/workouts">
+            <WorkoutsPage />
+         </Route>
+
          <Redirect to="/" />
       </Switch>
+   );
+};
+
+const PublicRouteOnly = ({ children, ...rest }) => {
+   const auth = useAuth();
+   return (
+      <Route
+         {...rest}
+         render={({ location }) =>
+            auth.isAuthenticated() ? (
+               <Redirect to={{ pathname: '/', state: { from: location } }} />
+            ) : (
+               children
+            )
+         }
+      />
    );
 };
 
