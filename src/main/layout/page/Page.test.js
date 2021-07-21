@@ -75,67 +75,54 @@ jest.mock('../../pages/public/workouts/WorkoutsPage', () => ({
 
 describe('Page', () => {
    test.each([
-      ['/', 'Home page'],
-      ['/messages', 'Message page'],
-      ['/settings', 'Settings page'],
-      ['/', 'Account page'],
-      ['/contact', 'Contact page'],
-      ['/confirmRegistration?token=sampleToken', 'Confirm registration page'],
-      ['/confirmNewPassword?token=sampleToken', 'Confirm reset password page'],
-      ['/equipment', 'Equipment page'],
-      ['/login', 'LogIn page'],
-      ['/price-list', 'Price list page'],
-      ['/resetPassword', 'Reset password page'],
-      ['/sign-up', 'SignUp page'],
+      ['/', null, 'Home page'],
+      ['/messages', 'Message page', null],
+      ['/settings', 'Settings page', null],
+      ['/', 'Account page', null],
+      ['/contact', 'Contact page', null],
+      [
+         '/confirmRegistration?token=sampleToken',
+         null,
+         'Confirm registration page',
+      ],
+      [
+         '/confirmNewPassword?token=sampleToken',
+         null,
+         'Confirm reset password page',
+      ],
+      ['/equipment', 'Equipment page', null],
+      ['/login', null, 'LogIn page'],
+      ['/price-list', 'Price list page', null],
+      ['/resetPassword', null, 'Reset password page'],
+      ['/sign-up', null, 'SignUp page'],
       ['/trainers', 'Trainers page'],
       ['/timetable', 'Timetable page'],
       ['/workouts', 'Workouts page'],
-   ])('with valid path: "%s" should redirect to %p page.', (link, text) => {
-      render(
-         <AuthContext.Provider
-            value={{
-               authState: {
-                  token: 'SampleToken',
-                  userInfo: { roles: [ROLE_USER] },
-               },
-            }}
-         >
-            <MemoryRouter initialEntries={[link]}>
-               <Page />
-            </MemoryRouter>
-         </AuthContext.Provider>,
-      );
-      expect(screen.getByText(text)).toBeInTheDocument();
-   });
+   ])(
+      'when authenticated: "%s" should route to proper page.',
+      (link, expectedText, textShouldNotRender) => {
+         render(
+            <AuthContext.Provider
+               value={{
+                  authState: {
+                     token: 'SampleToken',
+                     userInfo: { roles: [ROLE_USER] },
+                  },
+                  isAuthenticated: () => true,
+               }}
+            >
+               <MemoryRouter initialEntries={[link]}>
+                  <Page />
+               </MemoryRouter>
+            </AuthContext.Provider>,
+         );
+         if (expectedText)
+            expect(screen.getByText(expectedText)).toBeInTheDocument();
 
-   test.each([
-      ['/accunt/messagess', 'Message page'],
-      ['/acount/settingss', 'Settings page'],
-      ['/acount', 'Account page'],
-      ['/contac', 'Contact page'],
-      ['/confirmregistration?token=sampleToken', 'Confirm registration page'],
-      ['/confirmnewPassword?token=sampleToken', 'Confirm reset password page'],
-      ['/equipmentt', 'Equipment page'],
-      ['/logina', 'LogIn page'],
-      ['/pricelist', 'Price list page'],
-      ['/resetpassword', 'Reset password page'],
-      ['/signup', 'SignUp page'],
-      ['/trainerss', 'Trainers page'],
-      ['/timetablea', 'Timetable page'],
-      ['/workout', 'Workouts page'],
-   ])('with invalid path: "%s" should redirect to Home page.', (link, text) => {
-      render(
-         <AuthContext.Provider
-            value={{
-               authState: { token: 'SampleToken', userInfo: { roles: [] } },
-            }}
-         >
-            <MemoryRouter initialEntries={[link]}>
-               <Page />
-            </MemoryRouter>
-         </AuthContext.Provider>,
-      );
-      expect(screen.getByText(/Home page/)).toBeInTheDocument();
-      expect(screen.queryByText(text)).not.toBeInTheDocument();
-   });
+         if (textShouldNotRender)
+            expect(
+               screen.queryByText(textShouldNotRender),
+            ).not.toBeInTheDocument();
+      },
+   );
 });

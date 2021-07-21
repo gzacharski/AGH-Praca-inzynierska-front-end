@@ -26,12 +26,12 @@ describe('NavlinkButton', () => {
    test.each([
       ['/', 'Account Page'],
       ['/admin', 'Admin Page'],
-      ['/manager','Manager Page']
+      ['/manager', 'Manager Page'],
    ])('should route to %s page onClick', (path, textOnPage) => {
       render(
-         <MemoryRouter>
+         <MemoryRouter initialEntries={['/test']}>
             <Route
-               path="/"
+               path="/test"
                render={() => (
                   <NavLinkButton
                      name="Test button"
@@ -40,7 +40,8 @@ describe('NavlinkButton', () => {
                   />
                )}
             />
-            <Route path="/" render={() => <div>Account Page</div>} />
+
+            <Route exact path="/" render={() => <div>Account Page</div>} />
             <Route path="/admin" render={() => <div>Admin Page</div>} />
             <Route path="/manager" render={() => <div>Manager Page</div>} />
          </MemoryRouter>,

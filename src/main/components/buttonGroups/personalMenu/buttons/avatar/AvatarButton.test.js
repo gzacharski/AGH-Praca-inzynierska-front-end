@@ -13,9 +13,9 @@ const mockStore = configureStore([]);
 const rendenAvatarButton = (store) =>
    render(
       <Provider store={store}>
-         <MemoryRouter>
+         <MemoryRouter initialEntries={['/test']}>
             <AvatarButton />
-            <Route path="/" render={() => <div>Account Page</div>} />
+            <Route exact path="/" render={() => <div>Account Page</div>} />
          </MemoryRouter>
       </Provider>,
    );
