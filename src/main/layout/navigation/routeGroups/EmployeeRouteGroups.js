@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import {
    EquipmentPage,
    EmployeePage,
@@ -7,17 +7,22 @@ import {
    UsersPage,
 } from 'src/main/pages/private/employee';
 
-const EmployeeRouteGroup = () => {
-   const { path } = useRouteMatch();
-   return (
-      <Switch>
-         <Route exact path="/employee" component={EmployeePage} />
-         <Route path={`${path}/tasks`} component={TasksPage} />
-         <Route path={`${path}/equipment`} component={EquipmentPage} />
-         <Route path={`${path}/users`} component={UsersPage} />
-         <Redirect to="/employee" />
-      </Switch>
-   );
-};
+const EmployeeRouteGroup = () => (
+   <Switch>
+      <Route exact path="/employee">
+         <EmployeePage />
+      </Route>
+      <Route path="/employee/tasks">
+         <TasksPage />
+      </Route>
+      <Route path="/employee/equipment">
+         <EquipmentPage />
+      </Route>
+      <Route path="/employee/users">
+         <UsersPage />
+      </Route>
+      <Redirect to="/employee" />
+   </Switch>
+);
 
 export default EmployeeRouteGroup;
