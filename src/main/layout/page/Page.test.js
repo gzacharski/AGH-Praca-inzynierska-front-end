@@ -78,7 +78,7 @@ describe('Page', () => {
       ['/', 'Home page'],
       ['/messages', 'Message page'],
       ['/settings', 'Settings page'],
-      ['/account', 'Account page'],
+      ['/', 'Account page'],
       ['/contact', 'Contact page'],
       ['/confirmRegistration?token=sampleToken', 'Confirm registration page'],
       ['/confirmNewPassword?token=sampleToken', 'Confirm reset password page'],

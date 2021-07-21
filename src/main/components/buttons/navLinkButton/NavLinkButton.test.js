@@ -24,7 +24,7 @@ describe('NavlinkButton', () => {
    });
 
    test.each([
-      ['/account', 'Account Page'],
+      ['/', 'Account Page'],
       ['/admin', 'Admin Page'],
       ['/manager','Manager Page']
    ])('should route to %s page onClick', (path, textOnPage) => {
