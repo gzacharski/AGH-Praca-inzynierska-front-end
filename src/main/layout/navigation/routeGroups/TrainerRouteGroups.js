@@ -11,11 +11,11 @@ const ManagerRouteGroup = () => {
    const { path } = useRouteMatch();
    return (
       <Switch>
-         <Route exact path="/account/trainer" component={TrainerPage} />
+         <Route exact path="/trainer" component={TrainerPage} />
          <Route path={`${path}/workouts`} component={WorkoutsPage} />
          <Route path={`${path}/notifications`} component={NotificationsPage} />
          <Route path={`${path}/tasks`} component={TasksPage} />
-         <Redirect to="/account/trainer" />
+         <Redirect to="/trainer" />
       </Switch>
    );
 };

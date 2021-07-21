@@ -6,6 +6,6 @@ export const SettingsMenuItem = () => (
    <AbstractMenuItem
       itemName="Ustawienia"
       CustomIcon={Settings}
-      pushUrl="/account/settings"
+      pushUrl="/settings"
    />
 );

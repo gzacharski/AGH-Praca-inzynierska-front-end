@@ -15,7 +15,7 @@ const rendenAvatarButton = (store) =>
       <Provider store={store}>
          <MemoryRouter>
             <AvatarButton />
-            <Route path="/account" render={() => <div>Account Page</div>} />
+            <Route path="/" render={() => <div>Account Page</div>} />
          </MemoryRouter>
       </Provider>,
    );

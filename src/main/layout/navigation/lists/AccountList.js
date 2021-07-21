@@ -56,7 +56,7 @@ const AccountList = (props) => {
          <CustomListItem
             buttonName="Moje konto"
             CustomIcon={AccountCircle}
-            pushUrl="/account"
+            pushUrl="/"
             secondaryText={name && surname && `${name} ${surname}`}
          />
          <Tooltip
@@ -86,7 +86,7 @@ const AccountList = (props) => {
                component="div"
                disablePadding
                onClick={() =>
-                  props.history.push('/account/reservations/workouts/group')
+                  props.history.push('/reservations/workouts/group')
                }
             >
                <ListItem button className={classes.nested}>
@@ -97,9 +97,7 @@ const AccountList = (props) => {
                component="div"
                disablePadding
                onClick={() =>
-                  props.history.push(
-                     '/account/reservations/workouts/individual',
-                  )
+                  props.history.push('/reservations/workouts/individual')
                }
             >
                <ListItem button className={classes.nested}>
@@ -109,9 +107,7 @@ const AccountList = (props) => {
             <List
                component="div"
                disablePadding
-               onClick={() =>
-                  props.history.push('/account/reservations/equipment')
-               }
+               onClick={() => props.history.push('/reservations/equipment')}
             >
                <ListItem button className={classes.nested}>
                   <ListItemText primary="Sprzętu" />
@@ -121,23 +117,23 @@ const AccountList = (props) => {
          <CustomListItem
             buttonName="Wiadomości"
             CustomIcon={Mail}
-            pushUrl="/account/messages"
+            pushUrl="/messages"
          />
          <CustomListItem
             buttonName="Powiadomienia"
             CustomIcon={NotificationsNone}
-            pushUrl="/account/notifications"
+            pushUrl="/notifications"
          />
          <CustomListItem
             buttonName="Statystyki"
             CustomIcon={Timeline}
-            pushUrl="/account/stats"
+            pushUrl="/stats"
             secondaryText="Twoja aktywność w klubie"
          />
          <CustomListItem
             buttonName="Ustawienia"
             CustomIcon={Settings}
-            pushUrl="/account/settings"
+            pushUrl="/settings"
             secondaryText="Zmień ustawienia swojego konta"
          />
       </List>

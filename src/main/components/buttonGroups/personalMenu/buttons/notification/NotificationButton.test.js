@@ -15,7 +15,7 @@ const renderNotificationButton = (store) =>
          <MemoryRouter>
             <NotificationButton />
             <Route
-               path="/account/notifications"
+               path="/notifications"
                render={() => <div>Notifications page</div>}
             />
          </MemoryRouter>

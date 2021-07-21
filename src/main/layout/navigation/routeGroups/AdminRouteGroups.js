@@ -14,14 +14,14 @@ const AdminRouteGroup = () => {
    const { path } = useRouteMatch();
    return (
       <Switch>
-         <Route exact path="/account/admin" component={AdminPage} />
+         <Route exact path="/admin" component={AdminPage} />
          <Route path={`${path}/backup`} component={BackupPage} />
          <Route path={`${path}/configure`} component={ConfigurePage} />
          <Route path={`${path}/logs`} component={LogsPage} />
          <Route path={`${path}/manage`} component={ManagementPage} />
          <Route path={`${path}/stats`} component={StatisticsPage} />
          <Route path={`${path}/users`} component={UsersPage} />
-         <Redirect to="/account/admin" />
+         <Redirect to="/admin" />
       </Switch>
    );
 };

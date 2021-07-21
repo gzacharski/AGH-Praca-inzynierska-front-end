@@ -33,7 +33,7 @@ export default function Login() {
 
    return (
       <>
-         {redirection && <Redirect to="/account" />}
+         {redirection && <Redirect to="/" />}
          <Slide direction="right" in mountOnEnter unmountOnExit timeout={400}>
             <Grid container className={classes.root}>
                <Grid

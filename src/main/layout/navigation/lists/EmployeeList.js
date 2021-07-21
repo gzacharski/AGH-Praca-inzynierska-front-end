@@ -27,24 +27,24 @@ export default function ReceptionEmployeeList() {
          <CustomListItem
             buttonName="Strona główna"
             CustomIcon={HomeIcon}
-            pushUrl="/account/employee"
+            pushUrl="/employee"
          />
          <CustomListItem
             buttonName="Użytkownicy"
             CustomIcon={SupervisorAccountIcon}
-            pushUrl="/account/employee/users"
+            pushUrl="/employee/users"
             secondaryText="Rejestr użytkowników w systemie"
          />
          <CustomListItem
             buttonName="Sprzęt"
             CustomIcon={EventSeatIcon}
-            pushUrl="/account/employee/equipment"
+            pushUrl="/employee/equipment"
             secondaryText="Rejestr sprzętu w systemie"
          />
          <CustomListItem
             buttonName="Zadania"
             CustomIcon={AssignmentIcon}
-            pushUrl="/account/employee/tasks"
+            pushUrl="/employee/tasks"
             secondaryText="Moje zadania do wykonania"
          />
       </List>

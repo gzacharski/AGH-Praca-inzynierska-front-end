@@ -13,13 +13,13 @@ const ManagerRouteGroup = () => {
    const { path } = useRouteMatch();
    return (
       <Switch>
-         <Route exact path="/account/manager" component={ManagerPage} />
+         <Route exact path="/manager" component={ManagerPage} />
          <Route path={`${path}/tasks`} component={TasksPage} />
          <Route path={`${path}/timetable`} component={TimetablePage} />
          <Route path={`${path}/pricelist`} component={PriceListPage} />
          <Route path={`${path}/equipment`} component={EquipmentPage} />
          <Route path={`${path}/users`} component={UsersPage} />
-         <Redirect to="/account/manager" />
+         <Redirect to="/manager" />
       </Switch>
    );
 };

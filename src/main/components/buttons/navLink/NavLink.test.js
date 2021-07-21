@@ -14,7 +14,7 @@ describe('Link', () => {
                render={() => (
                   <NavLink
                      name="Test link"
-                     link="/account"
+                     link="/"
                      testId="test-btn-id"
                   />
                )}
@@ -41,7 +41,7 @@ describe('Link', () => {
                   />
                )}
             />
-            <Route path="/account" render={() => <div>Account Page</div>} />
+            <Route path="/" render={() => <div>Account Page</div>} />
             <Route path="/admin" render={() => <div>Admin Page</div>} />
             <Route path="/manager" render={() => <div>Manager Page</div>} />
          </MemoryRouter>,

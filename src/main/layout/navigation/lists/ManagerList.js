@@ -28,31 +28,31 @@ export default function ManagerList() {
          <CustomListItem
             buttonName="Zadania pracowników"
             CustomIcon={Assignment}
-            pushUrl="/account/manager/tasks"
+            pushUrl="/manager/tasks"
             secondaryText="Zlecaj zadania i zarządzaj pracownikami"
          />
          <CustomListItem
             buttonName="Modyfikuj grafik"
             CustomIcon={EventNote}
-            pushUrl="/account/manager/timetable"
+            pushUrl="/manager/timetable"
             secondaryText="Zmień aktualne godziny zajęć"
          />
          <CustomListItem
             buttonName="Modyfikuj ofertę"
             CustomIcon={AttachMoney}
-            pushUrl="/account/manager/pricelist"
+            pushUrl="/manager/pricelist"
             secondaryText="Dodaj, modyfikuj lub usuń"
          />
          <CustomListItem
             buttonName="Sprzęt"
             CustomIcon={EventSeat}
-            pushUrl="/account/manager/equipment"
+            pushUrl="/manager/equipment"
             secondaryText="Rejestr sprzętu w systemie"
          />
          <CustomListItem
             buttonName="Użytkownicy"
             CustomIcon={SupervisorAccount}
-            pushUrl="/account/manager/users"
+            pushUrl="/manager/users"
             secondaryText="Rejestr użytkowników w systemie"
          />
       </List>

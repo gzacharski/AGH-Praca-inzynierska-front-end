@@ -103,7 +103,7 @@ describe('Price list card', () => {
                         component={() => <PriceListCard gymPass={gympass[0]} />}
                      />
                      <Route
-                        path="/account"
+                        path="/"
                         component={() =>
                            withAuthFilter(() => (
                               <div>Account page to buy gym pass</div>

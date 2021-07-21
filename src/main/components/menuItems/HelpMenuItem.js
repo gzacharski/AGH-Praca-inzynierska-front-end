@@ -6,6 +6,6 @@ export const HelpMenuItem = () => (
    <AbstractMenuItem
       itemName="Pomoc"
       CustomIcon={Help}
-      pushUrl="/account/help"
+      pushUrl="/help"
    />
 );

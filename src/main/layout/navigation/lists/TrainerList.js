@@ -27,25 +27,25 @@ export default function TrainerList() {
          <CustomListItem
             buttonName="Strona główna"
             CustomIcon={HomeIcon}
-            pushUrl="/account/trainer"
+            pushUrl="/trainer"
             secondaryText="Plan zajęć w aktualnym tygodniu"
          />
          <CustomListItem
             buttonName="Zajęcia"
             CustomIcon={GroupIcon}
-            pushUrl="/account/trainer/workouts"
+            pushUrl="/trainer/workouts"
             secondaryText="Plan zajęć w aktualnym tygodniu"
          />
          <CustomListItem
             buttonName="Powiadomienia"
             CustomIcon={NotificationsNoneIcon}
-            pushUrl="/account/trainer/notifications"
+            pushUrl="/trainer/notifications"
             secondaryText="Akceptuj lub odrzuć zapytania o trening"
          />
          <CustomListItem
             buttonName="Zadania"
             CustomIcon={AssignmentIcon}
-            pushUrl="/account/trainer/tasks"
+            pushUrl="/trainer/tasks"
             secondaryText="Moje zadania do wykonania"
          />
       </List>
