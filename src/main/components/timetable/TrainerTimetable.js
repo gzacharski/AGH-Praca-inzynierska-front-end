@@ -8,16 +8,19 @@ import {
 import { Timetable } from 'src/main/components/timetable';
 import { ContentTooltip } from './appointmentTooltip/ContentTooltip';
 import { HeaderTooltip } from './appointmentTooltip/HeaderTooltip';
+import { CurrentDateContextProvider } from './CurrentDateContext';
 
 export const TrainerTimetable = ({ data }) => (
-   <Timetable data={data}>
-      <Toolbar />
-      <TodayButton messages={{ today: 'Dzisiaj' }} />
-      <Appointments />
-      <AppointmentTooltip
-         showCloseButton
-         headerComponent={HeaderTooltip}
-         contentComponent={ContentTooltip}
-      />
-   </Timetable>
+   <CurrentDateContextProvider>
+      <Timetable data={data}>
+         <Toolbar />
+         <TodayButton messages={{ today: 'Dzisiaj' }} />
+         <Appointments />
+         <AppointmentTooltip
+            showCloseButton
+            headerComponent={HeaderTooltip}
+            contentComponent={ContentTooltip}
+         />
+      </Timetable>
+   </CurrentDateContextProvider>
 );

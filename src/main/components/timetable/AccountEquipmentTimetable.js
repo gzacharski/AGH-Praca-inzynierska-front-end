@@ -8,6 +8,7 @@ import {
 import { Timetable } from 'src/main/components/timetable';
 import { ContentTooltip } from './appointmentTooltip/ContentTooltip';
 import { HeaderTooltip } from './appointmentTooltip/HeaderTooltip';
+import { CurrentDateContextProvider } from './CurrentDateContext';
 
 export const AccountEquipmentTimetable = ({
    data,
@@ -15,19 +16,21 @@ export const AccountEquipmentTimetable = ({
    fetchData,
    fetchedDates,
 }) => (
-   <Timetable
-      data={data}
-      status={status}
-      fetchData={fetchData}
-      fetchedDates={fetchedDates}
-   >
-      <Toolbar />
-      <TodayButton messages={{ today: 'Dzisiaj' }} />
-      <Appointments />
-      <AppointmentTooltip
-         showCloseButton
-         headerComponent={HeaderTooltip}
-         contentComponent={ContentTooltip}
-      />
-   </Timetable>
+   <CurrentDateContextProvider>
+      <Timetable
+         data={data}
+         status={status}
+         fetchData={fetchData}
+         fetchedDates={fetchedDates}
+      >
+         <Toolbar />
+         <TodayButton messages={{ today: 'Dzisiaj' }} />
+         <Appointments />
+         <AppointmentTooltip
+            showCloseButton
+            headerComponent={HeaderTooltip}
+            contentComponent={ContentTooltip}
+         />
+      </Timetable>
+   </CurrentDateContextProvider>
 );

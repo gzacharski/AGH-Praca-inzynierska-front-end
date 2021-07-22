@@ -8,21 +8,25 @@ import {
 import { Timetable } from 'src/main/components/timetable';
 import { PublicContentTooltip } from './PublicContentTooltip';
 import { PublicHeaderTooltip } from './PublicHeaderTooltip';
+import { ToolbarButtons } from './ToolbarButtons';
+import { CurrentDateContextProvider } from '../CurrentDateContext';
 
 export const PublicTimetable = ({ data, status, fetchData, fetchedDates }) => (
-   <Timetable
-      data={data}
-      status={status}
-      fetchData={fetchData}
-      fetchedDates={fetchedDates}
-   >
-      <Toolbar />
-      <TodayButton messages={{ today: 'Dzisiaj' }} />
-      <Appointments />
-      <AppointmentTooltip
-         showCloseButton
-         headerComponent={PublicHeaderTooltip}
-         contentComponent={PublicContentTooltip}
-      />
-   </Timetable>
+   <CurrentDateContextProvider>
+      <Timetable
+         data={data}
+         status={status}
+         fetchData={fetchData}
+         fetchedDates={fetchedDates}
+      >
+         <Toolbar flexibleSpaceComponent={ToolbarButtons} />
+         <TodayButton messages={{ today: 'Dzisiaj' }} />
+         <Appointments />
+         <AppointmentTooltip
+            showCloseButton
+            headerComponent={PublicHeaderTooltip}
+            contentComponent={PublicContentTooltip}
+         />
+      </Timetable>
+   </CurrentDateContextProvider>
 );
