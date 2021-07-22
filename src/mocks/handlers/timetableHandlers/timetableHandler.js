@@ -230,6 +230,21 @@ export const timetableHandlers = [
                      ],
                   },
                },
+               {
+                  id: nanoid(),
+                  title: 'Pilates',
+                  startDate: '2021-07-23T12:00',
+                  endDate: '2021-07-23T13:30',
+                  location: 'Sala nr 2',
+                  allDay: false,
+               },
+               {
+                  id: nanoid(),
+                  title: 'Rowery',
+                  startDate: '2021-07-24T13:00',
+                  endDate: '2021-07-24T15:30',
+                  allDay: false,
+               },
             ]),
          );
 
