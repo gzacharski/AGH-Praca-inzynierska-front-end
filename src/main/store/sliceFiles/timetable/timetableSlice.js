@@ -50,6 +50,24 @@ export const fetchPrivateTimetableData = createAsyncThunk(
    },
 );
 
+export const enrollToGroupTraining = createAsyncThunk(
+   'timetable/enrollToGroupTraining',
+   async ({ trainingId, userId, token }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/group/${trainingId}/enroll?clientId=${userId}`;
+
+      try {
+         const response = await axios.post(url, config(token));
+         const { message = null } = response?.data;
+         return { message };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 export const timetableSlice = createSlice({
    name: 'timetable',
    initialState,
@@ -96,6 +114,19 @@ export const timetableSlice = createSlice({
          };
       },
       [fetchPrivateTimetableData.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+      [enrollToGroupTraining.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [enrollToGroupTraining.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [enrollToGroupTraining.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
