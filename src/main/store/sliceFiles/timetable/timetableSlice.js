@@ -34,11 +34,11 @@ export const fetchPublicTimetableData = createAsyncThunk(
 
 export const fetchPrivateTimetableData = createAsyncThunk(
    'timetable/fetchPrivateTimetableData',
-   async ({ startOfWeek, endOfWeek }, { rejectWithValue }) => {
+   async ({ startOfWeek, endOfWeek, token }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/group?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       try {
-         const response = await axios.get(url, config());
+         const response = await axios.get(url, config(token));
          const { data = [] } = response;
          return { data, startOfWeek, endOfWeek };
       } catch (error) {

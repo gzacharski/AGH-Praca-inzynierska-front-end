@@ -86,7 +86,7 @@ export const PublicHeaderTooltip = ({ appointmentData, ...restProps }) => {
             arrow
             placement="bottom"
          >
-            <div className={classes.wrapper}>
+            <div>
                <IconButton
                   aria-haspopup="true"
                   onClick={handleClick}
