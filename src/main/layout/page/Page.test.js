@@ -91,7 +91,7 @@ describe('Page', () => {
          'Confirm reset password page',
       ],
       ['/equipment', 'Equipment page', null],
-      ['/login', null, 'LogIn page'],
+      ['/login', 'LogIn page', null],
       ['/price-list', 'Price list page', null],
       ['/resetPassword', null, 'Reset password page'],
       ['/sign-up', null, 'SignUp page'],

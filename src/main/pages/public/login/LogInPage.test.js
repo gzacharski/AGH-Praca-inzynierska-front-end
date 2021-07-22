@@ -10,9 +10,11 @@ import LogInPage from './LogInPage';
 describe('LogInPage page component', () => {
    beforeEach(() => {
       render(
-         <MemoryRouter>
-            <LogInPage />
-         </MemoryRouter>,
+         <AuthProvider>
+            <MemoryRouter>
+               <LogInPage />
+            </MemoryRouter>
+         </AuthProvider>,
       );
    });
 

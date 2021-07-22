@@ -15,7 +15,6 @@ export const useStyles = makeStyles((theme) => ({
    },
    headerButtons: {
       display: 'flex',
-      justifyContent: 'right',
    },
    title: {
       display: 'block',

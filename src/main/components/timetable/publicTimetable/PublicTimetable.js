@@ -6,16 +6,12 @@ import {
    TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
-import { ContentTooltip } from './appointmentTooltip/ContentTooltip';
-import { HeaderTooltip } from './appointmentTooltip/HeaderTooltip';
-import { CurrentDateContextProvider } from './CurrentDateContext';
+import { PublicContentTooltip } from './PublicContentTooltip';
+import { PublicHeaderTooltip } from './PublicHeaderTooltip';
+import { ToolbarButtons } from './ToolbarButtons';
+import { CurrentDateContextProvider } from '../CurrentDateContext';
 
-export const AccountEquipmentTimetable = ({
-   data,
-   status,
-   fetchData,
-   fetchedDates,
-}) => (
+export const PublicTimetable = ({ data, status, fetchData, fetchedDates }) => (
    <CurrentDateContextProvider>
       <Timetable
          data={data}
@@ -23,13 +19,13 @@ export const AccountEquipmentTimetable = ({
          fetchData={fetchData}
          fetchedDates={fetchedDates}
       >
-         <Toolbar />
+         <Toolbar flexibleSpaceComponent={ToolbarButtons} />
          <TodayButton messages={{ today: 'Dzisiaj' }} />
          <Appointments />
          <AppointmentTooltip
             showCloseButton
-            headerComponent={HeaderTooltip}
-            contentComponent={ContentTooltip}
+            headerComponent={PublicHeaderTooltip}
+            contentComponent={PublicContentTooltip}
          />
       </Timetable>
    </CurrentDateContextProvider>

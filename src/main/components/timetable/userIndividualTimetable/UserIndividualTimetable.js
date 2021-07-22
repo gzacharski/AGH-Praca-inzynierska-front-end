@@ -14,6 +14,7 @@ import { WorkoutRequestDialog } from 'src/main/components/dialogs';
 import { UserIndividualContentTooltip } from './UserIndividualContentTooltip';
 import { UserIndividualHeaderTooltip } from './UserIndividualHeaderTooltip';
 import { IndividualWorkoutContext } from './IndividualWorkoutContex';
+import { CurrentDateContextProvider } from '../CurrentDateContext';
 
 const useStyles = makeStyles(({ spacing }) => ({
    flexibleSpace: {
@@ -60,7 +61,7 @@ export const UserIndividualTimetable = ({
    fetchData,
    fetchedDates,
 }) => (
-   <>
+   <CurrentDateContextProvider>
       <Timetable
          data={data}
          status={status}
@@ -77,5 +78,5 @@ export const UserIndividualTimetable = ({
          />
       </Timetable>
       <WorkoutRequestDialog />
-   </>
+   </CurrentDateContextProvider>
 );

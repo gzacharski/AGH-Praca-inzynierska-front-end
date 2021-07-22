@@ -5,8 +5,10 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import jwtDecode from 'jwt-decode';
+import { useDispatch } from 'react-redux';
 import { AuthContext } from 'src/main/auth';
 import { authServiceURL } from 'src/main/data/urls';
+import { reset } from 'src/main/store/sliceFiles/timetable/timetableSlice';
 import { useStyles } from './LogInForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -31,6 +33,7 @@ export default function LogInForm(props) {
    const authContext = useContext(AuthContext);
 
    const classes = useStyles();
+   const dispatch = useDispatch();
 
    const formik = useFormik({
       initialValues: {
@@ -72,6 +75,7 @@ export default function LogInForm(props) {
                   setDisplaySnackBar(false);
                   setTimeout(() => {
                      setRedirection(true);
+                     dispatch(reset());
                   }, 700);
                } else {
                   const { errors } = response.data;

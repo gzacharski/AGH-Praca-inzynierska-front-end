@@ -6,12 +6,14 @@ import { PublicTimetable } from 'src/main/components/timetable';
 import {
    clearMessage,
    fetchPublicTimetableData,
+   fetchPrivateTimetableData,
    selectData,
    selectFetchedDates,
    selectMessage,
    selectStatus,
 } from 'src/main/store/sliceFiles/timetable/timetableSlice';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
+import { useAuth } from 'src/main/auth';
 import { STATUS } from 'src/main/store';
 
 const TimetablePage = () => {
@@ -21,13 +23,19 @@ const TimetablePage = () => {
    const message = useSelector(selectMessage);
    const fetchedDates = useSelector(selectFetchedDates);
    const { enqueueSnackbar } = useSnackbar();
+   const { isAuthenticated, authState = {} } = useAuth();
+   const { token } = authState;
+
+   const fetchData = isAuthenticated()
+      ? fetchPrivateTimetableData
+      : fetchPublicTimetableData;
 
    useEffect(() => {
       if (dataStatus === STATUS.IDLE) {
          const startOfWeek = getCurrentStartOfWeek();
          const endOfWeek = getCurrentEndOfWeek();
          if (fetchedDates[startOfWeek] !== endOfWeek) {
-            dispatch(fetchPublicTimetableData({ startOfWeek, endOfWeek }));
+            dispatch(fetchData({ startOfWeek, endOfWeek, token }));
          }
       }
    }, [dataStatus, dispatch]);
@@ -53,7 +61,7 @@ const TimetablePage = () => {
          <PublicTimetable
             data={data}
             status={dataStatus}
-            fetchData={fetchPublicTimetableData}
+            fetchData={fetchData}
             fetchedDates={fetchedDates}
          />
       </PageWrapper>

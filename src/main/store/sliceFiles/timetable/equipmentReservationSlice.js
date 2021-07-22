@@ -1,17 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+   createSlice,
+   createAsyncThunk,
+   createEntityAdapter,
+} from '@reduxjs/toolkit';
 import axios from 'axios';
 import { equipmentServiceURL } from 'src/main/data/urls';
 import { STATUS } from '../../status';
 
-const initialState = {
-   data: [],
+const equipmentReservationAdapter = createEntityAdapter({});
+
+const initialState = equipmentReservationAdapter.getInitialState({
    fetchedDates: {},
    status: STATUS.IDLE,
    message: null,
-   error: null,
-};
+});
 
 export const fetchUserEquipmentReservation = createAsyncThunk(
    'equipmentReservation/fetchUserEquipmentReservation',
@@ -30,7 +34,6 @@ export const fetchUserEquipmentReservation = createAsyncThunk(
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
          return rejectWithValue({
-            error: error?.response,
             message: error?.response?.data?.message,
          });
       }
@@ -51,8 +54,7 @@ export const equipmentReservationSlice = createSlice({
       },
       [fetchUserEquipmentReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.data.push(...action.payload.data);
-         state.error = null;
+         equipmentReservationAdapter.upsertMany(state, action.payload.data);
          state.fetchedDates = {
             ...state.fetchedDates,
             [action.payload.startOfWeek]: action.payload.endOfWeek,
@@ -60,7 +62,6 @@ export const equipmentReservationSlice = createSlice({
       },
       [fetchUserEquipmentReservation.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
-         state.error = action.payload.error;
          state.message = action.payload.message;
       },
    },
@@ -68,7 +69,11 @@ export const equipmentReservationSlice = createSlice({
 
 export const { clearMessage } = equipmentReservationSlice.actions;
 
-export const selectData = (state) => state.equipmentReservation.data;
+export const { selectAll: selectData } =
+   equipmentReservationAdapter.getSelectors(
+      (state) => state.equipmentReservation,
+   );
+
 export const selectStatus = (state) => state.equipmentReservation.status;
 export const selectMessage = (state) => state.equipmentReservation.message;
 export const selectFetchedDates = (state) =>

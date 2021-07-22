@@ -33,7 +33,7 @@ const WorkoutCards = ({ workouts = [] }) => (
 );
 
 const TrainerListCardSkeleton = () => (
-   <Grid container spacing={5} justify="center" alignItems="center">
+   <Grid container spacing={5} justifyContent="center" alignItems="center">
       {[{ id: 1 }, { id: 2 }, { id: 3 }].map((card) => (
          <TrainerCardSkeleton key={card.id} />
       ))}
@@ -71,7 +71,7 @@ const WorkoutsPage = () => {
             header="Oferta zajęć grupowych"
             subheader="Dobierz odpowiedni trening dla siebie"
          />
-         <Container maxWidth="xl" className={{ alignItems: 'center' }}>
+         <Container maxWidth="xl">
             {status === STATUS.SUCCEEDED && (
                <WorkoutCards workouts={workouts} />
             )}

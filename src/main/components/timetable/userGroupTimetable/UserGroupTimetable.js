@@ -8,6 +8,7 @@ import {
 import { Timetable } from 'src/main/components/timetable';
 import { UserGroupContentTooltip } from './UserGroupContentTooltip';
 import { UserGroupHeaderTooltip } from './UserGroupHeaderTooltip';
+import { CurrentDateContextProvider } from '../CurrentDateContext';
 
 export const UserGroupTimetable = ({
    data,
@@ -15,19 +16,21 @@ export const UserGroupTimetable = ({
    fetchData,
    fetchedDates,
 }) => (
-   <Timetable
-      data={data}
-      status={status}
-      fetchData={fetchData}
-      fetchedDates={fetchedDates}
-   >
-      <Toolbar />
-      <TodayButton messages={{ today: 'Dzisiaj' }} />
-      <Appointments />
-      <AppointmentTooltip
-         showCloseButton
-         headerComponent={UserGroupHeaderTooltip}
-         contentComponent={UserGroupContentTooltip}
-      />
-   </Timetable>
+   <CurrentDateContextProvider>
+      <Timetable
+         data={data}
+         status={status}
+         fetchData={fetchData}
+         fetchedDates={fetchedDates}
+      >
+         <Toolbar />
+         <TodayButton messages={{ today: 'Dzisiaj' }} />
+         <Appointments />
+         <AppointmentTooltip
+            showCloseButton
+            headerComponent={UserGroupHeaderTooltip}
+            contentComponent={UserGroupContentTooltip}
+         />
+      </Timetable>
+   </CurrentDateContextProvider>
 );

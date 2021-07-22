@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Paper, LinearProgress } from '@material-ui/core';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { getEndOfWeek, getStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { useStyles } from './Timetable.styles';
+import { CurrentDateContext } from './CurrentDateContext';
 
 export const Timetable = ({
    data,
@@ -22,6 +23,7 @@ export const Timetable = ({
 }) => {
    const classes = useStyles();
    const dispatch = useDispatch();
+   const { setCurrentDate } = useContext(CurrentDateContext);
    const shouldRenderProgress =
       status === STATUS.IDLE || status === STATUS.LOADING;
    return (
@@ -31,6 +33,7 @@ export const Timetable = ({
             <ViewState
                defaultCurrentViewName="Week"
                onCurrentDateChange={(currentDate) => {
+                  setCurrentDate(currentDate);
                   const startOfWeek = getStartOfWeek(currentDate);
                   const endOfWeek = getEndOfWeek(currentDate);
                   if (fetchedDates[startOfWeek] !== endOfWeek) {

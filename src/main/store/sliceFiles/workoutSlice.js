@@ -1,18 +1,25 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+   createSlice,
+   createAsyncThunk,
+   createEntityAdapter,
+} from '@reduxjs/toolkit';
 import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../status';
 
-const initialState = {
-   data: [],
+const workoutListAdapter = createEntityAdapter({
+   selectId: (entity) => entity.trainingTypeId,
+});
+
+const initialState = workoutListAdapter.getInitialState({
    status: STATUS.IDLE,
    message: null,
    error: null,
-};
+});
 
 export const fetchWorkoutList = createAsyncThunk(
    'workoutList/fetchWorkoutList',
@@ -51,7 +58,7 @@ const workoutListSlice = createSlice({
       },
       [fetchWorkoutList.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.data = action.payload;
+         workoutListAdapter.setAll(state, action.payload);
          state.error = null;
       },
       [fetchWorkoutList.rejected]: (state, action) => {
@@ -66,7 +73,10 @@ export default workoutListSlice.reducer;
 
 export const { clearMessage } = workoutListSlice.actions;
 
+export const { selectAll: selectWorkouts } = workoutListAdapter.getSelectors(
+   (state) => state.workoutList,
+);
+
 export const selectMessage = (state) => state.workoutList.message;
 export const selectStatus = (state) => state.workoutList.status;
-export const selectWorkouts = (state) => state.workoutList.data;
 export const selectError = (state) => state.workoutList.error;

@@ -77,7 +77,8 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
             setOpenDialog={setRatingDialog}
             dialogTitle="Oceń zajęcia"
             eventTitle={`${title}, ${workoutDate}`}
-            callback={(value) =>
+            callback={(value) => {
+               onHide();
                dispatch(
                   rateUserIndividualEvent({
                      trainingId: id,
@@ -85,8 +86,8 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
                      userId,
                      token,
                   }),
-               )
-            }
+               );
+            }}
             rating={rating}
          />
       </>

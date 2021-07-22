@@ -32,7 +32,7 @@ const ShowEquipmentList = ({ equipment = [] }) => (
 );
 
 const TrainerListCardSkeleton = () => (
-   <Grid container spacing={5} justify="center" alignItems="center">
+   <Grid container spacing={5} justifyContent="center" alignItems="center">
       {[{ id: 1 }, { id: 2 }, { id: 3 }].map((card) => (
          <EquipmentCardSkeleton key={card.id} />
       ))}
@@ -70,7 +70,7 @@ const EquipmentPage = () => {
             header="Sprzęt treningowy"
             subheader="Odpowiedni dobór sprzętu fitness poprawia efektywność Twoich treningów"
          />
-         <Container maxWidth="xl" className={{ alignItems: 'center' }}>
+         <Container maxWidth="xl">
             {status === STATUS.SUCCEEDED && (
                <ShowEquipmentList equipment={equipment} />
             )}

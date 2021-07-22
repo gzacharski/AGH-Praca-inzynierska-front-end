@@ -10,14 +10,21 @@ import {
 import MuiAlert from '@material-ui/lab/Alert';
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
+import { Link as RouterLink, Redirect, useLocation } from 'react-router-dom';
+
 import { LogInForm } from 'src/main/components/forms';
 import { Footer } from 'src/main/layout/footer/Footer';
+import { getRedirectionParam } from 'src/main/utils';
+import { useAuth } from 'src/main/auth';
 import { useStyles } from './LogInPage.styles';
 import { LogInIcon } from './LogInIcon';
 
 export default function Login() {
    const classes = useStyles();
+   const { search } = useLocation();
+   const redirect = getRedirectionParam(search);
+   const { isAuthenticated } = useAuth();
+  
 
    const [success, setSuccess] = useState(false);
    const [error, setError] = useState(false);
@@ -33,7 +40,7 @@ export default function Login() {
 
    return (
       <>
-         {redirection && <Redirect to="/" />}
+         {(redirection || isAuthenticated()) && <Redirect to={redirect} />}
          <Slide direction="right" in mountOnEnter unmountOnExit timeout={400}>
             <Grid container className={classes.root}>
                <Grid

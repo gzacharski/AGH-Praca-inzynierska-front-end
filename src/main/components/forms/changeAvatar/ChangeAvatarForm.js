@@ -51,14 +51,16 @@ const UserInfo = ({ render, name, surname, phone, email }) => {
 const UploadImageButton = ({ file, classes, render, setOpenDialog }) => (
    <Skeleton render={render} classes={{ margin: 0, display: 'inline-block' }}>
       <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
-         <IconButton
-            onClick={() => setOpenDialog(true)}
-            disabled={Boolean(!file)}
-            className={classes.icon}
-            aria-label="upload picture"
-         >
-            <CloudUpload fontSize="large" />
-         </IconButton>
+         <div>
+            <IconButton
+               onClick={() => setOpenDialog(true)}
+               disabled={Boolean(!file)}
+               className={classes.icon}
+               aria-label="upload picture"
+            >
+               <CloudUpload fontSize="large" />
+            </IconButton>
+         </div>
       </Tooltip>
    </Skeleton>
 );
@@ -75,14 +77,16 @@ const ChooseImageButton = ({ render, classes, handleFileChange, file }) => (
          />
          <label htmlFor="icon-button-file">
             <Tooltip title="Wybierz zdjęcie z dysku" arrow placement="bottom">
-               <IconButton
-                  className={classes.icon}
-                  disabled={Boolean(file)}
-                  aria-label="select picture from disk"
-                  component="span"
-               >
-                  <PhotoCamera fontSize="large" />
-               </IconButton>
+               <div>
+                  <IconButton
+                     className={classes.icon}
+                     disabled={Boolean(file)}
+                     aria-label="select picture from disk"
+                     component="span"
+                  >
+                     <PhotoCamera fontSize="large" />
+                  </IconButton>
+               </div>
             </Tooltip>
          </label>
       </>
@@ -97,14 +101,16 @@ const DeleteImageButton = ({
 }) => (
    <Skeleton render={render} classes={{ margin: 0, display: 'inline-block' }}>
       <Tooltip title="Usuń zdjęcie" placement="bottom" arrow>
-         <IconButton
-            aria-label="delete current picture"
-            disabled={disabled}
-            className={classes.icon}
-            onClick={handleRemoveAvatar}
-         >
-            <Delete fontSize="large" />
-         </IconButton>
+         <div>
+            <IconButton
+               aria-label="delete current picture"
+               disabled={disabled}
+               className={classes.icon}
+               onClick={handleRemoveAvatar}
+            >
+               <Delete fontSize="large" />
+            </IconButton>
+         </div>
       </Tooltip>
    </Skeleton>
 );
@@ -190,24 +196,26 @@ export const ChangeAvatarForm = () => {
                         />
                      </Grid>
                      <Grid item xs={12}>
-                        <ChooseImageButton
-                           render={shouldRender}
-                           classes={classes}
-                           file={file}
-                           handleFileChange={handleFileChange}
-                        />
-                        <UploadImageButton
-                           file={file}
-                           classes={classes}
-                           render={shouldRender}
-                           setOpenDialog={setOpenDialog}
-                        />
-                        <DeleteImageButton
-                           classes={classes}
-                           disabled={Boolean(!avatar)}
-                           handleRemoveAvatar={() => setOpenDialog2(true)}
-                           render={shouldRender}
-                        />
+                        <div className={classes.headerButtons}>
+                           <ChooseImageButton
+                              render={shouldRender}
+                              classes={classes}
+                              file={file}
+                              handleFileChange={handleFileChange}
+                           />
+                           <UploadImageButton
+                              file={file}
+                              classes={classes}
+                              render={shouldRender}
+                              setOpenDialog={setOpenDialog}
+                           />
+                           <DeleteImageButton
+                              classes={classes}
+                              disabled={Boolean(!avatar)}
+                              handleRemoveAvatar={() => setOpenDialog2(true)}
+                              render={shouldRender}
+                           />
+                        </div>
                         <SaveChangesDialog
                            openDialog={openDialog}
                            setOpenDialog={setOpenDialog}

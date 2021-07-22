@@ -16,7 +16,7 @@ import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 import { useStyles } from './PriceListPage.styles';
 
 const ShowPriceList = ({ gymPasses }) => (
-   <Grid container spacing={5} justify="center" alignItems="center">
+   <Grid container spacing={5} justifyContent="center" alignItems="center">
       {gymPasses.map((gymPass) => (
          <Grid item key={gymPass.id} xs={12} sm={6} md={4} lg={3}>
             <PriceListCard gymPass={gymPass} />
@@ -26,7 +26,7 @@ const ShowPriceList = ({ gymPasses }) => (
 );
 
 const ShowPriceListSkeleton = () => (
-   <Grid container spacing={5} justify="center" alignItems="center">
+   <Grid container spacing={5} justifyContent="center" alignItems="center">
       {[
          { id: 1, isSmall: true },
          { id: 2, isSmall: false },
@@ -70,7 +70,7 @@ const PriceListPage = () => {
             header="Oferta karnetów"
             subheader="Wybierz odpowiedni dla siebie typ karnetu i zacznij ćwiczyć!"
          />
-         <Container maxWidth="xl" className={{ alignItems: 'center' }}>
+         <Container maxWidth="xl">
             {status === STATUS.SUCCEEDED && (
                <ShowPriceList gymPasses={priceList} />
             )}

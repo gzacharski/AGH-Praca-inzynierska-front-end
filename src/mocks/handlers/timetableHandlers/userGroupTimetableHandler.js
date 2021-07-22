@@ -19,6 +19,86 @@ export const userGroupTimetableHandlers = [
       },
    ),
    rest.post(
+      `${trainingsServiceURL}/group/:trainingId/enroll`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const clientId = req.url.searchParams.get('clientId');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(2000),
+            ctx.json({
+               message: `Zapisano się na zajęcia.`,
+               training: {
+                  id: trainingId,
+                  title: 'Pilates',
+                  startDate: '2021-07-23T12:00',
+                  endDate: '2021-07-23T13:30',
+                  allDay: false,
+                  location: 'Sala nr 2',
+                  trainers: [
+                     {
+                        userId: nanoid(),
+                        name: 'Joaquin',
+                        surname: 'Phoenix',
+                        avatar:
+                           'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',
+                     },
+                     {
+                        userId: nanoid(),
+                        name: 'Jack',
+                        surname: 'Nicholson',
+                        avatar:
+                           'https://fwcdn.pl/fph/10/19/1019/409449_2.2.jpg',
+                     },
+                  ],
+                  partipants: {
+                     basicList: [
+                        {
+                           userId: clientId,
+                           name: 'Grzegorz',
+                           surname: 'Zacharski',
+                           avatar:
+                              'https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2020/05/13/Pictures/_67aa6b5c-94d7-11ea-9070-932bbf5d90a5.jpg',
+                        },
+                        {
+                           userId: nanoid(),
+                           name: 'Leonardo',
+                           surname: 'DiCaprio',
+                           avatar:
+                              'https://fwcdn.pl/fph/65/97/426597/458437_8.2.jpg',
+                        },
+                        {
+                           userId: nanoid(),
+                           name: 'Al',
+                           surname: 'Pacino',
+                           avatar:
+                              'https://fwcdn.pl/fph/10/90/1090/419293_1.2.jpg',
+                        },
+                        {
+                           userId: nanoid(),
+                           name: 'Clint',
+                           surname: 'Eastwood',
+                           avatar:
+                              'https://fwcdn.pl/fph/12/41/1241/433855_2.2.jpg',
+                        },
+                     ],
+                     reserveList: [
+                        {
+                           userId: nanoid(),
+                           name: 'Christoph',
+                           surname: 'Waltz',
+                           avatar:
+                              'https://fwcdn.pl/ppo/95/01/69501/449668.2.jpg',
+                        },
+                     ],
+                  },
+               },
+            }),
+         );
+      },
+   ),
+   rest.post(
       `${trainingsServiceURL}/groupWorkout/:trainingId/rate`,
       (req, res, ctx) => {
          const { trainingId } = req.params;
