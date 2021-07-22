@@ -6,7 +6,12 @@ import TimetablePage from './TimetablePage';
 describe('News component', () => {
    test('should contain proper page', () => {
       render(
-         <AuthContext.Provider value={{ isAuthenticated: () => true }}>
+         <AuthContext.Provider
+            value={{
+               isAuthenticated: () => true,
+               authState: { token: 'testToken' },
+            }}
+         >
             <TimetablePage />
          </AuthContext.Provider>,
       );
