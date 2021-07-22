@@ -11,7 +11,7 @@ import { useStyles } from './App.styles';
 const App = () => {
    const classes = useStyles();
    return (
-      <SnackbarProvider maxSnack={4} preventDuplicate>
+      <SnackbarProvider maxSnack={4}>
          <Router basename={process.env.PUBLIC_URL}>
             <AuthProvider>
                <Provider store={store}>
