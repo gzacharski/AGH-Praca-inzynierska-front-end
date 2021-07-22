@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+   createSlice,
+   createAsyncThunk,
+   createEntityAdapter,
+} from '@reduxjs/toolkit';
 import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { STATUS } from '../../status';
@@ -13,13 +17,14 @@ const loadAuthData = () => {
    return { token, userId };
 };
 
-const initialState = {
-   data: [],
+const userGroupReservationAdapter = createEntityAdapter({});
+
+const initialState = userGroupReservationAdapter.getInitialState({
    fetchedDates: {},
    status: STATUS.IDLE,
    message: null,
    error: null,
-};
+});
 
 export const fetchUserGroupReservation = createAsyncThunk(
    'userGroupReservation/fetchUserGroupReservation',
@@ -112,7 +117,7 @@ export const userGroupReservationSlice = createSlice({
       },
       [fetchUserGroupReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.data.push(...action.payload.data);
+         userGroupReservationAdapter.upsertMany(state, action.payload.data);
          state.message = action.payload.message;
          state.error = null;
          state.fetchedDates = {
@@ -125,13 +130,15 @@ export const userGroupReservationSlice = createSlice({
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
+
       [cancelUserGroupReservation.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
       [cancelUserGroupReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.data = state.data.filter(
-            (workout) => workout.id !== action.payload.trainingId,
+         userGroupReservationAdapter.removeOne(
+            state,
+            action.payload.trainingId,
          );
          state.message = action.payload.message;
          state.error = null;
@@ -141,6 +148,7 @@ export const userGroupReservationSlice = createSlice({
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
+
       [rateUserGroupEvent.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
@@ -159,7 +167,10 @@ export const userGroupReservationSlice = createSlice({
 
 export const { clearMessage } = userGroupReservationSlice.actions;
 
-export const selectData = (state) => state.userGroupReservation.data;
+export const { selectAll: selectData } = userGroupReservationAdapter.getSelectors(
+   (state) => state.userGroupReservation,
+);
+
 export const selectStatus = (state) => state.userGroupReservation.status;
 export const selectMessage = (state) => state.userGroupReservation.message;
 export const selectFetchedDates = (state) =>
