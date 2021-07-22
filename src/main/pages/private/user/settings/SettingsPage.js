@@ -16,7 +16,7 @@ const SettingsPage = () => {
       <PageWrapper>
          <PageTitle>Ustawienia konta</PageTitle>
          <div className={classes.content}>
-            <Grid container spacing={3} justify="center">
+            <Grid container spacing={3} justifyContent="center">
                <Grid item xs={12} sm={9}>
                   <ChangeAvatarForm />
                </Grid>
