@@ -1,18 +1,25 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+   createSlice,
+   createAsyncThunk,
+   createEntityAdapter,
+} from '@reduxjs/toolkit';
 import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
 
-const initialState = {
-   data: [],
+const timetableAdapter = createEntityAdapter({
+   selectId: (entity) => entity.id,
+});
+
+const initialState = timetableAdapter.getInitialState({
    fetchedDates: {},
    status: STATUS.IDLE,
    message: null,
    error: null,
-};
+});
 
 export const fetchPublicTimetableData = createAsyncThunk(
    'timetable/fetchPublicTimetableData',
@@ -76,7 +83,7 @@ export const timetableSlice = createSlice({
          state.message = null;
       },
       reset(state) {
-         state.data = [];
+         timetableAdapter.removeAll(state);
          state.fetchedDates = {};
          state.status = STATUS.IDLE;
          state.message = null;
@@ -89,7 +96,7 @@ export const timetableSlice = createSlice({
       },
       [fetchPublicTimetableData.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.data.push(...action.payload.data);
+         timetableAdapter.upsertMany(state, action.payload.data);
          state.error = null;
          state.fetchedDates = {
             ...state.fetchedDates,
@@ -101,12 +108,13 @@ export const timetableSlice = createSlice({
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
+
       [fetchPrivateTimetableData.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
       [fetchPrivateTimetableData.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         state.data.push(...action.payload.data);
+         timetableAdapter.upsertMany(state, action.payload.data);
          state.error = null;
          state.fetchedDates = {
             ...state.fetchedDates,
@@ -118,6 +126,7 @@ export const timetableSlice = createSlice({
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
+
       [enrollToGroupTraining.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
@@ -136,7 +145,10 @@ export const timetableSlice = createSlice({
 
 export const { clearMessage, reset } = timetableSlice.actions;
 
-export const selectData = (state) => state.timetable.data;
+export const { selectAll: selectData } = timetableAdapter.getSelectors(
+   (state) => state.timetable,
+);
+
 export const selectStatus = (state) => state.timetable.status;
 export const selectMessage = (state) => state.timetable.message;
 export const selectFetchedDates = (state) => state.timetable.fetchedDates;
