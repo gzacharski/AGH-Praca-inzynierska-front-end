@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {
-   IconButton,
-   Paper,
-   Grid,
-   TextField,
-   Tooltip,
-   Typography
-} from '@material-ui/core';
-import { Edit, Save } from '@material-ui/icons';
+import { Paper, Grid, TextField, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import {
@@ -22,6 +14,7 @@ import {
 } from 'src/main/store/sliceFiles/accountSlice';
 import { SaveChangesDialog } from 'src/main/components/dialogs';
 import { STATUS } from 'src/main/store';
+import { SaveIconButton, EditIconButton } from 'src/main/components/buttons';
 import { useStyles } from './ChangeUserInfoForm.styles';
 import { phoneRegExp } from '../sign-up/phoneRegExp';
 
@@ -139,23 +132,11 @@ export const ChangeUserInfoForm = () => {
                   Dane osobowe
                </Typography>
                <div className={classes.headerButtons}>
-                  <Tooltip title="Edytuj" placement="bottom" arrow>
-                     <IconButton
-                        onClick={() => toggleEditable(!editable)}
-                        className={classes.icon}
-                     >
-                        <Edit fontSize="large" />
-                     </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
-                     <IconButton
-                        disabled={editable}
-                        className={classes.icon}
-                        onClick={() => setOpenDialog(true)}
-                     >
-                        <Save fontSize="large" />
-                     </IconButton>
-                  </Tooltip>
+                  <EditIconButton callback={() => toggleEditable(!editable)} />
+                  <SaveIconButton
+                     editable={editable}
+                     callback={() => setOpenDialog(true)}
+                  />
                   <SaveChangesDialog
                      form="changeUserDataForm"
                      openDialog={openDialog}

@@ -3,18 +3,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {
-   IconButton,
-   Paper,
-   Grid,
-   TextField,
-   Tooltip,
-   Typography,
-} from '@material-ui/core';
-import { Edit, Save } from '@material-ui/icons';
+import { Paper, Grid, TextField, Typography } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { accountServiceURL } from 'src/main/data/urls';
 import { SaveChangesDialog } from 'src/main/components/dialogs';
+import { EditIconButton, SaveIconButton } from 'src/main/components/buttons';
 import { useStyles } from './ChangePasswordForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -132,30 +125,20 @@ export const ChangePasswordForm = () => {
                   Zmień hasło
                </Typography>
                <div className={classes.headerButtons}>
-                  <Tooltip title="Edytuj" placement="bottom" arrow>
-                     <IconButton
-                        className={classes.icon}
-                        onClick={() => {
-                           toggleEditable(!editable);
-                           formik.setErrors({
-                              password1: false,
-                              password2: false,
-                              password: false,
-                           });
-                        }}
-                     >
-                        <Edit fontSize="large" />
-                     </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Zapisz zmiany" placement="bottom" arrow>
-                     <IconButton
-                        onClick={() => setOpenDialog(true)}
-                        disabled={editable}
-                        className={classes.icon}
-                     >
-                        <Save fontSize="large" />
-                     </IconButton>
-                  </Tooltip>
+                  <EditIconButton
+                     callback={() => {
+                        toggleEditable(!editable);
+                        formik.setErrors({
+                           password1: false,
+                           password2: false,
+                           password: false,
+                        });
+                     }}
+                  />
+                  <SaveIconButton
+                     callback={() => setOpenDialog(true)}
+                     editable={editable}
+                  />
                   <SaveChangesDialog
                      form="changePasswordForm"
                      openDialog={openDialog}
@@ -174,6 +157,7 @@ export const ChangePasswordForm = () => {
                      name="password"
                      type="password"
                      label="Stare hasło"
+                     autoComplete="current-password"
                      onChange={formik.handleChange}
                      onBlur={formik.handleBlur}
                      value={formik.values.password}
@@ -196,6 +180,7 @@ export const ChangePasswordForm = () => {
                      name="password1"
                      type="password"
                      label="Nowe hasło"
+                     autoComplete="new-password"
                      onChange={formik.handleChange}
                      onBlur={formik.handleBlur}
                      value={formik.values.password1}
@@ -218,6 +203,7 @@ export const ChangePasswordForm = () => {
                      name="password2"
                      type="password"
                      label="Powtórz nowe hasło"
+                     autoComplete="new-password"
                      onChange={formik.handleChange}
                      onBlur={formik.handleBlur}
                      value={formik.values.password2}
