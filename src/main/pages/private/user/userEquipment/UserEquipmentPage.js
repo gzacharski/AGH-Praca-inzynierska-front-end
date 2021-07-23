@@ -23,7 +23,7 @@ const ReservationsEquipmentPage = () => {
    const fetchedDates = useSelector(selectFetchedDates);
    const context = useContext(AuthContext);
 
-   const { userInfo = {} } = context.authState;
+   const { userInfo = {}, token } = context.authState;
    const { userId = '' } = userInfo;
 
    const { enqueueSnackbar } = useSnackbar();
@@ -38,6 +38,7 @@ const ReservationsEquipmentPage = () => {
                   userId,
                   startOfWeek,
                   endOfWeek,
+                  token,
                }),
             );
          }

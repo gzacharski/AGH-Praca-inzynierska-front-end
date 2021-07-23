@@ -7,6 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { equipmentServiceURL } from 'src/main/data/urls';
+import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
 
 const equipmentReservationAdapter = createEntityAdapter({});
@@ -19,17 +20,11 @@ const initialState = equipmentReservationAdapter.getInitialState({
 
 export const fetchUserEquipmentReservation = createAsyncThunk(
    'equipmentReservation/fetchUserEquipmentReservation',
-   async ({ userId, startOfWeek, endOfWeek }, { rejectWithValue }) => {
+   async ({ userId, startOfWeek, endOfWeek, token }, { rejectWithValue }) => {
       const url = `${equipmentServiceURL}/timetable/user/${userId}/reservation?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-         },
-      };
-
       try {
-         const response = await axios.get(url, config);
+         const response = await axios.get(url, config(token));
          const { data = [] } = response;
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
