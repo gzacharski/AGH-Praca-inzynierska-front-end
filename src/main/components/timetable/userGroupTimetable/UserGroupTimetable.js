@@ -9,6 +9,7 @@ import { Timetable } from 'src/main/components/timetable';
 import { UserGroupContentTooltip } from './UserGroupContentTooltip';
 import { UserGroupHeaderTooltip } from './UserGroupHeaderTooltip';
 import { CurrentDateContextProvider } from '../CurrentDateContext';
+import { ToolbarButtons } from './ToolbarButtons';
 
 export const UserGroupTimetable = ({
    data,
@@ -23,7 +24,7 @@ export const UserGroupTimetable = ({
          fetchData={fetchData}
          fetchedDates={fetchedDates}
       >
-         <Toolbar />
+         <Toolbar flexibleSpaceComponent={ToolbarButtons} />
          <TodayButton messages={{ today: 'Dzisiaj' }} />
          <Appointments />
          <AppointmentTooltip
