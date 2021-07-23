@@ -7,6 +7,7 @@ import ActivateAccountRefreshButton from './activateAccount/refreshButton/Activa
 import { EditIconButton } from './iconButtons/EditIconButton';
 import { SaveIconButton } from './iconButtons/SaveIconButton';
 import { RefreshIconButton } from './iconButtons/refreshButton/RefreshIconButton';
+import { JoinEventIconButton } from './iconButtons/joinEventIconButton/JoinEventIconButton';
 
 export {
    ActivateAccountButton,
@@ -18,4 +19,5 @@ export {
    EditIconButton,
    SaveIconButton,
    RefreshIconButton,
+   JoinEventIconButton,
 };
