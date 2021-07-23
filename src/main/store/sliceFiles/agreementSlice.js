@@ -3,6 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { accountServiceURL } from 'src/main/data/urls';
+import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../status';
 
 const loadAuthData = () => {
@@ -32,15 +33,8 @@ export const fetchAgreements = createAsyncThunk(
    async (_, { rejectWithValue }) => {
       const { token, userId } = loadAuthData();
 
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-            Authorization: token,
-         },
-      };
-
       try {
-         const response = await axios.get(url(userId), config);
+         const response = await axios.get(url(userId), config(token));
          const { data } = response;
          return {
             regulation: data?.regulationsAccepted,
@@ -62,13 +56,6 @@ export const setAgreements = createAsyncThunk(
    async ({ regulation, training, avatar, stats }, { rejectWithValue }) => {
       const { token, userId } = loadAuthData();
 
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-            Authorization: token,
-         },
-      };
-
       const requestData = {
          regulationsAccepted: regulation,
          allowShowingTrainingsParticipation: training,
@@ -77,7 +64,11 @@ export const setAgreements = createAsyncThunk(
       };
 
       try {
-         const response = await axios.put(url(userId), requestData, config);
+         const response = await axios.put(
+            url(userId),
+            requestData,
+            config(token),
+         );
          const { data } = response;
          return {
             data: {
