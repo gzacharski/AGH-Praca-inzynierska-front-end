@@ -25,7 +25,7 @@ const ToolbarButtons = ({ ...restProps }) => {
    const { authState, isAuthenticated } = useAuth();
 
    useEffect(() => {
-      if (status === STATUS.SUCCEEDED) setClicked(false);
+      if (status !== STATUS.LOADING) setClicked(false);
    }, [status]);
    return (
       <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
@@ -61,7 +61,7 @@ const ToolbarButtons = ({ ...restProps }) => {
                >
                   <RefreshIcon />
                </IconButton>
-               {status === STATUS.LOADING && (
+               {status === STATUS.LOADING && clicked && (
                   <CircularProgress size={40} className={classes.progress} />
                )}
             </div>
