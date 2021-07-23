@@ -63,7 +63,9 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
             eventTitle={`${title}, ${workoutDate}`}
             callback={() => {
                onHide();
-               dispatch(cancelUserGroupReservation({ trainingId: id }));
+               dispatch(
+                  cancelUserGroupReservation({ trainingId: id, userId, token }),
+               );
             }}
          />
          <RatingDialog

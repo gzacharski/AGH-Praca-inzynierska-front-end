@@ -21,14 +21,11 @@ const initialState = userIndividualReservationAdapter.getInitialState({
 
 export const fetchUserIndividualReservation = createAsyncThunk(
    'userIndividualReservation/fetchUserIndividualReservation',
-   async (
-      { startOfWeek, endOfWeek, userId, token, locale },
-      { rejectWithValue },
-   ) => {
+   async ({ startOfWeek, endOfWeek, userId, token }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/timetable/${userId}/individualWorkouts?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       try {
-         const response = await axios.get(url, config(token, locale));
+         const response = await axios.get(url, config(token));
          const { data = [], message = null } = response?.data;
          return { data, startOfWeek, endOfWeek, message };
       } catch (error) {
@@ -41,7 +38,7 @@ export const fetchUserIndividualReservation = createAsyncThunk(
 );
 
 export const cancelUserIndividualReservation = createAsyncThunk(
-   'userIndividualReservation/cancelUserGroupReservation',
+   'userIndividualReservation/cancelUserIndividualReservation',
    async ({ trainingId, userId, token, locale }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/individualWorkout/${trainingId}/enroll?clientId=${userId}`;
 
@@ -59,7 +56,7 @@ export const cancelUserIndividualReservation = createAsyncThunk(
 );
 
 export const rateUserIndividualEvent = createAsyncThunk(
-   'userIndividualReservation/rateUserGroupEvent',
+   'userIndividualReservation/rateUserIndividualEvent',
    async (
       { trainingId, rating, userId, token, locale },
       { rejectWithValue },
