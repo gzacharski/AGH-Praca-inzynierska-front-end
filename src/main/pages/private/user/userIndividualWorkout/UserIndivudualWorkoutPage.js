@@ -14,7 +14,6 @@ import { UserIndividualTimetable } from 'src/main/components/timetable/userIndiv
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
-import { IndividualWorkoutContextProvider } from 'src/main/components/timetable/userIndividualTimetable/IndividualWorkoutContex';
 
 const UserIndividualWorkoutPage = () => {
    const data = useSelector(selectData);
@@ -60,14 +59,12 @@ const UserIndividualWorkoutPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Twoje rezerwacje zajęć indywidualnych</PageTitle>
-         <IndividualWorkoutContextProvider>
-            <UserIndividualTimetable
-               data={data}
-               status={status}
-               fetchData={fetchUserIndividualReservation}
-               fetchedDates={fetchedDates}
-            />
-         </IndividualWorkoutContextProvider>
+         <UserIndividualTimetable
+            data={data}
+            status={status}
+            fetchData={fetchUserIndividualReservation}
+            fetchedDates={fetchedDates}
+         />
       </PageWrapper>
    );
 };
