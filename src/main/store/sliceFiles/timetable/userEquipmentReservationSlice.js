@@ -34,6 +34,27 @@ export const fetchUserEquipmentReservation = createAsyncThunk(
    },
 );
 
+export const addUserEquipmentReservation = createAsyncThunk(
+   'userEquipmentReservation/addUserEquipmentReservation',
+   async (
+      { equipmentId, userId, token, startDateTime, endDateTime },
+      { rejectWithValue },
+   ) => {
+      const url = `${equipmentServiceURL}/user/${userId}/equipment/${equipmentId}?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+
+      try {
+         const response = await axios.post(url, config(token));
+         const { message = null, reservation = {} } = response?.data;
+         return { message, reservation };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 export const cancelUserEquipmentReservation = createAsyncThunk(
    'userEquipmentReservation/cancelUserEquipmentReservation',
    async ({ eventId, userId, token }, { rejectWithValue }) => {
@@ -91,6 +112,21 @@ export const userEquipmentReservationSlice = createSlice({
          };
       },
       [fetchUserEquipmentReservation.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.message = action.payload.message;
+      },
+
+      [addUserEquipmentReservation.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [addUserEquipmentReservation.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         userEquipmentReservationAdapter.upsertOne(
+            state,
+            action.payload.reservation,
+         );
+      },
+      [addUserEquipmentReservation.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.message = action.payload.message;
       },

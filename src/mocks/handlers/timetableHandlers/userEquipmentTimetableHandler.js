@@ -169,6 +169,64 @@ export const userEquipmentTimetableHandlers = [
          );
       },
    ),
+   rest.post(
+      `${equipmentServiceURL}/user/:userId/equipment/:equipmentId`,
+      (req, res, ctx) => {
+         const { equipmentId } = req.params;
+
+         const startDateTime = req.url.searchParams.get('startDateTime');
+         const endDateTime = req.url.searchParams.get('endDateTime');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: 'Pomyślnie dodano rezerwację sprzętu fitness.',
+               reservation: {
+                  id: nanoid(),
+                  title: 'Rower stacjonarny',
+                  startDate: startDateTime,
+                  endDate: endDateTime,
+                  allDay: false,
+                  equipment: {
+                     id: equipmentId,
+                     name: 'Rower stacjonarny',
+                     rating: 4.5,
+                  },
+               },
+            }),
+         );
+      },
+   ),
+   rest.post(
+      `${equipmentServiceURL}/user/:userId/event/:eventId/rate`,
+      (req, res, ctx) => {
+         const rating = req.url.searchParams.get('rating');
+         const { eventId } = req.params;
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: `Pomyślnie oceniono sprzęt ${eventId} na ocenę ${rating}.`,
+            }),
+         );
+      },
+   ),
+   rest.delete(
+      `${equipmentServiceURL}/user/:userId/event/:eventId`,
+      (req, res, ctx) => {
+         const { eventId } = req.params;
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: `Pomyślnie anulowano rezerwację ${eventId} sprzętu fitness.`,
+            }),
+         );
+      },
+   ),
    rest.get(
       `${equipmentServiceURL}/timetable/user/:userId/reservation`,
       (req, res, ctx) => {
