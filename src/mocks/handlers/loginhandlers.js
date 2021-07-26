@@ -6,6 +6,7 @@ export const handlers = [
    rest.post(`${authServiceURL}/login`, (req, res, ctx) =>
       res(
          ctx.status(200),
+         ctx.delay(),
          ctx.set(
             'token',
             'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiMDVhODUwYy04ODI3LTQ4MDUtYWVjZC0zYTg5M2Q1ODY2OGIiLCJyb2xlcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sImV4cCI6MTYyNTQ5MTk2Mn0.Z2o0tfU1BiVL_3qJJUXyMVuZvNpLSed1aRbcqimhIE0',
@@ -17,6 +18,7 @@ export const handlers = [
       const { userId } = req.params;
       return res(
          ctx.status(200),
+         ctx.delay(),
          ctx.json({
             id: userId,
             name: 'Grzegorz',

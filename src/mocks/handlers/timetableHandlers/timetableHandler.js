@@ -10,7 +10,7 @@ export const timetableHandlers = [
       if (startDate === '2021-07-19' && endDate === '2021-07-25')
          return res(
             ctx.status(200),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json({ message: 'Brak treningów do wyświetlenia' }),
          );
 
@@ -64,7 +64,7 @@ export const timetableHandlers = [
       if (startDate === '2021-08-02' && endDate === '2021-08-08')
          return res(
             ctx.status(200),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json([
                {
                   id: 'fb90cd5f-2d33-4c29-aeef-25e6b590b46e',
@@ -112,7 +112,7 @@ export const timetableHandlers = [
       if (startDate === '2021-07-12' && endDate === '2021-07-18')
          return res(
             ctx.status(200),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json([
                {
                   id: '7e4dc129-6ee9-41a2-9c64-8c09262ae2fe',
@@ -166,7 +166,7 @@ export const timetableHandlers = [
 
       return res(
          ctx.status(200),
-         ctx.delay(1500),
+         ctx.delay(),
          ctx.json({ message: 'Brak dostępnej oferty' }),
       );
    }),
@@ -177,7 +177,7 @@ export const timetableHandlers = [
       if (startDate === '2021-07-19' && endDate === '2021-07-25')
          return res(
             ctx.status(200),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json([
                {
                   id: 'e1a471eb-3762-4f54-b242-fdf994815b28',
@@ -251,14 +251,14 @@ export const timetableHandlers = [
       if (startDate === '2021-07-26' && endDate === '2021-08-01')
          return res(
             ctx.status(404),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json({ message: 'Brak treningów do wyświetlenia' }),
          );
 
       if (startDate === '2021-07-12' && endDate === '2021-07-18')
          return res(
             ctx.status(200),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json([
                {
                   id: 'e0345046-e53e-4701-9622-ad0e29133878',
@@ -395,7 +395,7 @@ export const timetableHandlers = [
 
       return res(
          ctx.status(404),
-         ctx.delay(1500),
+         ctx.delay(),
          ctx.json({ message: 'Brak dostępnej oferty' }),
       );
    }),

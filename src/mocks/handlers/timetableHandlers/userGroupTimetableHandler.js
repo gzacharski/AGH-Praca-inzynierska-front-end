@@ -11,7 +11,7 @@ export const userGroupTimetableHandlers = [
 
          return res(
             ctx.status(200),
-            ctx.delay(2000),
+            ctx.delay(),
             ctx.json({
                message: `Anulowano rezerwacje w wydarzeniu o id: ${trainingId} dla klienta o id: ${clientId}`,
             }),
@@ -26,7 +26,7 @@ export const userGroupTimetableHandlers = [
 
          return res(
             ctx.status(200),
-            ctx.delay(2000),
+            ctx.delay(),
             ctx.json({
                message: `Zapisano się na zajęcia.`,
                training: {
@@ -107,7 +107,7 @@ export const userGroupTimetableHandlers = [
 
          return res(
             ctx.status(200),
-            ctx.delay(2000),
+            ctx.delay(),
             ctx.json({
                message: `Oceniono na ${rating} wydarzenie (id: ${trainingId}) przez klienta (id: ${clientId})`,
             }),

@@ -13,7 +13,7 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-19' && endDate === '2021-07-25')
             return res(
                ctx.status(200),
-               ctx.delay(1500),
+               ctx.delay(),
                ctx.json([
                   {
                      id: '2e29ab24-400e-48dc-b7d3-b871b3a58b8c',
@@ -96,7 +96,7 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-12' && endDate === '2021-07-18')
             return res(
                ctx.status(200),
-               ctx.delay(2000),
+               ctx.delay(),
                ctx.json([
                   {
                      id: 'd51a645b-9b4a-4d9f-8e39-31a747ee5c2f',
@@ -236,7 +236,7 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-19' && endDate === '2021-07-25')
             return res(
                ctx.status(200),
-               ctx.delay(1500),
+               ctx.delay(),
                ctx.json([
                   {
                      id: 'd6be9eda-d515-4246-a65a-4c962208921c',
@@ -299,7 +299,7 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-12' && endDate === '2021-07-18')
             return res(
                ctx.status(200),
-               ctx.delay(2000),
+               ctx.delay(),
                ctx.json([
                   {
                      id: '99d5dfd7-9745-48c0-8927-c7d6b041f3c1',

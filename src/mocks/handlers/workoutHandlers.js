@@ -9,7 +9,7 @@ export const workoutHandlers = [
       if (error === 'noConnection') {
          return res(
             ctx.status(500),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json({ message: NETWORK_ERROR }),
          );
       }
@@ -25,7 +25,7 @@ export const workoutHandlers = [
 
       return res(
          ctx.status(200),
-         ctx.delay(1500),
+         ctx.delay(),
          ctx.json([
             {
                trainingTypeId: nanoid(),
