@@ -34,6 +34,42 @@ export const fetchUserEquipmentReservation = createAsyncThunk(
    },
 );
 
+export const cancelUserEquipmentReservation = createAsyncThunk(
+   'userEquipmentReservation/cancelUserEquipmentReservation',
+   async ({ eventId, userId, token }, { rejectWithValue }) => {
+      const url = `${equipmentServiceURL}/user/${userId}/event/${eventId}`;
+
+      try {
+         const response = await axios.delete(url, config(token));
+         const { message = null } = response?.data;
+         return { message, eventId };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const rateUserEquipmentEvent = createAsyncThunk(
+   'userEquipmentReservation/rateUserEquipmentEvent',
+   async ({ eventId, rating, userId, token }, { rejectWithValue }) => {
+      const url = `${equipmentServiceURL}/user/${userId}/event/${eventId}/rate?rating=${rating}`;
+
+      try {
+         const response = await axios.post(url, config(token));
+         const { message = null } = response?.data;
+         return { message };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 export const userEquipmentReservationSlice = createSlice({
    name: 'userEquipmentReservation',
    initialState,
@@ -56,6 +92,38 @@ export const userEquipmentReservationSlice = createSlice({
       },
       [fetchUserEquipmentReservation.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
+         state.message = action.payload.message;
+      },
+
+      [cancelUserEquipmentReservation.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [cancelUserEquipmentReservation.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         userEquipmentReservationAdapter.removeOne(
+            state,
+            action.payload.eventId,
+         );
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [cancelUserEquipmentReservation.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [rateUserEquipmentEvent.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [rateUserEquipmentEvent.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [rateUserEquipmentEvent.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.error = action.payload.error;
          state.message = action.payload.message;
       },
    },
