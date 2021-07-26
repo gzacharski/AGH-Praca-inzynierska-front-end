@@ -10,7 +10,7 @@ import {
    selectStatus,
 } from 'src/main/store/sliceFiles/timetable/equipmentReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { AccountEquipmentTimetable } from 'src/main/components/timetable';
+import { UserEquipmentTimetable } from 'src/main/components/timetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
@@ -60,7 +60,7 @@ const ReservationsEquipmentPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Twoje rezerwacje sprzętu</PageTitle>
-         <AccountEquipmentTimetable
+         <UserEquipmentTimetable
             data={data}
             status={status}
             fetchData={fetchUserEquipmentReservation}
