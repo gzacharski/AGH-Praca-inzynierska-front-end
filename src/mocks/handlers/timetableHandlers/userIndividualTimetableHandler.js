@@ -48,7 +48,7 @@ export const userIndividualTimetableHandler = [
                ctx.json({
                   data: [
                      {
-                        id: nanoid(),
+                        id: 'a52a5aa9-5031-4511-b1e5-92b34b05df3a',
                         title: 'Trening personalny',
                         startDate: '2021-07-20T09:45',
                         endDate: '2021-07-20T11:00',
@@ -87,7 +87,7 @@ export const userIndividualTimetableHandler = [
                ctx.json({
                   data: [
                      {
-                        id: nanoid(),
+                        id: '64fbef7b-8109-457b-a8d2-6f0fad39d1f2',
                         title: 'Trening personalny',
                         startDate: '2021-07-26T09:45',
                         endDate: '2021-07-26T11:00',
@@ -115,7 +115,7 @@ export const userIndividualTimetableHandler = [
                         },
                      },
                      {
-                        id: nanoid(),
+                        id: 'de5b837b-2036-41e5-931c-709d6d68db7e',
                         title: 'Trening personalny',
                         startDate: '2021-07-30T13:00',
                         endDate: '2021-07-30T15:30',
@@ -154,7 +154,7 @@ export const userIndividualTimetableHandler = [
                ctx.json({
                   data: [
                      {
-                        id: nanoid(),
+                        id: 'df9ee276-0f30-446b-9f98-5e57eecb20e5',
                         title: 'Trening personalny',
                         startDate: '2021-07-16T09:45',
                         endDate: '2021-07-16T11:00',
@@ -182,7 +182,7 @@ export const userIndividualTimetableHandler = [
                         },
                      },
                      {
-                        id: nanoid(),
+                        id: '360379a3-d5e8-4132-bc95-3157b9a1e30a',
                         title: 'Trening personalny',
                         startDate: '2021-07-16T13:00',
                         endDate: '2021-07-16T15:30',
