@@ -11,12 +11,19 @@ export const timetableHandlers = [
          return res(
             ctx.status(200),
             ctx.delay(1500),
+            ctx.json({ message: 'Brak treningów do wyświetlenia' }),
+         );
+
+      if (startDate === '2021-07-26' && endDate === '2021-08-01')
+         return res(
+            ctx.status(200),
+            ctx.delay(),
             ctx.json([
                {
                   id: 'e47e2b36-183b-4399-981e-2f84a568f1af',
                   title: 'Joga',
-                  startDate: '2021-07-20T09:45',
-                  endDate: '2021-07-20T11:00',
+                  startDate: '2021-07-27T09:45',
+                  endDate: '2021-07-27T11:00',
                   allDay: false,
                   location: 'Sala nr 1',
                   trainers: [
@@ -39,26 +46,19 @@ export const timetableHandlers = [
                {
                   id: '18d83841-0d97-4a91-9a6c-100c5f411ca5',
                   title: 'Pilates',
-                  startDate: '2021-07-23T12:00',
-                  endDate: '2021-07-23T13:30',
+                  startDate: '2021-07-28T12:00',
+                  endDate: '2021-07-28T13:30',
                   location: 'Sala nr 2',
                   allDay: false,
                },
                {
                   id: 'a5e50410-082a-4c80-902d-a423ed7f2160',
                   title: 'Rowery',
-                  startDate: '2021-07-24T13:00',
-                  endDate: '2021-07-24T15:30',
+                  startDate: '2021-07-29T13:00',
+                  endDate: '2021-07-29T15:30',
                   allDay: false,
                },
             ]),
-         );
-
-      if (startDate === '2021-07-26' && endDate === '2021-08-01')
-         return res(
-            ctx.status(404),
-            ctx.delay(1500),
-            ctx.json({ message: 'Brak treningów do wyświetlenia' }),
          );
 
       if (startDate === '2021-08-02' && endDate === '2021-08-08')
@@ -165,7 +165,7 @@ export const timetableHandlers = [
          );
 
       return res(
-         ctx.status(404),
+         ctx.status(200),
          ctx.delay(1500),
          ctx.json({ message: 'Brak dostępnej oferty' }),
       );
