@@ -10,6 +10,9 @@ const useStyles = makeStyles({
       },
       margin: 'auto',
    },
+   select: {
+      width: '195px',
+   },
 });
 
 export { useStyles };
