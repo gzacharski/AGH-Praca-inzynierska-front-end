@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
    selectStatus,
    fetchUserEquipmentReservation,
-} from 'src/main/store/sliceFiles/timetable/equipmentReservationSlice';
+} from 'src/main/store/sliceFiles/timetable/userEquipmentReservationSlice';
 import { getStartOfWeek, getEndOfWeek } from 'src/main/utils';
 import { useAuth } from 'src/main/auth';
 import { RefreshIconButton } from 'src/main/components/buttons';
@@ -25,12 +25,6 @@ const ToolbarButtons = ({ ...restProps }) => {
 
       const { token, userInfo = {} } = authState;
       const { userId } = userInfo;
-      console.log({
-         userId,
-         startOfWeek,
-         endOfWeek,
-         token,
-      });
       dispatch(
          fetchUserEquipmentReservation({
             userId,

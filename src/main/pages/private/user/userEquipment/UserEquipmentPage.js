@@ -8,7 +8,7 @@ import {
    selectFetchedDates,
    selectMessage,
    selectStatus,
-} from 'src/main/store/sliceFiles/timetable/equipmentReservationSlice';
+} from 'src/main/store/sliceFiles/timetable/userEquipmentReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import { UserEquipmentTimetable } from 'src/main/components/timetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';

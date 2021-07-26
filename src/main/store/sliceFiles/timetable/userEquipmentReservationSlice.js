@@ -10,16 +10,16 @@ import { equipmentServiceURL } from 'src/main/data/urls';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
 
-const equipmentReservationAdapter = createEntityAdapter({});
+const userEquipmentReservationAdapter = createEntityAdapter({});
 
-const initialState = equipmentReservationAdapter.getInitialState({
+const initialState = userEquipmentReservationAdapter.getInitialState({
    fetchedDates: {},
    status: STATUS.IDLE,
    message: null,
 });
 
 export const fetchUserEquipmentReservation = createAsyncThunk(
-   'equipmentReservation/fetchUserEquipmentReservation',
+   'userEquipmentReservation/fetchUserEquipmentReservation',
    async ({ userId, startOfWeek, endOfWeek, token }, { rejectWithValue }) => {
       const url = `${equipmentServiceURL}/timetable/user/${userId}/reservation?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
@@ -28,15 +28,14 @@ export const fetchUserEquipmentReservation = createAsyncThunk(
          const { data = [] } = response;
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
-         return rejectWithValue({
-            message: error?.response?.data?.message,
-         });
+         const { message = null } = error?.response?.data;
+         return rejectWithValue({ message });
       }
    },
 );
 
-export const equipmentReservationSlice = createSlice({
-   name: 'equipmentReservation',
+export const userEquipmentReservationSlice = createSlice({
+   name: 'userEquipmentReservation',
    initialState,
    reducers: {
       clearMessage(state) {
@@ -49,7 +48,7 @@ export const equipmentReservationSlice = createSlice({
       },
       [fetchUserEquipmentReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         equipmentReservationAdapter.upsertMany(state, action.payload.data);
+         userEquipmentReservationAdapter.upsertMany(state, action.payload.data);
          state.fetchedDates = {
             ...state.fetchedDates,
             [action.payload.startOfWeek]: action.payload.endOfWeek,
@@ -62,16 +61,16 @@ export const equipmentReservationSlice = createSlice({
    },
 });
 
-export const { clearMessage } = equipmentReservationSlice.actions;
+export const { clearMessage } = userEquipmentReservationSlice.actions;
 
 export const { selectAll: selectData } =
-   equipmentReservationAdapter.getSelectors(
-      (state) => state.equipmentReservation,
+   userEquipmentReservationAdapter.getSelectors(
+      (state) => state.userEquipmentReservation,
    );
 
-export const selectStatus = (state) => state.equipmentReservation.status;
-export const selectMessage = (state) => state.equipmentReservation.message;
+export const selectStatus = (state) => state.userEquipmentReservation.status;
+export const selectMessage = (state) => state.userEquipmentReservation.message;
 export const selectFetchedDates = (state) =>
-   state.equipmentReservation.fetchedDates;
+   state.userEquipmentReservation.fetchedDates;
 
-export default equipmentReservationSlice.reducer;
+export default userEquipmentReservationSlice.reducer;
