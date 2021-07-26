@@ -34,6 +34,51 @@ export const userIndividualTimetableHandler = [
          );
       },
    ),
+   rest.post(
+      `${trainingsServiceURL}/individualWorkout/user/:userId/trainerId/:trainerId`,
+      (req, res, ctx) => {
+         const { trainingId } = req.params;
+         const { userId } = req.params;
+         const startDateTime = req.url.searchParams.get('startDateTime');
+         const endDateTime = req.url.searchParams.get('endDateTime');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: `Wysłano zapytanie o trening personalny (id: ${trainingId}) przez klienta (id: ${userId}).`,
+               reservation: {
+                  id: 'a52a5aa9-5031-4511-b1e5-92b34b05df3a',
+                  title: 'Trening personalny',
+                  startDate: startDateTime.substring(0, 16),
+                  endDate: endDateTime.substring(0, 16),
+                  allDay: false,
+                  trainers: [
+                     {
+                        userId: nanoid(),
+                        name: 'Joaquin',
+                        surname: 'Phoenix',
+                        avatar:
+                           'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',
+                     },
+                  ],
+                  partipants: {
+                     basicList: [
+                        {
+                           userId,
+                           name: 'Grzegorz',
+                           surname: 'Zacharski',
+                           avatar:
+                              'https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2020/05/13/Pictures/_67aa6b5c-94d7-11ea-9070-932bbf5d90a5.jpg',
+                        },
+                     ],
+                     reserveList: [],
+                  },
+               },
+            }),
+         );
+      },
+   ),
    rest.get(
       `${trainingsServiceURL}/timetable/:userId/individualWorkouts`,
       (req, res, ctx) => {

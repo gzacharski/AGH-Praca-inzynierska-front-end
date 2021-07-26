@@ -23,7 +23,7 @@ const initialState = trainerListAdapter.getInitialState({
 
 export const fetchTrainerList = createAsyncThunk(
    'trainerList/fetchTrainerList',
-   async ({ search }, { rejectWithValue }) => {
+   async ({ search = '' }, { rejectWithValue }) => {
       const url = `${accountServiceURL}/trainers${search}`;
 
       try {
