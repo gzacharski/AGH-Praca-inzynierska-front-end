@@ -1,21 +1,6 @@
 import React from 'react';
-import { isPast, isFuture, differenceInMinutes } from 'date-fns';
+import { isPast, isFuture } from 'date-fns';
 import { Menu, MenuItem, Fade, Tooltip } from '@material-ui/core';
-
-const cancelParticipationTitle = (startDate) => {
-   const difference = differenceInMinutes(Date.parse(startDate), Date.now());
-
-   if (difference <= 60 && difference > 0)
-      return 'Nie można anulować uczestnistwa na godzinę przed rozpoczęciem zajęć.';
-
-   return 'Nie można anuluwać uczestnistwa w zajęciach, które już się odbyły.';
-};
-
-const ratingTooltipTitle = (startDate) => {
-   if (isFuture(Date.parse(startDate)))
-      return 'Nie można oceniać zajęć przed ich rozpoczęciem.';
-   return 'Oceny zajęć można dokonać wyłącznie w ciągu 7 dni od daty zakończenia zajęć.';
-};
 
 export const UserEventMenu = ({
    appointmentData,
@@ -23,6 +8,8 @@ export const UserEventMenu = ({
    anchorEl,
    setOpenDialog,
    setRatingDialog,
+   cancelCallback,
+   rateCallback,
 }) => {
    const { startDate, endDate } = appointmentData;
    const cancelParticipationDisabled = isPast(Date.parse(startDate));
@@ -39,7 +26,7 @@ export const UserEventMenu = ({
             TransitionComponent={Fade}
          >
             <Tooltip
-               title={cancelParticipationTitle(startDate)}
+               title={cancelCallback(startDate)}
                arrow
                enterDelay={700}
                leaveDelay={200}
@@ -59,7 +46,7 @@ export const UserEventMenu = ({
                </div>
             </Tooltip>
             <Tooltip
-               title={ratingTooltipTitle(startDate)}
+               title={rateCallback(startDate)}
                arrow
                enterDelay={700}
                leaveDelay={200}
