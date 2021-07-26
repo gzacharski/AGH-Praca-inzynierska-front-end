@@ -11,7 +11,7 @@ export const userGroupTimetableHandlers = [
 
          return res(
             ctx.status(200),
-            ctx.delay(2000),
+            ctx.delay(),
             ctx.json({
                message: `Anulowano rezerwacje w wydarzeniu o id: ${trainingId} dla klienta o id: ${clientId}`,
             }),
@@ -26,7 +26,7 @@ export const userGroupTimetableHandlers = [
 
          return res(
             ctx.status(200),
-            ctx.delay(2000),
+            ctx.delay(),
             ctx.json({
                message: `Zapisano się na zajęcia.`,
                training: {
@@ -107,7 +107,7 @@ export const userGroupTimetableHandlers = [
 
          return res(
             ctx.status(200),
-            ctx.delay(2000),
+            ctx.delay(),
             ctx.json({
                message: `Oceniono na ${rating} wydarzenie (id: ${trainingId}) przez klienta (id: ${clientId})`,
             }),
@@ -128,7 +128,7 @@ export const userGroupTimetableHandlers = [
                ctx.json({
                   data: [
                      {
-                        id: nanoid(),
+                        id: '4dcd4d62-265b-4a62-9648-7a0a5054fa5e',
                         title: 'Joga',
                         startDate: '2021-07-20T09:45',
                         endDate: '2021-07-20T11:00',
@@ -204,7 +204,7 @@ export const userGroupTimetableHandlers = [
                ctx.json({
                   data: [
                      {
-                        id: nanoid(),
+                        id: 'cee3c101-11af-467d-b9f2-47b1768e75f4',
                         title: 'Joga',
                         startDate: '2021-07-26T09:45',
                         endDate: '2021-07-26T11:00',
@@ -263,7 +263,7 @@ export const userGroupTimetableHandlers = [
                         },
                      },
                      {
-                        id: nanoid(),
+                        id: 'dcd22e79-92ac-477f-9d4d-3a92078cd160',
                         title: 'Rowery',
                         startDate: '2021-07-30T13:00',
                         endDate: '2021-07-30T15:30',
@@ -343,7 +343,7 @@ export const userGroupTimetableHandlers = [
                ctx.json({
                   data: [
                      {
-                        id: nanoid(),
+                        id: '00f860da-ae90-4e23-a612-66b6d52fb521',
                         title: 'Joga',
                         startDate: '2021-07-16T09:45',
                         endDate: '2021-07-16T11:00',
@@ -402,7 +402,7 @@ export const userGroupTimetableHandlers = [
                         },
                      },
                      {
-                        id: nanoid(),
+                        id: 'a7cc69cf-9c24-4020-a276-6536e96dc1a2',
                         title: 'Rowery',
                         startDate: '2021-07-16T13:00',
                         endDate: '2021-07-16T15:30',

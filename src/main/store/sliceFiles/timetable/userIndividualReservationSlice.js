@@ -21,14 +21,11 @@ const initialState = userIndividualReservationAdapter.getInitialState({
 
 export const fetchUserIndividualReservation = createAsyncThunk(
    'userIndividualReservation/fetchUserIndividualReservation',
-   async (
-      { startOfWeek, endOfWeek, userId, token, locale },
-      { rejectWithValue },
-   ) => {
+   async ({ startOfWeek, endOfWeek, userId, token }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/timetable/${userId}/individualWorkouts?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       try {
-         const response = await axios.get(url, config(token, locale));
+         const response = await axios.get(url, config(token));
          const { data = [], message = null } = response?.data;
          return { data, startOfWeek, endOfWeek, message };
       } catch (error) {
@@ -40,8 +37,29 @@ export const fetchUserIndividualReservation = createAsyncThunk(
    },
 );
 
+export const addUserIndividualReservation = createAsyncThunk(
+   'userEquipmentReservation/addUserEquipmentReservation',
+   async (
+      { trainerId, userId, token, startDateTime, endDateTime },
+      { rejectWithValue },
+   ) => {
+      const url = `${trainingsServiceURL}/individualWorkout/user/${userId}/trainerId/${trainerId}?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+
+      try {
+         const response = await axios.post(url, config(token));
+         const { message = null, reservation = {} } = response?.data;
+         return { message, reservation };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 export const cancelUserIndividualReservation = createAsyncThunk(
-   'userIndividualReservation/cancelUserGroupReservation',
+   'userIndividualReservation/cancelUserIndividualReservation',
    async ({ trainingId, userId, token, locale }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/individualWorkout/${trainingId}/enroll?clientId=${userId}`;
 
@@ -59,7 +77,7 @@ export const cancelUserIndividualReservation = createAsyncThunk(
 );
 
 export const rateUserIndividualEvent = createAsyncThunk(
-   'userIndividualReservation/rateUserGroupEvent',
+   'userIndividualReservation/rateUserIndividualEvent',
    async (
       { trainingId, rating, userId, token, locale },
       { rejectWithValue },
@@ -105,6 +123,24 @@ export const userIndividualReservationSlice = createSlice({
          };
       },
       [fetchUserIndividualReservation.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [addUserIndividualReservation.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [addUserIndividualReservation.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         userIndividualReservationAdapter.upsertOne(
+            state,
+            action.payload.reservation,
+         );
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [addUserIndividualReservation.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;

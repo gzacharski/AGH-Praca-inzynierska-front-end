@@ -1,5 +1,5 @@
 import { Timetable } from './Timetable';
-import { AccountEquipmentTimetable } from './AccountEquipmentTimetable';
+import { UserEquipmentTimetable } from './userEquipmentTimetable/UserEquipmentTimetable';
 import { UserGroupTimetable } from './userGroupTimetable/UserGroupTimetable';
 import { UserIndividualTimetable } from './userIndividualTimetable/UserIndividualTimetable';
 import { ManagerTimetable } from './ManagerTimetable';
@@ -8,7 +8,7 @@ import { TrainerTimetable } from './TrainerTimetable';
 
 export {
    Timetable,
-   AccountEquipmentTimetable,
+   UserEquipmentTimetable,
    UserGroupTimetable,
    UserIndividualTimetable,
    ManagerTimetable,

@@ -7,15 +7,8 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
+import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
-
-const loadAuthData = () => {
-   const token = localStorage.getItem('token');
-   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-   const { userId } = userInfo;
-
-   return { token, userId };
-};
 
 const userGroupReservationAdapter = createEntityAdapter({});
 
@@ -28,19 +21,11 @@ const initialState = userGroupReservationAdapter.getInitialState({
 
 export const fetchUserGroupReservation = createAsyncThunk(
    'userGroupReservation/fetchUserGroupReservation',
-   async ({ userId, startOfWeek, endOfWeek }, { rejectWithValue }) => {
+   async ({ userId, startOfWeek, endOfWeek, token }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/timetable/${userId}/groupWorkouts?startDate=${startOfWeek}&endDate=${endOfWeek}`;
-      const { token } = loadAuthData();
-
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-            Authorization: token,
-         },
-      };
 
       try {
-         const response = await axios.get(url, config);
+         const response = await axios.get(url, config(token));
          const { data = [], message = null } = response?.data;
          return { data, startOfWeek, endOfWeek, message };
       } catch (error) {
@@ -54,19 +39,11 @@ export const fetchUserGroupReservation = createAsyncThunk(
 
 export const cancelUserGroupReservation = createAsyncThunk(
    'userGroupReservation/cancelUserGroupReservation',
-   async ({ trainingId }, { rejectWithValue }) => {
-      const { token, userId } = loadAuthData();
+   async ({ trainingId, userId, token }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/groupWorkout/${trainingId}/enroll?clientId=${userId}`;
 
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-            Authorization: token,
-         },
-      };
-
       try {
-         const response = await axios.delete(url, config);
+         const response = await axios.delete(url, config(token));
          const { message = null } = response?.data;
          return { message, trainingId };
       } catch (error) {
@@ -83,15 +60,8 @@ export const rateUserGroupEvent = createAsyncThunk(
    async ({ trainingId, rating, userId, token }, { rejectWithValue }) => {
       const url = `${trainingsServiceURL}/groupWorkout/${trainingId}/rate?clientId=${userId}&rating=${rating}`;
 
-      const config = {
-         headers: {
-            'Accept-Language': 'pl',
-            Authorization: token,
-         },
-      };
-
       try {
-         const response = await axios.post(url, config);
+         const response = await axios.post(url, config(token));
          const { message = null } = response?.data;
          return { message };
       } catch (error) {
@@ -167,9 +137,10 @@ export const userGroupReservationSlice = createSlice({
 
 export const { clearMessage } = userGroupReservationSlice.actions;
 
-export const { selectAll: selectData } = userGroupReservationAdapter.getSelectors(
-   (state) => state.userGroupReservation,
-);
+export const { selectAll: selectData } =
+   userGroupReservationAdapter.getSelectors(
+      (state) => state.userGroupReservation,
+   );
 
 export const selectStatus = (state) => state.userGroupReservation.status;
 export const selectMessage = (state) => state.userGroupReservation.message;

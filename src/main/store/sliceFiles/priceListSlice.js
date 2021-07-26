@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { gymPassServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
+import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../status';
 
 const initialState = {
@@ -16,13 +17,10 @@ const initialState = {
 export const fetchPriceList = createAsyncThunk(
    'priceList/fetchPriceList',
    async ({ search }, { rejectWithValue }) => {
-      const config = {
-         'Accept-Language': 'pl',
-      };
       const url = `${gymPassServiceURL}/offer${search}`;
 
       try {
-         const response = await axios.get(url, config);
+         const response = await axios.get(url, config());
          return response.data;
       } catch (error) {
          if (error.response === undefined) {

@@ -13,10 +13,10 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-19' && endDate === '2021-07-25')
             return res(
                ctx.status(200),
-               ctx.delay(1500),
+               ctx.delay(),
                ctx.json([
                   {
-                     id: nanoid(),
+                     id: '2e29ab24-400e-48dc-b7d3-b871b3a58b8c',
                      startDate: '2021-07-20T09:45',
                      endDate: '2021-07-20T11:00',
                      allDay: false,
@@ -36,7 +36,7 @@ export const userEquipmentTimetableHandlers = [
                      ],
                   },
                   {
-                     id: nanoid(),
+                     id: '89df73d9-7aad-4977-b9ee-fb425b5e9a1c',
                      startDate: '2021-07-21T13:00',
                      endDate: '2021-07-21T15:30',
                      allDay: false,
@@ -57,7 +57,7 @@ export const userEquipmentTimetableHandlers = [
                   },
 
                   {
-                     id: nanoid(),
+                     id: '773614ad-c22d-4227-9fb8-dd118760507f',
                      startDate: '2021-07-23T14:00',
                      endDate: '2021-07-23T15:00',
                      allDay: false,
@@ -96,10 +96,10 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-12' && endDate === '2021-07-18')
             return res(
                ctx.status(200),
-               ctx.delay(2000),
+               ctx.delay(),
                ctx.json([
                   {
-                     id: nanoid(),
+                     id: 'd51a645b-9b4a-4d9f-8e39-31a747ee5c2f',
                      startDate: '2021-07-12T09:45',
                      endDate: '2021-07-12T11:00',
                      allDay: false,
@@ -119,7 +119,7 @@ export const userEquipmentTimetableHandlers = [
                      ],
                   },
                   {
-                     id: nanoid(),
+                     id: 'edbe6a93-dafa-480e-9696-51e3a9cf9578',
                      startDate: '2021-07-14T13:00',
                      endDate: '2021-07-14T15:30',
                      allDay: false,
@@ -140,7 +140,7 @@ export const userEquipmentTimetableHandlers = [
                   },
 
                   {
-                     id: nanoid(),
+                     id: 'ecf66f85-6d69-411f-91b1-1e571bbc1f12',
                      startDate: '2021-07-16T14:00',
                      endDate: '2021-07-16T15:00',
                      allDay: false,
@@ -169,6 +169,64 @@ export const userEquipmentTimetableHandlers = [
          );
       },
    ),
+   rest.post(
+      `${equipmentServiceURL}/user/:userId/equipment/:equipmentId`,
+      (req, res, ctx) => {
+         const { equipmentId } = req.params;
+
+         const startDateTime = req.url.searchParams.get('startDateTime');
+         const endDateTime = req.url.searchParams.get('endDateTime');
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: 'Pomyślnie dodano rezerwację sprzętu fitness.',
+               reservation: {
+                  id: nanoid(),
+                  title: 'Rower stacjonarny',
+                  startDate: startDateTime,
+                  endDate: endDateTime,
+                  allDay: false,
+                  equipment: {
+                     id: equipmentId,
+                     name: 'Rower stacjonarny',
+                     rating: 4.5,
+                  },
+               },
+            }),
+         );
+      },
+   ),
+   rest.post(
+      `${equipmentServiceURL}/user/:userId/event/:eventId/rate`,
+      (req, res, ctx) => {
+         const rating = req.url.searchParams.get('rating');
+         const { eventId } = req.params;
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: `Pomyślnie oceniono sprzęt ${eventId} na ocenę ${rating}.`,
+            }),
+         );
+      },
+   ),
+   rest.delete(
+      `${equipmentServiceURL}/user/:userId/event/:eventId`,
+      (req, res, ctx) => {
+         const { eventId } = req.params;
+
+         return res(
+            ctx.status(200),
+            ctx.delay(),
+            ctx.json({
+               message: `Pomyślnie anulowano rezerwację ${eventId} sprzętu fitness.`,
+            }),
+         );
+      },
+   ),
    rest.get(
       `${equipmentServiceURL}/timetable/user/:userId/reservation`,
       (req, res, ctx) => {
@@ -178,10 +236,10 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-19' && endDate === '2021-07-25')
             return res(
                ctx.status(200),
-               ctx.delay(1500),
+               ctx.delay(),
                ctx.json([
                   {
-                     id: nanoid(),
+                     id: 'd6be9eda-d515-4246-a65a-4c962208921c',
                      title: 'Rower stacjonarny',
                      startDate: '2021-07-20T09:45',
                      endDate: '2021-07-20T11:00',
@@ -193,7 +251,7 @@ export const userEquipmentTimetableHandlers = [
                      },
                   },
                   {
-                     id: nanoid(),
+                     id: 'da55a367-cad5-4a8d-afc2-628e2e1d6244',
                      title: 'Wiosła',
                      startDate: '2021-07-22T09:45',
                      endDate: '2021-07-22T11:00',
@@ -205,7 +263,7 @@ export const userEquipmentTimetableHandlers = [
                      },
                   },
                   {
-                     id: nanoid(),
+                     id: '343eafe9-0505-4a5a-9e50-8c03f338f240',
                      title: 'TRX',
                      startDate: '2021-07-21T13:00',
                      endDate: '2021-07-21T15:30',
@@ -217,7 +275,7 @@ export const userEquipmentTimetableHandlers = [
                      },
                   },
                   {
-                     id: nanoid(),
+                     id: '672c68f7-799b-42af-877d-2c092bfd3404',
                      title: 'Brama',
                      startDate: '2021-07-23T14:00',
                      endDate: '2021-07-23T15:00',
@@ -241,10 +299,10 @@ export const userEquipmentTimetableHandlers = [
          if (startDate === '2021-07-12' && endDate === '2021-07-18')
             return res(
                ctx.status(200),
-               ctx.delay(2000),
+               ctx.delay(),
                ctx.json([
                   {
-                     id: nanoid(),
+                     id: '99d5dfd7-9745-48c0-8927-c7d6b041f3c1',
                      title: 'Wiosła',
                      startDate: '2021-07-16T09:45',
                      endDate: '2021-07-16T11:00',
@@ -256,7 +314,7 @@ export const userEquipmentTimetableHandlers = [
                      },
                   },
                   {
-                     id: nanoid(),
+                     id: '1d2701c5-4376-4378-b902-2a427162c5bb',
                      title: 'TRX',
                      startDate: '2021-07-16T13:00',
                      endDate: '2021-07-16T15:30',
@@ -268,7 +326,7 @@ export const userEquipmentTimetableHandlers = [
                      },
                   },
                   {
-                     id: nanoid(),
+                     id: '206eeb84-2dfe-4dbf-8f28-a7d90618f662',
                      title: 'Brama',
                      startDate: '2021-07-14T14:00',
                      endDate: '2021-07-14T15:00',

@@ -11,10 +11,19 @@ import {
    selectFetchedDates,
    selectMessage,
    selectStatus,
+   selectError,
 } from 'src/main/store/sliceFiles/timetable/timetableSlice';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { useAuth } from 'src/main/auth';
 import { STATUS } from 'src/main/store';
+
+const variantFn = (dataStatus, error) => {
+   if (dataStatus === STATUS.SUCCEEDED) return 'success';
+   const { status = 0 } = error;
+
+   if (status === 404) return 'info';
+   return 'error';
+};
 
 const TimetablePage = () => {
    const data = useSelector(selectData);
@@ -22,6 +31,7 @@ const TimetablePage = () => {
    const dataStatus = useSelector(selectStatus);
    const message = useSelector(selectMessage);
    const fetchedDates = useSelector(selectFetchedDates);
+   const error = useSelector(selectError);
    const { enqueueSnackbar } = useSnackbar();
    const { isAuthenticated, authState = {} } = useAuth();
    const { token } = authState;
@@ -41,7 +51,7 @@ const TimetablePage = () => {
    }, [dataStatus, dispatch]);
 
    if (message) {
-      const variant = dataStatus === STATUS.SUCCEEDED ? 'success' : 'error';
+      const variant = variantFn(dataStatus, error);
       enqueueSnackbar(message, {
          variant,
          anchorOrigin: {

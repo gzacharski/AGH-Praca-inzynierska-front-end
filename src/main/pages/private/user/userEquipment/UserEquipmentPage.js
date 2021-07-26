@@ -8,9 +8,9 @@ import {
    selectFetchedDates,
    selectMessage,
    selectStatus,
-} from 'src/main/store/sliceFiles/timetable/equipmentReservationSlice';
+} from 'src/main/store/sliceFiles/timetable/userEquipmentReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { AccountEquipmentTimetable } from 'src/main/components/timetable';
+import { UserEquipmentTimetable } from 'src/main/components/timetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { AuthContext } from 'src/main/auth';
@@ -23,7 +23,7 @@ const ReservationsEquipmentPage = () => {
    const fetchedDates = useSelector(selectFetchedDates);
    const context = useContext(AuthContext);
 
-   const { userInfo = {} } = context.authState;
+   const { userInfo = {}, token } = context.authState;
    const { userId = '' } = userInfo;
 
    const { enqueueSnackbar } = useSnackbar();
@@ -38,6 +38,7 @@ const ReservationsEquipmentPage = () => {
                   userId,
                   startOfWeek,
                   endOfWeek,
+                  token,
                }),
             );
          }
@@ -59,7 +60,7 @@ const ReservationsEquipmentPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Twoje rezerwacje sprzętu</PageTitle>
-         <AccountEquipmentTimetable
+         <UserEquipmentTimetable
             data={data}
             status={status}
             fetchData={fetchUserEquipmentReservation}

@@ -31,9 +31,11 @@ export const fetchPublicTimetableData = createAsyncThunk(
          const { data = [] } = response;
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
+         const { data = {}, status = 0 } = error?.response;
+         const { message = null } = data;
          return rejectWithValue({
-            error: error?.response?.data,
-            message: error?.response?.data?.message,
+            error: { data, status },
+            message,
          });
       }
    },
@@ -49,9 +51,11 @@ export const fetchPrivateTimetableData = createAsyncThunk(
          const { data = [] } = response;
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
+         const { data = {}, status = 0 } = error?.response;
+         const { message = null } = data;
          return rejectWithValue({
-            error: error?.response?.data,
-            message: error?.response?.data?.message,
+            error: { data, status },
+            message,
          });
       }
    },
@@ -67,9 +71,11 @@ export const enrollToGroupTraining = createAsyncThunk(
          const { message = null } = response?.data;
          return { message };
       } catch (error) {
+         const { data = {}, status = 0 } = error?.response;
+         const { message = null } = data;
          return rejectWithValue({
-            error: error?.response,
-            message: error?.response?.data?.message,
+            error: { data, status },
+            message,
          });
       }
    },
@@ -152,5 +158,6 @@ export const { selectAll: selectData } = timetableAdapter.getSelectors(
 export const selectStatus = (state) => state.timetable.status;
 export const selectMessage = (state) => state.timetable.message;
 export const selectFetchedDates = (state) => state.timetable.fetchedDates;
+export const selectError = (state) => state.timetable.error;
 
 export default timetableSlice.reducer;

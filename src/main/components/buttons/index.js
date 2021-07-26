@@ -6,6 +6,10 @@ import ActivateAccountButton from './activateAccount/primaryButton/ActivateAccou
 import ActivateAccountRefreshButton from './activateAccount/refreshButton/ActivateAccountRefreshButton';
 import { EditIconButton } from './iconButtons/EditIconButton';
 import { SaveIconButton } from './iconButtons/SaveIconButton';
+import { RefreshIconButton } from './iconButtons/refreshButton/RefreshIconButton';
+import { JoinEventIconButton } from './iconButtons/joinEventIconButton/JoinEventIconButton';
+import { AddIndividualWorkoutButton } from './iconButtons/addIndividualWorkoutButton/AddIndividualWorkoutButton';
+import { AddEquipmentReservationButton } from './iconButtons/addEquipmentReservationButton/AddEquipmentReservationButton';
 
 export {
    ActivateAccountButton,
@@ -16,4 +20,8 @@ export {
    SignUpButton,
    EditIconButton,
    SaveIconButton,
+   RefreshIconButton,
+   JoinEventIconButton,
+   AddIndividualWorkoutButton,
+   AddEquipmentReservationButton,
 };

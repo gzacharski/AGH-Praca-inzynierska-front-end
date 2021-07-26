@@ -9,7 +9,7 @@ export const trainerListHandlers = [
       if (error === 'noConnection') {
          return res(
             ctx.status(500),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json({ message: NETWORK_ERROR }),
          );
       }
@@ -18,19 +18,19 @@ export const trainerListHandlers = [
       if (status === 'noTrainers') {
          return res(
             ctx.status(404),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json({ message: 'Brak aktulanej oferty' }),
          );
       }
 
       return res(
          ctx.status(200),
-         ctx.delay(1500),
+         ctx.delay(),
          ctx.json([
             {
                userId: nanoid(),
-               name: 'Redford',
-               surname: 'Bowdry',
+               name: 'Joe',
+               surname: 'Pesci',
                images: [
                   'https://images.unsplash.com/photo-1549476464-37392f717541?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
                   'https://images.unsplash.com/photo-1613685044678-0a9ae422cf5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80',
@@ -47,8 +47,8 @@ export const trainerListHandlers = [
             },
             {
                userId: nanoid(),
-               name: 'Redford',
-               surname: 'Bowdry',
+               name: 'Al',
+               surname: 'Pacino',
                images: [
                   'https://images.unsplash.com/photo-1613685044678-0a9ae422cf5a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80',
                   'https://images.unsplash.com/photo-1549476464-37392f717541?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',

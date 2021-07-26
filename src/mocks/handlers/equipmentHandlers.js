@@ -9,7 +9,7 @@ export const equipmentListHandlers = [
       if (error === 'noConnection') {
          return res(
             ctx.status(500),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json({ message: NETWORK_ERROR }),
          );
       }
@@ -18,14 +18,14 @@ export const equipmentListHandlers = [
       if (status === 'noEquipment') {
          return res(
             ctx.status(404),
-            ctx.delay(1500),
+            ctx.delay(),
             ctx.json({ message: 'Brak aktulanej oferty' }),
          );
       }
 
       return res(
          ctx.status(200),
-         ctx.delay(1500),
+         ctx.delay(),
          ctx.json([
             {
                equipmentId: nanoid(),

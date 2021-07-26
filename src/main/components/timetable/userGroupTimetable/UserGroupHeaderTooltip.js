@@ -13,6 +13,10 @@ import {
 } from 'src/main/components/dialogs';
 import { UserEventMenu } from 'src/main/components/menu';
 import {
+   cancelParticipationTitle,
+   ratingTooltipTitle,
+} from 'src/main/components/menu/eventMenu/tooltipTitleUtils';
+import {
    cancelUserGroupReservation,
    rateUserGroupEvent,
 } from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
@@ -55,6 +59,8 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
             onClose={handleClose}
             setOpenDialog={setOpenDialog}
             setRatingDialog={setRatingDialog}
+            rateCallback={ratingTooltipTitle}
+            cancelCallback={cancelParticipationTitle}
          />
          <CancelParticipationDialog
             openDialog={openDialog}
@@ -63,7 +69,9 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
             eventTitle={`${title}, ${workoutDate}`}
             callback={() => {
                onHide();
-               dispatch(cancelUserGroupReservation({ trainingId: id }));
+               dispatch(
+                  cancelUserGroupReservation({ trainingId: id, userId, token }),
+               );
             }}
          />
          <RatingDialog

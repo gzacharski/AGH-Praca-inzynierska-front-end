@@ -16,7 +16,7 @@ const initialState = {
 
 export const fetchEquipmentList = createAsyncThunk(
    'equipmentList/fetchEquipmentList',
-   async ({ search }, { rejectWithValue }) => {
+   async ({ search = '' }, { rejectWithValue }) => {
       const url = `${equipmentServiceURL}${search}`;
 
       try {

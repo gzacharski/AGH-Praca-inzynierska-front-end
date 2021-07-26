@@ -3,6 +3,7 @@ import { ParticipantsDialog } from './participantsDialog/ParticipantsDialog';
 import { RatingDialog } from './ratingDialog/RatingDialog';
 import { CancelParticipationDialog } from './cancelParticipationDialog/CancelParticipationDialog';
 import { WorkoutRequestDialog } from './workoutRequestDialog/WorkoutRequestDialog';
+import { EquipmentRequestDialog } from './equipmentRequestDialog/EquipmentRequestDialog';
 import TrainingDetailsDialog from './trainingDetailsDialog/TrainingDetailsDialog';
 
 export {
@@ -11,5 +12,6 @@ export {
    ParticipantsDialog,
    RatingDialog,
    WorkoutRequestDialog,
+   EquipmentRequestDialog,
    TrainingDetailsDialog,
 };
