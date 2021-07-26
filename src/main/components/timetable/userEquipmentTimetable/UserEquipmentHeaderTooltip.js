@@ -26,8 +26,9 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
    const [openDialog, setOpenDialog] = useState(false);
    const [ratingDialog, setRatingDialog] = useState(false);
    const dispatch = useDispatch();
+   const { authState } = useAuth();
 
-   const { token = '', userInfo = {} } = useAuth();
+   const { token = '', userInfo = {} } = authState;
    const { userId = '' } = userInfo;
 
    const handleClick = (event) => setAnchorEl(event.currentTarget);
