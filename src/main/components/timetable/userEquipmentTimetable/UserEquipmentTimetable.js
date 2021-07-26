@@ -6,8 +6,7 @@ import {
    TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
-import { ContentTooltip } from '../appointmentTooltip/ContentTooltip';
-import { HeaderTooltip } from '../appointmentTooltip/HeaderTooltip';
+import { UserEquipmentHeaderTooltip } from './UserEquipmentHeaderTooltip';
 import { CurrentDateContextProvider } from '../CurrentDateContext';
 import { ToolbarButtons } from './ToolbarButtons';
 
@@ -29,8 +28,7 @@ export const UserEquipmentTimetable = ({
          <Appointments />
          <AppointmentTooltip
             showCloseButton
-            headerComponent={HeaderTooltip}
-            contentComponent={ContentTooltip}
+            headerComponent={UserEquipmentHeaderTooltip}
          />
       </Timetable>
    </CurrentDateContextProvider>
