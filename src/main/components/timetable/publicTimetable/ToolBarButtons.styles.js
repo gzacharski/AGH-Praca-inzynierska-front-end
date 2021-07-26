@@ -7,4 +7,7 @@ export const useStyles = makeStyles(({ spacing }) => ({
       marginLeft: spacing(2),
       marginRight: 'auto',
    },
+   buttonWrapped: {
+      padding: spacing(1),
+   },
 }));

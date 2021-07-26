@@ -46,7 +46,9 @@ const ToolbarButtons = ({ ...restProps }) => {
    return (
       // eslint-disable-next-line react/jsx-props-no-spreading
       <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
-         <RefreshIconButton status={status} onClick={handleClick} />
+         <div className={classes.buttonWrapped}>
+            <RefreshIconButton status={status} onClick={handleClick} />
+         </div>
       </Toolbar.FlexibleSpace>
    );
 };
