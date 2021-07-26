@@ -13,6 +13,7 @@ import {
 } from 'src/main/components/buttons';
 import { useStyles } from './ToolbarButtons.styles';
 import { CurrentDateContext } from '../CurrentDateContext';
+import { UserEquipmentContext } from './UserEquipmentContext';
 
 const ToolbarButtons = ({ ...restProps }) => {
    const classes = useStyles();
@@ -20,6 +21,7 @@ const ToolbarButtons = ({ ...restProps }) => {
    const dispatch = useDispatch();
    const currentDateCtx = useContext(CurrentDateContext);
    const { authState = {} } = useAuth();
+   const { setOpenDialog } = useContext(UserEquipmentContext);
 
    const handleRefreshClick = () => {
       const { currentDate } = currentDateCtx;
@@ -38,7 +40,7 @@ const ToolbarButtons = ({ ...restProps }) => {
       );
    };
 
-   const handleAddClick = () => console.log('Test');
+   const handleAddClick = () => setOpenDialog((prevState) => !prevState);
 
    return (
       // eslint-disable-next-line react/jsx-props-no-spreading
