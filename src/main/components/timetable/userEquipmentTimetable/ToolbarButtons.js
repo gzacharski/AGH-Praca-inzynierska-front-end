@@ -7,7 +7,10 @@ import {
 } from 'src/main/store/sliceFiles/timetable/userEquipmentReservationSlice';
 import { getStartOfWeek, getEndOfWeek } from 'src/main/utils';
 import { useAuth } from 'src/main/auth';
-import { RefreshIconButton } from 'src/main/components/buttons';
+import {
+   RefreshIconButton,
+   AddEquipmentReservationButton,
+} from 'src/main/components/buttons';
 import { useStyles } from './ToolbarButtons.styles';
 import { CurrentDateContext } from '../CurrentDateContext';
 
@@ -18,7 +21,7 @@ const ToolbarButtons = ({ ...restProps }) => {
    const currentDateCtx = useContext(CurrentDateContext);
    const { authState = {} } = useAuth();
 
-   const handleClick = () => {
+   const handleRefreshClick = () => {
       const { currentDate } = currentDateCtx;
       const startOfWeek = getStartOfWeek(currentDate);
       const endOfWeek = getEndOfWeek(currentDate);
@@ -35,11 +38,16 @@ const ToolbarButtons = ({ ...restProps }) => {
       );
    };
 
+   const handleAddClick = () => console.log('Test');
+
    return (
       // eslint-disable-next-line react/jsx-props-no-spreading
       <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
          <div className={classes.buttonWrapped}>
-            <RefreshIconButton status={status} onClick={handleClick} />
+            <RefreshIconButton status={status} onClick={handleRefreshClick} />
+         </div>
+         <div className={classes.buttonWrapped}>
+            <AddEquipmentReservationButton onClick={handleAddClick} />
          </div>
       </Toolbar.FlexibleSpace>
    );

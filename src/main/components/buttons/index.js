@@ -9,6 +9,7 @@ import { SaveIconButton } from './iconButtons/SaveIconButton';
 import { RefreshIconButton } from './iconButtons/refreshButton/RefreshIconButton';
 import { JoinEventIconButton } from './iconButtons/joinEventIconButton/JoinEventIconButton';
 import { AddIndividualWorkoutButton } from './iconButtons/addIndividualWorkoutButton/AddIndividualWorkoutButton';
+import { AddEquipmentReservationButton } from './iconButtons/addEquipmentReservationButton/AddEquipmentReservationButton';
 
 export {
    ActivateAccountButton,
@@ -22,4 +23,5 @@ export {
    RefreshIconButton,
    JoinEventIconButton,
    AddIndividualWorkoutButton,
+   AddEquipmentReservationButton,
 };
