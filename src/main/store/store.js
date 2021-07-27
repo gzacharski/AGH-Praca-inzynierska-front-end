@@ -13,6 +13,7 @@ import userEquipmentReservationSlice from 'src/main/store/sliceFiles/timetable/u
 import trainerListSlice from 'src/main/store/sliceFiles/trainerListSlice';
 import equipmentListSlice from 'src/main/store/sliceFiles/equipmentSlice';
 import workoutListSlice from 'src/main/store/sliceFiles/workoutSlice';
+import notificationsSlice from 'src/main/store/sliceFiles/notificationsSlice';
 
 export const reducer = {
    drawer: drawerReducer,
@@ -29,6 +30,7 @@ export const reducer = {
    equipmentList: equipmentListSlice,
    priceList: priceListSlice,
    workoutList: workoutListSlice,
+   notifications: notificationsSlice,
 };
 
 export default configureStore({ reducer });
