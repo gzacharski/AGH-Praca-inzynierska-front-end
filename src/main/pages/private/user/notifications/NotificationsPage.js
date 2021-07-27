@@ -6,29 +6,30 @@ import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
 import { PageWrapper } from 'src/main/components/utils';
 import { NoNotifications } from 'src/main/components/noContent';
-import { NotificationItem } from 'src/main/components/grid';
+import {
+   NotificationItem,
+   NotificationItemSkeleton,
+} from 'src/main/components/grid';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import {
    fetchNotifications,
-   markAsReadNotification,
-   deleteNotification,
    selectError,
    selectMessage,
    selectStatus,
-   selectNotifications,
+   selectIds,
 } from 'src/main/store/sliceFiles/notificationsSlice';
 import { useStyles } from './NotificationsPage.styles';
 
-const MessagesPage = () => {
+const NotificationsPage = () => {
    const classes = useStyles();
    const dispatch = useDispatch();
    const status = useSelector(selectStatus);
-   const notifications = useSelector(selectNotifications);
+   const notificationsIds = useSelector(selectIds);
    const message = useSelector(selectMessage);
    const error = useSelector(selectError);
    const location = useLocation();
-   const { authState } = useAuth();
 
+   const { authState } = useAuth();
    const { userInfo = {}, token = '' } = authState;
    const { userId = '' } = userInfo;
 
@@ -41,22 +42,18 @@ const MessagesPage = () => {
 
    if (status === STATUS.FAILED) {
       return (
-         <Container className={classes.container}>
-            <ConfirmationIcon onRequest={false} status={error?.status} />
-            <Typography className={classes.message}>{message}</Typography>
-         </Container>
+         <PageWrapper>
+            <Container className={classes.container}>
+               <ConfirmationIcon onRequest={false} status={error?.status} />
+               <Typography className={classes.message}>{message}</Typography>
+            </Container>
+         </PageWrapper>
       );
    }
 
-   const handleMarkAsReadNotification = (notificationId) =>
-      dispatch(markAsReadNotification({ userId, token, notificationId }));
-
-   const handleDeleteNotification = (notificationId) =>
-      dispatch(deleteNotification({ userId, token, notificationId }));
-
-   return (
-      <PageWrapper>
-         {notifications.length !== 0 ? (
+   if (status === STATUS.LOADING && notificationsIds.length === 0) {
+      return (
+         <PageWrapper>
             <Grid
                container
                alignItems="center"
@@ -64,32 +61,27 @@ const MessagesPage = () => {
                spacing={3}
                direction="column"
             >
-               {notifications.map(
-                  ({
-                     notificationId,
-                     content,
-                     title,
-                     created,
-                     from,
-                     markAsRead,
-                  }) => (
-                     <NotificationItem
-                        key={notificationId}
-                        id={notificationId}
-                        content={content}
-                        title={title}
-                        created={created}
-                        from={from}
-                        markAsRead={markAsRead}
-                        deleteCallback={() =>
-                           handleDeleteNotification(notificationId)
-                        }
-                        markAsReadCallback={() =>
-                           handleMarkAsReadNotification(notificationId)
-                        }
-                     />
-                  ),
-               )}
+               <NotificationItemSkeleton />
+               <NotificationItemSkeleton />
+               <NotificationItemSkeleton />
+            </Grid>
+         </PageWrapper>
+      );
+   }
+
+   return (
+      <PageWrapper>
+         {notificationsIds.length !== 0 ? (
+            <Grid
+               container
+               alignItems="center"
+               justifyContent="center"
+               spacing={3}
+               direction="column"
+            >
+               {notificationsIds.map((id) => (
+                  <NotificationItem key={id} notificationId={id} />
+               ))}
             </Grid>
          ) : (
             <NoNotifications />
@@ -98,4 +90,4 @@ const MessagesPage = () => {
    );
 };
 
-export default MessagesPage;
+export default NotificationsPage;
