@@ -18,14 +18,13 @@ const notificationsAdapter = createEntityAdapter({
 
 const initialState = notificationsAdapter.getInitialState({
    status: STATUS.IDLE,
-   notificationsToRead: 0,
    message: null,
    error: null,
 });
 
 export const fetchNotifications = createAsyncThunk(
    'notifications/fetchNotifications',
-   async ({ userId, search, token }, { rejectWithValue }) => {
+   async ({ userId = '', search = '', token = '' }, { rejectWithValue }) => {
       const url = `${accountServiceURL}/${userId}/notifications${search}`;
 
       try {
@@ -53,7 +52,6 @@ export const markAsReadNotification = createAsyncThunk(
 
       try {
          const response = await axios.patch(url, config(token));
-         console.log(response.data);
          return response.data;
       } catch (error) {
          if (error.response === undefined) {
@@ -77,7 +75,6 @@ export const deleteNotification = createAsyncThunk(
 
       try {
          const response = await axios.delete(url, config(token));
-         console.log(response.data);
          return response.data;
       } catch (error) {
          if (error.response === undefined) {
@@ -110,10 +107,6 @@ const notificationsSlice = createSlice({
          state.status = STATUS.SUCCEEDED;
          notificationsAdapter.upsertMany(state, action.payload);
          state.error = null;
-         state.notificationsToRead += action.payload.reduce(
-            (a, b) => a + (b.markAsRead ? 0 : 1),
-            0,
-         );
       },
       [fetchNotifications.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
@@ -127,7 +120,6 @@ const notificationsSlice = createSlice({
       [markAsReadNotification.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          notificationsAdapter.upsertOne(state, action.payload);
-         state.notificationsToRead -= 1;
          state.error = null;
       },
       [markAsReadNotification.rejected]: (state, action) => {
@@ -142,7 +134,6 @@ const notificationsSlice = createSlice({
       [deleteNotification.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          notificationsAdapter.removeOne(state, action.payload.notificationId);
-         state.notificationsToRead -= 1;
          state.error = null;
       },
       [deleteNotification.rejected]: (state, action) => {
