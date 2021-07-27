@@ -5,6 +5,9 @@ export const useStyles = makeStyles(({ spacing }) => ({
       display: 'flex',
       borderRadius: '10px',
    },
+   rootMarkAsRead: {
+      backgroundColor: '#e0e0e0',
+   },
    body: {
       padding: spacing(2),
    },
