@@ -4,12 +4,23 @@ export const useStyles = makeStyles(({ spacing }) => ({
    root: {
       display: 'flex',
       borderRadius: '10px',
+      cursor: 'pointer',
+      width: '100vw',
+      maxWidth: '100%',
    },
    rootMarkAsRead: {
       backgroundColor: '#e0e0e0',
+      cursor: 'auto',
+   },
+   rootSkeleton: {
+      display: 'flex',
+      borderRadius: '10px',
+      width: '100vw',
+      maxWidth: '100%',
    },
    body: {
       padding: spacing(2),
+      minWidth: '100%',
    },
    header: {
       marginTop: 'auto',
