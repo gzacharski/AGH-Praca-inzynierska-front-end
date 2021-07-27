@@ -1,3 +1,4 @@
 import { NoNotifications } from './NoNotifications';
+import { NoMessages } from './NoMessages';
 
-export { NoNotifications };
+export { NoNotifications, NoMessages };

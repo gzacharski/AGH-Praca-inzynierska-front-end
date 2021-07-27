@@ -8,6 +8,6 @@ describe('MessagePage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Powiadomienia (użytkownik)')).toBeInTheDocument();
+      expect(screen.getByText('Brak powiadomień')).toBeInTheDocument();
    });
 });
