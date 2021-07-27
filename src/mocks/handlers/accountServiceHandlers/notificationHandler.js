@@ -23,7 +23,7 @@ export const notificationsHandlers = [
                markAsRead: false,
             },
             {
-               notificationId: '3072dac2-b7af-4ea0-8dcf-c1cd37aeaf22',
+               notificationId: '45ee4f4b-ddfc-4a19-a25d-716d4b46d958',
                from: {
                   userId: nanoid(),
                   name: 'Hajrah',

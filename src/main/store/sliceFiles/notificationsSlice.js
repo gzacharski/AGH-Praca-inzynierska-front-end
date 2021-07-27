@@ -119,7 +119,10 @@ const notificationsSlice = createSlice({
       },
       [markAsReadNotification.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
-         notificationsAdapter.upsertOne(state, action.payload);
+         notificationsAdapter.updateOne(state, {
+            id: action.payload.notificationId,
+            changes: { markAsRead: action.payload.markAsRead },
+         });
          state.error = null;
       },
       [markAsReadNotification.rejected]: (state, action) => {
@@ -148,8 +151,11 @@ export default notificationsSlice.reducer;
 
 export const { clearMessage } = notificationsSlice.actions;
 
-export const { selectAll: selectNotifications, selectIds } =
-   notificationsAdapter.getSelectors((state) => state.notifications);
+export const {
+   selectAll: selectNotifications,
+   selectIds,
+   selectById,
+} = notificationsAdapter.getSelectors((state) => state.notifications);
 
 export const selectMessage = (state) => state.notifications.message;
 export const selectStatus = (state) => state.notifications.status;
