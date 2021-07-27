@@ -8,6 +8,6 @@ describe('MessagePage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Wiadomości')).toBeInTheDocument();
+      expect(screen.getByText('Brak wiadomości')).toBeInTheDocument();
    });
 });

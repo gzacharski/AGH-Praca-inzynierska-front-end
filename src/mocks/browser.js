@@ -8,6 +8,7 @@ import { timetableHandlers } from './handlers/timetableHandlers/timetableHandler
 import { trainerListHandlers } from './handlers/trainerListHandlers';
 import { equipmentListHandlers } from './handlers/equipmentHandlers';
 import { workoutHandlers } from './handlers/workoutHandlers';
+import { notificationsHandlers } from './handlers/accountServiceHandlers/notificationHandler';
 
 const worker = setupWorker(
    ...priceListHandlers,
@@ -19,6 +20,7 @@ const worker = setupWorker(
    ...loginHandlers,
    ...equipmentListHandlers,
    ...workoutHandlers,
+   ...notificationsHandlers,
 );
 
 export { worker };

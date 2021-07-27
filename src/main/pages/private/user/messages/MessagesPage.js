@@ -1,9 +1,10 @@
 import React from 'react';
-import { PageTitle, PageWrapper } from 'src/main/components/utils';
+import { PageWrapper } from 'src/main/components/utils';
+import { NoMessages } from 'src/main/components/noContent';
 
 const MessagesPage = () => (
    <PageWrapper>
-      <PageTitle>Wiadomości</PageTitle>
+      <NoMessages />
    </PageWrapper>
 );
 

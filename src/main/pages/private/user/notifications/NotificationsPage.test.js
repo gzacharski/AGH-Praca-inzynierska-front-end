@@ -1,13 +1,21 @@
 import React from 'react';
-import { render, screen } from 'src/testUtils';
+import { MemoryRouter } from 'react-router-dom';
+import { render } from 'src/testUtils';
+import { AuthContext } from 'src/main/auth';
 import NotificationsPage from './NotificationsPage';
 
 describe('MessagePage', () => {
-   beforeEach(() => {
-      render(<NotificationsPage />);
-   });
-
-   test('should contain ', () => {
-      expect(screen.getByText('Powiadomienia (użytkownik)')).toBeInTheDocument();
+   test('should render ', () => {
+      render(
+         <MemoryRouter>
+            <AuthContext.Provider
+               value={{
+                  authState: {},
+               }}
+            >
+               <NotificationsPage />
+            </AuthContext.Provider>
+         </MemoryRouter>,
+      );
    });
 });
