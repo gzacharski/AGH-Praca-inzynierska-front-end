@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import { render, screen, act } from 'src/testUtils';
 import { STATUS } from 'src/main/store';
+import { AuthContext } from 'src/main/auth';
 import NotificationButton from './NotificationButton';
 
 const mockStore = configureStore([]);
@@ -12,13 +13,15 @@ const mockStore = configureStore([]);
 const renderNotificationButton = (store) =>
    render(
       <Provider store={store}>
-         <MemoryRouter>
-            <NotificationButton />
-            <Route
-               path="/notifications"
-               render={() => <div>Notifications page</div>}
-            />
-         </MemoryRouter>
+         <AuthContext.Provider value={{ authState: {} }}>
+            <MemoryRouter>
+               <NotificationButton />
+               <Route
+                  path="/notifications"
+                  render={() => <div>Notifications page</div>}
+               />
+            </MemoryRouter>
+         </AuthContext.Provider>
       </Provider>,
    );
 
@@ -28,6 +31,11 @@ describe('Notification button', () => {
          const store = mockStore({
             account: {
                status: STATUS.LOADING,
+            },
+            notifications: {
+               ids: [],
+               entities: {},
+               status: STATUS.SUCCEEDED,
             },
          });
          renderNotificationButton(store);
@@ -41,6 +49,11 @@ describe('Notification button', () => {
             account: {
                status: STATUS.IDLE,
             },
+            notifications: {
+               ids: [],
+               entitities: {},
+               status: STATUS.SUCCEEDED,
+            },
          });
          renderNotificationButton(store);
          expect(
@@ -53,6 +66,11 @@ describe('Notification button', () => {
       beforeEach(() => {
          const store = mockStore({
             account: {
+               status: STATUS.SUCCEEDED,
+            },
+            notifications: {
+               ids: [],
+               entitities: {},
                status: STATUS.SUCCEEDED,
             },
          });
