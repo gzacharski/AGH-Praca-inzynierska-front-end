@@ -1,9 +1,10 @@
 import React from 'react';
-import { PageWrapper, PageTitle } from 'src/main/components/utils';
+import { PageWrapper } from 'src/main/components/utils';
+import { NoNotifications } from 'src/main/components/noContent';
 
 const MessagesPage = () => (
    <PageWrapper>
-      <PageTitle>Powiadomienia (użytkownik)</PageTitle>
+      <NoNotifications />
    </PageWrapper>
 );
 
