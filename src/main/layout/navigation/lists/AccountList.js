@@ -11,7 +11,6 @@ import {
 import {
    AccountCircle,
    Mail,
-   Timeline,
    Settings,
    ExpandLess,
    ExpandMore,
@@ -123,12 +122,6 @@ const AccountList = (props) => {
             buttonName="Powiadomienia"
             CustomIcon={NotificationsNone}
             pushUrl="/notifications"
-         />
-         <CustomListItem
-            buttonName="Statystyki"
-            CustomIcon={Timeline}
-            pushUrl="/stats"
-            secondaryText="Twoja aktywność w klubie"
          />
          <CustomListItem
             buttonName="Ustawienia"

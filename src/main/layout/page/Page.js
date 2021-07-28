@@ -15,7 +15,6 @@ import {
    UserGroupWorkoutPage,
    UserIndividualWorkoutPage,
    SettingsPage,
-   StatisticsPage,
 } from 'src/main/pages/private/user';
 import {
    ConfirmRegistration,
@@ -122,9 +121,6 @@ const Page = () => {
          <PublicRouteOnly path="/sign-up">
             <SignUp />
          </PublicRouteOnly>
-         <PrivateRoute path="/stats">
-            <StatisticsPage />
-         </PrivateRoute>
 
          <PrivateRouteWithRole path="/trainer" hasRole={hasTrainerRole}>
             <TrainerRouteGroups />
