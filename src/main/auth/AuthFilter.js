@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { AuthContext } from 'src/main/auth';
+import { useAuth } from 'src/main/auth';
 import {
    ROLE_ADMIN,
    ROLE_EMPLOYEE,
@@ -9,34 +9,42 @@ import {
    ROLE_USER,
 } from 'src/main/data/roles';
 
-export const withAuthFilter = (Component) => {
-   const authContext = useContext(AuthContext);
-   const { token } = authContext.authState;
+export const AuthFilter = ({ children }) => {
+   const { authState = {} } = useAuth();
+   const { token } = authState;
    return (
       <>
-         {token === null && <Redirect to="/login" />};
-         <Component />
+         {token === null && <Redirect to="/login" />};{children}
       </>
    );
 };
 
-const withHasRole = (Component, role) => {
-   const authContext = useContext(AuthContext);
-   const { userInfo } = authContext.authState;
-   const hasRole = userInfo.roles.includes(role);
+const OnlyWithRole = ({ children, role }) => {
+   const { authState = {} } = useAuth();
+   const { userInfo = {} } = authState;
+   const { roles = [] } = userInfo;
 
-   return hasRole && <Component />;
+   const hasRole = roles.includes(role);
+
+   return <>{hasRole && children}</>;
 };
 
-export const withAdminRole = (Component) => withHasRole(Component, ROLE_ADMIN);
+export const OnlyWithAdminRole = ({ children }) => (
+   <OnlyWithRole role={ROLE_ADMIN}>{children}</OnlyWithRole>
+);
 
-export const withEmployeeRole = (Component) =>
-   withHasRole(Component, ROLE_EMPLOYEE);
+export const OnlyWithEmployeeRole = ({ children }) => (
+   <OnlyWithRole role={ROLE_EMPLOYEE}>{children}</OnlyWithRole>
+);
 
-export const withManagerRole = (Component) =>
-   withHasRole(Component, ROLE_MANAGER);
+export const OnlyWithManagerRole = ({ children }) => (
+   <OnlyWithRole role={ROLE_MANAGER}>{children}</OnlyWithRole>
+);
 
-export const withTrainerRole = (Component) =>
-   withHasRole(Component, ROLE_TRAINER);
+export const OnlyWithTrainerRole = ({ children }) => (
+   <OnlyWithRole role={ROLE_TRAINER}>{children}</OnlyWithRole>
+);
 
-export const withUserRole = (Component) => withHasRole(Component, ROLE_USER);
+export const OnlyWithUserRole = ({ children }) => (
+   <OnlyWithRole role={ROLE_USER}>{children}</OnlyWithRole>
+);
