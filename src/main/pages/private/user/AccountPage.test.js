@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from 'src/testUtils';
 import AccountPage from './AccountPage';
 
-describe('SettingsPage', () => {
+describe('AccountPage', () => {
    beforeEach(() => {
       render(<AccountPage />);
    });
