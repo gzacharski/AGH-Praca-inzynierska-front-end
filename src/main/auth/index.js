@@ -2,23 +2,23 @@ import { AuthContext, useAuth } from './AuthContext';
 import { AuthProvider } from './AuthProvider';
 import { AuthFetchContext } from './AuthFetchContext';
 import {
-   withAuthFilter,
-   withAdminRole,
-   withEmployeeRole,
-   withManagerRole,
-   withTrainerRole,
-   withUserRole,
+   AuthFilter,
+   OnlyWithAdminRole,
+   OnlyWithEmployeeRole,
+   OnlyWithManagerRole,
+   OnlyWithTrainerRole,
+   OnlyWithUserRole,
 } from './AuthFilter';
 
 export {
    AuthContext,
    AuthProvider,
    AuthFetchContext,
-   withAuthFilter,
-   withAdminRole,
-   withEmployeeRole,
-   withManagerRole,
-   withTrainerRole,
-   withUserRole,
+   AuthFilter,
+   OnlyWithAdminRole,
+   OnlyWithEmployeeRole,
+   OnlyWithManagerRole,
+   OnlyWithTrainerRole,
+   OnlyWithUserRole,
    useAuth,
 };

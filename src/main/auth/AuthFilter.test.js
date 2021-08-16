@@ -10,29 +10,43 @@ import {
 } from 'src/main/data/roles';
 import { AuthContext } from './AuthContext';
 import {
-   withAuthFilter,
-   withAdminRole,
-   withEmployeeRole,
-   withManagerRole,
-   withTrainerRole,
-   withUserRole,
+   OnlyWithAdminRole,
+   OnlyWithEmployeeRole,
+   OnlyWithManagerRole,
+   OnlyWithTrainerRole,
+   OnlyWithUserRole,
+   AuthFilter,
 } from './AuthFilter';
 
-const TestComponent = () => withAuthFilter(() => <div>Test component</div>);
-const TestComponentWithAdmin = () =>
-   withAdminRole(() => <div>Test component with admin role</div>);
+const TestComponentWithAdmin = () => (
+   <OnlyWithAdminRole>
+      <div>Test component with admin role</div>
+   </OnlyWithAdminRole>
+);
 
-const TestComponentWithEmployee = () =>
-   withEmployeeRole(() => <div>Test component with employee role</div>);
+const TestComponentWithEmployee = () => (
+   <OnlyWithEmployeeRole>
+      <div>Test component with employee role</div>
+   </OnlyWithEmployeeRole>
+);
 
-const TestComponentWithManager = () =>
-   withManagerRole(() => <div>Test component with manager role</div>);
+const TestComponentWithManager = () => (
+   <OnlyWithManagerRole>
+      <div>Test component with manager role</div>
+   </OnlyWithManagerRole>
+);
 
-const TestComponentWithTrainer = () =>
-   withTrainerRole(() => <div>Test component with trainer role</div>);
+const TestComponentWithTrainer = () => (
+   <OnlyWithTrainerRole>
+      <div>Test component with trainer role</div>
+   </OnlyWithTrainerRole>
+);
 
-const TestComponentWithUser = () =>
-   withUserRole(() => <div>Test component with user role</div>);
+const TestComponentWithUser = () => (
+   <OnlyWithUserRole>
+      <div>Test component with user role</div>
+   </OnlyWithUserRole>
+);
 
 describe('Auth filter', () => {
    describe('withAuthFilter', () => {
@@ -42,7 +56,9 @@ describe('Auth filter', () => {
                <AuthContext.Provider
                   value={{ authState: { token: 'testToken' } }}
                >
-                  <TestComponent />
+                  <AuthFilter>
+                     <div>Test component</div>
+                  </AuthFilter>
                </AuthContext.Provider>
             </MemoryRouter>,
          );
@@ -59,7 +75,9 @@ describe('Auth filter', () => {
                         <AuthContext.Provider
                            value={{ authState: { token: null } }}
                         >
-                           <TestComponent />
+                           <AuthFilter>
+                              <div>Test component</div>
+                           </AuthFilter>
                         </AuthContext.Provider>
                      )}
                   />
@@ -71,6 +89,7 @@ describe('Auth filter', () => {
             </MemoryRouter>,
          );
          expect(screen.queryByText('Test component')).not.toBeInTheDocument();
+         expect(screen.getByText('Login page')).toBeInTheDocument();
       });
    });
 
@@ -108,13 +127,13 @@ describe('Auth filter', () => {
          ],
       ])(
          '%s should render text: %s',
-         (name, expectedText, TestedComponent, TestedRole) => {
+         (name, expectedText, TestedComponent, testedRole) => {
             render(
                <AuthContext.Provider
                   value={{
                      authState: {
                         userInfo: {
-                           roles: [TestedRole],
+                           roles: [testedRole],
                         },
                      },
                   }}
