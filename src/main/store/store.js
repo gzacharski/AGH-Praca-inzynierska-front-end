@@ -14,6 +14,7 @@ import trainerListSlice from 'src/main/store/sliceFiles/trainerListSlice';
 import equipmentListSlice from 'src/main/store/sliceFiles/equipmentSlice';
 import workoutListSlice from 'src/main/store/sliceFiles/workoutSlice';
 import notificationsSlice from 'src/main/store/sliceFiles/notificationsSlice';
+import messagesSlice from "src/main/store/sliceFiles/messagesSlice";
 
 export const reducer = {
    drawer: drawerReducer,
@@ -31,6 +32,7 @@ export const reducer = {
    priceList: priceListSlice,
    workoutList: workoutListSlice,
    notifications: notificationsSlice,
+   messages: messagesSlice
 };
 
 export default configureStore({ reducer });

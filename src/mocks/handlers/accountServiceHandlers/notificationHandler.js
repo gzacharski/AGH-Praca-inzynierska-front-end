@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { accountServiceURL } from 'src/main/data/urls';
 
 export const notificationsHandlers = [
-   rest.get(`${accountServiceURL}/:userId/notifications`, (req, res, ctx) =>
+   rest.get(`${accountServiceURL}/notification/user/:userId`, (req, res, ctx) =>
       res(
          ctx.status(200),
          ctx.delay(),
@@ -39,8 +39,8 @@ export const notificationsHandlers = [
          ]),
       ),
    ),
-   rest.patch(
-      `${accountServiceURL}/:userId/notification/:notificationId`,
+   rest.post(
+      `${accountServiceURL}/notification/:notificationId/user/:userId`,
       (req, res, ctx) => {
          const { notificationId } = req.params;
          const markAsRead = req.url.searchParams.get('markAsRead');
@@ -56,7 +56,7 @@ export const notificationsHandlers = [
       },
    ),
    rest.delete(
-      `${accountServiceURL}/:userId/notification/:notificationId`,
+      `${accountServiceURL}/notification/:notificationId/user/:userId`,
       (req, res, ctx) => {
          const { notificationId } = req.params;
 

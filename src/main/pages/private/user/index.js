@@ -5,7 +5,6 @@ import UserEquipmentPage from './userEquipment/UserEquipmentPage';
 import UserGroupWorkoutPage from './userGroupWorkout/UserGroupWorkoutPage';
 import UserIndividualWorkoutPage from './userIndividualWorkout/UserIndivudualWorkoutPage';
 import SettingsPage from './settings/SettingsPage';
-import StatisticsPage from './statistics/StatisticsPage';
 import AccountPage from './AccountPage';
 
 export {
@@ -17,5 +16,4 @@ export {
    UserGroupWorkoutPage,
    UserIndividualWorkoutPage,
    SettingsPage,
-   StatisticsPage,
 };

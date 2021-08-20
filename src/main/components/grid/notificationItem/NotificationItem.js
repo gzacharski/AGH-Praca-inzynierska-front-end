@@ -1,11 +1,11 @@
 import React from 'react';
-import clsx from 'clsx';
 import {
    Grid,
    Paper,
    Typography,
    IconButton,
    Tooltip,
+   Badge,
 } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -61,17 +61,21 @@ export const NotificationItem = ({ notificationId = '' }) => {
          {notification && (
             <Grid item xs={10} md={8} lg={6}>
                <Paper
-                  className={clsx(classes.root, {
-                     [classes.rootMarkAsRead]: markAsRead,
-                  })}
+                  className={classes.root}
                   elevation={6}
                   onClick={handleMarkAsReadNotification}
                >
                   <div className={classes.body}>
                      <div className={classes.header}>
-                        <Typography variant="h6" className={classes.title}>
-                           {title}
-                        </Typography>
+                        <Badge
+                           color="secondary"
+                           variant="dot"
+                           badgeContent={markAsRead ? 0 : 1}
+                        >
+                           <Typography variant="h6" className={classes.title}>
+                              {title}
+                           </Typography>
+                        </Badge>
                         <div>
                            <Tooltip
                               title="Usuń powiadomienie"

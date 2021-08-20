@@ -24,8 +24,11 @@ const initialState = notificationsAdapter.getInitialState({
 
 export const fetchNotifications = createAsyncThunk(
    'notifications/fetchNotifications',
-   async ({ userId = '', search = '', token = '' }, { rejectWithValue }) => {
-      const url = `${accountServiceURL}/${userId}/notifications${search}`;
+   async (
+      { userId = '', pageNumber = 0, pageSize = 10, token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${accountServiceURL}/notification/user/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
       try {
          const response = await axios.get(url, config(token));
@@ -48,10 +51,10 @@ export const fetchNotifications = createAsyncThunk(
 export const markAsReadNotification = createAsyncThunk(
    'notifications/markAsReadNotification',
    async ({ userId, token, notificationId }, { rejectWithValue }) => {
-      const url = `${accountServiceURL}/${userId}/notification/${notificationId}?markAsRead=true`;
+      const url = `${accountServiceURL}/notification/${notificationId}/user/${userId}`;
 
       try {
-         const response = await axios.patch(url, config(token));
+         const response = await axios.post(url, config(token));
          return response.data;
       } catch (error) {
          if (error.response === undefined) {
@@ -71,7 +74,7 @@ export const markAsReadNotification = createAsyncThunk(
 export const deleteNotification = createAsyncThunk(
    'notifications/deleteNotification',
    async ({ userId, token, notificationId }, { rejectWithValue }) => {
-      const url = `${accountServiceURL}/${userId}/notification/${notificationId}`;
+      const url = `${accountServiceURL}/notification/${notificationId}/user/${userId}`;
 
       try {
          const response = await axios.delete(url, config(token));
