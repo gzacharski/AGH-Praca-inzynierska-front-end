@@ -5,6 +5,7 @@ export const requestConfig = (token = '', locale = 'pl') => {
       return {
          headers: {
             'Accept-Language': checkedLocale,
+            'Content-Type': 'application/json',
             Authorization: token,
          },
       };
@@ -12,6 +13,7 @@ export const requestConfig = (token = '', locale = 'pl') => {
    return {
       headers: {
          'Accept-Language': checkedLocale,
+         'Content-Type': 'application/json',
       },
    };
 };

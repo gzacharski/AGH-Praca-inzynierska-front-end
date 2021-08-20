@@ -1,9 +1,12 @@
 version: '3.8'
+networks:
+   frontend:
 
 services:
    front:
       container_name: front-end
       image: gza73/agh-praca-inzynierska-front-end:latest
       ports:
-         - 3000:3000
-         
+         - "5000:5000"
+      networks:
+         - frontend
