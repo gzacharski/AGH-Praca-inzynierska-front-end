@@ -14,10 +14,7 @@ const renderMessageButton = (store) =>
       <Provider store={store}>
          <MemoryRouter>
             <MessageButton />
-            <Route
-               path="/messages"
-               render={() => <div>Messages page</div>}
-            />
+            <Route path="/messages" render={() => <div>Messages page</div>} />
          </MemoryRouter>
       </Provider>,
    );

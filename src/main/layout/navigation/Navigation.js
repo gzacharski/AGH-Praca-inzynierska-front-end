@@ -10,11 +10,11 @@ import {
 } from 'src/main/store/sliceFiles/drawerSlice';
 import {
    AuthContext,
-   withAdminRole,
-   withEmployeeRole,
-   withManagerRole,
-   withTrainerRole,
-   withUserRole,
+   OnlyWithAdminRole,
+   OnlyWithEmployeeRole,
+   OnlyWithManagerRole,
+   OnlyWithTrainerRole,
+   OnlyWithUserRole,
 } from 'src/main/auth';
 import { FilterRenderer } from 'src/main/components/utils';
 import {
@@ -28,54 +28,6 @@ import {
 import { MenuMoreInfoSwitch } from 'src/main/components/switches';
 import { filteredUrls } from 'src/main/data/filteredUrls';
 import { useStyles } from './Navigation.styles';
-
-const AdminListAuth = () =>
-   withAdminRole(() => (
-      <>
-         <Divider />
-         <AdminList />
-      </>
-   ));
-
-const AccountListAuth = () =>
-   withUserRole(() => (
-      <>
-         <Divider />
-         <AccountList />
-      </>
-   ));
-
-const PublicListAuth = () =>
-   withUserRole(() => (
-      <>
-         <Divider />
-         <PublicList />
-      </>
-   ));
-
-const EmployeeListAuth = () =>
-   withEmployeeRole(() => (
-      <>
-         <Divider />
-         <EmployeeList />
-      </>
-   ));
-
-const TrainerListAuth = () =>
-   withTrainerRole(() => (
-      <>
-         <Divider />
-         <TrainerList />
-      </>
-   ));
-
-const ManagerListAuth = () =>
-   withManagerRole(() => (
-      <>
-         <Divider />
-         <ManagerList />
-      </>
-   ));
 
 const Navigation = () => {
    const dispatch = useDispatch();
@@ -110,12 +62,30 @@ const Navigation = () => {
                   {menuIsOpen ? <ChevronLeft /> : <ChevronRight />}
                </IconButton>
             </div>
-            <AccountListAuth />
-            <EmployeeListAuth />
-            <TrainerListAuth />
-            <ManagerListAuth />
-            <AdminListAuth />
-            <PublicListAuth />
+            <OnlyWithUserRole>
+               <Divider />
+               <AccountList />
+            </OnlyWithUserRole>
+            <OnlyWithEmployeeRole>
+               <Divider />
+               <EmployeeList />
+            </OnlyWithEmployeeRole>
+            <OnlyWithTrainerRole>
+               <Divider />
+               <TrainerList />
+            </OnlyWithTrainerRole>
+            <OnlyWithManagerRole>
+               <Divider />
+               <ManagerList />
+            </OnlyWithManagerRole>
+            <OnlyWithAdminRole>
+               <Divider />
+               <AdminList />
+            </OnlyWithAdminRole>
+            <OnlyWithUserRole>
+               <Divider />
+               <PublicList />
+            </OnlyWithUserRole>
          </Drawer>
       )
    );
