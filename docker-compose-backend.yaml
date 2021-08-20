@@ -1,0 +1,143 @@
+version: "3.8"
+
+networks:
+  backend:
+
+services:
+  config-server:
+    image: gza73/agh-praca-inzynierska-config-server:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker,native"
+    volumes:
+      - ./properties:/home/healthy-gym-config
+    ports:
+      - "8030:8030"
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+
+  discovery:
+    image: gza73/agh-praca-inzynierska-discovery:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    ports:
+      - "8010:8010"
+    networks:
+      - backend
+    depends_on:
+      - config-server
+    deploy:
+      replicas: 1
+
+  gateway:
+    image: gza73/agh-praca-inzynierska-gateway:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    ports:
+      - "8020:8020"
+    networks:
+      - backend
+    depends_on:
+      - discovery
+    deploy:
+      replicas: 1
+
+  mongodb:
+    image: gza73/agh-praca-inzynierska-mongodb:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+
+  auth:
+    image: gza73/agh-praca-inzynierska-auth:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker,production"
+    networks:
+      - backend
+    depends_on:
+      - mongodb
+      - gateway
+    deploy:
+      replicas: 1
+
+  account:
+    image: gza73/agh-praca-inzynierska-account:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    networks:
+      - backend
+    depends_on:
+      - mongodb
+      - gateway
+    deploy:
+      replicas: 1
+
+  trainings:
+    image: gza73/agh-praca-inzynierska-trainings:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    networks:
+      - backend
+    depends_on:
+      - mongodb
+      - gateway
+    deploy:
+      replicas: 1
+
+  gympass:
+    image: gza73/agh-praca-inzynierska-gympass:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    networks:
+      - backend
+    depends_on:
+      - mongodb
+      - gateway
+    deploy:
+      replicas: 1
+
+  task:
+    image: gza73/agh-praca-inzynierska-task:latest
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    networks:
+      - backend
+    depends_on:
+      - mongodb
+      - gateway
+    deploy:
+      replicas: 1
+
+  redis:
+    image: gza73/agh-praca-inzynierska-redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+
+  rabbitmq:
+    image: gza73/agh-praca-inzynierska-rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    deploy:
+      replicas: 1
+    networks:
+      - backend
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - target: 9411
+        published: 9411
+        mode: host
+    deploy:
+      replicas: 1
+    networks:
+      - backend
