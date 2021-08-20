@@ -7,6 +7,7 @@ describe('Request configuration', () => {
          headers: {
             'Accept-Language': 'en',
             Authorization: 'testToken',
+            'Content-Type': 'application/json',
          },
       };
 
@@ -19,6 +20,7 @@ describe('Request configuration', () => {
          headers: {
             'Accept-Language': 'pl',
             Authorization: 'testToken',
+            'Content-Type': 'application/json',
          },
       };
 
@@ -30,6 +32,7 @@ describe('Request configuration', () => {
       const expectedConfig = {
          headers: {
             'Accept-Language': 'en',
+            'Content-Type': 'application/json',
          },
       };
 
@@ -41,6 +44,7 @@ describe('Request configuration', () => {
       const expectedConfig = {
          headers: {
             'Accept-Language': 'pl',
+            'Content-Type': 'application/json',
          },
       };
 
@@ -53,6 +57,7 @@ describe('Request configuration', () => {
          headers: {
             'Accept-Language': 'pl',
             Authorization: 'testToken',
+            'Content-Type': 'application/json',
          },
       };
 
@@ -65,6 +70,7 @@ describe('Request configuration', () => {
          headers: {
             'Accept-Language': 'pl',
             Authorization: 'testToken',
+            'Content-Type': 'application/json',
          },
       };
 
@@ -76,6 +82,7 @@ describe('Request configuration', () => {
       const expectedConfig = {
          headers: {
             'Accept-Language': 'pl',
+            'Content-Type': 'application/json',
          },
       };
 
@@ -87,6 +94,7 @@ describe('Request configuration', () => {
       const expectedConfig = {
          headers: {
             'Accept-Language': 'pl',
+            'Content-Type': 'application/json',
          },
       };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { setupWorker } from 'msw';
 import { handlers as loginHandlers } from './handlers/loginhandlers';
 import { priceListHandlers } from './handlers/priceListHandler';
