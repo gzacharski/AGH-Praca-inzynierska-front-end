@@ -2,10 +2,6 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/gzacharski/AGH-Praca-inzynierska-front-end)
 ![GitHub contributors](https://img.shields.io/github/contributors/gzacharski/AGH-Praca-inzynierska-front-end)
 
-### [English version below](#en-agh-praca-inzynierska-front-end)
-# GitHub Pages
-[Link](https://gzacharski.github.io/AGH-Praca-inzynierska-front-end/)
-
 # AGH-Praca-inżynierska-front-end
 Praca inżynierska "System do wspomagania zarządzania placówką profilaktyki zdrowotnej" autorstwa Bartosza Kordka i Grzegorza Zacharskiego.
 
