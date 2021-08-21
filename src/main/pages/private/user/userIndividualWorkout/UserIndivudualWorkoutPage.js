@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import {
@@ -8,12 +8,13 @@ import {
    selectFetchedDates,
    selectMessage,
    selectStatus,
+   selectNotistack,
 } from 'src/main/store/sliceFiles/timetable/userIndividualReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import { UserIndividualTimetable } from 'src/main/components/timetable/userIndividualTimetable/UserIndividualTimetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
-import { AuthContext } from 'src/main/auth';
+import { useAuth } from 'src/main/auth';
 
 const UserIndividualWorkoutPage = () => {
    const data = useSelector(selectData);
@@ -21,9 +22,10 @@ const UserIndividualWorkoutPage = () => {
    const status = useSelector(selectStatus);
    const message = useSelector(selectMessage);
    const fetchedDates = useSelector(selectFetchedDates);
-   const context = useContext(AuthContext);
+   const notistackVariant = useSelector(selectNotistack);
+   const context = useAuth();
 
-   const { userInfo = {} } = context.authState;
+   const { userInfo = {}, token = '' } = context.authState;
    const { userId = '' } = userInfo;
 
    const { enqueueSnackbar } = useSnackbar();
@@ -38,6 +40,7 @@ const UserIndividualWorkoutPage = () => {
                   userId,
                   startOfWeek,
                   endOfWeek,
+                  token,
                }),
             );
          }
@@ -45,9 +48,8 @@ const UserIndividualWorkoutPage = () => {
    }, [status, dispatch]);
 
    if (message) {
-      const variant = status === STATUS.SUCCEEDED ? 'success' : 'error';
       enqueueSnackbar(message, {
-         variant,
+         variant: notistackVariant,
          anchorOrigin: {
             vertical: 'bottom',
             horizontal: 'right',

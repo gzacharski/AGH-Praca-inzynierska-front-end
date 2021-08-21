@@ -5,7 +5,8 @@ import axios from 'axios';
 import { accountServiceURL } from 'src/main/data/urls';
 import { STATUS } from '../status';
 
-const url = (userId) => `${accountServiceURL}/photos/${userId}/avatar`;
+const url = (userId) =>
+   `${accountServiceURL}/photos/${userId}/avatar/lastVersion`;
 
 const loadAuthData = () => {
    const token = localStorage.getItem('token');
@@ -20,6 +21,34 @@ const initialState = {
    message: null,
    error: null,
 };
+
+export const fetchAvatarUrl = createAsyncThunk(
+   'avatar/fetchAvatarUrl',
+   async (_, { rejectWithValue }) => {
+      const { token, userId } = loadAuthData();
+
+      const config = {
+         headers: {
+            'Accept-Language': 'pl',
+            Authorization: token,
+         },
+      };
+
+      try {
+         const response = await axios.get(
+            `${accountServiceURL}/photos/${userId}/avatar`,
+            config,
+         );
+         const { avatar = null } = response?.data;
+         return { avatar };
+      } catch (error) {
+         return rejectWithValue({
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
 
 export const setAvatar = createAsyncThunk(
    'avatar/setAvatar',
@@ -37,7 +66,11 @@ export const setAvatar = createAsyncThunk(
       formData.append('avatar', file);
 
       try {
-         const response = await axios.post(url(userId), formData, config);
+         const response = await axios.post(
+            `${accountServiceURL}/photos/${userId}/avatar`,
+            formData,
+            config,
+         );
          return response.data;
       } catch (error) {
          return rejectWithValue({
@@ -61,8 +94,12 @@ export const removeAvatar = createAsyncThunk(
       };
 
       try {
-         const response = await axios.delete(url(userId), config);
-         return response.data;
+         const response = await axios.delete(
+            `${accountServiceURL}/photos/${userId}/avatar`,
+            config,
+         );
+         const { message = '', avatar = null } = response?.data;
+         return { message, avatar };
       } catch (error) {
          return rejectWithValue({
             error: error?.response?.data,
@@ -76,16 +113,25 @@ const avatarSlice = createSlice({
    name: 'avatar',
    initialState,
    reducers: {
-      getAvatar(state, action) {
-         state.status = STATUS.SUCCEEDED;
-         state.image = url(action.payload.userId);
-         state.error = null;
-      },
       clearMessage(state, action) {
          state.message = null;
       },
    },
    extraReducers: {
+      [fetchAvatarUrl.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [fetchAvatarUrl.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.image = action.payload.avatar;
+         state.error = null;
+      },
+      [fetchAvatarUrl.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.message = action.payload.message;
+         state.error = action.payload.error;
+      },
+
       [setAvatar.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
@@ -100,6 +146,7 @@ const avatarSlice = createSlice({
          state.message = action.payload.message;
          state.error = action.payload.error;
       },
+
       [removeAvatar.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
