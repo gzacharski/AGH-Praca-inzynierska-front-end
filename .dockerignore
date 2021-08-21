@@ -4,16 +4,12 @@
 .vscode
 coverage
 node_modules
-src
 target
 .dockerignore
 .eslintrc.json
 .flowconfig
 .prettierignore
 .prettierrc
-docker-compose.yaml
+docker-compose*
 Dockerfile
 Dockerfile.prod
-jsconfig.json
-package-lock.json
-package.json
