@@ -16,7 +16,7 @@ const App = () => {
    return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={pl}>
          <SnackbarProvider maxSnack={4}>
-            <Router basename={process.env.PUBLIC_URL}>
+            <Router>
                <AuthProvider>
                   <Provider store={store}>
                      <div className={classes.root}>
