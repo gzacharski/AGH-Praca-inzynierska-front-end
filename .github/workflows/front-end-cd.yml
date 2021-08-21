@@ -26,12 +26,6 @@ jobs:
         
       - name: Build
         run: npm run build --if-present
-        
-      - name: Deploy to Github Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.0
-        with:
-          branch: gh-pages
-          folder: build
       
       - name: Build Docker image
         run: docker build -t gza73/agh-praca-inzynierska-front-end .
