@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { useAuth } from 'src/main/auth';
 import {
@@ -42,7 +42,7 @@ export const NotificationItem = ({ notificationId = '' }) => {
 
    let createdFromNow;
    try {
-      createdFromNow = formatDistanceToNow(Date.parse(created), {
+      createdFromNow = formatDistanceToNow(parseISO(created), {
          locale: pl,
          addSuffix: true,
       });
