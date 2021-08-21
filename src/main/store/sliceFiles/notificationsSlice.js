@@ -91,7 +91,11 @@ export const deleteNotification = createAsyncThunk(
 
       try {
          const response = await axios.delete(url, config(token));
-         return response.data;
+         const {
+            message = 'Usunięto!',
+            notification = { notificationId: '' },
+         } = response?.data;
+         return { message, notification };
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
@@ -158,7 +162,11 @@ const notificationsSlice = createSlice({
       [deleteNotification.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.notistack = NOTISTACK.SUCCESS;
-         notificationsAdapter.removeOne(state, action.payload.notificationId);
+         state.message = action.payload.message;
+         notificationsAdapter.removeOne(
+            state,
+            action.payload.notification.notificationId,
+         );
          state.error = null;
       },
       [deleteNotification.rejected]: (state, action) => {
