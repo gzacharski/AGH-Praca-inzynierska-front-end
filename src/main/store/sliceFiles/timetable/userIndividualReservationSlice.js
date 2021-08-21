@@ -9,27 +9,43 @@ import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
+import { NOTISTACK } from '../../notistack';
 
 const userIndividualReservationAdapter = createEntityAdapter({});
 
 const initialState = userIndividualReservationAdapter.getInitialState({
    fetchedDates: {},
    status: STATUS.IDLE,
+   notistack: NOTISTACK.SUCCESS,
    message: null,
    error: null,
 });
 
+const getNotistackVariant = (error) => {
+   const { status = 500 } = error?.response?.data;
+   let notistack = NOTISTACK.ERROR;
+   if (status === 403) notistack = NOTISTACK.WARNING;
+   if (status === 404) notistack = NOTISTACK.INFO;
+   return notistack;
+};
+
 export const fetchUserIndividualReservation = createAsyncThunk(
    'userIndividualReservation/fetchUserIndividualReservation',
    async ({ startOfWeek, endOfWeek, userId, token }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}/timetable/${userId}/individualWorkouts?startDate=${startOfWeek}&endDate=${endOfWeek}`;
+      const url = `${trainingsServiceURL}/individual/user/${userId}?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       try {
-         const response = await axios.get(url, config(token));
+         const response = await axios.get(url, {
+            headers: {
+               'Accept-Language': 'pl',
+               Authorization: token,
+            },
+         });
          const { data = [], message = null } = response?.data;
          return { data, startOfWeek, endOfWeek, message };
       } catch (error) {
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -43,14 +59,22 @@ export const addUserIndividualReservation = createAsyncThunk(
       { trainerId, userId, token, startDateTime, endDateTime },
       { rejectWithValue },
    ) => {
-      const url = `${trainingsServiceURL}/individualWorkout/user/${userId}/trainerId/${trainerId}?startDateTime=${startDateTime}&endDateTime=${endDateTime}`;
+      const url = `${trainingsServiceURL}/individual/user/${userId}`;
+
+      const body = {
+         trainerId,
+         startDateTime,
+         endDateTime,
+         remarks: '',
+      };
 
       try {
-         const response = await axios.post(url, config(token));
+         const response = await axios.post(url, body, config(token));
          const { message = null, reservation = {} } = response?.data;
          return { message, reservation };
       } catch (error) {
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -61,7 +85,7 @@ export const addUserIndividualReservation = createAsyncThunk(
 export const cancelUserIndividualReservation = createAsyncThunk(
    'userIndividualReservation/cancelUserIndividualReservation',
    async ({ trainingId, userId, token, locale }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}/individualWorkout/${trainingId}/enroll?clientId=${userId}`;
+      const url = `${trainingsServiceURL}/individual/user/${userId}/training/${trainingId}`;
 
       try {
          const response = await axios.delete(url, config(token, locale));
@@ -69,6 +93,7 @@ export const cancelUserIndividualReservation = createAsyncThunk(
          return { message, trainingId };
       } catch (error) {
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -76,6 +101,7 @@ export const cancelUserIndividualReservation = createAsyncThunk(
    },
 );
 
+// TODO
 export const rateUserIndividualEvent = createAsyncThunk(
    'userIndividualReservation/rateUserIndividualEvent',
    async (
@@ -115,6 +141,7 @@ export const userIndividualReservationSlice = createSlice({
             state,
             action.payload.data,
          );
+         state.notistack = NOTISTACK.SUCCESS;
          state.message = action.payload.message;
          state.error = null;
          state.fetchedDates = {
@@ -126,6 +153,7 @@ export const userIndividualReservationSlice = createSlice({
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
+         state.notistack = action.payload.notistack;
       },
 
       [addUserIndividualReservation.pending]: (state, action) => {
@@ -133,6 +161,7 @@ export const userIndividualReservationSlice = createSlice({
       },
       [addUserIndividualReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          userIndividualReservationAdapter.upsertOne(
             state,
             action.payload.reservation,
@@ -144,6 +173,7 @@ export const userIndividualReservationSlice = createSlice({
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
+         state.notistack = action.payload.notistack;
       },
 
       [cancelUserIndividualReservation.pending]: (state, action) => {
@@ -151,6 +181,7 @@ export const userIndividualReservationSlice = createSlice({
       },
       [cancelUserIndividualReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          userIndividualReservationAdapter.removeOne(
             state,
             action.payload.trainingId,
@@ -162,6 +193,7 @@ export const userIndividualReservationSlice = createSlice({
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
+         state.notistack = action.payload.notistack;
       },
 
       [rateUserIndividualEvent.pending]: (state, action) => {
@@ -179,6 +211,7 @@ export const userIndividualReservationSlice = createSlice({
       [rateUserIndividualEvent.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
+         state.notistack = action.payload.notistack;
          state.message = action.payload.message;
       },
    },
@@ -195,5 +228,6 @@ export const selectStatus = (state) => state.userIndividualReservation.status;
 export const selectMessage = (state) => state.userIndividualReservation.message;
 export const selectFetchedDates = (state) =>
    state.userIndividualReservation.fetchedDates;
+export const selectNotistack = (state) => state.notifications.notistack;
 
 export default userIndividualReservationSlice.reducer;

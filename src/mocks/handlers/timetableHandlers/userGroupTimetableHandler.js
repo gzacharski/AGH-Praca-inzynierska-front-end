@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 
 export const userGroupTimetableHandlers = [
    rest.delete(
-      `${trainingsServiceURL}/groupWorkout/:trainingId/enroll`,
+      `${trainingsServiceURL}/group/:trainingId/enroll`,
       (req, res, ctx) => {
          const { trainingId } = req.params;
          const clientId = req.url.searchParams.get('clientId');
@@ -115,7 +115,7 @@ export const userGroupTimetableHandlers = [
       },
    ),
    rest.get(
-      `${trainingsServiceURL}/timetable/:userId/groupWorkouts`,
+      `${trainingsServiceURL}/group/trainings/:userId`,
       (req, res, ctx) => {
          const { userId } = req.params;
          const startDate = req.url.searchParams.get('startDate');

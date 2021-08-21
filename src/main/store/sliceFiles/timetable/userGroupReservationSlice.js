@@ -22,7 +22,7 @@ const initialState = userGroupReservationAdapter.getInitialState({
 export const fetchUserGroupReservation = createAsyncThunk(
    'userGroupReservation/fetchUserGroupReservation',
    async ({ userId, startOfWeek, endOfWeek, token }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}/timetable/${userId}/groupWorkouts?startDate=${startOfWeek}&endDate=${endOfWeek}`;
+      const url = `${trainingsServiceURL}/group/trainings/${userId}?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       try {
          const response = await axios.get(url, config(token));
@@ -40,7 +40,7 @@ export const fetchUserGroupReservation = createAsyncThunk(
 export const cancelUserGroupReservation = createAsyncThunk(
    'userGroupReservation/cancelUserGroupReservation',
    async ({ trainingId, userId, token }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}/groupWorkout/${trainingId}/enroll?clientId=${userId}`;
+      const url = `${trainingsServiceURL}/group/${trainingId}/enroll?clientId=${userId}`;
 
       try {
          const response = await axios.delete(url, config(token));
@@ -55,6 +55,7 @@ export const cancelUserGroupReservation = createAsyncThunk(
    },
 );
 
+// TODO link with backend
 export const rateUserGroupEvent = createAsyncThunk(
    'userGroupReservation/rateUserGroupEvent',
    async ({ trainingId, rating, userId, token }, { rejectWithValue }) => {
