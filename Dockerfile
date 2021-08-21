@@ -6,9 +6,8 @@ COPY public ./public
 COPY src ./src
 RUN npm run build
 
-FROM node:14-alpine
-WORKDIR /app
-COPY --from=build /app/build /app/build
-RUN npm install -g serve
-EXPOSE 5000
-CMD ["serve","-s","build"]
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
