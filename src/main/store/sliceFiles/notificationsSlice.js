@@ -10,6 +10,7 @@ import { accountServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../status';
+import { NOTISTACK } from '../notistack';
 
 const notificationsAdapter = createEntityAdapter({
    selectId: (entity) => entity.notificationId,
@@ -18,9 +19,18 @@ const notificationsAdapter = createEntityAdapter({
 
 const initialState = notificationsAdapter.getInitialState({
    status: STATUS.IDLE,
+   notistack: NOTISTACK.SUCCESS,
    message: null,
    error: null,
 });
+
+const getNotistackVariant = (error) => {
+   const { status = 500 } = error?.response?.data;
+   let notistack = NOTISTACK.ERROR;
+   if (status === 403) notistack = NOTISTACK.WARNING;
+   if (status === 404) notistack = NOTISTACK.INFO;
+   return notistack;
+};
 
 export const fetchNotifications = createAsyncThunk(
    'notifications/fetchNotifications',
@@ -40,7 +50,9 @@ export const fetchNotifications = createAsyncThunk(
                message: NETWORK_ERROR,
             });
          }
+
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -54,7 +66,7 @@ export const markAsReadNotification = createAsyncThunk(
       const url = `${accountServiceURL}/notification/${notificationId}/user/${userId}`;
 
       try {
-         const response = await axios.post(url, config(token));
+         const response = await axios.post(url, {}, config(token));
          return response.data;
       } catch (error) {
          if (error.response === undefined) {
@@ -64,6 +76,7 @@ export const markAsReadNotification = createAsyncThunk(
             });
          }
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -87,6 +100,7 @@ export const deleteNotification = createAsyncThunk(
             });
          }
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -108,11 +122,13 @@ const notificationsSlice = createSlice({
       },
       [fetchNotifications.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          notificationsAdapter.upsertMany(state, action.payload);
          state.error = null;
       },
       [fetchNotifications.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
@@ -122,6 +138,7 @@ const notificationsSlice = createSlice({
       },
       [markAsReadNotification.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          notificationsAdapter.updateOne(state, {
             id: action.payload.notificationId,
             changes: { markAsRead: action.payload.markAsRead },
@@ -130,6 +147,7 @@ const notificationsSlice = createSlice({
       },
       [markAsReadNotification.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
@@ -139,11 +157,13 @@ const notificationsSlice = createSlice({
       },
       [deleteNotification.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          notificationsAdapter.removeOne(state, action.payload.notificationId);
          state.error = null;
       },
       [deleteNotification.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
@@ -163,3 +183,4 @@ export const {
 export const selectMessage = (state) => state.notifications.message;
 export const selectStatus = (state) => state.notifications.status;
 export const selectError = (state) => state.notifications.error;
+export const selectNotistack = (state) => state.notifications.notistack;
