@@ -7,6 +7,6 @@ services:
       container_name: front-end
       image: gza73/agh-praca-inzynierska-front-end:latest
       ports:
-         - "5000:5000"
+         - "5000:80"
       networks:
          - frontend
