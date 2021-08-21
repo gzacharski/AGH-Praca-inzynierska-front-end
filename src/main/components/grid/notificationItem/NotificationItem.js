@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {
    Grid,
    Paper,
@@ -51,6 +52,7 @@ export const NotificationItem = ({ notificationId = '' }) => {
    }
 
    const handleMarkAsReadNotification = () =>
+      !markAsRead &&
       dispatch(markAsReadNotification({ userId, token, notificationId }));
 
    const handleDeleteNotification = () =>
@@ -61,7 +63,10 @@ export const NotificationItem = ({ notificationId = '' }) => {
          {notification && (
             <Grid item xs={10} md={8} lg={6}>
                <Paper
-                  className={classes.root}
+                  className={clsx(classes.root, {
+                     [classes.isRead]: markAsRead,
+                     [classes.isNotRead]: !markAsRead,
+                  })}
                   elevation={6}
                   onClick={handleMarkAsReadNotification}
                >
