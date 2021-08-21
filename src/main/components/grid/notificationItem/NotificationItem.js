@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {
    Grid,
    Paper,
@@ -9,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { useAuth } from 'src/main/auth';
 import {
@@ -42,7 +43,7 @@ export const NotificationItem = ({ notificationId = '' }) => {
 
    let createdFromNow;
    try {
-      createdFromNow = formatDistanceToNow(Date.parse(created), {
+      createdFromNow = formatDistanceToNow(parseISO(created), {
          locale: pl,
          addSuffix: true,
       });
@@ -51,6 +52,7 @@ export const NotificationItem = ({ notificationId = '' }) => {
    }
 
    const handleMarkAsReadNotification = () =>
+      !markAsRead &&
       dispatch(markAsReadNotification({ userId, token, notificationId }));
 
    const handleDeleteNotification = () =>
@@ -61,7 +63,10 @@ export const NotificationItem = ({ notificationId = '' }) => {
          {notification && (
             <Grid item xs={10} md={8} lg={6}>
                <Paper
-                  className={classes.root}
+                  className={clsx(classes.root, {
+                     [classes.isRead]: markAsRead,
+                     [classes.isNotRead]: !markAsRead,
+                  })}
                   elevation={6}
                   onClick={handleMarkAsReadNotification}
                >

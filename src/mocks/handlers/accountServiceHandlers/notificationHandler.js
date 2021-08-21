@@ -19,7 +19,7 @@ export const notificationsHandlers = [
                title: 'Ultrices auctor',
                content:
                   'Maecenas vel lorem eu metus ultrices auctor. Nunc nec nunc sed lectus dictum fermentum ac sit amet lacus.',
-               created: '2021-07-26T20:21:01',
+               created: '2021-08-21T08:16:26.699Z',
                markAsRead: false,
             },
             {
@@ -33,7 +33,7 @@ export const notificationsHandlers = [
                title: 'Lacus finibus',
                content:
                   'Integer nec lacinia nibh. Donec accumsan orci ac urna tempus, sed aliquet lacus finibus. Duis egestas.',
-               created: '2021-07-27T12:21:01',
+               created: '2021-08-21T09:16:26.699Z',
                markAsRead: false,
             },
          ]),
