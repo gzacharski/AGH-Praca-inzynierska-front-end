@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { rest } from 'msw';
 import faker from 'faker';
 import { accountServiceURL } from 'src/main/data/urls';
@@ -30,8 +31,13 @@ const getTestTrainer = () => getAbstractUser(['user', 'trainer']);
 const getTestManager = () => getAbstractUser(['user', 'manager']);
 const getTestEmployee = () => getAbstractUser(['user', 'employee']);
 
+const total = 1000;
+
 export const adminUserHandlers = [
    rest.get(`${accountServiceURL}/admin/all`, (req, res, ctx) => {
+      const pageNumber = req.url.searchParams.get('pageNumber');
+      const pageSize = req.url.searchParams.get('pageSize');
+
       const getRows = (count) => {
          const testRows = [];
          for (let i = 0; i < count; i += 1) {
@@ -39,10 +45,12 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(100);
-      return res(ctx.status(200), ctx.delay(), ctx.json(users));
+      const users = getRows(total);
+      return res(ctx.status(200), ctx.delay(1500), ctx.json(users));
    }),
    rest.get(`${accountServiceURL}/admin/users`, (req, res, ctx) => {
+      const pageNumber = req.url.searchParams.get('pageNumber');
+      const pageSize = req.url.searchParams.get('pageSize');
       const getRows = (count) => {
          const testRows = [];
          for (let i = 0; i < count; i += 1) {
@@ -50,10 +58,12 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(100);
+      const users = getRows(total);
       return res(ctx.status(200), ctx.delay(), ctx.json(users));
    }),
    rest.get(`${accountServiceURL}/admin/employee`, (req, res, ctx) => {
+      const pageNumber = req.url.searchParams.get('pageNumber');
+      const pageSize = req.url.searchParams.get('pageSize');
       const getRows = (count) => {
          const testRows = [];
          for (let i = 0; i < count; i += 1) {
@@ -61,10 +71,12 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(100);
+      const users = getRows(total);
       return res(ctx.status(200), ctx.delay(), ctx.json(users));
    }),
    rest.get(`${accountServiceURL}/admin/manager`, (req, res, ctx) => {
+      const pageNumber = req.url.searchParams.get('pageNumber');
+      const pageSize = req.url.searchParams.get('pageSize');
       const getRows = (count) => {
          const testRows = [];
          for (let i = 0; i < count; i += 1) {
@@ -72,10 +84,12 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(100);
-      return res(ctx.status(200), ctx.delay(), ctx.json(users));
+      const users = getRows(total);
+      return res(ctx.status(200), ctx.delay(), ctx.json({ total, users }));
    }),
    rest.get(`${accountServiceURL}/admin/trainers`, (req, res, ctx) => {
+      const pageNumber = req.url.searchParams.get('pageNumber');
+      const pageSize = req.url.searchParams.get('pageSize');
       const getRows = (count) => {
          const testRows = [];
          for (let i = 0; i < count; i += 1) {
@@ -83,7 +97,7 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(100);
+      const users = getRows(pageSize);
       return res(ctx.status(200), ctx.delay(), ctx.json(users));
    }),
 ];

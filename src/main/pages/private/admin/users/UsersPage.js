@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -13,6 +14,7 @@ import {
    DataTypeProvider,
    IntegratedPaging,
    PagingState,
+   CustomPaging,
 } from '@devexpress/dx-react-grid';
 import {
    Grid,
@@ -28,6 +30,7 @@ import {
    selectNotistack,
    selectAll,
    fetchAdminUsersList,
+   selectTotal,
 } from 'src/main/store/sliceFiles/adminSlices/usersSlice';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
@@ -102,15 +105,20 @@ const AccountPage = () => {
    const message = useSelector(selectMessage);
    const notistackVariant = useSelector(selectNotistack);
    const auth = useAuth();
+   const [pageNumber, setPageNumber] = useState(0);
+   const [pageSize, setPageSize] = useState(10);
+   const { enqueueSnackbar } = useSnackbar();
+
+   const fetchData = () => {
+      const { token = '' } = auth;
+      dispatch(fetchAdminUsersList({ pageNumber, pageSize, token }));
+   };
 
    useEffect(() => {
       if (status === STATUS.IDLE) {
-         const { token = '' } = auth;
-         dispatch(fetchAdminUsersList({ pageNumber: 0, pageSize: 50, token }));
+         fetchData();
       }
-   }, [status, dispatch]);
-
-   const { enqueueSnackbar } = useSnackbar();
+   }, [status, dispatch, pageNumber, pageSize]);
 
    if (message) {
       enqueueSnackbar(message, {
@@ -135,7 +143,12 @@ const AccountPage = () => {
                <AccountStateDataTypeProvider for={['enabled']} />
                <AvatarStateDataTypeProvider for={['avatar']} />
                <RolesStateDataTypeProvider for={['roles']} />
-               <PagingState defaultCurrentPage={0} defaultPageSize={10} />
+               <PagingState
+                  currentPage={pageNumber}
+                  pageSize={pageSize}
+                  onCurrentPageChange={setPageNumber}
+                  onPageSizeChange={setPageSize}
+               />
                <IntegratedPaging />
                <Table messages={tableMessages} />
                <TableHeaderRow />
