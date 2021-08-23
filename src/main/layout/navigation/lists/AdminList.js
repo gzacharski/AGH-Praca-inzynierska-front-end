@@ -7,7 +7,6 @@ import {
    FileCopy,
    SupervisorAccount,
    PermDataSetting,
-   Home,
    EventSeat,
 } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
@@ -29,12 +28,6 @@ const AdminList = () => {
             )
          }
       >
-         <CustomListItem
-            buttonName="Strona główna"
-            CustomIcon={Home}
-            pushUrl="/admin"
-            secondaryText="Główny panel administratora"
-         />
          <CustomListItem
             buttonName="Logi"
             CustomIcon={Fingerprint}

@@ -1,4 +1,3 @@
-import AdminPage from './main/AdminPage';
 import BackupPage from './backup/BackupPage';
 import ConfigurePage from './configure/ConfigurePage';
 import LogsPage from './logs/LogsPage';
@@ -8,7 +7,6 @@ import UsersPage from './users/UsersPage';
 import EquipmentPage from './equipment/EquipmentPage';
 
 export {
-   AdminPage,
    BackupPage,
    ConfigurePage,
    LogsPage,
