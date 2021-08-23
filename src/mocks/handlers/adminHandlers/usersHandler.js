@@ -30,7 +30,7 @@ const getTestTrainer = () => getAbstractUser(['user', 'trainer']);
 const getTestManager = () => getAbstractUser(['user', 'manager']);
 const getTestEmployee = () => getAbstractUser(['user', 'employee']);
 
-export const managementHandlers = [
+export const adminUserHandlers = [
    rest.get(`${accountServiceURL}/admin/all`, (req, res, ctx) => {
       const getRows = (count) => {
          const testRows = [];

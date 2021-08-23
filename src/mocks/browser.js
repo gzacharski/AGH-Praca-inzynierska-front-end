@@ -11,6 +11,7 @@ import { equipmentListHandlers } from './handlers/equipmentHandlers';
 import { workoutHandlers } from './handlers/workoutHandlers';
 import { notificationsHandlers } from './handlers/accountServiceHandlers/notificationHandler';
 import { managementHandlers } from './handlers/adminHandlers/managementHandler';
+import { adminUserHandlers } from './handlers/adminHandlers/usersHandler';
 
 const worker = setupWorker(
    ...priceListHandlers,
@@ -24,6 +25,7 @@ const worker = setupWorker(
    ...workoutHandlers,
    ...notificationsHandlers,
    ...managementHandlers,
+   ...adminUserHandlers,
 );
 
 export { worker };
