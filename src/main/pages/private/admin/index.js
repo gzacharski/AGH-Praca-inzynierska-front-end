@@ -5,6 +5,7 @@ import LogsPage from './logs/LogsPage';
 import ManagementPage from './management/ManagementPage';
 import StatisticsPage from './statistics/StatisticsPage';
 import UsersPage from './users/UsersPage';
+import EquipmentPage from './equipment/EquipmentPage';
 
 export {
    AdminPage,
@@ -14,4 +15,5 @@ export {
    ManagementPage,
    StatisticsPage,
    UsersPage,
+   EquipmentPage,
 };

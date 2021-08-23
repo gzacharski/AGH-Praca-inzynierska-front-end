@@ -8,6 +8,7 @@ import {
    ManagementPage,
    StatisticsPage,
    UsersPage,
+   EquipmentPage,
 } from 'src/main/pages/private/admin';
 
 const AdminRouteGroup = () => (
@@ -20,6 +21,9 @@ const AdminRouteGroup = () => (
       </Route>
       <Route path="/admin/configure">
          <ConfigurePage />
+      </Route>
+      <Route path="/admin/equipment">
+         <EquipmentPage />
       </Route>
       <Route path="/admin/logs">
          <LogsPage />
