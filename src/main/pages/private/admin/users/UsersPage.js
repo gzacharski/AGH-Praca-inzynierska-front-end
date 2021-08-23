@@ -94,7 +94,11 @@ const getRows = (count) => {
    return testRows;
 };
 
-const rows = getRows(100);
+const rows = getRows(981);
+
+const tableMessages = {
+   noData: 'Brak użytkowników do wyświetlenia',
+};
 
 const pagingPanelMessages = {
    showAll: 'Wszystko',
@@ -116,10 +120,10 @@ const AccountPage = () => {
                <RolesStateDataTypeProvider for={['roles']} />
                <PagingState defaultCurrentPage={0} defaultPageSize={10} />
                <IntegratedPaging />
-               <Table />
+               <Table messages={tableMessages} />
                <TableHeaderRow />
                <PagingPanel
-                  pageSizes={[5, 10, 15, 0]}
+                  pageSizes={[5, 10, 20, 50]}
                   messages={pagingPanelMessages}
                />
             </Grid>
