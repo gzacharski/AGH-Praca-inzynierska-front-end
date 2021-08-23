@@ -80,7 +80,7 @@ export const userIndividualTimetableHandler = [
       },
    ),
    rest.get(
-      `${trainingsServiceURL}/timetable/:userId/individualWorkouts`,
+      `${trainingsServiceURL}/individual/user/:userId`,
       (req, res, ctx) => {
          const { userId } = req.params;
          const startDate = req.url.searchParams.get('startDate');

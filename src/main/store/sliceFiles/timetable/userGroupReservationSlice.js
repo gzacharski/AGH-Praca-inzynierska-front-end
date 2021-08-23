@@ -9,15 +9,25 @@ import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
+import { NOTISTACK } from '../../notistack';
 
 const userGroupReservationAdapter = createEntityAdapter({});
 
 const initialState = userGroupReservationAdapter.getInitialState({
    fetchedDates: {},
    status: STATUS.IDLE,
+   notistack: NOTISTACK.SUCCESS,
    message: null,
    error: null,
 });
+
+const getNotistackVariant = (error) => {
+   const { status = 500 } = error?.response?.data;
+   let notistack = NOTISTACK.ERROR;
+   if ([400, 404].includes(status)) notistack = NOTISTACK.INFO;
+   if (status === 403) notistack = NOTISTACK.WARNING;
+   return notistack;
+};
 
 export const fetchUserGroupReservation = createAsyncThunk(
    'userGroupReservation/fetchUserGroupReservation',
@@ -30,6 +40,7 @@ export const fetchUserGroupReservation = createAsyncThunk(
          return { data, startOfWeek, endOfWeek, message };
       } catch (error) {
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -48,6 +59,7 @@ export const cancelUserGroupReservation = createAsyncThunk(
          return { message, trainingId };
       } catch (error) {
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -67,6 +79,7 @@ export const rateUserGroupEvent = createAsyncThunk(
          return { message };
       } catch (error) {
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: error?.response,
             message: error?.response?.data?.message,
          });
@@ -90,6 +103,7 @@ export const userGroupReservationSlice = createSlice({
          state.status = STATUS.SUCCEEDED;
          userGroupReservationAdapter.upsertMany(state, action.payload.data);
          state.message = action.payload.message;
+         state.notistack = NOTISTACK.SUCCESS;
          state.error = null;
          state.fetchedDates = {
             ...state.fetchedDates,
@@ -100,6 +114,7 @@ export const userGroupReservationSlice = createSlice({
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
+         state.notistack = action.payload.notistack;
       },
 
       [cancelUserGroupReservation.pending]: (state, action) => {
@@ -107,6 +122,7 @@ export const userGroupReservationSlice = createSlice({
       },
       [cancelUserGroupReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          userGroupReservationAdapter.removeOne(
             state,
             action.payload.trainingId,
@@ -118,6 +134,7 @@ export const userGroupReservationSlice = createSlice({
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
+         state.notistack = action.payload.notistack;
       },
 
       [rateUserGroupEvent.pending]: (state, action) => {
@@ -125,6 +142,7 @@ export const userGroupReservationSlice = createSlice({
       },
       [rateUserGroupEvent.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          state.message = action.payload.message;
          state.error = null;
       },
@@ -132,6 +150,7 @@ export const userGroupReservationSlice = createSlice({
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
+         state.notistack = action.payload.notistack;
       },
    },
 });
@@ -147,5 +166,6 @@ export const selectStatus = (state) => state.userGroupReservation.status;
 export const selectMessage = (state) => state.userGroupReservation.message;
 export const selectFetchedDates = (state) =>
    state.userGroupReservation.fetchedDates;
+export const selectNotistack = (state) => state.userGroupReservation.notistack;
 
 export default userGroupReservationSlice.reducer;

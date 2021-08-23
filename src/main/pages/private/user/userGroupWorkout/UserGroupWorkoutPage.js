@@ -8,6 +8,7 @@ import {
    selectFetchedDates,
    selectMessage,
    selectStatus,
+   selectNotistack,
 } from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import { UserGroupTimetable } from 'src/main/components/timetable';
@@ -22,6 +23,7 @@ const UserGroupWorkoutPage = () => {
    const message = useSelector(selectMessage);
    const fetchedDates = useSelector(selectFetchedDates);
    const context = useContext(AuthContext);
+   const notistackVariant = useSelector(selectNotistack);
 
    const { userInfo = {}, token = '' } = context.authState;
    const { userId = '' } = userInfo;
@@ -45,9 +47,8 @@ const UserGroupWorkoutPage = () => {
    }, [status, dispatch]);
 
    if (message) {
-      const variant = status === STATUS.SUCCEEDED ? 'success' : 'error';
       enqueueSnackbar(message, {
-         variant,
+         variant: notistackVariant,
          anchorOrigin: {
             vertical: 'bottom',
             horizontal: 'right',
