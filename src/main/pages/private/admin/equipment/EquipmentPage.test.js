@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen } from 'src/testUtils';
-import AdminPage from './AdminPage';
+import EquipmentPage from './EquipmentPage';
 
 describe('SettingsPage', () => {
    beforeEach(() => {
-      render(<AdminPage />);
+      render(<EquipmentPage />);
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Strona administratora')).toBeInTheDocument();
+      expect(screen.getByText('Modyfikuj sprzęt (admin)')).toBeInTheDocument();
    });
 });
