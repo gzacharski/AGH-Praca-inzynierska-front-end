@@ -68,9 +68,8 @@ const RolesStateDataTypeProvider = (props) => (
    <DataTypeProvider formatterComponent={RolesFormatter} {...props} />
 );
 
-// eslint-disable-next-line no-unused-vars
 const getTestUser = () => ({
-   userId: faker.random.uuid(),
+   userId: faker.datatype.uuid(),
    avatar: faker.internet.avatar(),
    name: faker.name.firstName(),
    surname: faker.name.lastName(),
@@ -83,7 +82,7 @@ const getTestUser = () => ({
       'employee',
       'manager',
    ]),
-   enabled: faker.random.boolean(),
+   enabled: faker.datatype.boolean(),
 });
 
 const getRows = (count) => {
