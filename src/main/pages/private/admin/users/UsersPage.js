@@ -1,7 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import faker from 'faker';
-import { Typography, Paper, Chip, Avatar, Tooltip } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useSnackbar } from 'notistack';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+   Paper,
+   Chip,
+   Avatar,
+   Tooltip,
+   LinearProgress,
+} from '@material-ui/core';
 import {
    DataTypeProvider,
    IntegratedPaging,
@@ -13,7 +20,17 @@ import {
    TableHeaderRow,
    PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
-import { PageWrapper } from 'src/main/components/utils';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
+import {
+   selectMessage,
+   selectStatus,
+   clearMessage,
+   selectNotistack,
+   selectAll,
+   fetchAdminUsersList,
+} from 'src/main/store/sliceFiles/adminSlices/usersSlice';
+import { STATUS } from 'src/main/store';
+import { useAuth } from 'src/main/auth';
 import { useStyles } from './UsersPage.styles';
 
 const columns = [
@@ -68,33 +85,6 @@ const RolesStateDataTypeProvider = (props) => (
    <DataTypeProvider formatterComponent={RolesFormatter} {...props} />
 );
 
-const getTestUser = () => ({
-   userId: faker.datatype.uuid(),
-   avatar: faker.internet.avatar(),
-   name: faker.name.firstName(),
-   surname: faker.name.lastName(),
-   email: faker.internet.email(),
-   phone: faker.phone.phoneNumber(),
-   roles: faker.random.arrayElements([
-      'user',
-      'admin',
-      'trainer',
-      'employee',
-      'manager',
-   ]),
-   enabled: faker.datatype.boolean(),
-});
-
-const getRows = (count) => {
-   const testRows = [];
-   for (let i = 0; i < count; i += 1) {
-      testRows.push(getTestUser());
-   }
-   return testRows;
-};
-
-const rows = getRows(981);
-
 const tableMessages = {
    noData: 'Brak użytkowników do wyświetlenia',
 };
@@ -106,14 +96,42 @@ const pagingPanelMessages = {
 };
 
 const AccountPage = () => {
-   const classes = useStyles;
+   const dispatch = useDispatch();
+   const status = useSelector(selectStatus);
+   const users = useSelector(selectAll);
+   const message = useSelector(selectMessage);
+   const notistackVariant = useSelector(selectNotistack);
+   const auth = useAuth();
+
+   useEffect(() => {
+      if (status === STATUS.IDLE) {
+         const { token = '' } = auth;
+         dispatch(fetchAdminUsersList({ pageNumber: 0, pageSize: 50, token }));
+      }
+   }, [status, dispatch]);
+
+   const { enqueueSnackbar } = useSnackbar();
+
+   if (message) {
+      enqueueSnackbar(message, {
+         variant: notistackVariant,
+         anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'right',
+         },
+      });
+      dispatch(clearMessage());
+   }
+
+   const shouldRenderProgress =
+      status === STATUS.IDLE || status === STATUS.LOADING;
+
    return (
       <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Użytkownicy
-         </Typography>
+         <PageTitle>Użytkownicy</PageTitle>
          <Paper>
-            <Grid rows={rows} columns={columns}>
+            {shouldRenderProgress && <LinearProgress />}
+            <Grid rows={users} columns={columns}>
                <AccountStateDataTypeProvider for={['enabled']} />
                <AvatarStateDataTypeProvider for={['avatar']} />
                <RolesStateDataTypeProvider for={['roles']} />
