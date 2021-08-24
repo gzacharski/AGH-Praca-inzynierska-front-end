@@ -8,6 +8,6 @@ describe('SettingsPage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Użytkownicy')).toBeInTheDocument();
+      expect(screen.getByText('Użytkownicy w systemie')).toBeInTheDocument();
    });
 });

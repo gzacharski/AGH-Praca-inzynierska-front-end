@@ -2,6 +2,12 @@
 import React from 'react';
 import { Typography, AppBar, Tabs, Tab, Box } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
+import {
+   ClientsSubpage,
+   EmployeesSubpage,
+   ManagersSubpage,
+   TrainersSubpage,
+} from './subpages';
 import { useStyles } from './UsersPage.styles';
 
 function TabPanel(props) {
@@ -31,7 +37,7 @@ function a11yProps(index) {
    };
 }
 
-const AccountPage = () => {
+const UsersPage = () => {
    const classes = useStyles;
    const [value, setValue] = React.useState(0);
 
@@ -55,20 +61,20 @@ const AccountPage = () => {
                </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-               Lista klientów
+               <ClientsSubpage />
             </TabPanel>
             <TabPanel value={value} index={1}>
-               Lista pracowników
+               <EmployeesSubpage />
             </TabPanel>
             <TabPanel value={value} index={2}>
-               Lista trenerów
+               <TrainersSubpage />
             </TabPanel>
             <TabPanel value={value} index={3}>
-               Lista managerów
+               <ManagersSubpage />
             </TabPanel>
          </div>
       </PageWrapper>
    );
 };
 
-export default AccountPage;
+export default UsersPage;
