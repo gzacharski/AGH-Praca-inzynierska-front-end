@@ -7,7 +7,7 @@ describe('SettingsPage', () => {
       render(<PriceListPage />);
    });
 
-   test('should contain ', () => {
+   xtest('should contain ', () => {
       expect(screen.getByText('Modyfikuj ofertę')).toBeInTheDocument();
    });
 });
