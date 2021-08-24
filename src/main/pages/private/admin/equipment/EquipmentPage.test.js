@@ -8,6 +8,8 @@ describe('SettingsPage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Modyfikuj sprzęt')).toBeInTheDocument();
+      expect(
+         screen.getByText('Zarządzaj sprzętem fitness'),
+      ).toBeInTheDocument();
    });
 });

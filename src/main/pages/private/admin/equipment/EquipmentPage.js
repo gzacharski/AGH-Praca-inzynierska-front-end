@@ -33,7 +33,7 @@ const rows = getRows(15);
 
 const EquipmentPage = () => (
    <PageWrapper>
-      <PageTitle>Modyfikuj sprzęt</PageTitle>
+      <PageTitle>Zarządzaj sprzętem fitness</PageTitle>
       <Paper>
          <EquipmentTable data={rows} />
       </Paper>
