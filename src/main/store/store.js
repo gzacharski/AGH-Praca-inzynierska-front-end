@@ -17,6 +17,7 @@ import notificationsSlice from 'src/main/store/sliceFiles/notificationsSlice';
 import messagesSlice from 'src/main/store/sliceFiles/messagesSlice';
 import adminUsersListSlice from 'src/main/store/sliceFiles/adminSlices/usersSlice';
 import clientsListSlice from 'src/main/store/sliceFiles/users/clientSlice';
+import employeesListSlice from 'src/main/store/sliceFiles/users/employeesSlice';
 
 export const reducer = {
    drawer: drawerReducer,
@@ -37,6 +38,7 @@ export const reducer = {
    messages: messagesSlice,
    adminUsersList: adminUsersListSlice,
    clientsList: clientsListSlice,
+   employeesList: employeesListSlice,
 };
 
 export default configureStore({ reducer });
