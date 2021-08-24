@@ -1,4 +1,5 @@
 import { EquipmentTable } from './equipmentTable/EquipmentTable';
 import { UsersTable } from './usersTable/UsersTable';
+import { TrainingTypeTable } from './trainingTypeTable/TrainingTypeTable';
 
-export { EquipmentTable, UsersTable };
+export { EquipmentTable, UsersTable, TrainingTypeTable };
