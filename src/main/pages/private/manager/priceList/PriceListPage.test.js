@@ -8,6 +8,6 @@ describe('SettingsPage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Modyfikuj ofertę karnetów')).toBeInTheDocument();
+      expect(screen.getByText('Modyfikuj ofertę')).toBeInTheDocument();
    });
 });

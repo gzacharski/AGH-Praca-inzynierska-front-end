@@ -8,6 +8,6 @@ describe('SettingsPage', () => {
    });
 
    test('should contain ', () => {
-      expect(screen.getByText('Modyfikuj sprzęt (admin)')).toBeInTheDocument();
+      expect(screen.getByText('Modyfikuj sprzęt')).toBeInTheDocument();
    });
 });
