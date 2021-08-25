@@ -1,29 +1,29 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Typography, Tabs, Tab, AppBar, Box } from '@material-ui/core';
+import { Tabs, Tab, AppBar } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { TrainingTypeSubpage, LocationsSubpage } from './subpages';
+import {
+   TrainingTypeSubpage,
+   LocationsSubpage,
+   GympassesSubpage,
+} from './subpages';
 import { useStyles } from './PriceListPage.styles';
 
-function TabPanel(props) {
+const TabPanel = (props) => {
    const { children, value, index, ...other } = props;
 
    return (
       <div
          role="tabpanel"
          hidden={value !== index}
-         id={`simple-tabpanel-${index}`}
-         aria-labelledby={`simple-tab-${index}`}
+         id={`tabpanel-${index}`}
+         aria-labelledby={`tab-${index}`}
          {...other}
       >
-         {value === index && (
-            <Box p={3}>
-               <Typography>{children}</Typography>
-            </Box>
-         )}
+         {value === index && <div>{children}</div>}
       </div>
    );
-}
+};
 
 function a11yProps(index) {
    return {
@@ -48,11 +48,13 @@ const AccountPage = () => {
                   value={value}
                   onChange={handleChange}
                   aria-label="simple tabs example"
+                  indicatorColor="primary"
+                  textColor="primary"
+                  centered
                >
                   <Tab label="Typy treningów" {...a11yProps(0)} />
                   <Tab label="Sale treningowe" {...a11yProps(1)} />
-                  <Tab label="Sprzęt fitness" {...a11yProps(2)} />
-                  <Tab label="Karnety" {...a11yProps(3)} />
+                  <Tab label="Karnety" {...a11yProps(2)} />
                </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
@@ -62,10 +64,7 @@ const AccountPage = () => {
                <LocationsSubpage />
             </TabPanel>
             <TabPanel value={value} index={2}>
-               Sprzęt fitness
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-               Karnety
+               <GympassesSubpage />
             </TabPanel>
          </div>
       </PageWrapper>

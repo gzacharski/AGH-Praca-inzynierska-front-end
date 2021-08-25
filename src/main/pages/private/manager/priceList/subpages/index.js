@@ -1,4 +1,5 @@
 import { TrainingTypeSubpage } from './TrainingTypesSubpage';
 import { LocationsSubpage } from './LocationsSubpage';
+import { GympassesSubpage } from './GympassesSubpage';
 
-export { TrainingTypeSubpage, LocationsSubpage };
+export { TrainingTypeSubpage, LocationsSubpage, GympassesSubpage };
