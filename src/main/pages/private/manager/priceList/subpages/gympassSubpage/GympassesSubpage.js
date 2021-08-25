@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import { LinearProgress, Paper } from '@material-ui/core';
@@ -13,12 +13,6 @@ import {
    selectAll,
    fetchManagerGympassList,
 } from 'src/main/store/sliceFiles/managerSlices/gympassSlice';
-import { RowDialogContextProvider } from 'src/main/components/contexts/RowDialogContext';
-import {
-   DeleteGympassDialog,
-   EditGympassDialog,
-   InfoGympassDialog,
-} from './dialogs';
 
 export const GympassesSubpage = () => {
    const dispatch = useDispatch();
@@ -27,8 +21,7 @@ export const GympassesSubpage = () => {
    const message = useSelector(selectMessage);
    const variant = useSelector(selectNotistack);
    const auth = useAuth();
-   const [pageNumber, setPageNumber] = useState(0);
-   const [pageSize, setPageSize] = useState(10);
+
    const { enqueueSnackbar } = useSnackbar();
 
    useEffect(() => {
@@ -53,20 +46,9 @@ export const GympassesSubpage = () => {
       status === STATUS.IDLE || status === STATUS.LOADING;
 
    return (
-      <RowDialogContextProvider>
-         <Paper>
-            {shouldRenderProgress && <LinearProgress />}
-            <GympassTable
-               data={gympasses}
-               pageNumber={pageNumber}
-               pageSize={pageSize}
-               setPageNumber={setPageNumber}
-               setPageSize={setPageSize}
-            />
-         </Paper>
-         <InfoGympassDialog />
-         <EditGympassDialog />
-         <DeleteGympassDialog />
-      </RowDialogContextProvider>
+      <Paper>
+         {shouldRenderProgress && <LinearProgress />}
+         <GympassTable data={gympasses} />
+      </Paper>
    );
 };
