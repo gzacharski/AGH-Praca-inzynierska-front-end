@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useContext } from 'react';
 import {
    Typography,
    makeStyles,
@@ -12,9 +12,13 @@ import {
    StarBorder as StarBorderIcon,
    Edit as EditIcon,
    Delete as DeleteIcon,
+   MoreVert as InfoIcon,
 } from '@material-ui/icons';
 import { DataTypeProvider } from '@devexpress/dx-react-grid';
-// import { useAuth } from 'src/main/auth';
+import {
+   RowDialogContext,
+   DIALOG_MODE,
+} from 'src/main/components/contexts/RowDialogContext';
 
 const useStyles = makeStyles({
    root: {
@@ -97,18 +101,38 @@ export const StatusStateDataTypeProvider = (props) => (
 
 const ActionFormatter = ({ row }) => {
    const { documentId = '' } = row;
+   const { setIdAndOpenDialog } = useContext(RowDialogContext);
+   const { DELETE, EDIT, INFO } = DIALOG_MODE;
+
    return (
       <div>
-         <IconButton
-            onClick={() => console.log(`Editing gympass id ${documentId}`)}
-         >
-            <EditIcon />
-         </IconButton>
-         <IconButton
-            onClick={() => console.log(`Removing gympass id ${documentId}`)}
-         >
-            <DeleteIcon />
-         </IconButton>
+         <Tooltip title="Pokaż więcej informacji" arrow>
+            <IconButton
+               onClick={() =>
+                  setIdAndOpenDialog({ id: documentId, mode: INFO })
+               }
+            >
+               <InfoIcon />
+            </IconButton>
+         </Tooltip>
+         <Tooltip title="Edytuj" arrow>
+            <IconButton
+               onClick={() =>
+                  setIdAndOpenDialog({ id: documentId, mode: EDIT })
+               }
+            >
+               <EditIcon />
+            </IconButton>
+         </Tooltip>
+         <Tooltip title="Usuń" arrow>
+            <IconButton
+               onClick={() =>
+                  setIdAndOpenDialog({ id: documentId, mode: DELETE })
+               }
+            >
+               <DeleteIcon />
+            </IconButton>
+         </Tooltip>
       </div>
    );
 };
