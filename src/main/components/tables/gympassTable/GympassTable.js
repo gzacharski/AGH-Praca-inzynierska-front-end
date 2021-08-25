@@ -3,6 +3,7 @@ import {
    IntegratedPaging,
    PagingState,
    SearchState,
+   DataTypeProvider,
 } from '@devexpress/dx-react-grid';
 import {
    Grid,
@@ -10,7 +11,7 @@ import {
    TableHeaderRow,
    PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
-import { ActionStateDataTypeProvider } from 'src/main/components/tables/utils/columnFormatters';
+import { ActionFormatter } from 'src/main/components/tables/utils/columnFormatters';
 import {
    PremiumStateDataTypeProvider,
    PriceStateDataTypeProvider,
@@ -47,6 +48,16 @@ const columnExtensions = [
    { columnName: 'subheader', wordWrapEnabled: true },
    { columnName: 'title', wordWrapEnabled: true },
 ];
+
+const ActionFormatterAdapter = ({ row }) => {
+   const { documentId = '' } = row;
+   return <ActionFormatter id={documentId} />;
+};
+
+const ActionStateDataTypeProvider = (props) => (
+   // eslint-disable-next-line react/jsx-props-no-spreading
+   <DataTypeProvider formatterComponent={ActionFormatterAdapter} {...props} />
+);
 
 export const GympassTable = ({ data }) => (
    <RowDialogContextProvider>

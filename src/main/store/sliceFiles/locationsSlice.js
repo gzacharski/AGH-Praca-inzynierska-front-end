@@ -86,7 +86,7 @@ export default locationListSlice.reducer;
 
 export const { clearMessage } = locationListSlice.actions;
 
-export const { selectAll } = locationListAdapter.getSelectors(
+export const { selectAll, selectById } = locationListAdapter.getSelectors(
    (state) => state.locationList,
 );
 
