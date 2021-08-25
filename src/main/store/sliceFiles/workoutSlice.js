@@ -86,9 +86,8 @@ export default workoutListSlice.reducer;
 
 export const { clearMessage } = workoutListSlice.actions;
 
-export const { selectAll: selectWorkouts } = workoutListAdapter.getSelectors(
-   (state) => state.workoutList,
-);
+export const { selectAll: selectWorkouts, selectById } =
+   workoutListAdapter.getSelectors((state) => state.workoutList);
 
 export const selectMessage = (state) => state.workoutList.message;
 export const selectStatus = (state) => state.workoutList.status;
