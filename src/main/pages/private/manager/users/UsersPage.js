@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Typography, AppBar, Tabs, Tab, Box } from '@material-ui/core';
+import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import {
    ClientsSubpage,
@@ -10,7 +10,7 @@ import {
 } from './subpages';
 import { useStyles } from './UsersPage.styles';
 
-function TabPanel(props) {
+const TabPanel = (props) => {
    const { children, value, index, ...other } = props;
 
    return (
@@ -21,14 +21,10 @@ function TabPanel(props) {
          aria-labelledby={`simple-tab-${index}`}
          {...other}
       >
-         {value === index && (
-            <Box p={3}>
-               <Typography>{children}</Typography>
-            </Box>
-         )}
+         {value === index && <div>{children}</div>}
       </div>
    );
-}
+};
 
 function a11yProps(index) {
    return {

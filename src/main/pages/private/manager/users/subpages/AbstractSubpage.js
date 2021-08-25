@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
-import { LinearProgress } from '@material-ui/core';
+import { LinearProgress, Paper } from '@material-ui/core';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
 import { UsersTable } from 'src/main/components/tables';
@@ -46,7 +46,7 @@ export const AbstractSubpage = ({
       status === STATUS.IDLE || status === STATUS.LOADING;
 
    return (
-      <>
+      <Paper>
          {shouldRenderProgress && <LinearProgress />}
          <UsersTable
             users={users}
@@ -55,6 +55,6 @@ export const AbstractSubpage = ({
             setPageNumber={setPageNumber}
             setPageSize={setPageSize}
          />
-      </>
+      </Paper>
    );
 };
