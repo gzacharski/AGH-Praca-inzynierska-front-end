@@ -1,3 +1,9 @@
-import { ActionStateDataTypeProvider } from './ActionColumnFormatter';
+import { ActionFormatter } from './ActionColumnFormatter';
+import { ImageStateDataTypeProvider } from './ImageColumnFormatter';
+import { AvatarStateDataTypeProvider } from './AvatarColumnFormatter';
 
-export { ActionStateDataTypeProvider };
+export {
+   ActionFormatter,
+   ImageStateDataTypeProvider,
+   AvatarStateDataTypeProvider,
+};
