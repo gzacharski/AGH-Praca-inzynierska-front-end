@@ -20,6 +20,7 @@ import clientsListSlice from 'src/main/store/sliceFiles/users/clientSlice';
 import employeesListSlice from 'src/main/store/sliceFiles/users/employeesSlice';
 import managerListSlice from 'src/main/store/sliceFiles/users/managerSlice';
 import trainersListSlice from 'src/main/store/sliceFiles/users/trainersSlice';
+import locationsSlice from './sliceFiles/locationsSlice';
 
 export const reducer = {
    drawer: drawerReducer,
@@ -43,6 +44,7 @@ export const reducer = {
    employeesList: employeesListSlice,
    managersList: managerListSlice,
    trainersList: trainersListSlice,
+   locationList: locationsSlice,
 };
 
 export default configureStore({ reducer });

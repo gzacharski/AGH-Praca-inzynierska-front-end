@@ -2,7 +2,7 @@
 import React from 'react';
 import { Typography, Tabs, Tab, AppBar, Box } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { TrainingTypeSubpage } from './subpages';
+import { TrainingTypeSubpage, LocationsSubpage } from './subpages';
 import { useStyles } from './PriceListPage.styles';
 
 function TabPanel(props) {
@@ -59,7 +59,7 @@ const AccountPage = () => {
                <TrainingTypeSubpage />
             </TabPanel>
             <TabPanel value={value} index={1}>
-               Sale treningowe
+               <LocationsSubpage />
             </TabPanel>
             <TabPanel value={value} index={2}>
                Sprzęt fitness

@@ -52,7 +52,9 @@ const UsersPage = () => {
                <Tabs
                   value={value}
                   onChange={handleChange}
-                  aria-label="simple tabs example"
+                  indicatorColor="primary"
+                  textColor="primary"
+                  centered
                >
                   <Tab label="Klienci" {...a11yProps(0)} />
                   <Tab label="Pracownicy" {...a11yProps(1)} />

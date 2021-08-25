@@ -12,11 +12,11 @@ import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../status';
 import { NOTISTACK } from '../notistack';
 
-const workoutListAdapter = createEntityAdapter({
-   selectId: (entity) => entity.trainingTypeId,
+const locationListAdapter = createEntityAdapter({
+   selectId: (entity) => entity.locationId,
 });
 
-const initialState = workoutListAdapter.getInitialState({
+const initialState = locationListAdapter.getInitialState({
    status: STATUS.IDLE,
    notistack: NOTISTACK.SUCCESS,
    message: null,
@@ -31,10 +31,10 @@ const getNotistackVariant = (error) => {
    return notistack;
 };
 
-export const fetchWorkoutList = createAsyncThunk(
-   'workoutList/fetchWorkoutList',
+export const fetchLocationList = createAsyncThunk(
+   'locationList/fetchLocationList',
    async ({ search = '' }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}/trainingType${search}`;
+      const url = `${trainingsServiceURL}/location${search}`;
 
       try {
          const response = await axios.get(url, config());
@@ -55,8 +55,8 @@ export const fetchWorkoutList = createAsyncThunk(
    },
 );
 
-const workoutListSlice = createSlice({
-   name: 'workoutList',
+const locationListSlice = createSlice({
+   name: 'locationList',
    initialState,
    reducers: {
       clearMessage(state, action) {
@@ -64,16 +64,16 @@ const workoutListSlice = createSlice({
       },
    },
    extraReducers: {
-      [fetchWorkoutList.pending]: (state, action) => {
+      [fetchLocationList.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
-      [fetchWorkoutList.fulfilled]: (state, action) => {
+      [fetchLocationList.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.notistack = NOTISTACK.SUCCESS;
-         workoutListAdapter.setAll(state, action.payload);
+         locationListAdapter.setAll(state, action.payload);
          state.error = null;
       },
-      [fetchWorkoutList.rejected]: (state, action) => {
+      [fetchLocationList.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
@@ -82,15 +82,15 @@ const workoutListSlice = createSlice({
    },
 });
 
-export default workoutListSlice.reducer;
+export default locationListSlice.reducer;
 
-export const { clearMessage } = workoutListSlice.actions;
+export const { clearMessage } = locationListSlice.actions;
 
-export const { selectAll: selectWorkouts } = workoutListAdapter.getSelectors(
-   (state) => state.workoutList,
+export const { selectAll } = locationListAdapter.getSelectors(
+   (state) => state.locationList,
 );
 
-export const selectMessage = (state) => state.workoutList.message;
-export const selectStatus = (state) => state.workoutList.status;
-export const selectError = (state) => state.workoutList.error;
-export const selectNotistack = (state) => state.workoutList.notistack;
+export const selectMessage = (state) => state.locationList.message;
+export const selectStatus = (state) => state.locationList.status;
+export const selectError = (state) => state.locationList.error;
+export const selectNotistack = (state) => state.locationList.notistack;
