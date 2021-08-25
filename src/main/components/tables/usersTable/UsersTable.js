@@ -1,16 +1,22 @@
 import React from 'react';
-import { IntegratedPaging, PagingState } from '@devexpress/dx-react-grid';
+import {
+   IntegratedPaging,
+   PagingState,
+   DataTypeProvider,
+} from '@devexpress/dx-react-grid';
 import {
    Grid,
    Table,
    TableHeaderRow,
    PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
+import { ActionFormatter } from 'src/main/components/tables/utils/columnFormatters';
+import { RowDialogContextProvider } from 'src/main/components/contexts/RowDialogContext';
 import {
    AccountStateDataTypeProvider,
-   AvatarStateDataTypeProvider,
    RolesStateDataTypeProvider,
-} from './formatters';
+   AvatarStateDataTypeProvider,
+} from './formatters/index';
 
 const columns = [
    { name: 'userId', title: 'ID' },
@@ -21,6 +27,7 @@ const columns = [
    { name: 'phone', title: 'Telefon' },
    { name: 'roles', title: 'Przypisane role' },
    { name: 'enabled', title: 'Stan konta' },
+   { name: '_action', title: 'Akcja' },
 ];
 
 const tableMessages = {
@@ -33,6 +40,16 @@ const pagingPanelMessages = {
    info: '{from} do {to} z {count}',
 };
 
+const ActionFormatterAdapter = ({ row }) => {
+   const { trainingTypeId = '' } = row;
+   return <ActionFormatter id={trainingTypeId} />;
+};
+
+const ActionStateDataTypeProvider = (props) => (
+   // eslint-disable-next-line react/jsx-props-no-spreading
+   <DataTypeProvider formatterComponent={ActionFormatterAdapter} {...props} />
+);
+
 export const UsersTable = ({
    users,
    pageNumber,
@@ -40,19 +57,25 @@ export const UsersTable = ({
    setPageNumber,
    setPageSize,
 }) => (
-   <Grid rows={users} columns={columns}>
-      <AccountStateDataTypeProvider for={['enabled']} />
-      <AvatarStateDataTypeProvider for={['avatar']} />
-      <RolesStateDataTypeProvider for={['roles']} />
-      <PagingState
-         currentPage={pageNumber}
-         pageSize={pageSize}
-         onCurrentPageChange={setPageNumber}
-         onPageSizeChange={setPageSize}
-      />
-      <IntegratedPaging />
-      <Table messages={tableMessages} />
-      <TableHeaderRow />
-      <PagingPanel pageSizes={[5, 10, 20, 50]} messages={pagingPanelMessages} />
-   </Grid>
+   <RowDialogContextProvider>
+      <Grid rows={users} columns={columns}>
+         <AccountStateDataTypeProvider for={['enabled']} />
+         <AvatarStateDataTypeProvider for={['avatar']} />
+         <RolesStateDataTypeProvider for={['roles']} />
+         <ActionStateDataTypeProvider for={['_action']} />
+         <PagingState
+            currentPage={pageNumber}
+            pageSize={pageSize}
+            onCurrentPageChange={setPageNumber}
+            onPageSizeChange={setPageSize}
+         />
+         <IntegratedPaging />
+         <Table messages={tableMessages} />
+         <TableHeaderRow />
+         <PagingPanel
+            pageSizes={[5, 10, 20, 50]}
+            messages={pagingPanelMessages}
+         />
+      </Grid>
+   </RowDialogContextProvider>
 );
