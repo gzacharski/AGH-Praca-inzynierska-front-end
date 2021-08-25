@@ -1,26 +1,22 @@
 import React from 'react';
-import {
-   IntegratedPaging,
-   PagingState,
-   DataTypeProvider,
-} from '@devexpress/dx-react-grid';
+import { IntegratedPaging, PagingState } from '@devexpress/dx-react-grid';
 import {
    Grid,
    Table,
    TableHeaderRow,
    PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
-import { ActionFormatter } from 'src/main/components/tables/utils/columnFormatters';
 import { RowDialogContextProvider } from 'src/main/components/contexts/RowDialogContext';
 import {
    AccountStateDataTypeProvider,
    RolesStateDataTypeProvider,
    AvatarStateDataTypeProvider,
+   ActionStateDataTypeProvider,
 } from './formatters/index';
+import { InfoTrainingTypeDialog } from './dialogs';
 
 const columns = [
-   { name: 'userId', title: 'ID' },
-   { name: 'avatar', title: 'Zdjęcie profilowe' },
+   { name: 'avatar', title: 'Zdjęcie' },
    { name: 'name', title: 'Imię' },
    { name: 'surname', title: 'Nazwisko' },
    { name: 'email', title: 'Email' },
@@ -39,16 +35,6 @@ const pagingPanelMessages = {
    rowsPerPage: 'Ilość wierszy na stronę',
    info: '{from} do {to} z {count}',
 };
-
-const ActionFormatterAdapter = ({ row }) => {
-   const { trainingTypeId = '' } = row;
-   return <ActionFormatter id={trainingTypeId} />;
-};
-
-const ActionStateDataTypeProvider = (props) => (
-   // eslint-disable-next-line react/jsx-props-no-spreading
-   <DataTypeProvider formatterComponent={ActionFormatterAdapter} {...props} />
-);
 
 export const UsersTable = ({
    users,
@@ -77,5 +63,6 @@ export const UsersTable = ({
             messages={pagingPanelMessages}
          />
       </Grid>
+      <InfoTrainingTypeDialog />
    </RowDialogContextProvider>
 );
