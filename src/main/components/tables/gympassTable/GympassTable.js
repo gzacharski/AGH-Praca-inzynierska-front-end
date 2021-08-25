@@ -16,7 +16,7 @@ import {
    PriceStateDataTypeProvider,
    SubheaderStateDataTypeProvider,
    StatusStateDataTypeProvider,
-} from './formatters';
+} from 'src/main/components/tables/gympassTable/formatters';
 
 const tableMessages = {
    noData: 'Brak danych na temat karnetów do wyświetlenia',
