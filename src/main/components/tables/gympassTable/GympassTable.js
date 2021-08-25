@@ -10,12 +10,12 @@ import {
    TableHeaderRow,
    PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
+import { ActionStateDataTypeProvider } from 'src/main/components/tables/utils/columnFormatters';
 import {
    PremiumStateDataTypeProvider,
    PriceStateDataTypeProvider,
    SubheaderStateDataTypeProvider,
    StatusStateDataTypeProvider,
-   ActionStateDataTypeProvider,
 } from './formatters';
 
 const tableMessages = {
