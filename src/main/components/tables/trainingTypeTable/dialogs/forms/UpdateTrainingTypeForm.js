@@ -7,20 +7,9 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardTimePicker } from '@material-ui/pickers';
 import { parse, format } from 'date-fns';
-import {
-   Avatar,
-   Typography,
-   Grid,
-   TextField,
-   Select,
-   FormControl,
-   InputLabel,
-   MenuItem,
-   Button,
-} from '@material-ui/core';
+import { Grid, TextField, Button } from '@material-ui/core';
 import { updateTrainingType } from 'src/main/store/sliceFiles/workoutSlice';
 import {
-   selectAll as selectAllTrainers,
    fetchTrainersList,
    selectStatus,
 } from 'src/main/store/sliceFiles/users/trainersSlice';
@@ -39,15 +28,14 @@ const validationSchema = Yup.object({
 
 export const UpdateTrainingTypeForm = ({
    trainingTypeId,
-   title,
-   image,
-   description,
-   trainer,
-   duration,
+   title = '',
+   image = '',
+   description = '',
+   duration = '',
    onCloseCallback,
+   readOnly = false,
 }) => {
    const classes = useStyles();
-   const trainers = useSelector(selectAllTrainers);
    const dispatch = useDispatch();
    const status = useSelector(selectStatus);
    const [selectedDuration, handleDurationChange] = useState(
@@ -87,7 +75,6 @@ export const UpdateTrainingTypeForm = ({
          trainingTypeId,
          title,
          description,
-         trainerId: trainer.userId,
       },
       validationSchema,
       onSubmit: (values) => {
@@ -98,7 +85,6 @@ export const UpdateTrainingTypeForm = ({
                trainingTypeId: values?.trainingTypeId,
                name: values?.title,
                description: values?.description,
-               trainerId: values?.trainerId,
                duration: format(selectedDuration, 'HH:mm:ss.SSS'),
                token,
             }),
@@ -145,63 +131,68 @@ export const UpdateTrainingTypeForm = ({
                         />
                      )}
                   </Grid>
-                  <Grid xs={6}>
-                     <input
-                        accept="image/jpeg, image/png"
-                        className={classes.input}
-                        id="icon-button-file"
-                        type="file"
-                        onChange={handleFileChange}
-                     />
-                     <label htmlFor="icon-button-file">
-                        <Button
-                           component="span"
-                           variant="outlined"
-                           color="primary"
-                           fullWidth
-                           style={{ marginTop: '8px' }}
-                        >
-                           Wybierz zdjęcie
-                        </Button>
-                     </label>
-                  </Grid>
-                  <Grid xs={6}>
-                     {editingState ? (
-                        <Button
-                           variant="outlined"
-                           color="primary"
-                           fullWidth
-                           style={{ marginTop: '8px' }}
-                           onClick={() => {
-                              setEditingState(false);
-                              showCroppedImage();
-                           }}
-                        >
-                           Przytnij
-                        </Button>
-                     ) : (
-                        <Button
-                           variant="outlined"
-                           color="primary"
-                           fullWidth
-                           style={{ marginTop: '8px' }}
-                           onClick={() => setEditingState(true)}
-                           disabled={imageToUpdate === null}
-                        >
-                           Edytuj
-                        </Button>
-                     )}
-                  </Grid>
+                  {!readOnly && (
+                     <>
+                        <Grid xs={6}>
+                           <input
+                              accept="image/jpeg, image/png"
+                              className={classes.input}
+                              id="icon-button-file"
+                              type="file"
+                              onChange={handleFileChange}
+                           />
+                           <label htmlFor="icon-button-file">
+                              <Button
+                                 component="span"
+                                 variant="outlined"
+                                 color="primary"
+                                 fullWidth
+                                 style={{ marginTop: '8px' }}
+                              >
+                                 Wybierz zdjęcie
+                              </Button>
+                           </label>
+                        </Grid>
+                        <Grid xs={6}>
+                           {editingState ? (
+                              <Button
+                                 variant="outlined"
+                                 color="primary"
+                                 fullWidth
+                                 style={{ marginTop: '8px' }}
+                                 onClick={() => {
+                                    setEditingState(false);
+                                    showCroppedImage();
+                                 }}
+                              >
+                                 Przytnij
+                              </Button>
+                           ) : (
+                              <Button
+                                 variant="outlined"
+                                 color="primary"
+                                 fullWidth
+                                 style={{ marginTop: '8px' }}
+                                 onClick={() => setEditingState(true)}
+                                 disabled={imageToUpdate === null}
+                              >
+                                 Edytuj
+                              </Button>
+                           )}
+                        </Grid>
+                     </>
+                  )}
                </Grid>
             </Grid>
             <Grid item xs={12} md={6}>
                <Grid container justifyContent="space-between">
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={6}>
                      <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
+                        disabled={readOnly}
                         id="title"
                         label="Tytuł"
                         name="title"
@@ -217,6 +208,24 @@ export const UpdateTrainingTypeForm = ({
                         helperText={formik.touched.title && formik.errors.title}
                      />
                   </Grid>
+                  <Grid item xs={12} sm={6}>
+                     <KeyboardTimePicker
+                        variant="inline"
+                        label="Czas trwania"
+                        views={['hours', 'minutes']}
+                        minutesStep={5}
+                        disabled={readOnly}
+                        openTo="minutes"
+                        format="HH:mm:ss"
+                        ampm={false}
+                        value={selectedDuration}
+                        inputVariant="outlined"
+                        margin="normal"
+                        fullWidth
+                        styles={{ height: '100%' }}
+                        onChange={handleDurationChange}
+                     />
+                  </Grid>
                   <Grid item xs={12}>
                      <TextField
                         variant="outlined"
@@ -227,7 +236,8 @@ export const UpdateTrainingTypeForm = ({
                         label="Opis"
                         name="description"
                         multiline
-                        rows={4}
+                        disabled={readOnly}
+                        rows={6}
                         type="text"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -242,68 +252,20 @@ export const UpdateTrainingTypeForm = ({
                         }
                      />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                     <FormControl variant="outlined" fullWidth margin="normal">
-                        <InputLabel id="select-trainer-label">
-                           Wybierz trenera
-                        </InputLabel>
-                        <Select
-                           label="Wybierz trenera"
+                  {!readOnly && (
+                     <Grid item xs={12}>
+                        <Button
+                           type="submit"
                            variant="outlined"
-                           required
+                           color="primary"
                            fullWidth
-                           id="trainerId"
-                           labelId="select-trainer-label"
-                           name="trainerId"
-                           value={formik.values.trainerId}
-                           onChange={formik.handleChange}
+                           style={{ marginTop: '5px' }}
+                           disabled={editingState}
                         >
-                           <MenuItem
-                              value={trainer?.userId}
-                           >{`${trainer?.name} ${trainer?.surname}`}</MenuItem>
-                           {trainers.map((user) => (
-                              <MenuItem key={user?.userId} value={user?.userId}>
-                                 <div className={classes.menuItem}>
-                                    <Avatar
-                                       className={classes.avatar}
-                                       src={user?.avatar}
-                                    >{`${user?.name?.[0]}${user?.surname?.[0]}`}</Avatar>
-                                    <Typography>{`${user?.name} ${user?.surname}`}</Typography>
-                                 </div>
-                              </MenuItem>
-                           ))}
-                        </Select>
-                     </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={5}>
-                     <KeyboardTimePicker
-                        variant="inline"
-                        label="Czas trwania"
-                        views={['hours', 'minutes']}
-                        minutesStep={5}
-                        openTo="minutes"
-                        format="HH:mm:ss"
-                        ampm={false}
-                        value={selectedDuration}
-                        inputVariant="outlined"
-                        margin="normal"
-                        fullWidth
-                        styles={{ height: '100%' }}
-                        onChange={handleDurationChange}
-                     />
-                  </Grid>
-                  <Grid item xs={12}>
-                     <Button
-                        type="submit"
-                        variant="outlined"
-                        color="primary"
-                        fullWidth
-                        style={{ marginTop: '5px' }}
-                        disabled={editingState}
-                     >
-                        Zapisz zmiany
-                     </Button>
-                  </Grid>
+                           Zapisz zmiany
+                        </Button>
+                     </Grid>
+                  )}
                </Grid>
             </Grid>
          </Grid>
