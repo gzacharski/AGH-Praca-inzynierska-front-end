@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext } from 'react';
-import { IconButton } from '@material-ui/core';
-import { Add as AddIcon } from '@material-ui/icons';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { AddCircle as AddIcon } from '@material-ui/icons';
 import {
    IntegratedPaging,
    PagingState,
@@ -63,14 +63,14 @@ const HeaderCell = ({ column, ...restProps }) => {
       return (
          <TableHeaderRow.Cell {...restProps}>
             <span>{column.title}</span>
-            <IconButton
-               variant="contained"
-               color="primary"
-               onClick={openAddDialog}
-               style={{ marginLeft: '30px' }}
-            >
-               <AddIcon />
-            </IconButton>
+            <Tooltip title="Dodaj nowy typ treningu" arrow>
+               <IconButton
+                  onClick={openAddDialog}
+                  style={{ marginLeft: '30px' }}
+               >
+                  <AddIcon />
+               </IconButton>
+            </Tooltip>
          </TableHeaderRow.Cell>
       );
    }
