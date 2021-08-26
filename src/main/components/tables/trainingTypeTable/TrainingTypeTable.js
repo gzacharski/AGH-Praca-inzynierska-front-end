@@ -25,10 +25,8 @@ import {
 const columns = [
    // { name: 'trainingTypeId', title: 'ID' },
    { name: 'image', title: 'Zdjęcie' },
-   { name: 'title', title: 'Nazwa' },
-   { name: 'trainer', title: 'Prowadzący zajęcia' },
+   { name: 'name', title: 'Nazwa' },
    { name: 'duration', title: 'Czas trwania' },
-   { name: 'rating', title: 'Ocena' },
    { name: '_action', title: 'Akcja' },
 ];
 
