@@ -9,6 +9,8 @@ import {
    RowDialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/RowDialogContext';
+import { createTrainingType } from 'src/main/store/sliceFiles/workoutSlice';
+import { TrainingTypeForm } from './forms/TrainingTypeForm';
 
 export const AddTrainingTypeDialog = () => {
    const { dialogState, closeDialog } = useContext(RowDialogContext);
@@ -24,7 +26,12 @@ export const AddTrainingTypeDialog = () => {
                Dodaj nowy typ treningu
             </Typography>
          </DialogTitle>
-         <DialogContent>Test</DialogContent>
+         <DialogContent>
+            <TrainingTypeForm
+               onCloseCallback={closeDialog}
+               onSubmitReduxCallback={createTrainingType}
+            />
+         </DialogContent>
       </Dialog>
    );
 };

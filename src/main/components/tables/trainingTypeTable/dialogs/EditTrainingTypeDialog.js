@@ -6,7 +6,10 @@ import {
    DialogContent,
    Typography,
 } from '@material-ui/core';
-import { selectById } from 'src/main/store/sliceFiles/workoutSlice';
+import {
+   selectById,
+   updateTrainingType,
+} from 'src/main/store/sliceFiles/workoutSlice';
 import {
    RowDialogContext,
    DIALOG_MODE,
@@ -46,6 +49,7 @@ export const EditTrainingTypeDialog = () => {
                trainer={trainer}
                trainingTypeId={trainingTypeId}
                onCloseCallback={closeDialog}
+               onSubmitReduxCallback={updateTrainingType}
             />
          </DialogContent>
       </Dialog>

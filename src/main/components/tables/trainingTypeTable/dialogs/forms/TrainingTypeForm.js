@@ -1,19 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import Image from 'material-ui-image';
 import Cropper from 'react-easy-crop';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { KeyboardTimePicker } from '@material-ui/pickers';
 import { parse, format } from 'date-fns';
 import { Grid, TextField, Button } from '@material-ui/core';
-import { updateTrainingType } from 'src/main/store/sliceFiles/workoutSlice';
-import {
-   fetchTrainersList,
-   selectStatus,
-} from 'src/main/store/sliceFiles/users/trainersSlice';
-import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
 import getCroppedImg from './cropImage';
 import { useStyles } from './TrainingTypeForm.styles';
@@ -21,23 +15,22 @@ import { useStyles } from './TrainingTypeForm.styles';
 const isNotEmpty = (text) => text && text.length !== 0;
 
 const validationSchema = Yup.object({
-   trainingTypeId: Yup.string().required('Pole jest wymagane'),
-   title: Yup.string().required(),
+   title: Yup.string().required('Pole jest wymagane'),
    description: Yup.string().required('Pole jest wymagane'),
 });
 
 export const TrainingTypeForm = ({
-   trainingTypeId,
+   trainingTypeId = '',
    title = '',
    image = '',
    description = '',
-   duration = '',
-   onCloseCallback,
+   duration = '0:30:00',
+   onCloseCallback = () => false,
    readOnly = false,
+   onSubmitReduxCallback = () => false,
 }) => {
    const classes = useStyles();
    const dispatch = useDispatch();
-   const status = useSelector(selectStatus);
    const [selectedDuration, handleDurationChange] = useState(
       parse(duration, 'HH:mm:ss', 0),
    );
@@ -80,7 +73,7 @@ export const TrainingTypeForm = ({
       onSubmit: (values) => {
          onCloseCallback();
          dispatch(
-            updateTrainingType({
+            onSubmitReduxCallback({
                file: croppedImage,
                trainingTypeId: values?.trainingTypeId,
                name: values?.title,
@@ -91,12 +84,6 @@ export const TrainingTypeForm = ({
          );
       },
    });
-
-   useEffect(() => {
-      if (status === STATUS.IDLE) {
-         dispatch(fetchTrainersList({ token }));
-      }
-   }, [status, dispatch]);
 
    const handleFileChange = (event) => {
       setImageToUpdate(URL.createObjectURL(event.target.files[0]));

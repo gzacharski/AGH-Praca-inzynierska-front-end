@@ -63,17 +63,9 @@ export const fetchWorkoutList = createAsyncThunk(
 );
 
 export const createTrainingType = createAsyncThunk(
-   'workoutList/updateTrainingType',
+   'workoutList/createTrainingType',
    async (
-      {
-         file = '',
-         trainingTypeId = '',
-         title = '',
-         description = '',
-         trainerId = '',
-         selectedDate = '',
-         token = '',
-      },
+      { file = '', name = '', description = '', duration = '', token = '' },
       { rejectWithValue },
    ) => {
       const url = `${trainingsServiceURL}/trainingType`;
@@ -87,20 +79,46 @@ export const createTrainingType = createAsyncThunk(
       };
 
       const body = {
-         name: title,
+         name,
          description,
-         duration: selectedDate,
-         trainerId,
+         duration,
       };
       const formData = new FormData();
-      if (file) {
-         formData.append('image', file);
+      try {
+         if (file) {
+            const blob = await fetch(file).then((r) => r.blob());
+            formData.append(
+               'image',
+               new File([blob], 'trainingType', {
+                  lastModified: new Date().getTime(),
+                  type: 'image/jpeg',
+               }),
+            );
+         }
+         formData.append(
+            'body',
+            new Blob([JSON.stringify(body)], { type: 'application/json' }),
+         );
+      } catch (error) {
+         return rejectWithValue({
+            notistack: getNotistackVariant(500),
+            message: error.message,
+         });
       }
-      formData.append('body', JSON.stringify(body));
 
       try {
-         const response = await axios.put(url, formData, config);
-         return response.data;
+         const response = await axios.post(url, formData, config);
+         const {
+            message = '',
+            trainingType = {
+               trainingTypeId: '',
+               name: '',
+               description: '',
+               duration: '',
+               image: '',
+            },
+         } = response?.data;
+         return { message, trainingType };
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
@@ -125,7 +143,6 @@ export const updateTrainingType = createAsyncThunk(
          trainingTypeId = '',
          name = '',
          description = '',
-         trainerId = '',
          duration = '',
          token = '',
       },
@@ -145,7 +162,6 @@ export const updateTrainingType = createAsyncThunk(
          name,
          description,
          duration,
-         trainerId,
       };
       const formData = new FormData();
       try {
@@ -182,7 +198,6 @@ export const updateTrainingType = createAsyncThunk(
                image: '',
             },
          } = response?.data;
-         console.log(response);
          return { message, trainingType };
       } catch (error) {
          if (error.response === undefined) {
@@ -219,6 +234,23 @@ const workoutListSlice = createSlice({
          state.error = null;
       },
       [fetchWorkoutList.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [createTrainingType.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [createTrainingType.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         workoutListAdapter.upsertOne(state, action.payload.trainingType);
+         state.error = null;
+      },
+      [createTrainingType.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
