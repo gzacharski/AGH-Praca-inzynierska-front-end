@@ -1,6 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { useFormik } from 'formik';
 import ChipInput from 'material-ui-chip-input';
@@ -153,12 +151,12 @@ export const GympassForm = ({
                   <FormControlLabel
                      control={
                         <Switch
-                           value={formik.values.isPremium}
+                           disabled={readOnly}
+                           checked={formik.values.isPremium}
                            onChange={handleSwitchChange}
                         />
                      }
                      label="Karnet premium"
-                     s
                   />
                </div>
             </Grid>

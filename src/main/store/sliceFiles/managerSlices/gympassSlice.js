@@ -26,7 +26,7 @@ const initialState = managerGympassAdapter.getInitialState({
 const getNotistackVariant = (error) => {
    const { status = 500 } = error?.response?.data;
    let notistack = NOTISTACK.ERROR;
-   if (status === 403) notistack = NOTISTACK.WARNING;
+   if ([400, 403, 409].includes(status)) notistack = NOTISTACK.WARNING;
    if (status === 404) notistack = NOTISTACK.INFO;
    return notistack;
 };
@@ -82,18 +82,88 @@ export const addGympass = createAsyncThunk(
                amount,
                currency,
                period,
-               isPremium,
+               isPremium: Boolean(isPremium),
                synopsis,
                features,
             },
             config(token),
          );
-         console.log(response);
          const { message = '', gymPass = '' } = response?.data || {};
          return { message, gymPass };
       } catch (error) {
-         console.log(error.response);
-         console.log(error.response?.data?.message);
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data || '',
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const editGympass = createAsyncThunk(
+   'managerGympassList/editGympass',
+   async (
+      {
+         documentId = '',
+         title = '',
+         subheader = '',
+         amount = 0,
+         currency = '',
+         period = '',
+         isPremium = false,
+         synopsis = '',
+         features = [],
+         token = '',
+      },
+      { rejectWithValue },
+   ) => {
+      const url = `${gymPassServiceURL}/offer/${documentId}`;
+      const body = {
+         title,
+         subheader,
+         amount,
+         currency,
+         period,
+         isPremium,
+         synopsis,
+         features,
+      };
+      try {
+         const response = await axios.put(url, body, config(token));
+         const { message = '', gymPass = '' } = response?.data || {};
+         return { message, gymPass };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data || '',
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const deleteGympass = createAsyncThunk(
+   'managerGympassList/deleteGympass',
+   async ({ documentId = '', token = '' }, { rejectWithValue }) => {
+      const url = `${gymPassServiceURL}/offer/${documentId}`;
+
+      try {
+         const response = await axios.delete(url, config(token));
+         const { message = '', gymPass = '' } = response?.data || {};
+         return { message, gymPass };
+      } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
                error: error?.response?.data || '',
@@ -145,6 +215,43 @@ const managerGympassListSlice = createSlice({
          state.error = null;
       },
       [addGympass.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [editGympass.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [editGympass.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         managerGympassAdapter.upsertOne(state, action.payload.gymPass);
+         state.error = null;
+      },
+      [editGympass.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [deleteGympass.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [deleteGympass.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         managerGympassAdapter.removeOne(
+            state,
+            action.payload.gymPass.documentId,
+         );
+         state.error = null;
+      },
+      [deleteGympass.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
