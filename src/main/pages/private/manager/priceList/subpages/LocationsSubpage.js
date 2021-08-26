@@ -20,15 +20,15 @@ export const LocationsSubpage = () => {
    const locations = useSelector(selectAll);
    const message = useSelector(selectMessage);
    const notistackVariant = useSelector(selectNotistack);
-   const auth = useAuth();
+   const { authState = {} } = useAuth();
    const [pageNumber, setPageNumber] = useState(0);
    const [pageSize, setPageSize] = useState(10);
    const { enqueueSnackbar } = useSnackbar();
 
    useEffect(() => {
       if (status === STATUS.IDLE) {
-         const { token = '' } = auth;
-         dispatch(fetchLocationList({ pageNumber, pageSize, token }));
+         const { token = '' } = authState;
+         dispatch(fetchLocationList({ token }));
       }
    }, [status, dispatch]);
 

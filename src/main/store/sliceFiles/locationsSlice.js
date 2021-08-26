@@ -33,12 +33,18 @@ const getNotistackVariant = (error) => {
 
 export const fetchLocationList = createAsyncThunk(
    'locationList/fetchLocationList',
-   async ({ search = '' }, { rejectWithValue }) => {
-      const url = `${trainingsServiceURL}/location${search}`;
+   async ({ token = '' }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/location`;
 
       try {
-         const response = await axios.get(url, config());
-         return response.data;
+         const response = await axios.get(url, {
+            headers: {
+               'Accept-Language': 'pl',
+               'Content-Type': 'application/json',
+               Authorization: token,
+            },
+         });
+         return response?.data || [];
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
@@ -84,6 +90,63 @@ export const addLocation = createAsyncThunk(
    },
 );
 
+export const updateLocation = createAsyncThunk(
+   'locationList/addLocation',
+   async (
+      { locationId = '', name = '', description = '', token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${trainingsServiceURL}/location/${locationId}`;
+
+      try {
+         const response = await axios.put(
+            url,
+            { name, description },
+            config(token),
+         );
+         const { message = '', location = '' } = response?.data || {};
+         return { message, location };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data || '',
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const deleteLocation = createAsyncThunk(
+   'locationList/deleteLocation',
+   async ({ locationId = '', token = '' }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/location/${locationId}`;
+
+      try {
+         const response = await axios.delete(url, config(token));
+         const { message = '', location = '' } = response?.data || {};
+         return { message, location };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data || '',
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const locationListSlice = createSlice({
    name: 'locationList',
    initialState,
@@ -99,7 +162,7 @@ const locationListSlice = createSlice({
       [fetchLocationList.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.notistack = NOTISTACK.SUCCESS;
-         locationListAdapter.setAll(state, action.payload);
+         locationListAdapter.upsertMany(state, action.payload);
          state.error = null;
       },
       [fetchLocationList.rejected]: (state, action) => {
@@ -120,6 +183,26 @@ const locationListSlice = createSlice({
          state.error = null;
       },
       [addLocation.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [deleteLocation.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [deleteLocation.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         locationListAdapter.removeOne(
+            state,
+            action.payload.location.locationId,
+         );
+         state.error = null;
+      },
+      [deleteLocation.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;

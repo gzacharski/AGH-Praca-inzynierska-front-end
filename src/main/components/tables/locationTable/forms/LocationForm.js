@@ -35,12 +35,6 @@ export const LocationForm = ({
       validationSchema,
       onSubmit: (values) => {
          onCloseCallback();
-         console.log({
-            locationId: values?.locationId || '',
-            name: values?.name || '',
-            description: values?.description || '',
-            token,
-         });
          dispatch(
             onSubmitReduxCallback({
                locationId: values?.locationId || '',
