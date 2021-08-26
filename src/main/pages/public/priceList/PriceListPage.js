@@ -18,7 +18,7 @@ import { useStyles } from './PriceListPage.styles';
 const ShowPriceList = ({ gymPasses }) => (
    <Grid container spacing={5} justifyContent="center" alignItems="center">
       {gymPasses.map((gymPass) => (
-         <Grid item key={gymPass.id} xs={12} sm={6} md={4} lg={3}>
+         <Grid item key={gymPass.documentId} xs={12} sm={6} md={4} lg={3}>
             <PriceListCard gymPass={gymPass} />
          </Grid>
       ))}
