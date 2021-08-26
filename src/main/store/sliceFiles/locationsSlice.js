@@ -55,6 +55,35 @@ export const fetchLocationList = createAsyncThunk(
    },
 );
 
+export const addLocation = createAsyncThunk(
+   'locationList/addLocation',
+   async ({ name = '', description = '', token = '' }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/location`;
+
+      try {
+         const response = await axios.post(
+            url,
+            { name, description },
+            config(token),
+         );
+         const { message = '', location = '' } = response?.data || {};
+         return { message, location };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data || '',
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const locationListSlice = createSlice({
    name: 'locationList',
    initialState,
@@ -74,6 +103,23 @@ const locationListSlice = createSlice({
          state.error = null;
       },
       [fetchLocationList.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [addLocation.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [addLocation.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         locationListAdapter.upsertOne(state, action.payload.location);
+         state.error = null;
+      },
+      [addLocation.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;

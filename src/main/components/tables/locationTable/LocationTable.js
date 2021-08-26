@@ -1,4 +1,7 @@
-import React from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useContext } from 'react';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { AddCircle as AddIcon } from '@material-ui/icons';
 import {
    IntegratedPaging,
    PagingState,
@@ -15,8 +18,13 @@ import {
    ImageStateDataTypeProvider,
    ActionFormatter,
 } from 'src/main/components/tables/utils/columnFormatters';
-import { RowDialogContextProvider } from 'src/main/components/contexts/RowDialogContext';
+import { SubheaderStateDataTypeProvider } from 'src/main/components/tables/gympassTable/formatters/SubheaderColumnFormatter';
 import {
+   RowDialogContextProvider,
+   RowDialogContext,
+} from 'src/main/components/contexts/RowDialogContext';
+import {
+   AddLocationDialog,
    DeleteLocationDialog,
    EditLocationDialog,
    InfoLocationDialog,
@@ -34,7 +42,6 @@ const pagingPanelMessages = {
 
 const columns = [
    { name: 'name', title: 'Nazwa' },
-   { name: 'image', title: 'Zdjęcie' },
    { name: 'area', title: 'Powierzchnia' },
    { name: 'description', title: 'Opis/Uwagi' },
    { name: '_action', title: 'Akcja' },
@@ -50,19 +57,41 @@ const ActionStateDataTypeProvider = (props) => (
    <DataTypeProvider formatterComponent={ActionFormatterAdapter} {...props} />
 );
 
+const HeaderCell = ({ column, ...restProps }) => {
+   const { openAddDialog } = useContext(RowDialogContext);
+   if (column.name === '_action') {
+      return (
+         <TableHeaderRow.Cell {...restProps}>
+            <span>{column.title}</span>
+            <Tooltip title="Dodaj nową salę treningową" arrow>
+               <IconButton
+                  onClick={openAddDialog}
+                  style={{ marginLeft: '30px' }}
+               >
+                  <AddIcon />
+               </IconButton>
+            </Tooltip>
+         </TableHeaderRow.Cell>
+      );
+   }
+   return <TableHeaderRow.Cell {...restProps} />;
+};
+
 export const LocationTable = ({ data }) => (
    <RowDialogContextProvider>
       <Grid rows={data} columns={columns}>
          <ImageStateDataTypeProvider for={['image']} />
          <ActionStateDataTypeProvider for={['_action']} />
+         <SubheaderStateDataTypeProvider for={['description', 'area']} />
 
          <PagingState defaultCurrentPage={0} defaultPageSize={10} />
          <SearchState defaultValue="" />
          <IntegratedPaging />
          <Table messages={tableMessages} />
-         <TableHeaderRow />
+         <TableHeaderRow cellComponent={HeaderCell} />
          <PagingPanel pageSizes={[5, 10, 0]} messages={pagingPanelMessages} />
       </Grid>
+      <AddLocationDialog />
       <DeleteLocationDialog />
       <EditLocationDialog />
       <InfoLocationDialog />
