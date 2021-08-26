@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardTimePicker } from '@material-ui/pickers';
-import { parse } from 'date-fns';
+import { parse, format } from 'date-fns';
 import {
    Avatar,
    Dialog,
@@ -23,7 +23,10 @@ import {
    MenuItem,
    Button,
 } from '@material-ui/core';
-import { selectById } from 'src/main/store/sliceFiles/workoutSlice';
+import {
+   selectById,
+   updateTrainingType,
+} from 'src/main/store/sliceFiles/workoutSlice';
 import {
    selectAll as selectAllTrainers,
    fetchTrainersList,
@@ -57,6 +60,9 @@ const useStyles = makeStyles(({ spacing }) => ({
       position: 'relative',
       height: '313px',
    },
+   image: {
+      height: '313px',
+   },
 }));
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -65,7 +71,6 @@ const validationSchema = Yup.object({
    trainingTypeId: Yup.string().required('Pole jest wymagane'),
    title: Yup.string().required(),
    description: Yup.string().required('Pole jest wymagane'),
-   trainerId: Yup.string().required('Pole jest wymagane'),
 });
 
 const UpdateForm = ({
@@ -81,9 +86,11 @@ const UpdateForm = ({
    const trainers = useSelector(selectAllTrainers);
    const dispatch = useDispatch();
    const status = useSelector(selectStatus);
-   const [selectedDate, handleDateChange] = useState(
+   const [selectedDuration, handleDurationChange] = useState(
       parse(duration, 'HH:mm:ss', 0),
    );
+   const { authState = {} } = useAuth();
+   const { token = '' } = authState;
 
    const [imageToUpdate, setImageToUpdate] = useState(null);
 
@@ -107,11 +114,10 @@ const UpdateForm = ({
          );
          setCroppedImage(croppedImageTmp);
       } catch (e) {
-         //
+         // ignore on error
       }
    }, [croppedPixels, rotation]);
 
-   const auth = useAuth();
    const formik = useFormik({
       initialValues: {
          trainingTypeId,
@@ -122,14 +128,31 @@ const UpdateForm = ({
       validationSchema,
       onSubmit: (values) => {
          onCloseCallback();
-         console.log(croppedImage);
-         console.log(values);
+         console.log({
+            file: croppedImage,
+            trainingTypeId: values?.trainingTypeId,
+            name: values?.title,
+            description: values?.description,
+            trainerId: values?.trainerId,
+            duration: format(selectedDuration, 'HH:mm:ss.SSS'),
+            token,
+         });
+         dispatch(
+            updateTrainingType({
+               file: croppedImage,
+               trainingTypeId: values?.trainingTypeId,
+               name: values?.title,
+               description: values?.description,
+               trainerId: values?.trainerId,
+               duration: format(selectedDuration, 'HH:mm:ss.SSS'),
+               token,
+            }),
+         );
       },
    });
 
    useEffect(() => {
       if (status === STATUS.IDLE) {
-         const { token = '' } = auth;
          dispatch(fetchTrainersList({ token }));
       }
    }, [status, dispatch]);
@@ -249,7 +272,7 @@ const UpdateForm = ({
                         label="Opis"
                         name="description"
                         multiline
-                        rows={5}
+                        rows={4}
                         type="text"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -306,12 +329,12 @@ const UpdateForm = ({
                         openTo="minutes"
                         format="HH:mm:ss"
                         ampm={false}
-                        value={selectedDate}
+                        value={selectedDuration}
                         inputVariant="outlined"
                         margin="normal"
                         fullWidth
                         styles={{ height: '100%' }}
-                        onChange={handleDateChange}
+                        onChange={handleDurationChange}
                      />
                   </Grid>
                   <Grid item xs={12}>
@@ -321,6 +344,7 @@ const UpdateForm = ({
                         color="primary"
                         fullWidth
                         style={{ marginTop: '5px' }}
+                        disabled={editingState}
                      >
                         Zapisz zmiany
                      </Button>
@@ -340,11 +364,10 @@ export const EditTrainingTypeDialog = () => {
    const selectedRow = useSelector((state) => selectById(state, rowId)) || {};
    const {
       trainingTypeId = '',
-      title = '',
+      name = '',
       image = '',
       description = '',
       trainer = {},
-      rating = 0,
       duration = '',
    } = selectedRow;
 
@@ -354,12 +377,12 @@ export const EditTrainingTypeDialog = () => {
       <Dialog open={shouldOpen} onClose={closeDialog} maxWidth="md">
          <DialogTitle>
             <Typography variant="h6" color="primary">
-               {title} - edytuj typ treningu
+               {name} - edytuj typ treningu
             </Typography>
          </DialogTitle>
          <DialogContent>
             <UpdateForm
-               title={title}
+               title={name}
                description={description}
                image={image}
                duration={duration}
