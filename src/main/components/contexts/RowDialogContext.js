@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 export const DIALOG_MODE = {
+   ADD: 'add',
    INFO: 'info',
    EDIT: 'edit',
    DELETE: 'delete',
@@ -25,6 +26,9 @@ export const RowDialogContextProvider = ({ children }) => {
       setDialogState({ mode: DIALOG_MODE.INFO, isOpen: false });
    };
 
+   const openAddDialog = () =>
+      setDialogState({ mode: DIALOG_MODE.ADD, isOpen: true });
+
    return (
       <RowDialogContext.Provider
          value={{
@@ -32,6 +36,7 @@ export const RowDialogContextProvider = ({ children }) => {
             dialogState,
             setIdAndOpenDialog,
             closeDialog,
+            openAddDialog,
          }}
       >
          {children}

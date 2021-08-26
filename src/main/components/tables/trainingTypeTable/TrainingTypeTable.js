@@ -1,4 +1,7 @@
-import React from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useContext } from 'react';
+import { IconButton } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 import {
    IntegratedPaging,
    PagingState,
@@ -15,11 +18,15 @@ import {
    AvatarStateDataTypeProvider,
    ActionFormatter,
 } from 'src/main/components/tables/utils/columnFormatters';
-import { RowDialogContextProvider } from 'src/main/components/contexts/RowDialogContext';
+import {
+   RowDialogContextProvider,
+   RowDialogContext,
+} from 'src/main/components/contexts/RowDialogContext';
 import {
    DeleteTrainingTypeDialog,
    EditTrainingTypeDialog,
    InfoTrainingTypeDialog,
+   AddTrainingTypeDialog,
 } from './dialogs';
 
 const columns = [
@@ -50,6 +57,26 @@ const ActionStateDataTypeProvider = (props) => (
    <DataTypeProvider formatterComponent={ActionFormatterAdapter} {...props} />
 );
 
+const HeaderCell = ({ column, ...restProps }) => {
+   const { openAddDialog } = useContext(RowDialogContext);
+   if (column.name === '_action') {
+      return (
+         <TableHeaderRow.Cell {...restProps}>
+            <span>{column.title}</span>
+            <IconButton
+               variant="contained"
+               color="primary"
+               onClick={openAddDialog}
+               style={{ marginLeft: '30px' }}
+            >
+               <AddIcon />
+            </IconButton>
+         </TableHeaderRow.Cell>
+      );
+   }
+   return <TableHeaderRow.Cell {...restProps} />;
+};
+
 export const TrainingTypeTable = ({
    trainingTypes,
    pageNumber,
@@ -70,9 +97,10 @@ export const TrainingTypeTable = ({
          />
          <IntegratedPaging />
          <Table messages={tableMessages} />
-         <TableHeaderRow />
+         <TableHeaderRow cellComponent={HeaderCell} />
          <PagingPanel pageSizes={[5, 10, 0]} messages={pagingPanelMessages} />
       </Grid>
+      <AddTrainingTypeDialog />
       <DeleteTrainingTypeDialog />
       <EditTrainingTypeDialog />
       <InfoTrainingTypeDialog />
