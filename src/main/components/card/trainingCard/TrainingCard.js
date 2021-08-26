@@ -16,7 +16,7 @@ const TrainingCard = ({
    image = '',
    title = '',
    description = '',
-   trainer = {},
+   trainer,
    rating = 2.5,
    duration = '',
    comments = [],
@@ -24,7 +24,7 @@ const TrainingCard = ({
    const classes = useStyles();
    const [open, setOpen] = useState(false);
 
-   const { name = '', surname = '', avatar = '' } = trainer;
+   const { name = '', surname = '', avatar = '' } = trainer || {};
    const trainerName = `${name} ${surname}`;
 
    return (
@@ -46,13 +46,15 @@ const TrainingCard = ({
                   <Typography gutterBottom variant="h5" component="h2">
                      {title}
                   </Typography>
-                  <Tooltip title={trainerName}>
-                     <Avatar
-                        alt={trainerName}
-                        src={avatar}
-                        data-testid="avatar"
-                     />
-                  </Tooltip>
+                  {trainer && (
+                     <Tooltip title={trainerName}>
+                        <Avatar
+                           alt={trainerName}
+                           src={avatar}
+                           data-testid="avatar"
+                        />
+                     </Tooltip>
+                  )}
                </Box>
                <Typography className={classes.typography}>
                   {description}

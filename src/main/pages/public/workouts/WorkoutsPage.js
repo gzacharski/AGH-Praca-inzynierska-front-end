@@ -18,13 +18,19 @@ import { useStyles } from './WorkoutsPage.styles';
 const WorkoutCards = ({ workouts = [] }) => (
    <Grid container spacing={4} justifyContent="center" alignItems="baseline">
       {workouts.map((workout) => {
-         const { trainingTypeId, title, image, description, trainer } = workout;
+         const {
+            trainingTypeId = '',
+            name = '',
+            image = '',
+            description = '',
+            trainer = '',
+         } = workout || {};
          return (
             <TrainingCard
                key={trainingTypeId}
                image={image}
                description={description}
-               title={title}
+               title={name}
                trainer={trainer}
             />
          );
