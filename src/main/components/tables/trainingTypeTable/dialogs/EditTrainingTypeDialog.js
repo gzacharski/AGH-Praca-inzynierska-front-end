@@ -11,7 +11,7 @@ import {
    RowDialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/RowDialogContext';
-import { UpdateTrainingTypeForm } from './forms/UpdateTrainingTypeForm';
+import { TrainingTypeForm } from './forms/TrainingTypeForm';
 
 export const EditTrainingTypeDialog = () => {
    const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
@@ -38,7 +38,7 @@ export const EditTrainingTypeDialog = () => {
             </Typography>
          </DialogTitle>
          <DialogContent>
-            <UpdateTrainingTypeForm
+            <TrainingTypeForm
                title={name}
                description={description}
                image={image}

@@ -16,7 +16,7 @@ import {
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
 import getCroppedImg from './cropImage';
-import { useStyles } from './UpdateTrainingTypeForm.styles';
+import { useStyles } from './TrainingTypeForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
 
@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
    description: Yup.string().required('Pole jest wymagane'),
 });
 
-export const UpdateTrainingTypeForm = ({
+export const TrainingTypeForm = ({
    trainingTypeId,
    title = '',
    image = '',
