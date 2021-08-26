@@ -1,14 +1,19 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { useFormik } from 'formik';
+import ChipInput from 'material-ui-chip-input';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
+import NumberFormat from 'react-number-format';
 import {
    Grid,
    TextField,
    Button,
    FormControlLabel,
    Switch,
+   FormControl,
 } from '@material-ui/core';
 import { useAuth } from 'src/main/auth';
 import { useStyles } from './GympassForm.styles';
@@ -17,7 +22,29 @@ const isNotEmpty = (text) => text && text.length !== 0;
 
 const validationSchema = Yup.object({
    title: Yup.string().required('Pole jest wymagane'),
+   synopsis: Yup.string().required('Pole jest wymagane'),
+   features: Yup.array().min(1, 'Wymanaga przynajmniej jedna cecha'),
 });
+
+const CustomNumberFormat = ({ inputRef, onChange, name, ...other }) => (
+   <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+         onChange({
+            target: {
+               name,
+               value: values.value,
+            },
+         });
+      }}
+      decimalScale={2}
+      allowNegative={false}
+      thousandSeparator=" "
+      decimalSeparator=","
+      isNumericString
+   />
+);
 
 export const GympassForm = ({
    documentId = '',
@@ -34,7 +61,7 @@ export const GympassForm = ({
    const dispatch = useDispatch();
    const { authState = {} } = useAuth();
    const { token = '' } = authState;
-   const { amount = '55,99', currency = 'zł', period = 'miesiąc' } = price;
+   const { amount = '0,00', currency = 'zł', period = 'miesiąc' } = price;
    const { synopsis = '', features = [] } = description;
 
    const formik = useFormik({
@@ -54,14 +81,42 @@ export const GympassForm = ({
          onCloseCallback();
          dispatch(
             onSubmitReduxCallback({
-               locationId: values?.locationId || '',
-               name: values?.name || '',
-               description: values?.description || '',
+               documentId: values.documentId,
+               title: values.title,
+               subheader: values.subheader,
+               amount: Number.parseFloat(values.amount),
+               currency: values.currency,
+               period: values.period,
+               isPremium: values.isPremium,
+               synopsis: values.synopsis,
+               features: values.features,
                token,
             }),
          );
       },
    });
+
+   const handleSwitchChange = (event) => {
+      formik.setValues((values) => ({
+         ...values,
+         isPremium: event.target.checked,
+      }));
+   };
+
+   const handleAddChip = (chip) => {
+      formik.setValues((values) => ({
+         ...values,
+         features: [...values.features, chip],
+      }));
+   };
+
+   const handleDeleteChip = (chip, index) => {
+      formik.setValues((values) => {
+         const updatedFeatures = values.features;
+         updatedFeatures.splice(index, 1);
+         return { ...values, features: updatedFeatures };
+      });
+   };
 
    return (
       <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
@@ -96,7 +151,12 @@ export const GympassForm = ({
                   }}
                >
                   <FormControlLabel
-                     control={<Switch value={formik.values.isPremium} />}
+                     control={
+                        <Switch
+                           value={formik.values.isPremium}
+                           onChange={handleSwitchChange}
+                        />
+                     }
                      label="Karnet premium"
                      s
                   />
@@ -137,7 +197,6 @@ export const GympassForm = ({
                   label="Cena"
                   name="amount"
                   disabled={readOnly}
-                  type="text"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.amount}
@@ -145,6 +204,9 @@ export const GympassForm = ({
                      formik.touched.amount && isNotEmpty(formik.errors.amount)
                   }
                   helperText={formik.touched.amount && formik.errors.amount}
+                  InputProps={{
+                     inputComponent: CustomNumberFormat,
+                  }}
                />
             </Grid>
             <Grid item xs={4}>
@@ -210,6 +272,30 @@ export const GympassForm = ({
                   }
                   helperText={formik.touched.synopsis && formik.errors.synopsis}
                />
+            </Grid>
+            <Grid item xs={12}>
+               <FormControl variant="outlined" fullWidth margin="normal">
+                  <ChipInput
+                     required
+                     variant="outlined"
+                     margin="normal"
+                     label="Cechy"
+                     id="features"
+                     value={formik.values.features}
+                     disabled={readOnly}
+                     fullWidth
+                     placeholder="Zacznij pisać i wciśnij enter by dodać"
+                     onAdd={(chip) => handleAddChip(chip)}
+                     onDelete={(chip, index) => handleDeleteChip(chip, index)}
+                     error={
+                        formik.touched.features &&
+                        isNotEmpty(formik.errors.features)
+                     }
+                     helperText={
+                        formik.touched.features && formik.errors.features
+                     }
+                  />
+               </FormControl>
             </Grid>
             {!readOnly && (
                <Grid item xs={12}>

@@ -55,6 +55,60 @@ export const fetchManagerGympassList = createAsyncThunk(
    },
 );
 
+export const addGympass = createAsyncThunk(
+   'managerGympassList/addGympass',
+   async (
+      {
+         title = '',
+         subheader = '',
+         amount = 0,
+         currency = '',
+         period = '',
+         isPremium = false,
+         synopsis = '',
+         features = [],
+         token = '',
+      },
+      { rejectWithValue },
+   ) => {
+      const url = `${gymPassServiceURL}/offer`;
+
+      try {
+         const response = await axios.post(
+            url,
+            {
+               title,
+               subheader,
+               amount,
+               currency,
+               period,
+               isPremium,
+               synopsis,
+               features,
+            },
+            config(token),
+         );
+         console.log(response);
+         const { message = '', gymPass = '' } = response?.data || {};
+         return { message, gymPass };
+      } catch (error) {
+         console.log(error.response);
+         console.log(error.response?.data?.message);
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data || '',
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const managerGympassListSlice = createSlice({
    name: 'managerGympassList',
    initialState,
@@ -74,6 +128,23 @@ const managerGympassListSlice = createSlice({
          state.error = null;
       },
       [fetchManagerGympassList.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [addGympass.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [addGympass.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         managerGympassAdapter.upsertOne(state, action.payload.gymPass);
+         state.error = null;
+      },
+      [addGympass.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;

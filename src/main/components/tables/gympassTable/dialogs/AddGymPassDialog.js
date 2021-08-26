@@ -9,7 +9,7 @@ import {
    RowDialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/RowDialogContext';
-// import { selectById } from 'src/main/store/sliceFiles/managerSlices/gympassSlice';
+import { addGympass } from 'src/main/store/sliceFiles/managerSlices/gympassSlice';
 import { GympassForm } from '../forms/GympassForm';
 
 export const AddGympassDialog = () => {
@@ -27,7 +27,10 @@ export const AddGympassDialog = () => {
             </Typography>
          </DialogTitle>
          <DialogContent>
-            <GympassForm onCloseCallback={closeDialog} />
+            <GympassForm
+               onCloseCallback={closeDialog}
+               onSubmitReduxCallback={addGympass}
+            />
          </DialogContent>
       </Dialog>
    );
