@@ -71,7 +71,7 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(total);
+      const users = getRows(7);
       return res(ctx.status(200), ctx.delay(), ctx.json(users));
    }),
    rest.get(`${accountServiceURL}/admin/manager`, (req, res, ctx) => {
@@ -84,10 +84,10 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(total);
-      return res(ctx.status(200), ctx.delay(), ctx.json({ total, users }));
+      const users = getRows(3);
+      return res(ctx.status(200), ctx.delay(), ctx.json(users));
    }),
-   rest.get(`${accountServiceURL}/admin/trainers`, (req, res, ctx) => {
+   rest.get(`${accountServiceURL}/admin/trainer`, (req, res, ctx) => {
       const pageNumber = req.url.searchParams.get('pageNumber');
       const pageSize = req.url.searchParams.get('pageSize');
       const getRows = (count) => {
@@ -97,7 +97,7 @@ export const adminUserHandlers = [
          }
          return testRows;
       };
-      const users = getRows(pageSize);
+      const users = getRows(13);
       return res(ctx.status(200), ctx.delay(), ctx.json(users));
    }),
 ];

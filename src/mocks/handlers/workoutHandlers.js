@@ -34,7 +34,7 @@ export const workoutHandlers = [
                description:
                   'Sed eget velit tortor. Duis vestibulum est in arcu tempus pulvinar. Donec semper rhoncus leo, at pellentesque dui malesuada sed. Ut eu odio ac urna cursus finibus.',
                trainer: {
-                  trainerId: nanoid(),
+                  userId: nanoid(),
                   name: 'Redford',
                   surname: 'Bowdry',
                   avatar: 'https://fwcdn.pl/ppo/71/04/57104/449672.2.jpg',
@@ -76,7 +76,7 @@ export const workoutHandlers = [
                description:
                   'Sed eget velit tortor. Duis vestibulum est in arcu tempus pulvinar. Donec semper rhoncus leo, at pellentesque dui malesuada sed. Ut eu odio ac urna cursus finibus.',
                trainer: {
-                  trainerId: nanoid(),
+                  userId: nanoid(),
                   name: 'Joaquin',
                   surname: 'Phoenix',
                   avatar: 'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',

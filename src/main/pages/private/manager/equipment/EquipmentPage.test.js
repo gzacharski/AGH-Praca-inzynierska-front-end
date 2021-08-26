@@ -9,7 +9,7 @@ describe('SettingsPage', () => {
 
    test('should contain ', () => {
       expect(
-         screen.getByText('Modyfikuj sprzęt (manager)'),
+         screen.getByText('Zarządzaj sprzętem fitness'),
       ).toBeInTheDocument();
    });
 });
