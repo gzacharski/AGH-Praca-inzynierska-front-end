@@ -11,7 +11,7 @@ import {
    DIALOG_MODE,
 } from 'src/main/components/contexts/RowDialogContext';
 
-export const ActionFormatter = ({ id }) => {
+export const ActionFormatter = ({ id = '' }) => {
    const { setIdAndOpenDialog } = useContext(RowDialogContext);
    const { DELETE, EDIT, INFO } = DIALOG_MODE;
 

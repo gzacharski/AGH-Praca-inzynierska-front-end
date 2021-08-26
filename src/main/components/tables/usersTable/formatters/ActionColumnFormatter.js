@@ -8,7 +8,7 @@ import {
    DIALOG_MODE,
 } from 'src/main/components/contexts/RowDialogContext';
 
-const ActionFormatter = ({ row }) => {
+const ActionFormatter = ({ row = {} }) => {
    const { userId = '' } = row;
    const { setIdAndOpenDialog } = useContext(RowDialogContext);
 

@@ -10,7 +10,7 @@ const useStyles = makeStyles({
    },
 });
 
-const ImageFormatter = ({ row }) => {
+const ImageFormatter = ({ row = {} }) => {
    const classes = useStyles();
    const { image = '', title = '' } = row;
    return (

@@ -14,7 +14,7 @@ const useStyles = makeStyles(({ spacing }) => ({
    },
 }));
 
-const AvatarFormatter = ({ value }) => {
+const AvatarFormatter = ({ value = {} }) => {
    const classes = useStyles();
    const { avatar = '', name = ' ', surname = ' ' } = value;
    return (
