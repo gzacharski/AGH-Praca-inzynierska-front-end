@@ -1,15 +1,65 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './TimetablePage.styles';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import { PageWrapper, PageTitle } from 'src/main/components/utils';
+import { PublicTimetable } from 'src/main/components/timetable';
+import {
+   clearMessage,
+   fetchPrivateTimetableData,
+   selectData,
+   selectFetchedDates,
+   selectMessage,
+   selectStatus,
+   selectNotistack,
+} from 'src/main/store/sliceFiles/timetable/timetableSlice';
+import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
+import { useAuth } from 'src/main/auth';
+import { STATUS } from 'src/main/store';
 
-export default function News() {
-   const classes = useStyles();
+const TimetablePage = () => {
+   const data = useSelector(selectData);
+   const dispatch = useDispatch();
+   const dataStatus = useSelector(selectStatus);
+   const message = useSelector(selectMessage);
+   const fetchedDates = useSelector(selectFetchedDates);
+   const variant = useSelector(selectNotistack);
+   const { enqueueSnackbar } = useSnackbar();
+   const { authState = {} } = useAuth();
+   const { token = '' } = authState;
+
+   useEffect(() => {
+      if (dataStatus === STATUS.IDLE) {
+         const startOfWeek = getCurrentStartOfWeek();
+         const endOfWeek = getCurrentEndOfWeek();
+         if (fetchedDates[startOfWeek] !== endOfWeek) {
+            dispatch(
+               fetchPrivateTimetableData({ startOfWeek, endOfWeek, token }),
+            );
+         }
+      }
+   }, [dataStatus, dispatch]);
+
+   if (message) {
+      enqueueSnackbar(message, {
+         variant,
+         anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'right',
+         },
+      });
+      dispatch(clearMessage());
+   }
    return (
       <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Aktualny grafik zajęć (manager)
-         </Typography>
+         <PageTitle>Modyfikuj ofertę</PageTitle>
+         <PublicTimetable
+            data={data}
+            status={dataStatus}
+            fetchData={fetchPrivateTimetableData}
+            fetchedDates={fetchedDates}
+         />
       </PageWrapper>
    );
-}
+};
+
+export default TimetablePage;

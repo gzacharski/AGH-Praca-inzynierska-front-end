@@ -7,8 +7,10 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { trainingsServiceURL } from 'src/main/data/urls';
+import { NETWORK_ERROR } from 'src/main/data/messages';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
+import { NOTISTACK } from '../../notistack';
 
 const timetableAdapter = createEntityAdapter({
    selectId: (entity) => entity.id,
@@ -17,9 +19,18 @@ const timetableAdapter = createEntityAdapter({
 const initialState = timetableAdapter.getInitialState({
    fetchedDates: {},
    status: STATUS.IDLE,
+   notistack: NOTISTACK.SUCCESS,
    message: null,
    error: null,
 });
+
+const getNotistackVariant = (error) => {
+   const { status = 500 } = error?.response?.data;
+   let notistack = NOTISTACK.ERROR;
+   if (status === 403) notistack = NOTISTACK.WARNING;
+   if (status === 404) notistack = NOTISTACK.INFO;
+   return notistack;
+};
 
 export const fetchPublicTimetableData = createAsyncThunk(
    'timetable/fetchPublicTimetableData',
@@ -51,9 +62,16 @@ export const fetchPrivateTimetableData = createAsyncThunk(
          const { data = [] } = response;
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
-         const { data = {}, status = 0 } = error?.response;
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         const { data = {}, status = 0 } = error?.response || {};
          const { message = null } = data;
          return rejectWithValue({
+            notistack: getNotistackVariant(error),
             error: { data, status },
             message,
          });
@@ -71,11 +89,16 @@ export const enrollToGroupTraining = createAsyncThunk(
          const { message = null } = response?.data;
          return { message };
       } catch (error) {
-         const { data = {}, status = 0 } = error?.response;
-         const { message = null } = data;
+         if (error?.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
          return rejectWithValue({
-            error: { data, status },
-            message,
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
          });
       }
    },
@@ -102,6 +125,7 @@ export const timetableSlice = createSlice({
       },
       [fetchPublicTimetableData.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          timetableAdapter.upsertMany(state, action.payload.data);
          state.error = null;
          state.fetchedDates = {
@@ -111,6 +135,7 @@ export const timetableSlice = createSlice({
       },
       [fetchPublicTimetableData.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
@@ -120,6 +145,7 @@ export const timetableSlice = createSlice({
       },
       [fetchPrivateTimetableData.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          timetableAdapter.upsertMany(state, action.payload.data);
          state.error = null;
          state.fetchedDates = {
@@ -129,6 +155,7 @@ export const timetableSlice = createSlice({
       },
       [fetchPrivateTimetableData.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
@@ -138,11 +165,13 @@ export const timetableSlice = createSlice({
       },
       [enrollToGroupTraining.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
          state.message = action.payload.message;
          state.error = null;
       },
       [enrollToGroupTraining.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
@@ -159,5 +188,6 @@ export const selectStatus = (state) => state.timetable.status;
 export const selectMessage = (state) => state.timetable.message;
 export const selectFetchedDates = (state) => state.timetable.fetchedDates;
 export const selectError = (state) => state.timetable.error;
+export const selectNotistack = (state) => state.timetable.notistack;
 
 export default timetableSlice.reducer;

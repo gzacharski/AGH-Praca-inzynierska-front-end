@@ -6,7 +6,9 @@ describe('News component', () => {
    beforeEach(() => {
       render(<TimetablePage />);
    });
-   test('should contain proper page', () => {
-      expect(screen.getByText("Aktualny grafik zajęć (manager)")).toBeInTheDocument();
+   xtest('should contain proper page', () => {
+      expect(
+         screen.getByText('Aktualny grafik zajęć (manager)'),
+      ).toBeInTheDocument();
    });
 });

@@ -46,7 +46,7 @@ export const fetchLocationList = createAsyncThunk(
          });
          return response?.data || [];
       } catch (error) {
-         if (error.response === undefined) {
+         if (error?.response === undefined) {
             return rejectWithValue({
                error: error?.response?.data,
                message: NETWORK_ERROR,
