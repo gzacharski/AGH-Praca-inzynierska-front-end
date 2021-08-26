@@ -19,14 +19,14 @@ export const AbstractSubpage = ({
    const users = useSelector(selectAll);
    const message = useSelector(selectMessage);
    const notistackVariant = useSelector(selectNotistack);
-   const auth = useAuth();
+   const { authState = {} } = useAuth();
    const [pageNumber, setPageNumber] = useState(0);
    const [pageSize, setPageSize] = useState(10);
    const { enqueueSnackbar } = useSnackbar();
 
    useEffect(() => {
       if (status === STATUS.IDLE) {
-         const { token = '' } = auth;
+         const { token = '' } = authState;
          dispatch(fetchData({ pageNumber, pageSize, token }));
       }
    }, [status, dispatch]);
