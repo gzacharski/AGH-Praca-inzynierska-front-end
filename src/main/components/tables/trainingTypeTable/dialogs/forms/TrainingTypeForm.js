@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
 export const TrainingTypeForm = ({
    trainingTypeId = '',
    title = '',
-   image = '',
+   image = 'http://localhost',
    description = '',
    duration = '0:30:00',
    onCloseCallback = () => false,

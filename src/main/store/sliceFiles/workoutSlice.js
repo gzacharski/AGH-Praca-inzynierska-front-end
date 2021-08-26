@@ -215,6 +215,38 @@ export const updateTrainingType = createAsyncThunk(
    },
 );
 
+export const deleteTrainingType = createAsyncThunk(
+   'workoutList/deleteTrainingType',
+   async ({ trainingTypeId = '', token = '' }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/trainingType/${trainingTypeId}`;
+
+      const config = {
+         headers: {
+            'Accept-Language': 'pl',
+            Authorization: token,
+         },
+      };
+
+      try {
+         const response = await axios.delete(url, config);
+         const { message = '', trainingType = {} } = response?.data;
+         return { message, trainingTypeId: trainingType?.trainingTypeId || '' };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const workoutListSlice = createSlice({
    name: 'workoutList',
    initialState,
@@ -268,6 +300,23 @@ const workoutListSlice = createSlice({
          state.error = null;
       },
       [updateTrainingType.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [deleteTrainingType.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [deleteTrainingType.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         workoutListAdapter.removeOne(state, action.payload.trainingTypeId);
+         state.error = null;
+      },
+      [deleteTrainingType.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
