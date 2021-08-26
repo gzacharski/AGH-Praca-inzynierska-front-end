@@ -1,5 +1,11 @@
 import { DeleteGympassDialog } from './DeleteGymPassDialog';
 import { EditGympassDialog } from './EditGympassDialog';
 import { InfoGympassDialog } from './InfoGympassDialog';
+import { AddGympassDialog } from './AddGymPassDialog';
 
-export { DeleteGympassDialog, EditGympassDialog, InfoGympassDialog };
+export {
+   AddGympassDialog,
+   DeleteGympassDialog,
+   EditGympassDialog,
+   InfoGympassDialog,
+};

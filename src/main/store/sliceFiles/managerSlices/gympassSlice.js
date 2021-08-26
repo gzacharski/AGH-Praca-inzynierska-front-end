@@ -34,7 +34,7 @@ const getNotistackVariant = (error) => {
 export const fetchManagerGympassList = createAsyncThunk(
    'managerGympassList/fetchGympassList',
    async ({ token = '' }, { rejectWithValue }) => {
-      const url = `${gymPassServiceURL}/offer/all`;
+      const url = `${gymPassServiceURL}/offer`;
 
       try {
          const response = await axios.get(url, config(token));

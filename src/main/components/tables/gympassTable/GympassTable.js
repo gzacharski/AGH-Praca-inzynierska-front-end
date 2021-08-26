@@ -1,4 +1,7 @@
-import React from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useContext } from 'react';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { AddCircle as AddIcon } from '@material-ui/icons';
 import {
    IntegratedPaging,
    PagingState,
@@ -18,8 +21,12 @@ import {
    SubheaderStateDataTypeProvider,
    StatusStateDataTypeProvider,
 } from 'src/main/components/tables/gympassTable/formatters';
-import { RowDialogContextProvider } from 'src/main/components/contexts/RowDialogContext';
 import {
+   RowDialogContextProvider,
+   RowDialogContext,
+} from 'src/main/components/contexts/RowDialogContext';
+import {
+   AddGympassDialog,
    DeleteGympassDialog,
    EditGympassDialog,
    InfoGympassDialog,
@@ -59,6 +66,26 @@ const ActionStateDataTypeProvider = (props) => (
    <DataTypeProvider formatterComponent={ActionFormatterAdapter} {...props} />
 );
 
+const HeaderCell = ({ column, ...restProps }) => {
+   const { openAddDialog } = useContext(RowDialogContext);
+   if (column.name === '_action') {
+      return (
+         <TableHeaderRow.Cell {...restProps}>
+            <span>{column.title}</span>
+            <Tooltip title="Dodaj nowy typ karnetu" arrow>
+               <IconButton
+                  onClick={openAddDialog}
+                  style={{ marginLeft: '30px' }}
+               >
+                  <AddIcon />
+               </IconButton>
+            </Tooltip>
+         </TableHeaderRow.Cell>
+      );
+   }
+   return <TableHeaderRow.Cell {...restProps} />;
+};
+
 export const GympassTable = ({ data }) => (
    <RowDialogContextProvider>
       <Grid rows={data} columns={columns}>
@@ -72,9 +99,10 @@ export const GympassTable = ({ data }) => (
          <SearchState defaultValue="" />
          <IntegratedPaging />
          <Table messages={tableMessages} columnExtensions={columnExtensions} />
-         <TableHeaderRow />
+         <TableHeaderRow cellComponent={HeaderCell} />
          <PagingPanel pageSizes={[5, 10, 0]} messages={pagingPanelMessages} />
       </Grid>
+      <AddGympassDialog />
       <InfoGympassDialog />
       <EditGympassDialog />
       <DeleteGympassDialog />
