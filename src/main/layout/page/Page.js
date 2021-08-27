@@ -8,8 +8,6 @@ import {
    ROLE_TRAINER,
 } from 'src/main/data/roles';
 import {
-   HelpPage,
-   MessagesPage,
    NotificationsPage,
    UserEquipmentPage,
    UserGroupWorkoutPage,
@@ -79,10 +77,6 @@ const Page = () => {
             <EquipmentPage />
          </Route>
 
-         <PrivateRoute path="/help">
-            <HelpPage />
-         </PrivateRoute>
-
          <Route path="/login">
             <LogInPage />
          </Route>
@@ -90,9 +84,6 @@ const Page = () => {
          <PrivateRouteWithRole path="/manager" hasRole={hasManagerRole}>
             <ManagerRouteGroup />
          </PrivateRouteWithRole>
-         <PrivateRoute path="/messages">
-            <MessagesPage />
-         </PrivateRoute>
 
          <PrivateRoute path="/notifications">
             <NotificationsPage />

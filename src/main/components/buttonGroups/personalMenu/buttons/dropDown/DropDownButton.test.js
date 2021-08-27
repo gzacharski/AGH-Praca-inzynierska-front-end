@@ -26,10 +26,6 @@ describe('Message button', () => {
          expect(screen.getByText(/Moje konto/)).toBeInTheDocument();
       });
 
-      test('should have "Pomoc" item', () => {
-         expect(screen.getByText(/Pomoc/)).toBeInTheDocument();
-      });
-
       test('should have "Ustawienia" item', () => {
          expect(screen.getByText(/Ustawienia/)).toBeInTheDocument();
       });

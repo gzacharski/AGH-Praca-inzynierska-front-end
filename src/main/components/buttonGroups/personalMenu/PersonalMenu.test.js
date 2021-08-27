@@ -32,12 +32,6 @@ describe('Personal menu', () => {
          expect(await screen.findByTestId('avatar-button')).toBeInTheDocument();
       });
 
-      test('should contains message button', async () => {
-         expect(
-            await screen.findByTestId('message-button'),
-         ).toBeInTheDocument();
-      });
-
       test('should contains notification button', async () => {
          expect(
             await screen.findByTestId('notification-button'),
