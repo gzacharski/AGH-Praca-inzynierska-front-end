@@ -1,25 +1,48 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { Dialog, Typography } from '@material-ui/core';
-import { selectById } from 'src/main/store/sliceFiles/locationsSlice';
+import {
+   Dialog,
+   DialogTitle,
+   DialogContent,
+   Typography,
+} from '@material-ui/core';
+import {
+   selectById,
+   updateLocation,
+} from 'src/main/store/sliceFiles/locationsSlice';
 import {
    RowDialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/RowDialogContext';
+import { LocationForm } from '../forms/LocationForm';
 
 export const EditLocationDialog = () => {
    const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
    const { EDIT } = DIALOG_MODE;
    const { mode = EDIT, isOpen = false } = dialogState;
 
-   const selectedRow = useSelector((state) => selectById(state, rowId));
+   const selectedRow = useSelector((state) => selectById(state, rowId)) || {};
+
+   const { locationId = '', name = '', description = '' } = selectedRow;
 
    const shouldOpen = mode === EDIT && isOpen;
 
    return (
       <Dialog open={shouldOpen} onClose={closeDialog}>
-         <Typography>Edytuj</Typography>
-         {JSON.stringify(selectedRow)}
+         <DialogTitle>
+            <Typography variant="h6" color="primary">
+               Edytuj salę treningową {name}
+            </Typography>
+         </DialogTitle>
+         <DialogContent>
+            <LocationForm
+               description={description}
+               locationId={locationId}
+               name={name}
+               onCloseCallback={closeDialog}
+               onSubmitReduxCallback={updateLocation}
+            />
+         </DialogContent>
       </Dialog>
    );
 };

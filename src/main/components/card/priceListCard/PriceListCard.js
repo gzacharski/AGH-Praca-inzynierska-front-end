@@ -14,9 +14,19 @@ import { useStyles } from './PriceListCard.styles';
 const PriceListCard = (props) => {
    const classes = useStyles();
    const { gymPass } = props;
-   const { id, title, subheader, price, premium, description } = gymPass;
+   const {
+      documentId = '',
+      title = '',
+      subheader = '',
+      price = {},
+      isPremium = false,
+      description = {},
+   } = gymPass || {};
    const handleBuyClick = (history) =>
-      history.push(`login?gympass=buy&client=${id}`);
+      history.push(`login?gympass=buy&client=${documentId}`);
+
+   const { amount = 0, currency = 'zł', period = '' } = price;
+   const { synopsis = '', features = [] } = description;
 
    return (
       <Card>
@@ -31,22 +41,22 @@ const PriceListCard = (props) => {
             <div className={classes.cardContent}>
                <div className={classes.cardPricing}>
                   <Typography variant="h3" color="textPrimary">
-                     {price.amount}
+                     {amount}
                   </Typography>
                   <Typography variant="h4" color="textPrimary">
-                     {price.currency}
+                     {currency}
                   </Typography>
                   <Typography variant="h6" color="textSecondary">
-                     /{price.period}
+                     /{period}
                   </Typography>
                </div>
                <div className={classes.cardPricing}>
                   <Typography align="center" color="textPrimary" variant="h6">
-                     {description.synopsis}
+                     {synopsis}
                   </Typography>
                </div>
                <ul>
-                  {description.features.map((feature) => (
+                  {features.map((feature) => (
                      <Typography
                         component="li"
                         variant="subtitle1"
@@ -63,10 +73,10 @@ const PriceListCard = (props) => {
          <CardActions>
             <Button
                fullWidth
-               variant={premium ? 'contained' : 'outlined'}
+               variant={isPremium ? 'contained' : 'outlined'}
                className={clsx({
-                  [classes.button]: !premium,
-                  [classes.buttonPremium]: premium,
+                  [classes.button]: !isPremium,
+                  [classes.buttonPremium]: isPremium,
                })}
                onClick={() => handleBuyClick(props.history)}
             >

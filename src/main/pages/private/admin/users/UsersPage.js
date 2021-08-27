@@ -23,13 +23,13 @@ const AccountPage = () => {
    const users = useSelector(selectAll);
    const message = useSelector(selectMessage);
    const notistackVariant = useSelector(selectNotistack);
-   const auth = useAuth();
+   const { authState = {} } = useAuth();
    const [pageNumber, setPageNumber] = useState(0);
    const [pageSize, setPageSize] = useState(10);
    const { enqueueSnackbar } = useSnackbar();
 
    const fetchData = () => {
-      const { token = '' } = auth;
+      const { token = '' } = authState;
       dispatch(fetchAdminUsersList({ pageNumber, pageSize, token }));
    };
 

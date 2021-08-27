@@ -4,7 +4,6 @@ import {
    Assignment as AssignmentIcon,
    SupervisorAccount as SupervisorAccountIcon,
    EventSeat as EventSeatIcon,
-   Home as HomeIcon,
 } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { selectDrawer } from 'src/main/store/sliceFiles/drawerSlice';
@@ -24,11 +23,6 @@ export default function ReceptionEmployeeList() {
             )
          }
       >
-         <CustomListItem
-            buttonName="Strona główna"
-            CustomIcon={HomeIcon}
-            pushUrl="/employee"
-         />
          <CustomListItem
             buttonName="Użytkownicy"
             CustomIcon={SupervisorAccountIcon}

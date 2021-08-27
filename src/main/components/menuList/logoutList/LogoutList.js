@@ -2,7 +2,6 @@ import React from 'react';
 import { MenuList, Divider } from '@material-ui/core';
 import {
    AccountMenuItem,
-   HelpMenuItem,
    LogoutItem,
    SettingsMenuItem,
 } from 'src/main/components/menuItems';
@@ -14,8 +13,6 @@ const LogoutList = () => {
       <div className={classes.paper}>
          <MenuList>
             <AccountMenuItem />
-            <Divider />
-            <HelpMenuItem />
             <SettingsMenuItem />
             <Divider />
             <LogoutItem />

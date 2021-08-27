@@ -4,12 +4,12 @@ import { Chip } from '@material-ui/core';
 import { DataTypeProvider } from '@devexpress/dx-react-grid';
 
 const StatusFormatter = ({ value }) => {
-   if (value === 'active') {
+   if (value === 'inactive') {
       return (
          <Chip
-            label="Aktywny"
+            label="Nieaktywny"
             size="small"
-            style={{ backgroundColor: 'limegreen' }}
+            style={{ backgroundColor: 'mediumTurquoise' }}
          />
       );
    }
@@ -17,9 +17,9 @@ const StatusFormatter = ({ value }) => {
 
    return (
       <Chip
-         label="Nieaktywny"
+         label="Aktywny"
          size="small"
-         style={{ backgroundColor: 'mediumTurquoise' }}
+         style={{ backgroundColor: 'limegreen' }}
       />
    );
 };

@@ -37,7 +37,7 @@ export const fetchManagersList = createAsyncThunk(
       { pageNumber = 0, pageSize = 10, token = '' },
       { rejectWithValue },
    ) => {
-      const url = `${accountServiceURL}/admin/manager?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+      const url = `${accountServiceURL}/admin/managers?pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
       try {
          const response = await axios.get(url, config(token));

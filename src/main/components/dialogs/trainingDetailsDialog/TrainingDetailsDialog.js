@@ -23,12 +23,12 @@ const TrainingDetailsDialog = ({
    title,
    description,
    trainer,
-   rating,
+   rating = 2.5,
    duration,
    comments,
 }) => {
    const classes = useStyles();
-   const { name, surname, avatar } = trainer;
+   const { name = '', surname = '', avatar = '' } = trainer || {};
 
    return (
       <Backdrop
@@ -56,22 +56,26 @@ const TrainingDetailsDialog = ({
                   <Typography gutterBottom variant="h5" component="h2">
                      {title}
                   </Typography>
-                  <Box className={classes.box}>
-                     <Typography className={classes.typography}>Prowadzący:</Typography>
-                     <Tooltip
-                        title={`${name} ${surname}`}
-                        arrow
-                        placement="bottom"
-                     >
-                        <Avatar
-                           alt={`${name} ${surname}`}
-                           src={avatar}
-                           data-testid="avatar"
+                  {trainer && (
+                     <Box className={classes.box}>
+                        <Typography className={classes.typography}>
+                           Prowadzący:
+                        </Typography>
+                        <Tooltip
+                           title={`${name} ${surname}`}
+                           arrow
+                           placement="bottom"
                         >
-                           `${name[0]}${surname[0]}`
-                        </Avatar>
-                     </Tooltip>
-                  </Box>
+                           <Avatar
+                              alt={`${name} ${surname}`}
+                              src={avatar}
+                              data-testid="avatar"
+                           >
+                              `${name[0]}${surname[0]}`
+                           </Avatar>
+                        </Tooltip>
+                     </Box>
+                  )}
                </Box>
                <Typography className={classes.description}>
                   {description}

@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import {
    AccountCircle,
-   Mail,
    Settings,
    ExpandLess,
    ExpandMore,
@@ -113,11 +112,6 @@ const AccountList = (props) => {
                </ListItem>
             </List>
          </Collapse>
-         <CustomListItem
-            buttonName="Wiadomości"
-            CustomIcon={Mail}
-            pushUrl="/messages"
-         />
          <CustomListItem
             buttonName="Powiadomienia"
             CustomIcon={NotificationsNone}

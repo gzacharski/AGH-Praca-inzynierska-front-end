@@ -12,7 +12,6 @@ import {
 import {
    AvatarButton,
    DropDownButton,
-   MessageButton,
    NotificationButton,
 } from 'src/main/components/buttonGroups/personalMenu/buttons';
 import { STATUS } from 'src/main/store';
@@ -44,7 +43,6 @@ const PersonalMenu = () => {
       isAuthenticated && (
          <ButtonGroup data-testid="personal-menu">
             <AvatarButton />
-            <MessageButton />
             <NotificationButton />
             <DropDownButton />
          </ButtonGroup>
