@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { PublicTimetable } from 'src/main/components/timetable';
+import { ManagerTimetable } from 'src/main/components/timetable';
 import {
    clearMessage,
    fetchPrivateTimetableData,
@@ -52,7 +52,7 @@ const TimetablePage = () => {
    return (
       <PageWrapper>
          <PageTitle>Modyfikuj ofertę</PageTitle>
-         <PublicTimetable
+         <ManagerTimetable
             data={data}
             status={dataStatus}
             fetchData={fetchPrivateTimetableData}
