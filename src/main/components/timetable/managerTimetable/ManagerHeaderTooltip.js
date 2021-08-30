@@ -11,7 +11,7 @@ import {
 } from 'src/main/store/sliceFiles/timetable/timetableSlice';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
-import { JoinEventIconButton } from 'src/main/components/buttons';
+import { EditEventIconButton } from 'src/main/components/buttons';
 
 export const ManagerHeaderTooltip = ({ appointmentData, ...restProps }) => {
    const history = useHistory();
@@ -23,6 +23,7 @@ export const ManagerHeaderTooltip = ({ appointmentData, ...restProps }) => {
 
    const { startDate, id } = appointmentData;
 
+   // eslint-disable-next-line no-unused-vars
    const handleClick = () => {
       if (auth.isAuthenticated()) {
          const { authState = {} } = auth;
@@ -55,9 +56,9 @@ export const ManagerHeaderTooltip = ({ appointmentData, ...restProps }) => {
          {...restProps}
          appointmentData={appointmentData}
       >
-         <JoinEventIconButton
+         <EditEventIconButton
             status={status}
-            onClick={handleClick}
+            onClick={() => console.log(appointmentData)}
             startDate={startDate}
          />
       </AppointmentTooltip.Header>
