@@ -62,7 +62,7 @@ export const userIndividualTimetableHandler = [
                            'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',
                      },
                   ],
-                  partipants: {
+                  participants: {
                      basicList: [
                         {
                            userId,
@@ -107,7 +107,7 @@ export const userIndividualTimetableHandler = [
                                  'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,
@@ -146,7 +146,7 @@ export const userIndividualTimetableHandler = [
                                  'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,
@@ -174,7 +174,7 @@ export const userIndividualTimetableHandler = [
                                  'https://fwcdn.pl/fph/10/19/1019/409449_2.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,
@@ -213,7 +213,7 @@ export const userIndividualTimetableHandler = [
                                  'https://fwcdn.pl/fph/10/19/1019/409449_2.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,
@@ -241,7 +241,7 @@ export const userIndividualTimetableHandler = [
                                  'https://fwcdn.pl/fph/10/75/1075/212753.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,

@@ -21,7 +21,7 @@ import {
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { ParticipantsDialog } from 'src/main/components/dialogs';
 import { useAuth } from 'src/main/auth';
-import {} from "src/main/utils"
+import {} from 'src/main/utils';
 
 const style = ({ palette }) => ({
    icon: {
@@ -96,10 +96,10 @@ export const PublicContentTooltip = withStyles(style)(
       const {
          location = '',
          trainers = [],
-         partipants = {},
+         participants = {},
          rating,
       } = appointmentData;
-      const { basicList = [] } = partipants;
+      const { basicList = [] } = participants;
 
       const [open, setOpen] = useState(false);
       const { isAuthenticated } = useAuth();
@@ -181,7 +181,7 @@ export const PublicContentTooltip = withStyles(style)(
                </Grid>
                {isAuthenticated() && (
                   <ParticipantsDialog
-                     users={{ trainers, partipants }}
+                     users={{ trainers, participants }}
                      open={open}
                      setOpen={setOpen}
                   />

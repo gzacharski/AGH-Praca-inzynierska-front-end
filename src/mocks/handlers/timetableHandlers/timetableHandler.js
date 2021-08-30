@@ -202,7 +202,7 @@ export const timetableHandlers = [
                            'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
                      },
                   ],
-                  partipants: {
+                  participants: {
                      basicList: [
                         {
                            userId: nanoid(),
@@ -284,7 +284,7 @@ export const timetableHandlers = [
                            'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
                      },
                   ],
-                  partipants: {
+                  participants: {
                      basicList: [
                         {
                            userId: nanoid(),
@@ -326,7 +326,7 @@ export const timetableHandlers = [
                   startDate: '2021-07-16T13:00',
                   endDate: '2021-07-16T15:30',
                   allDay: false,
-                  partipants: {
+                  participants: {
                      basicList: [
                         {
                            userId: nanoid(),

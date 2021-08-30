@@ -31,10 +31,10 @@ export const CustomContentTooltip = withStyles(style)(
       const {
          location = '',
          trainers = [],
-         partipants = {},
+         participants = {},
          rating,
       } = appointmentData;
-      const { basicList = [] } = partipants;
+      const { basicList = [] } = participants;
 
       return (
          <>
