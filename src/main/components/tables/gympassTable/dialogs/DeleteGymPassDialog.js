@@ -18,13 +18,14 @@ import {
 import { useAuth } from 'src/main/auth';
 
 export const DeleteGympassDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(DialogContext);
+   const { dialogState, closeDialog, entityId } = useContext(DialogContext);
    const { DELETE } = DIALOG_MODE;
    const { mode = DELETE, isOpen = false } = dialogState;
    const { authState = {} } = useAuth();
    const dispatch = useDispatch();
 
-   const selectedRow = useSelector((state) => selectById(state, rowId)) || {};
+   const selectedRow =
+      useSelector((state) => selectById(state, entityId)) || {};
    const { documentId = '', title = '' } = selectedRow;
 
    const shouldOpen = mode === DELETE && isOpen;

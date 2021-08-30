@@ -14,15 +14,15 @@ export const DialogContextProvider = ({ children }) => {
       mode: DIALOG_MODE.INFO,
       isOpen: false,
    });
-   const [rowId, setRowId] = useState('');
+   const [entityId, setEntityId] = useState('');
 
    const setIdAndOpenDialog = ({ id, mode }) => {
-      setRowId(id);
+      setEntityId(id);
       setDialogState({ mode, isOpen: true });
    };
 
    const closeDialog = () => {
-      setRowId('');
+      setEntityId('');
       setDialogState({ mode: DIALOG_MODE.INFO, isOpen: false });
    };
 
@@ -32,7 +32,7 @@ export const DialogContextProvider = ({ children }) => {
    return (
       <DialogContext.Provider
          value={{
-            rowId,
+            entityId,
             dialogState,
             setIdAndOpenDialog,
             closeDialog,

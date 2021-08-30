@@ -14,11 +14,11 @@ import {
 import { LocationForm } from '../forms/LocationForm';
 
 export const InfoLocationDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(DialogContext);
+   const { dialogState, closeDialog, entityId } = useContext(DialogContext);
    const { INFO } = DIALOG_MODE;
    const { mode = INFO, isOpen = false } = dialogState;
 
-   const selectedRow = useSelector((state) => selectById(state, rowId)) || {};
+   const selectedRow = useSelector((state) => selectById(state, entityId)) || {};
    const { locationId = '', name = '', description = '' } = selectedRow;
 
    const shouldOpen = mode === INFO && isOpen;
