@@ -6,14 +6,14 @@ import {
    Typography,
 } from '@material-ui/core';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { addGympass } from 'src/main/store/sliceFiles/managerSlices/gympassSlice';
 import { GympassForm } from '../forms/GympassForm';
 
 export const AddGympassDialog = () => {
-   const { dialogState, closeDialog } = useContext(RowDialogContext);
+   const { dialogState, closeDialog } = useContext(DialogContext);
    const { ADD } = DIALOG_MODE;
    const { mode = ADD, isOpen = false } = dialogState;
 

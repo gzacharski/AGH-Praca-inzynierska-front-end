@@ -12,13 +12,13 @@ import {
    deleteGympass,
 } from 'src/main/store/sliceFiles/managerSlices/gympassSlice';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { useAuth } from 'src/main/auth';
 
 export const DeleteGympassDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
+   const { dialogState, closeDialog, rowId } = useContext(DialogContext);
    const { DELETE } = DIALOG_MODE;
    const { mode = DELETE, isOpen = false } = dialogState;
    const { authState = {} } = useAuth();

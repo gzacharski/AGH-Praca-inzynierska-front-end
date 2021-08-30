@@ -22,9 +22,9 @@ import {
    StatusStateDataTypeProvider,
 } from 'src/main/components/tables/gympassTable/formatters';
 import {
-   RowDialogContextProvider,
-   RowDialogContext,
-} from 'src/main/components/contexts/RowDialogContext';
+   DialogContextProvider,
+   DialogContext,
+} from 'src/main/components/contexts/DialogContext';
 import {
    AddGympassDialog,
    DeleteGympassDialog,
@@ -67,7 +67,7 @@ const ActionStateDataTypeProvider = (props) => (
 );
 
 const HeaderCell = ({ column, ...restProps }) => {
-   const { openAddDialog } = useContext(RowDialogContext);
+   const { openAddDialog } = useContext(DialogContext);
    if (column.name === '_action') {
       return (
          <TableHeaderRow.Cell {...restProps}>
@@ -87,7 +87,7 @@ const HeaderCell = ({ column, ...restProps }) => {
 };
 
 export const GympassTable = ({ data }) => (
-   <RowDialogContextProvider>
+   <DialogContextProvider>
       <Grid rows={data} columns={columns}>
          <PremiumStateDataTypeProvider for={['isPremium']} />
          <PriceStateDataTypeProvider for={['price']} />
@@ -106,5 +106,5 @@ export const GympassTable = ({ data }) => (
       <InfoGympassDialog />
       <EditGympassDialog />
       <DeleteGympassDialog />
-   </RowDialogContextProvider>
+   </DialogContextProvider>
 );

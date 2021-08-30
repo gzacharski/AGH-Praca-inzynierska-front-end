@@ -6,14 +6,14 @@ import {
    Typography,
 } from '@material-ui/core';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { createTrainingType } from 'src/main/store/sliceFiles/workoutSlice';
 import { TrainingTypeForm } from './forms/TrainingTypeForm';
 
 export const AddTrainingTypeDialog = () => {
-   const { dialogState, closeDialog } = useContext(RowDialogContext);
+   const { dialogState, closeDialog } = useContext(DialogContext);
    const { ADD, INFO } = DIALOG_MODE;
    const { mode = INFO, isOpen = false } = dialogState;
 

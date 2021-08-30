@@ -19,9 +19,9 @@ import {
    ActionFormatter,
 } from 'src/main/components/tables/utils/columnFormatters';
 import {
-   RowDialogContextProvider,
-   RowDialogContext,
-} from 'src/main/components/contexts/RowDialogContext';
+   DialogContextProvider,
+   DialogContext,
+} from 'src/main/components/contexts/DialogContext';
 import {
    DeleteTrainingTypeDialog,
    EditTrainingTypeDialog,
@@ -58,7 +58,7 @@ const ActionStateDataTypeProvider = (props) => (
 );
 
 const HeaderCell = ({ column, ...restProps }) => {
-   const { openAddDialog } = useContext(RowDialogContext);
+   const { openAddDialog } = useContext(DialogContext);
    if (column.name === '_action') {
       return (
          <TableHeaderRow.Cell {...restProps}>
@@ -84,7 +84,7 @@ export const TrainingTypeTable = ({
    setPageNumber,
    setPageSize,
 }) => (
-   <RowDialogContextProvider>
+   <DialogContextProvider>
       <Grid rows={trainingTypes} columns={columns}>
          <AvatarStateDataTypeProvider for={['trainer']} />
          <ImageStateDataTypeProvider for={['image']} />
@@ -104,5 +104,5 @@ export const TrainingTypeTable = ({
       <DeleteTrainingTypeDialog />
       <EditTrainingTypeDialog />
       <InfoTrainingTypeDialog />
-   </RowDialogContextProvider>
+   </DialogContextProvider>
 );

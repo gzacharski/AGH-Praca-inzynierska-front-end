@@ -11,13 +11,13 @@ import {
    editGympass,
 } from 'src/main/store/sliceFiles/managerSlices/gympassSlice';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { GympassForm } from '../forms/GympassForm';
 
 export const EditGympassDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
+   const { dialogState, closeDialog, rowId } = useContext(DialogContext);
    const { EDIT } = DIALOG_MODE;
    const { mode = EDIT, isOpen = false } = dialogState;
 

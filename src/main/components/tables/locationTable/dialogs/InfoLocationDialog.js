@@ -8,13 +8,13 @@ import {
 } from '@material-ui/core';
 import { selectById } from 'src/main/store/sliceFiles/locationsSlice';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { LocationForm } from '../forms/LocationForm';
 
 export const InfoLocationDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
+   const { dialogState, closeDialog, rowId } = useContext(DialogContext);
    const { INFO } = DIALOG_MODE;
    const { mode = INFO, isOpen = false } = dialogState;
 

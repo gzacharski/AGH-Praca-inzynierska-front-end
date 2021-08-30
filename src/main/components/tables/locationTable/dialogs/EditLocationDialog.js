@@ -11,13 +11,13 @@ import {
    updateLocation,
 } from 'src/main/store/sliceFiles/locationsSlice';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { LocationForm } from '../forms/LocationForm';
 
 export const EditLocationDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
+   const { dialogState, closeDialog, rowId } = useContext(DialogContext);
    const { EDIT } = DIALOG_MODE;
    const { mode = EDIT, isOpen = false } = dialogState;
 

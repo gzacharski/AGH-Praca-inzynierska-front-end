@@ -11,13 +11,13 @@ import {
    updateTrainingType,
 } from 'src/main/store/sliceFiles/workoutSlice';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { TrainingTypeForm } from './forms/TrainingTypeForm';
 
 export const EditTrainingTypeDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
+   const { dialogState, closeDialog, rowId } = useContext(DialogContext);
    const { EDIT } = DIALOG_MODE;
    const { mode = EDIT, isOpen = false } = dialogState;
 

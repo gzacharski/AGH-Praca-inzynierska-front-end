@@ -7,9 +7,9 @@ export const DIALOG_MODE = {
    DELETE: 'delete',
 };
 
-export const RowDialogContext = React.createContext();
+export const DialogContext = React.createContext();
 
-export const RowDialogContextProvider = ({ children }) => {
+export const DialogContextProvider = ({ children }) => {
    const [dialogState, setDialogState] = useState({
       mode: DIALOG_MODE.INFO,
       isOpen: false,
@@ -30,7 +30,7 @@ export const RowDialogContextProvider = ({ children }) => {
       setDialogState({ mode: DIALOG_MODE.ADD, isOpen: true });
 
    return (
-      <RowDialogContext.Provider
+      <DialogContext.Provider
          value={{
             rowId,
             dialogState,
@@ -40,6 +40,6 @@ export const RowDialogContextProvider = ({ children }) => {
          }}
       >
          {children}
-      </RowDialogContext.Provider>
+      </DialogContext.Provider>
    );
 };

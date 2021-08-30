@@ -4,13 +4,13 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import { MoreVert as InfoIcon } from '@material-ui/icons';
 import { DataTypeProvider } from '@devexpress/dx-react-grid';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 
 const ActionFormatter = ({ row = {} }) => {
    const { userId = '' } = row;
-   const { setIdAndOpenDialog } = useContext(RowDialogContext);
+   const { setIdAndOpenDialog } = useContext(DialogContext);
 
    return (
       <Tooltip title="Pokaż więcej informacji" arrow>
