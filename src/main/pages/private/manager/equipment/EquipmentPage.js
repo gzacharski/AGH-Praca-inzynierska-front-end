@@ -1,43 +1,56 @@
-import React from 'react';
-import faker from 'faker';
-import { Paper } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useSnackbar } from 'notistack';
+import { useSelector, useDispatch } from 'react-redux';
+import { LinearProgress, Paper } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import { EquipmentTable } from 'src/main/components/tables';
+import {
+   fetchEquipmentList,
+   selectAll,
+   clearMessage,
+   selectStatus,
+   selectNotistack,
+   selectMessage,
+} from 'src/main/store/sliceFiles/equipmentSlice';
+import { STATUS } from 'src/main/store/status';
 
-const getTestEquipment = () => ({
-   equipmentId: faker.random.uuid(),
-   image: faker.image.image(),
-   title: faker.random.word(),
-   state: faker.random.arrayElement(['W użyciu', 'Wycofany', 'Nieużywany']),
-   quantity: faker.datatype.number(15),
-   purchaseDate: faker.date.past().toISOString(),
-   lastServiceDate: faker.date.past().toISOString(),
-   trainings: faker.random.arrayElements([
-      'Pilates',
-      'Rowery',
-      'TRX',
-      'Sztangi',
-      'Joga',
-   ]),
-});
+const EquipmentPage = () => {
+   const status = useSelector(selectStatus);
+   const equipmentList = useSelector(selectAll);
+   const dispatch = useDispatch();
+   const notistackVariant = useSelector(selectNotistack);
+   const message = useSelector(selectMessage);
+   const { enqueueSnackbar } = useSnackbar();
 
-const getRows = (count) => {
-   const testRows = [];
-   for (let i = 0; i < count; i += 1) {
-      testRows.push(getTestEquipment());
+   useEffect(() => {
+      if (status === STATUS.IDLE) {
+         dispatch(fetchEquipmentList({}));
+      }
+   }, [status, dispatch]);
+
+   if (message) {
+      enqueueSnackbar(message, {
+         variant: notistackVariant,
+         anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'right',
+         },
+      });
+      dispatch(clearMessage());
    }
-   return testRows;
+
+   const shouldRenderProgress =
+      status === STATUS.IDLE || status === STATUS.LOADING;
+
+   return (
+      <PageWrapper>
+         <PageTitle>Zarządzaj sprzętem fitness</PageTitle>
+         <Paper>
+            {shouldRenderProgress && <LinearProgress />}
+            <EquipmentTable data={equipmentList} />
+         </Paper>
+      </PageWrapper>
+   );
 };
 
-const rows = getRows(15);
-
-const AccountPage = () => (
-   <PageWrapper>
-      <PageTitle>Zarządzaj sprzętem fitness</PageTitle>
-      <Paper>
-         <EquipmentTable data={rows} />
-      </Paper>
-   </PageWrapper>
-);
-
-export default AccountPage;
+export default EquipmentPage;

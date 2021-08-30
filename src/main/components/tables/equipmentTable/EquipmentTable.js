@@ -27,6 +27,12 @@ import {
    EquipmentStateDataTypeProvider,
    TrainingsStateDataTypeProvider,
 } from './formatters';
+import {
+   AddEquipmentDialog,
+   DeleteEquipmentDialog,
+   EditEquipmentDialog,
+   InfoEquipmentDialog,
+} from './dialogs';
 
 const tableMessages = {
    noData: 'Brak danych na temat sprzętu do wyświetlenia',
@@ -42,10 +48,10 @@ const columns = [
    // { name: 'equipmentId', title: 'ID' },
    { name: 'image', title: 'Zdjęcie' },
    { name: 'title', title: 'Nazwa' },
-   { name: 'state', title: 'Stan' },
-   { name: 'quantity', title: 'Ilość' },
-   { name: 'purchaseDate', title: 'Data zakupu' },
-   { name: 'lastServiceDate', title: 'Data ostatniego serwisu' },
+   // { name: 'state', title: 'Stan' },
+   // { name: 'quantity', title: 'Ilość' },
+   // { name: 'purchaseDate', title: 'Data zakupu' },
+   // { name: 'lastServiceDate', title: 'Data ostatniego serwisu' },
    // { name: 'trainings', title: 'Przypisany do treningów' },
    { name: '_action', title: 'Akcja' },
 ];
@@ -96,5 +102,9 @@ export const EquipmentTable = ({ data }) => (
          />
          <SearchPanel />
       </Grid>
+      <AddEquipmentDialog />
+      <DeleteEquipmentDialog />
+      <EditEquipmentDialog />
+      <InfoEquipmentDialog />
    </DialogContextProvider>
 );

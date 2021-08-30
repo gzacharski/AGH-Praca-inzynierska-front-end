@@ -9,8 +9,8 @@ import {
    DialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/DialogContext';
-import { createTrainingType } from 'src/main/store/sliceFiles/workoutSlice';
-import { TrainingTypeForm } from './forms/TrainingTypeForm';
+import { addEquipment } from 'src/main/store/sliceFiles/equipmentSlice';
+import { EquipmentForm } from './forms/EquipmentForm';
 
 export const AddEquipmentDialog = () => {
    const { dialogState, closeDialog } = useContext(DialogContext);
@@ -27,9 +27,9 @@ export const AddEquipmentDialog = () => {
             </Typography>
          </DialogTitle>
          <DialogContent>
-            <TrainingTypeForm
+            <EquipmentForm
                onCloseCallback={closeDialog}
-               onSubmitReduxCallback={createTrainingType}
+               onSubmitReduxCallback={addEquipment}
             />
          </DialogContent>
       </Dialog>

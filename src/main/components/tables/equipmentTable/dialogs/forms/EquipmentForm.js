@@ -1,16 +1,31 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Image from 'material-ui-image';
 import Cropper from 'react-easy-crop';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { KeyboardTimePicker } from '@material-ui/pickers';
-import { parse, format } from 'date-fns';
-import { Grid, TextField, Button } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+   Grid,
+   TextField,
+   Button,
+   Typography,
+   Select,
+   Input,
+   Chip,
+   Avatar,
+   MenuItem,
+} from '@material-ui/core';
 import { useAuth } from 'src/main/auth';
+import {
+   fetchWorkoutList,
+   selectStatus,
+   selectWorkouts,
+} from 'src/main/store/sliceFiles/workoutSlice';
+import { STATUS } from 'src/main/store/status';
 import getCroppedImg from './cropImage';
-import { useStyles } from './TrainingTypeForm.styles';
+import { useStyles } from './EquipmentForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
 
@@ -19,21 +34,28 @@ const validationSchema = Yup.object({
    description: Yup.string().required('Pole jest wymagane'),
 });
 
-export const TrainingTypeForm = ({
-   trainingTypeId = '',
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+   PaperProps: {
+      style: {
+         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+         width: 250,
+      },
+   },
+};
+
+export const EquipmentForm = ({
+   equipmentId = '',
    title = '',
    image = 'http://localhost',
    description = '',
-   duration = '0:30:00',
    onCloseCallback = () => false,
    readOnly = false,
    onSubmitReduxCallback = () => false,
 }) => {
    const classes = useStyles();
    const dispatch = useDispatch();
-   const [selectedDuration, handleDurationChange] = useState(
-      parse(duration, 'HH:mm:ss', 0),
-   );
    const { authState = {} } = useAuth();
    const { token = '' } = authState;
 
@@ -45,6 +67,9 @@ export const TrainingTypeForm = ({
    const [croppedPixels, setCroppedPixels] = useState(null);
    const [croppedImage, setCroppedImage] = useState(null);
    const [editingState, setEditingState] = useState(false);
+   const [selectedWorkouts, setSelectedWorkouts] = useState([]);
+   const status = useSelector(selectStatus);
+   const workouts = useSelector(selectWorkouts);
 
    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
       setCroppedPixels(croppedAreaPixels);
@@ -65,7 +90,7 @@ export const TrainingTypeForm = ({
 
    const formik = useFormik({
       initialValues: {
-         trainingTypeId,
+         equipmentId,
          title,
          description,
       },
@@ -75,15 +100,23 @@ export const TrainingTypeForm = ({
          dispatch(
             onSubmitReduxCallback({
                file: croppedImage,
-               trainingTypeId: values?.trainingTypeId,
-               name: values?.title,
-               description: values?.description,
-               duration: format(selectedDuration, 'HH:mm:ss.SSS'),
+               equipmentId: values?.equipmentId,
+               title: values?.title,
+               synopsis: values?.description,
+               trainingIds: selectedWorkouts.map(
+                  (training) => training.trainingTypeId,
+               ),
                token,
             }),
          );
       },
    });
+
+   useEffect(() => {
+      if (status === STATUS.IDLE) {
+         dispatch(fetchWorkoutList({}));
+      }
+   }, [status, dispatch]);
 
    const handleFileChange = (event) => {
       setImageToUpdate(URL.createObjectURL(event.target.files[0]));
@@ -173,7 +206,7 @@ export const TrainingTypeForm = ({
             </Grid>
             <Grid item xs={12} md={6}>
                <Grid container justifyContent="space-between">
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12}>
                      <TextField
                         variant="outlined"
                         margin="normal"
@@ -195,23 +228,58 @@ export const TrainingTypeForm = ({
                         helperText={formik.touched.title && formik.errors.title}
                      />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                     <KeyboardTimePicker
-                        variant="inline"
-                        label="Czas trwania"
-                        views={['hours', 'minutes']}
-                        minutesStep={5}
-                        disabled={readOnly}
-                        openTo="minutes"
-                        format="HH:mm:ss"
-                        ampm={false}
-                        value={selectedDuration}
-                        inputVariant="outlined"
-                        margin="normal"
+                  <Grid item xs={12}>
+                     <Typography variant="subtitle1" color="primary">
+                        Wybierz treningi, w których jest wykorzystywany sprzęt
+                     </Typography>
+                     <Select
+                        labelId="demo-mutiple-chip-label"
+                        id="demo-mutiple-chip"
+                        multiple
                         fullWidth
-                        styles={{ height: '100%' }}
-                        onChange={handleDurationChange}
-                     />
+                        disabled={readOnly}
+                        value={selectedWorkouts}
+                        onChange={(event) =>
+                           setSelectedWorkouts(event.target.value)
+                        }
+                        className={classes.select}
+                        input={<Input />}
+                        renderValue={(selected) => (
+                           <div className={classes.chips}>
+                              {selected.map((value) => (
+                                 <Chip
+                                    key={value?.trainingTypeId}
+                                    avatar={
+                                       <Avatar
+                                          src={value?.image}
+                                       >{`${value?.name}`}</Avatar>
+                                    }
+                                    label={`${value?.name}`}
+                                    className={classes.chip}
+                                 />
+                              ))}
+                           </div>
+                        )}
+                        MenuProps={MenuProps}
+                     >
+                        <MenuItem value="" disabled>
+                           Wybierz treningi
+                        </MenuItem>
+                        {workouts.map((workout) => (
+                           <MenuItem
+                              key={workout?.trainingTypeId}
+                              value={workout}
+                           >
+                              <div className={classes.menuItem}>
+                                 <Avatar
+                                    className={classes.avatar}
+                                    src={workout?.image}
+                                 >{`${workout?.name?.[0]}`}</Avatar>
+                                 <Typography>{`${workout?.name}`}</Typography>
+                              </div>
+                           </MenuItem>
+                        ))}
+                     </Select>
                   </Grid>
                   <Grid item xs={12}>
                      <TextField
@@ -224,7 +292,7 @@ export const TrainingTypeForm = ({
                         name="description"
                         multiline
                         disabled={readOnly}
-                        rows={6}
+                        rows={2}
                         type="text"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

@@ -11,7 +11,7 @@ import {
    DialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/DialogContext';
-import { TrainingTypeForm } from './forms/TrainingTypeForm';
+import { EquipmentForm } from './forms/EquipmentForm';
 
 export const InfoEquipmentDialog = () => {
    const { dialogState, closeDialog, entityId } = useContext(DialogContext);
@@ -39,7 +39,7 @@ export const InfoEquipmentDialog = () => {
             </Typography>
          </DialogTitle>
          <DialogContent>
-            <TrainingTypeForm
+            <EquipmentForm
                title={name}
                description={description}
                image={image}

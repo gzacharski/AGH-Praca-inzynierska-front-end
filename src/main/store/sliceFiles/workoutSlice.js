@@ -49,6 +49,7 @@ export const fetchWorkoutList = createAsyncThunk(
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
+               notistack: NOTISTACK.ERROR,
                error: error?.response?.data,
                message: NETWORK_ERROR,
             });
@@ -122,6 +123,7 @@ export const createTrainingType = createAsyncThunk(
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
+               notistack: NOTISTACK.ERROR,
                error: error?.response?.data,
                message: NETWORK_ERROR,
             });
@@ -202,6 +204,7 @@ export const updateTrainingType = createAsyncThunk(
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
+               notistack: NOTISTACK.ERROR,
                error: error?.response?.data,
                message: NETWORK_ERROR,
             });
@@ -234,6 +237,7 @@ export const deleteTrainingType = createAsyncThunk(
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
+               notistack: NOTISTACK.ERROR,
                error: error?.response?.data,
                message: NETWORK_ERROR,
             });
