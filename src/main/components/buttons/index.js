@@ -12,6 +12,7 @@ import { AddIndividualWorkoutButton } from './iconButtons/addIndividualWorkoutBu
 import { AddEquipmentReservationButton } from './iconButtons/addEquipmentReservationButton/AddEquipmentReservationButton';
 import { AddWorkoutButton } from './iconButtons/addWorkoutButton/AddWorkoutButton';
 import { EditEventIconButton } from './iconButtons/editEventIconButton/EditEventIconButton';
+import { RemoveEventIconButton } from './iconButtons/removeEventIconButton/RemoveEventIconButton';
 
 export {
    ActivateAccountButton,
@@ -28,4 +29,5 @@ export {
    AddEquipmentReservationButton,
    AddWorkoutButton,
    EditEventIconButton,
+   RemoveEventIconButton,
 };

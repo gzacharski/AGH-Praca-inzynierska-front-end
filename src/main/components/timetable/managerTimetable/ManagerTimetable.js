@@ -6,7 +6,7 @@ import {
    TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
-import { AddWorkoutDialog } from 'src/main/components/dialogs/addWorkoutDialog/AddWorkoutDialog';
+import { AddWorkoutDialog } from 'src/main/components/dialogs/workout';
 import { ManagerContentTooltip } from './ManagerContentTooltip';
 import { ManagerHeaderTooltip } from './ManagerHeaderTooltip';
 import { ToolbarButtons } from './ToolbarButtons';

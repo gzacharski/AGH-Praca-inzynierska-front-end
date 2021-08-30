@@ -11,7 +11,10 @@ import {
 } from 'src/main/store/sliceFiles/timetable/timetableSlice';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
-import { EditEventIconButton } from 'src/main/components/buttons';
+import {
+   EditEventIconButton,
+   RemoveEventIconButton,
+} from 'src/main/components/buttons';
 
 export const ManagerHeaderTooltip = ({ appointmentData, ...restProps }) => {
    const history = useHistory();
@@ -57,6 +60,11 @@ export const ManagerHeaderTooltip = ({ appointmentData, ...restProps }) => {
          appointmentData={appointmentData}
       >
          <EditEventIconButton
+            status={status}
+            onClick={() => console.log(appointmentData)}
+            startDate={startDate}
+         />
+         <RemoveEventIconButton
             status={status}
             onClick={() => console.log(appointmentData)}
             startDate={startDate}
