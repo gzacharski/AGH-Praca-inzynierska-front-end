@@ -7,14 +7,14 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
 import { AddWorkoutDialog } from 'src/main/components/dialogs/workout';
+import { DialogContextProvider } from 'src/main/components/contexts/DialogContext';
 import { ManagerContentTooltip } from './ManagerContentTooltip';
 import { ManagerHeaderTooltip } from './ManagerHeaderTooltip';
 import { ToolbarButtons } from './ToolbarButtons';
 import { CurrentDateContextProvider } from '../CurrentDateContext';
-import { ManagerWorkoutContextProvider } from './ManagerWorkoutContext';
 
 export const ManagerTimetable = ({ data, status, fetchData, fetchedDates }) => (
-   <ManagerWorkoutContextProvider>
+   <DialogContextProvider>
       <CurrentDateContextProvider>
          <Timetable
             data={data}
@@ -33,5 +33,5 @@ export const ManagerTimetable = ({ data, status, fetchData, fetchedDates }) => (
          </Timetable>
          <AddWorkoutDialog />
       </CurrentDateContextProvider>
-   </ManagerWorkoutContextProvider>
+   </DialogContextProvider>
 );

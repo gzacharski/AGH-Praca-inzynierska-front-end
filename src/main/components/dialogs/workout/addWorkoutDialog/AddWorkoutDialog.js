@@ -19,7 +19,10 @@ import {
    TextField,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
-import { ManagerWorkoutContext } from 'src/main/components/timetable/managerTimetable/ManagerWorkoutContext';
+import {
+   DialogContext,
+   DIALOG_MODE,
+} from 'src/main/components/contexts/DialogContext';
 import { useSelector, useDispatch } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import { addMinutes, isBefore, formatISO9075, format } from 'date-fns';
@@ -99,7 +102,8 @@ export const AddWorkoutDialog = () => {
    const { authState = {} } = useAuth();
    const { token = '' } = authState;
 
-   const { openDialog, setOpenDialog } = useContext(ManagerWorkoutContext);
+   const { dialogState = {}, closeDialog = () => false } =
+      useContext(DialogContext);
 
    useEffect(() => {
       if (trainerStatus === STATUS.IDLE) {
@@ -135,7 +139,6 @@ export const AddWorkoutDialog = () => {
    };
 
    const handleSubmit = () => {
-      setOpenDialog(false);
       dispatch(
          createGroupTraining({
             trainingTypeId: selectedTrainingType,
@@ -149,12 +152,15 @@ export const AddWorkoutDialog = () => {
             token,
          }),
       );
-      setOpenDialog(false);
+      closeDialog();
       resetState();
    };
 
+   const { mode = DIALOG_MODE.INFO, isOpen = false } = dialogState;
+   const shouldOpen = mode === DIALOG_MODE.ADD && isOpen;
+
    return (
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      <Dialog open={shouldOpen} onClose={closeDialog}>
          <DialogTitle>
             <Typography variant="h6" color="primary">
                Dodaj nowy trening
@@ -335,7 +341,7 @@ export const AddWorkoutDialog = () => {
             <Button
                variant="contained"
                className={classes.button}
-               onClick={() => setOpenDialog(false)}
+               onClick={closeDialog}
             >
                Anuluj
             </Button>
