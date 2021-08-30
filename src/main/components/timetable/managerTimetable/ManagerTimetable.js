@@ -6,7 +6,11 @@ import {
    TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
-import { AddWorkoutDialog } from 'src/main/components/dialogs/workout';
+import {
+   AddWorkoutDialog,
+   EditWorkoutDialog,
+   DeleteWorkoutDialog,
+} from 'src/main/components/dialogs/workout';
 import { DialogContextProvider } from 'src/main/components/contexts/DialogContext';
 import { ManagerContentTooltip } from './ManagerContentTooltip';
 import { ManagerHeaderTooltip } from './ManagerHeaderTooltip';
@@ -32,6 +36,8 @@ export const ManagerTimetable = ({ data, status, fetchData, fetchedDates }) => (
             />
          </Timetable>
          <AddWorkoutDialog />
+         <EditWorkoutDialog />
+         <DeleteWorkoutDialog />
       </CurrentDateContextProvider>
    </DialogContextProvider>
 );

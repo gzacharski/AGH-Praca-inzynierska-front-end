@@ -1,43 +1,30 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import {
    selectMessage,
    selectStatus,
-   enrollToGroupTraining,
    clearMessage,
 } from 'src/main/store/sliceFiles/timetable/timetableSlice';
+import {
+   DialogContext,
+   DIALOG_MODE,
+} from 'src/main/components/contexts/DialogContext';
 import { STATUS } from 'src/main/store';
-import { useAuth } from 'src/main/auth';
 import {
    EditEventIconButton,
    RemoveEventIconButton,
 } from 'src/main/components/buttons';
 
 export const ManagerHeaderTooltip = ({ appointmentData, ...restProps }) => {
-   const history = useHistory();
-   const auth = useAuth();
    const dispatch = useDispatch();
    const message = useSelector(selectMessage);
    const status = useSelector(selectStatus);
    const { enqueueSnackbar } = useSnackbar();
+   const { setIdAndOpenDialog } = useContext(DialogContext);
 
-   const { startDate, id } = appointmentData;
-
-   // eslint-disable-next-line no-unused-vars
-   const handleClick = () => {
-      if (auth.isAuthenticated()) {
-         const { authState = {} } = auth;
-         const { userInfo = {}, token = '' } = authState;
-         const { userId = '' } = userInfo;
-
-         dispatch(enrollToGroupTraining({ trainingId: id, userId, token }));
-      } else {
-         history.push('/login?redirect=/timetable');
-      }
-   };
+   const { startDate = '', id = '' } = appointmentData || {};
 
    useEffect(() => {
       if (message) {
@@ -61,12 +48,12 @@ export const ManagerHeaderTooltip = ({ appointmentData, ...restProps }) => {
       >
          <EditEventIconButton
             status={status}
-            onClick={() => console.log(appointmentData)}
+            onClick={() => setIdAndOpenDialog({ id, mode: DIALOG_MODE.EDIT })}
             startDate={startDate}
          />
          <RemoveEventIconButton
             status={status}
-            onClick={() => console.log(appointmentData)}
+            onClick={() => setIdAndOpenDialog({ id, mode: DIALOG_MODE.DELETE })}
             startDate={startDate}
          />
       </AppointmentTooltip.Header>
