@@ -6,7 +6,7 @@ import {
    DialogContent,
    Typography,
 } from '@material-ui/core';
-import { selectById } from 'src/main/store/sliceFiles/workoutSlice';
+import { selectById } from 'src/main/store/sliceFiles/equipmentSlice';
 import {
    DialogContext,
    DIALOG_MODE,
@@ -21,12 +21,10 @@ export const InfoEquipmentDialog = () => {
    const selectedRow =
       useSelector((state) => selectById(state, entityId)) || {};
    const {
-      trainingTypeId = '',
-      name = '',
-      image = '',
+      equipmentId = '',
+      title = '',
+      images = [],
       description = '',
-      trainer = {},
-      duration = '',
    } = selectedRow;
 
    const shouldOpen = mode === INFO && isOpen;
@@ -35,17 +33,16 @@ export const InfoEquipmentDialog = () => {
       <Dialog open={shouldOpen} onClose={closeDialog} maxWidth="md">
          <DialogTitle>
             <Typography variant="h6" color="primary">
-               Szczegółowe informacje o sprzęcie: {name}
+               Szczegółowe informacje o sprzęcie: {JSON.stringify(selectedRow)}{' '}
+               {title}
             </Typography>
          </DialogTitle>
          <DialogContent>
             <EquipmentForm
-               title={name}
+               title={title}
                description={description}
-               image={image}
-               duration={duration}
-               trainer={trainer}
-               trainingTypeId={trainingTypeId}
+               image={images?.[0] || ''}
+               equipmentId={equipmentId}
                onCloseCallback={closeDialog}
                readOnly
             />

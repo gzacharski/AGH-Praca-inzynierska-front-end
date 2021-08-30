@@ -56,9 +56,14 @@ const columns = [
    { name: '_action', title: 'Akcja' },
 ];
 
+const ActionFormatterAdapter = ({ row }) => {
+   const { equipmentId = '' } = row;
+   return <ActionFormatter id={equipmentId} />;
+};
+
 export const ActionStateDataTypeProvider = (props) => (
    // eslint-disable-next-line react/jsx-props-no-spreading
-   <DataTypeProvider formatterComponent={ActionFormatter} {...props} />
+   <DataTypeProvider formatterComponent={ActionFormatterAdapter} {...props} />
 );
 
 const HeaderCell = ({ column, ...restProps }) => {

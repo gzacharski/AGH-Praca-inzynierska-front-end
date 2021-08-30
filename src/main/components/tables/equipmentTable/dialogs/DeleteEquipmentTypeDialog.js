@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core';
 import {
    selectById,
-   deleteTrainingType,
-} from 'src/main/store/sliceFiles/workoutSlice';
+   deleteEquipment,
+} from 'src/main/store/sliceFiles/equipmentSlice';
 import {
    DialogContext,
    DIALOG_MODE,
@@ -27,7 +27,7 @@ export const DeleteEquipmentDialog = () => {
    const selectedRow =
       useSelector((state) => selectById(state, entityId)) || {};
 
-   const { trainingTypeId = '', name = '' } = selectedRow;
+   const { equipmentId = '', title = '' } = selectedRow;
 
    const shouldOpen = mode === DELETE && isOpen;
 
@@ -35,7 +35,7 @@ export const DeleteEquipmentDialog = () => {
       <Dialog open={shouldOpen} onClose={closeDialog}>
          <DialogTitle>
             <Typography variant="h6" color="primary">
-               Czy na pewno chcesz usunąć sprzęt fitness {name}?
+               Czy na pewno chcesz usunąć sprzęt fitness {title}?
             </Typography>
          </DialogTitle>
          <DialogActions>
@@ -43,7 +43,7 @@ export const DeleteEquipmentDialog = () => {
                onClick={() => {
                   closeDialog();
                   const { token = '' } = authState;
-                  dispatch(deleteTrainingType({ token, trainingTypeId }));
+                  dispatch(deleteEquipment({ token, equipmentId }));
                }}
             >
                Usuń

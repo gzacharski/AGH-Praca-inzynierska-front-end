@@ -42,6 +42,7 @@ export const fetchEquipmentList = createAsyncThunk(
       } catch (error) {
          if (error.response === undefined) {
             return rejectWithValue({
+               notistack: getNotistackVariant(error),
                error: error?.response?.data,
                message: NETWORK_ERROR,
             });
@@ -125,6 +126,34 @@ export const addEquipment = createAsyncThunk(
    },
 );
 
+export const deleteEquipment = createAsyncThunk(
+   'equipmentList/deleteTrainingType',
+   async ({ equipmentId = '', token = '' }, { rejectWithValue }) => {
+      const url = `${equipmentServiceURL}/${equipmentId}`;
+
+      try {
+         const response = await axios.delete(url, {
+            headers: { 'Accept-Language': 'pl', Authorization: token },
+         });
+         const { message = '', equipment = {} } = response?.data;
+         return { message, equipmentId: equipment?.equipmentId || '' };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               notistack: NOTISTACK.ERROR,
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const equipmentListSlice = createSlice({
    name: 'equipmentList',
    initialState,
@@ -147,7 +176,7 @@ const equipmentListSlice = createSlice({
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
-         state.notistack = NOTISTACK.ERROR;
+         state.notistack = action.payload.notistack;
       },
 
       [addEquipment.pending]: (state, action) => {
@@ -161,6 +190,23 @@ const equipmentListSlice = createSlice({
          state.error = null;
       },
       [addEquipment.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [deleteEquipment.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [deleteEquipment.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         equipmentListAdapter.removeOne(state, action.payload.equipmentId);
+         state.error = null;
+      },
+      [deleteEquipment.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
