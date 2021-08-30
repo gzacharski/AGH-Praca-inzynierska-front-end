@@ -2,7 +2,7 @@ import { Timetable } from './Timetable';
 import { UserEquipmentTimetable } from './userEquipmentTimetable/UserEquipmentTimetable';
 import { UserGroupTimetable } from './userGroupTimetable/UserGroupTimetable';
 import { UserIndividualTimetable } from './userIndividualTimetable/UserIndividualTimetable';
-import { ManagerTimetable } from './ManagerTimetable';
+import { ManagerTimetable } from './managerTimetable/ManagerTimetable';
 import { PublicTimetable } from './publicTimetable/PublicTimetable';
 import { TrainerTimetable } from './TrainerTimetable';
 

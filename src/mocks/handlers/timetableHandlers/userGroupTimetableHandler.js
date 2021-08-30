@@ -52,7 +52,7 @@ export const userGroupTimetableHandlers = [
                            'https://fwcdn.pl/fph/10/19/1019/409449_2.2.jpg',
                      },
                   ],
-                  partipants: {
+                  participants: {
                      basicList: [
                         {
                            userId: clientId,
@@ -150,7 +150,7 @@ export const userGroupTimetableHandlers = [
                                  'https://fwcdn.pl/fph/10/19/1019/409449_2.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,
@@ -220,7 +220,7 @@ export const userGroupTimetableHandlers = [
                                  'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,
@@ -268,7 +268,7 @@ export const userGroupTimetableHandlers = [
                         startDate: '2021-07-30T13:00',
                         endDate: '2021-07-30T15:30',
                         allDay: false,
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId: nanoid(),
@@ -359,7 +359,7 @@ export const userGroupTimetableHandlers = [
                                  'https://fwcdn.pl/fph/30/06/583006/327598_1.2.jpg',
                            },
                         ],
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId,
@@ -407,7 +407,7 @@ export const userGroupTimetableHandlers = [
                         startDate: '2021-07-16T13:00',
                         endDate: '2021-07-16T15:30',
                         allDay: false,
-                        partipants: {
+                        participants: {
                            basicList: [
                               {
                                  userId: nanoid(),

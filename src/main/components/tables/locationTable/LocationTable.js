@@ -20,9 +20,9 @@ import {
 } from 'src/main/components/tables/utils/columnFormatters';
 import { SubheaderStateDataTypeProvider } from 'src/main/components/tables/gympassTable/formatters/SubheaderColumnFormatter';
 import {
-   RowDialogContextProvider,
-   RowDialogContext,
-} from 'src/main/components/contexts/RowDialogContext';
+   DialogContextProvider,
+   DialogContext,
+} from 'src/main/components/contexts/DialogContext';
 import {
    AddLocationDialog,
    DeleteLocationDialog,
@@ -58,7 +58,7 @@ const ActionStateDataTypeProvider = (props) => (
 );
 
 const HeaderCell = ({ column, ...restProps }) => {
-   const { openAddDialog } = useContext(RowDialogContext);
+   const { openAddDialog } = useContext(DialogContext);
    if (column.name === '_action') {
       return (
          <TableHeaderRow.Cell {...restProps}>
@@ -78,7 +78,7 @@ const HeaderCell = ({ column, ...restProps }) => {
 };
 
 export const LocationTable = ({ data }) => (
-   <RowDialogContextProvider>
+   <DialogContextProvider>
       <Grid rows={data} columns={columns}>
          <ImageStateDataTypeProvider for={['image']} />
          <ActionStateDataTypeProvider for={['_action']} />
@@ -95,5 +95,5 @@ export const LocationTable = ({ data }) => (
       <DeleteLocationDialog />
       <EditLocationDialog />
       <InfoLocationDialog />
-   </RowDialogContextProvider>
+   </DialogContextProvider>
 );

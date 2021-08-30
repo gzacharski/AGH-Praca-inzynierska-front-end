@@ -16,7 +16,7 @@ import { DateTimePicker } from '@material-ui/pickers';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMinutes, formatISO, isBefore, formatISO9075 } from 'date-fns';
 import {
-   selectEquipment,
+   selectAll,
    selectStatus,
    fetchEquipmentList,
 } from 'src/main/store/sliceFiles/equipmentSlice';
@@ -37,7 +37,7 @@ const EquipmentRequestDialog = () => {
    const { userId = '' } = userInfo;
 
    const [selectedEquipment, setSelectedEquipment] = useState('');
-   const equipmentData = useSelector(selectEquipment);
+   const equipmentData = useSelector(selectAll);
    const equipmentStatus = useSelector(selectStatus);
    const dispatch = useDispatch();
 

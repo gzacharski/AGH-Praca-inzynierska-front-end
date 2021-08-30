@@ -6,14 +6,14 @@ import {
    Typography,
 } from '@material-ui/core';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { addLocation } from 'src/main/store/sliceFiles/locationsSlice';
 import { LocationForm } from '../forms/LocationForm';
 
 export const AddLocationDialog = () => {
-   const { dialogState, closeDialog } = useContext(RowDialogContext);
+   const { dialogState, closeDialog } = useContext(DialogContext);
    const { ADD, INFO } = DIALOG_MODE;
    const { mode = INFO, isOpen = false } = dialogState;
 

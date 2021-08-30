@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux';
 import { Dialog, Typography } from '@material-ui/core';
 import { selectById } from 'src/main/store/sliceFiles/users/clientSlice';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 
 export const InfoTrainingTypeDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
+   const { dialogState, closeDialog, entityId } = useContext(DialogContext);
    const { INFO } = DIALOG_MODE;
    const { mode = INFO, isOpen = false } = dialogState;
 
-   const selectedRow = useSelector((state) => selectById(state, rowId));
+   const selectedRow = useSelector((state) => selectById(state, entityId));
 
    const shouldOpen = mode === INFO && isOpen;
 

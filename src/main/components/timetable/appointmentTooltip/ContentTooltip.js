@@ -89,10 +89,10 @@ export const ContentTooltip = withStyles(style)(
       const {
          location = '',
          trainers = [],
-         partipants = {},
+         participants = {},
          rating,
       } = appointmentData;
-      const { basicList = [] } = partipants;
+      const { basicList = [] } = participants;
 
       const [open, setOpen] = useState(false);
 
@@ -168,7 +168,7 @@ export const ContentTooltip = withStyles(style)(
                   </Grid>
                </Grid>
                <ParticipantsDialog
-                  users={{ trainers, partipants }}
+                  users={{ trainers, participants }}
                   open={open}
                   setOpen={setOpen}
                />

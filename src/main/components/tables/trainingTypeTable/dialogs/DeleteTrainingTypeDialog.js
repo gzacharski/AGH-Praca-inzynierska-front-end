@@ -12,19 +12,19 @@ import {
    deleteTrainingType,
 } from 'src/main/store/sliceFiles/workoutSlice';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 import { useAuth } from 'src/main/auth';
 
 export const DeleteTrainingTypeDialog = () => {
-   const { dialogState, closeDialog, rowId } = useContext(RowDialogContext);
+   const { dialogState, closeDialog, entityId } = useContext(DialogContext);
    const { DELETE } = DIALOG_MODE;
    const { mode = DELETE, isOpen = false } = dialogState;
    const { authState = {} } = useAuth();
    const dispatch = useDispatch();
 
-   const selectedRow = useSelector((state) => selectById(state, rowId)) || {};
+   const selectedRow = useSelector((state) => selectById(state, entityId)) || {};
 
    const { trainingTypeId = '', name = '' } = selectedRow;
 

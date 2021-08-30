@@ -20,7 +20,7 @@ const testUsers = {
             'https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg',
       },
    ],
-   partipants: {
+   participants: {
       basicList: [
          {
             userId: nanoid(),
@@ -71,7 +71,7 @@ describe('Participants list', () => {
       beforeEach(() => {
          render(
             <ParticipantList
-               users={testUsers.partipants.basicList}
+               users={testUsers.participants.basicList}
                title="Test title"
             />,
          );
@@ -89,11 +89,11 @@ describe('Participants list', () => {
       test('should render participants avatar', () => {
          expect(screen.getByAltText('Redford Bowdry')).toHaveAttribute(
             'src',
-            testUsers.partipants.basicList[0].avatar,
+            testUsers.participants.basicList[0].avatar,
          );
          expect(screen.getByAltText('Aditya Lindel')).toHaveAttribute(
             'src',
-            testUsers.partipants.basicList[1].avatar,
+            testUsers.participants.basicList[1].avatar,
          );
       });
 

@@ -39,7 +39,7 @@ export const fetchPublicTimetableData = createAsyncThunk(
 
       try {
          const response = await axios.get(url, config());
-         const { data = [] } = response;
+         const { data = [] } = response || {};
          return { data, startOfWeek, endOfWeek };
       } catch (error) {
          const { data = {}, status = 0 } = error?.response;
@@ -79,15 +79,154 @@ export const fetchPrivateTimetableData = createAsyncThunk(
    },
 );
 
+export const createGroupTraining = createAsyncThunk(
+   'timetable/createGroupTraining',
+   async (
+      {
+         trainingTypeId = '',
+         trainerIds = [],
+         startDate = '',
+         endDate = '',
+         locationId = '',
+         limit = 10,
+         token = '',
+      },
+      { rejectWithValue },
+   ) => {
+      const url = `${trainingsServiceURL}/group`;
+
+      const body = {
+         trainingTypeId,
+         trainerIds,
+         startDate,
+         endDate,
+         locationId,
+         limit,
+      };
+
+      try {
+         const response = await axios.post(url, body, {
+            headers: {
+               'Accept-Language': 'pl',
+               'Content-Type': 'application/json',
+               Authorization: token,
+            },
+         });
+         const { message = null, training = {} } = response?.data || {};
+         return { message, training };
+      } catch (error) {
+         if (error?.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const updateGroupTraining = createAsyncThunk(
+   'timetable/updateGroupTraining',
+   async (
+      {
+         trainingId = '',
+         trainingTypeId = '',
+         trainerIds = [],
+         startDate = '',
+         endDate = '',
+         locationId = '',
+         limit = 10,
+         shouldSendEmails = false,
+         token = '',
+      },
+      { rejectWithValue },
+   ) => {
+      const url = `${trainingsServiceURL}/group/${trainingId}`;
+
+      const body = {
+         trainingTypeId,
+         trainerIds,
+         startDate,
+         endDate,
+         locationId,
+         limit,
+         shouldSendEmails,
+      };
+
+      try {
+         const response = await axios.put(url, body, {
+            headers: {
+               'Accept-Language': 'pl',
+               'Content-Type': 'application/json',
+               Authorization: token,
+            },
+         });
+         const { message = null, training = {} } = response?.data || {};
+         return { message, training };
+      } catch (error) {
+         if (error?.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const deleteGroupTraining = createAsyncThunk(
+   'timetable/deleteGroupTraining',
+   async ({ trainingId = '', token = '' }, { rejectWithValue }) => {
+      const url = `${trainingsServiceURL}/group/${trainingId}`;
+
+      try {
+         const response = await axios.delete(url, {
+            headers: {
+               'Accept-Language': 'pl',
+               'Content-Type': 'application/json',
+               Authorization: token,
+            },
+         });
+         const { message = null, training = {} } = response?.data || {};
+         return { message, training };
+      } catch (error) {
+         if (error?.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 export const enrollToGroupTraining = createAsyncThunk(
    'timetable/enrollToGroupTraining',
-   async ({ trainingId, userId, token }, { rejectWithValue }) => {
+   async (
+      { trainingId = '', userId = '', token = '' },
+      { rejectWithValue },
+   ) => {
       const url = `${trainingsServiceURL}/group/${trainingId}/enroll?clientId=${userId}`;
 
       try {
-         const response = await axios.post(url, config(token));
-         const { message = null } = response?.data;
-         return { message };
+         const response = await axios.post(url, {}, config(token));
+         const { message = null, training = {} } = response?.data || {};
+         return { message, training };
       } catch (error) {
          if (error?.response === undefined) {
             return rejectWithValue({
@@ -167,9 +306,61 @@ export const timetableSlice = createSlice({
          state.status = STATUS.SUCCEEDED;
          state.notistack = NOTISTACK.SUCCESS;
          state.message = action.payload.message;
+         timetableAdapter.upsertOne(state, action.payload.training);
          state.error = null;
       },
       [enrollToGroupTraining.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [createGroupTraining.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [createGroupTraining.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         timetableAdapter.upsertOne(state, action.payload.training);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [createGroupTraining.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [updateGroupTraining.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [updateGroupTraining.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         timetableAdapter.upsertOne(state, action.payload.training);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [updateGroupTraining.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [deleteGroupTraining.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [deleteGroupTraining.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         timetableAdapter.removeOne(state, action.payload.training.id);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [deleteGroupTraining.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
@@ -180,9 +371,11 @@ export const timetableSlice = createSlice({
 
 export const { clearMessage, reset } = timetableSlice.actions;
 
-export const { selectAll: selectData } = timetableAdapter.getSelectors(
-   (state) => state.timetable,
-);
+export const {
+   selectAll: selectData,
+   selectById,
+   selectEntities,
+} = timetableAdapter.getSelectors((state) => state.timetable);
 
 export const selectStatus = (state) => state.timetable.status;
 export const selectMessage = (state) => state.timetable.message;

@@ -36,8 +36,8 @@ export const fetchUserGroupReservation = createAsyncThunk(
 
       try {
          const response = await axios.get(url, config(token));
-         const { data = [], message = null } = response?.data;
-         return { data, startOfWeek, endOfWeek, message };
+         const { data = [] } = response || {};
+         return { data, startOfWeek, endOfWeek };
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
@@ -102,7 +102,7 @@ export const userGroupReservationSlice = createSlice({
       [fetchUserGroupReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          userGroupReservationAdapter.upsertMany(state, action.payload.data);
-         state.message = action.payload.message;
+         state.message = null;
          state.notistack = NOTISTACK.SUCCESS;
          state.error = null;
          state.fetchedDates = {

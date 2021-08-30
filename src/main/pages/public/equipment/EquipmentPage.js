@@ -10,7 +10,7 @@ import {
    fetchEquipmentList,
    selectError,
    selectMessage,
-   selectEquipment,
+   selectAll,
    selectStatus,
 } from 'src/main/store/sliceFiles/equipmentSlice';
 import { useStyles } from './EquipmentPage.styles';
@@ -43,7 +43,7 @@ const EquipmentPage = () => {
    const classes = useStyles();
    const dispatch = useDispatch();
    const status = useSelector(selectStatus);
-   const equipment = useSelector(selectEquipment);
+   const equipment = useSelector(selectAll);
    const message = useSelector(selectMessage);
    const error = useSelector(selectError);
    const location = useLocation();

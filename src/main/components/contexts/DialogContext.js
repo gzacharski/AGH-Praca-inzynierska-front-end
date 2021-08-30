@@ -7,22 +7,22 @@ export const DIALOG_MODE = {
    DELETE: 'delete',
 };
 
-export const RowDialogContext = React.createContext();
+export const DialogContext = React.createContext();
 
-export const RowDialogContextProvider = ({ children }) => {
+export const DialogContextProvider = ({ children }) => {
    const [dialogState, setDialogState] = useState({
       mode: DIALOG_MODE.INFO,
       isOpen: false,
    });
-   const [rowId, setRowId] = useState('');
+   const [entityId, setEntityId] = useState('');
 
    const setIdAndOpenDialog = ({ id, mode }) => {
-      setRowId(id);
+      setEntityId(id);
       setDialogState({ mode, isOpen: true });
    };
 
    const closeDialog = () => {
-      setRowId('');
+      setEntityId('');
       setDialogState({ mode: DIALOG_MODE.INFO, isOpen: false });
    };
 
@@ -30,9 +30,9 @@ export const RowDialogContextProvider = ({ children }) => {
       setDialogState({ mode: DIALOG_MODE.ADD, isOpen: true });
 
    return (
-      <RowDialogContext.Provider
+      <DialogContext.Provider
          value={{
-            rowId,
+            entityId,
             dialogState,
             setIdAndOpenDialog,
             closeDialog,
@@ -40,6 +40,6 @@ export const RowDialogContextProvider = ({ children }) => {
          }}
       >
          {children}
-      </RowDialogContext.Provider>
+      </DialogContext.Provider>
    );
 };

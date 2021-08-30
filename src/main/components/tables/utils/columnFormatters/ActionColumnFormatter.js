@@ -7,12 +7,12 @@ import {
    MoreVert as InfoIcon,
 } from '@material-ui/icons';
 import {
-   RowDialogContext,
+   DialogContext,
    DIALOG_MODE,
-} from 'src/main/components/contexts/RowDialogContext';
+} from 'src/main/components/contexts/DialogContext';
 
 export const ActionFormatter = ({ id = '' }) => {
-   const { setIdAndOpenDialog } = useContext(RowDialogContext);
+   const { setIdAndOpenDialog } = useContext(DialogContext);
    const { DELETE, EDIT, INFO } = DIALOG_MODE;
 
    return (

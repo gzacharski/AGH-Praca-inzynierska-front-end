@@ -6,7 +6,7 @@ import {
    TableHeaderRow,
    PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
-import { RowDialogContextProvider } from 'src/main/components/contexts/RowDialogContext';
+import { DialogContextProvider } from 'src/main/components/contexts/DialogContext';
 import {
    AccountStateDataTypeProvider,
    RolesStateDataTypeProvider,
@@ -20,8 +20,8 @@ const columns = [
    { name: 'name', title: 'Imię' },
    { name: 'surname', title: 'Nazwisko' },
    { name: 'email', title: 'Email' },
-   { name: 'phone', title: 'Telefon' },
-   { name: 'roles', title: 'Przypisane role' },
+   // { name: 'phone', title: 'Telefon' },
+   // { name: 'roles', title: 'Przypisane role' },
    { name: 'enabled', title: 'Stan konta' },
    { name: '_action', title: 'Akcja' },
 ];
@@ -43,7 +43,7 @@ export const UsersTable = ({
    setPageNumber,
    setPageSize,
 }) => (
-   <RowDialogContextProvider>
+   <DialogContextProvider>
       <Grid rows={users} columns={columns}>
          <AccountStateDataTypeProvider for={['enabled']} />
          <AvatarStateDataTypeProvider for={['avatar']} />
@@ -64,5 +64,5 @@ export const UsersTable = ({
          />
       </Grid>
       <InfoTrainingTypeDialog />
-   </RowDialogContextProvider>
+   </DialogContextProvider>
 );

@@ -89,9 +89,8 @@ export default trainersListSlice.reducer;
 
 export const { clearMessage } = trainersListSlice.actions;
 
-export const { selectAll, selectById } = trainerListAdapter.getSelectors(
-   (state) => state.trainersList,
-);
+export const { selectAll, selectById, selectEntities } =
+   trainerListAdapter.getSelectors((state) => state.trainersList);
 
 export const selectMessage = (state) => state.trainersList.message;
 export const selectStatus = (state) => state.trainersList.status;

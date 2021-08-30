@@ -7,7 +7,7 @@ describe('SettingsPage', () => {
       render(<WorkoutsPage />);
    });
 
-   test('should contain ', () => {
+   xtest('should contain ', () => {
       expect(
          screen.getByText('Aktualny grafik zajęć indywidualnych i grupowych'),
       ).toBeInTheDocument();

@@ -28,7 +28,7 @@ const StyledBadge = withStyles({
    },
 })(Badge);
 
-const UserListItem = ({ user, isTrainer }) => {
+const UserListItem = ({ user = {}, isTrainer = false }) => {
    const { name = ' ', surname = ' ', avatar = '' } = user;
    return (
       <ListItem>
@@ -45,7 +45,7 @@ const UserListItem = ({ user, isTrainer }) => {
    );
 };
 
-export const TrainerList = ({ trainers }) =>
+export const TrainerList = ({ trainers = [] }) =>
    trainers && trainers.length > 0 ? (
       <List>
          {trainers.map((trainer) => (
@@ -73,10 +73,14 @@ export const ParticipantList = ({ users, title }) => (
    </div>
 );
 
-export const ParticipantsDialog = ({ users, open, setOpen }) => {
+export const ParticipantsDialog = ({
+   users = {},
+   open = false,
+   setOpen = () => false,
+}) => {
    const classes = useStyles();
-   const { trainers = [] } = users;
-   const { basicList = [], reserveList = [] } = users?.partipants;
+   const { trainers = [], participants = {} } = users;
+   const { basicList = [], reserveList = [] } = participants;
    return (
       <Dialog
          open={open}
