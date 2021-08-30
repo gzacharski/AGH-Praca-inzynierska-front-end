@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { Dialog } from '@material-ui/core';
+import React from 'react';
 import {
    Appointments,
    AppointmentTooltip,
@@ -7,23 +6,12 @@ import {
    TodayButton,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
+import { AddWorkoutDialog } from 'src/main/components/dialogs/addWorkoutDialog/AddWorkoutDialog';
 import { ManagerContentTooltip } from './ManagerContentTooltip';
 import { ManagerHeaderTooltip } from './ManagerHeaderTooltip';
 import { ToolbarButtons } from './ToolbarButtons';
 import { CurrentDateContextProvider } from '../CurrentDateContext';
-import {
-   ManagerWorkoutContextProvider,
-   ManagerWorkoutContext,
-} from './ManagerWorkoutContext';
-
-const ManagerDialog = () => {
-   const { openDialog, setOpenDialog } = useContext(ManagerWorkoutContext);
-   return (
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-         Test
-      </Dialog>
-   );
-};
+import { ManagerWorkoutContextProvider } from './ManagerWorkoutContext';
 
 export const ManagerTimetable = ({ data, status, fetchData, fetchedDates }) => (
    <ManagerWorkoutContextProvider>
@@ -43,7 +31,7 @@ export const ManagerTimetable = ({ data, status, fetchData, fetchedDates }) => (
                contentComponent={ManagerContentTooltip}
             />
          </Timetable>
-         <ManagerDialog />
+         <AddWorkoutDialog />
       </CurrentDateContextProvider>
    </ManagerWorkoutContextProvider>
 );

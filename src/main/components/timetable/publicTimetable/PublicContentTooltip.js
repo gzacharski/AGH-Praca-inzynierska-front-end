@@ -21,7 +21,6 @@ import {
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { ParticipantsDialog } from 'src/main/components/dialogs';
 import { useAuth } from 'src/main/auth';
-import {} from 'src/main/utils';
 
 const style = ({ palette }) => ({
    icon: {
