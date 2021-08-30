@@ -104,12 +104,6 @@ export const createGroupTraining = createAsyncThunk(
          limit,
       };
 
-      const conf = config(token);
-      conf.headers['Content-Type'] = 'application/json';
-
-      console.log(conf);
-      console.log(body);
-
       try {
          const response = await axios.post(url, body, {
             headers: {
@@ -118,7 +112,6 @@ export const createGroupTraining = createAsyncThunk(
                Authorization: token,
             },
          });
-         console.log(response);
          const { message = null, training = {} } = response?.data || {};
          return { message, training };
       } catch (error) {
@@ -147,8 +140,8 @@ export const enrollToGroupTraining = createAsyncThunk(
 
       try {
          const response = await axios.post(url, {}, config(token));
-         const { message = null } = response?.data || {};
-         return { message };
+         const { message = null, training = {} } = response?.data || {};
+         return { message, training };
       } catch (error) {
          if (error?.response === undefined) {
             return rejectWithValue({
@@ -228,6 +221,7 @@ export const timetableSlice = createSlice({
          state.status = STATUS.SUCCEEDED;
          state.notistack = NOTISTACK.SUCCESS;
          state.message = action.payload.message;
+         timetableAdapter.upsertOne(state, action.payload.training);
          state.error = null;
       },
       [enrollToGroupTraining.rejected]: (state, action) => {

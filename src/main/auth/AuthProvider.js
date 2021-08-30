@@ -5,13 +5,13 @@ import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }) => {
    const token = localStorage.getItem('token');
-   const useInfo = localStorage.getItem('userInfo');
+   const userInfo = localStorage.getItem('userInfo');
    const expiresAt = localStorage.getItem('expiresAt');
 
    const [authState, setAuthState] = useState({
       token,
       expiresAt,
-      userInfo: useInfo ? JSON.parse(useInfo) : {},
+      userInfo: userInfo ? JSON.parse(userInfo) : {},
    });
 
    const setAuthInfo = (authInfo) => {

@@ -11,6 +11,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { getEndOfWeek, getStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
+import { useAuth } from 'src/main/auth';
 import { useStyles } from './Timetable.styles';
 import { CurrentDateContext } from './CurrentDateContext';
 
@@ -26,6 +27,7 @@ export const Timetable = ({
    const { setCurrentDate } = useContext(CurrentDateContext);
    const shouldRenderProgress =
       status === STATUS.IDLE || status === STATUS.LOADING;
+   const { authState = {} } = useAuth();
    return (
       <Paper className={classes.paper}>
          {shouldRenderProgress && <LinearProgress />}
@@ -37,7 +39,11 @@ export const Timetable = ({
                   const startOfWeek = getStartOfWeek(currentDate);
                   const endOfWeek = getEndOfWeek(currentDate);
                   if (fetchedDates[startOfWeek] !== endOfWeek) {
-                     dispatch(fetchData({ startOfWeek, endOfWeek }));
+                     const { token = '', userInfo = {} } = authState;
+                     const { userId = '' } = userInfo;
+                     dispatch(
+                        fetchData({ userId, startOfWeek, endOfWeek, token }),
+                     );
                   }
                }}
             />
