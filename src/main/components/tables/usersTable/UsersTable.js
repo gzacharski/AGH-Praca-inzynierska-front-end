@@ -20,8 +20,8 @@ const columns = [
    { name: 'name', title: 'Imię' },
    { name: 'surname', title: 'Nazwisko' },
    { name: 'email', title: 'Email' },
-   { name: 'phone', title: 'Telefon' },
-   { name: 'roles', title: 'Przypisane role' },
+   // { name: 'phone', title: 'Telefon' },
+   // { name: 'roles', title: 'Przypisane role' },
    { name: 'enabled', title: 'Stan konta' },
    { name: '_action', title: 'Akcja' },
 ];
