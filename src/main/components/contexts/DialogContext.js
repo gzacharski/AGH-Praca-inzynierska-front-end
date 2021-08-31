@@ -5,6 +5,7 @@ export const DIALOG_MODE = {
    INFO: 'info',
    EDIT: 'edit',
    DELETE: 'delete',
+   GYMPASS: 'gympass',
 };
 
 export const DialogContext = React.createContext();

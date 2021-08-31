@@ -64,6 +64,7 @@ const AccountPage = () => {
                setPageNumber={setPageNumber}
                setPageSize={setPageSize}
                users={users}
+               employeeActions
             />
          </Paper>
       </PageWrapper>
