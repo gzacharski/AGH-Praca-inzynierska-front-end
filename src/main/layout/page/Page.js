@@ -9,7 +9,6 @@ import {
 } from 'src/main/data/roles';
 import {
    NotificationsPage,
-   UserEquipmentPage,
    UserGroupWorkoutPage,
    UserIndividualWorkoutPage,
    SettingsPage,
@@ -93,9 +92,6 @@ const Page = () => {
             <PriceListPage />
          </Route>
 
-         <PrivateRoute path="/reservations/equipment">
-            <UserEquipmentPage />
-         </PrivateRoute>
          <PrivateRoute path="/reservations/workouts/group">
             <UserGroupWorkoutPage />
          </PrivateRoute>

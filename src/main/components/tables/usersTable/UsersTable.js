@@ -1,10 +1,17 @@
 import React from 'react';
-import { IntegratedPaging, PagingState } from '@devexpress/dx-react-grid';
+import {
+   IntegratedPaging,
+   PagingState,
+   SearchState,
+   IntegratedFiltering,
+} from '@devexpress/dx-react-grid';
 import {
    Grid,
    Table,
    TableHeaderRow,
    PagingPanel,
+   SearchPanel,
+   Toolbar,
 } from '@devexpress/dx-react-grid-material-ui';
 import { DialogContextProvider } from 'src/main/components/contexts/DialogContext';
 import {
@@ -55,13 +62,17 @@ export const UsersTable = ({
             onCurrentPageChange={setPageNumber}
             onPageSizeChange={setPageSize}
          />
+         <SearchState defaultValue="" />
          <IntegratedPaging />
+         <IntegratedFiltering />
          <Table messages={tableMessages} />
          <TableHeaderRow />
+         <Toolbar />
          <PagingPanel
             pageSizes={[5, 10, 20, 50]}
             messages={pagingPanelMessages}
          />
+         <SearchPanel />
       </Grid>
       <InfoTrainingTypeDialog />
    </DialogContextProvider>
