@@ -23,7 +23,7 @@ import {
 } from 'src/main/components/contexts/DialogContext';
 import { ActionFormatter } from 'src/main/components/tables/utils/columnFormatters/ActionColumnFormatter';
 import {
-   ImageStateDataTypeProvider,
+   ImagesStateDataTypeProvider,
    EquipmentStateDataTypeProvider,
    TrainingsStateDataTypeProvider,
 } from './formatters';
@@ -89,7 +89,7 @@ const HeaderCell = ({ column, ...restProps }) => {
 export const EquipmentTable = ({ data }) => (
    <DialogContextProvider>
       <Grid rows={data} columns={columns}>
-         <ImageStateDataTypeProvider for={['image']} />
+         <ImagesStateDataTypeProvider for={['image']} />
          <EquipmentStateDataTypeProvider for={['state']} />
          <TrainingsStateDataTypeProvider for={['trainings']} />
          <ActionStateDataTypeProvider for={['_action']} />

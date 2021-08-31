@@ -106,7 +106,84 @@ export const addEquipment = createAsyncThunk(
                equipmentId: '',
                title: '',
                images: [],
-               description: '',
+               description: {},
+            },
+         } = response?.data;
+         return { message, equipment };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const editEquipment = createAsyncThunk(
+   'equipmentList/createTrainingType',
+   async (
+      {
+         file = '',
+         title = '',
+         synopsis = '',
+         trainingIds = '',
+         token = '',
+         equipmentId = '',
+      },
+      { rejectWithValue },
+   ) => {
+      const url = `${equipmentServiceURL}/${equipmentId}`;
+
+      const body = {
+         title,
+         synopsis,
+         trainingIds,
+      };
+      const formData = new FormData();
+      try {
+         if (file) {
+            const blob = await fetch(file).then((r) => r.blob());
+            formData.append(
+               'image',
+               new File([blob], 'trainingType', {
+                  lastModified: new Date().getTime(),
+                  type: 'image/jpeg',
+               }),
+            );
+         }
+         formData.append(
+            'body',
+            new Blob([JSON.stringify(body)], { type: 'application/json' }),
+         );
+      } catch (error) {
+         return rejectWithValue({
+            notistack: getNotistackVariant(500),
+            message: error.message,
+         });
+      }
+
+      try {
+         const response = await axios.put(url, formData, {
+            headers: {
+               'Accept-Language': 'pl',
+               Authorization: token,
+               'Content-type': 'multipart/form-data',
+            },
+         });
+         const {
+            message = '',
+            equipment = {
+               equipmentId: '',
+               title: '',
+               images: [],
+               description: {},
             },
          } = response?.data;
          return { message, equipment };
@@ -190,6 +267,23 @@ const equipmentListSlice = createSlice({
          state.error = null;
       },
       [addEquipment.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [editEquipment.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [editEquipment.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         equipmentListAdapter.upsertOne(state, action.payload.equipment);
+         state.error = null;
+      },
+      [editEquipment.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
