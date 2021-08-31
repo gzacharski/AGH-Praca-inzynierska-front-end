@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
 export const TrainingTypeForm = ({
    trainingTypeId = '',
    title = '',
-   image = 'http://localhost',
+   image = '',
    description = '',
    duration = '0:30:00',
    onCloseCallback = () => false,
@@ -93,7 +93,7 @@ export const TrainingTypeForm = ({
    return (
       <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
          <Grid container spacing={2}>
-            <Grid item xs={12} md={6} justifyContent="center">
+            <Grid item xs={12} justifyContent="center">
                <Grid container>
                   <Grid xs={12}>
                      {editingState ? (
@@ -111,11 +111,13 @@ export const TrainingTypeForm = ({
                            />
                         </div>
                      ) : (
-                        <Image
-                           src={croppedImage || image}
-                           alt={title}
-                           aspectRatio={16 / 9}
-                        />
+                        (croppedImage || image) && (
+                           <Image
+                              src={croppedImage || image}
+                              alt={title}
+                              aspectRatio={16 / 9}
+                           />
+                        )
                      )}
                   </Grid>
                   {!readOnly && (
@@ -171,7 +173,7 @@ export const TrainingTypeForm = ({
                   )}
                </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
                <Grid container justifyContent="space-between">
                   <Grid item xs={12} sm={6}>
                      <TextField

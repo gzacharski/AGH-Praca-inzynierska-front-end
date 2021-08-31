@@ -106,7 +106,7 @@ export const EquipmentForm = ({
                            />
                         </div>
                      ) : (
-                        image && (
+                        (croppedImage || image) && (
                            <Image
                               src={croppedImage || image}
                               alt={title}
