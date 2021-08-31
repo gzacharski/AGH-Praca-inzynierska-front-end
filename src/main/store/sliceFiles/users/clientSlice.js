@@ -51,7 +51,7 @@ export const fetchClientsList = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

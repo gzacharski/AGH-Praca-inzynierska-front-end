@@ -56,7 +56,7 @@ export const fetchWorkoutList = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -130,7 +130,7 @@ export const createTrainingType = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -211,7 +211,7 @@ export const updateTrainingType = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -244,7 +244,7 @@ export const deleteTrainingType = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

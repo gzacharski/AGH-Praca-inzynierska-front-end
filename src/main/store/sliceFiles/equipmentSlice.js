@@ -49,7 +49,7 @@ export const fetchEquipmentList = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -119,7 +119,7 @@ export const addEquipment = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -196,7 +196,7 @@ export const editEquipment = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -224,7 +224,7 @@ export const deleteEquipment = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

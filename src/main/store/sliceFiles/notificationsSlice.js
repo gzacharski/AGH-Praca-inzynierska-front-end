@@ -50,10 +50,9 @@ export const fetchNotifications = createAsyncThunk(
                message: NETWORK_ERROR,
             });
          }
-
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -77,7 +76,7 @@ export const markAsReadNotification = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -105,7 +104,7 @@ export const deleteNotification = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

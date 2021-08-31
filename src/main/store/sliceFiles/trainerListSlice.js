@@ -37,7 +37,7 @@ export const fetchTrainerList = createAsyncThunk(
             });
          }
          return rejectWithValue({
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

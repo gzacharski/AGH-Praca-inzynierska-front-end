@@ -41,7 +41,7 @@ export const fetchUserGroupReservation = createAsyncThunk(
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -60,7 +60,7 @@ export const cancelUserGroupReservation = createAsyncThunk(
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -80,7 +80,7 @@ export const rateUserGroupEvent = createAsyncThunk(
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

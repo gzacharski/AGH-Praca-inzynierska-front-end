@@ -46,7 +46,7 @@ export const fetchUserIndividualReservation = createAsyncThunk(
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -75,7 +75,7 @@ export const addUserIndividualReservation = createAsyncThunk(
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -94,7 +94,7 @@ export const cancelUserIndividualReservation = createAsyncThunk(
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -116,7 +116,7 @@ export const rateUserIndividualEvent = createAsyncThunk(
          return { message, training: { id: trainingId, rating } };
       } catch (error) {
          return rejectWithValue({
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
