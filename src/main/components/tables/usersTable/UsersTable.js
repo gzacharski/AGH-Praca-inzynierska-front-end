@@ -18,8 +18,9 @@ import {
    AccountStateDataTypeProvider,
    RolesStateDataTypeProvider,
    AvatarStateDataTypeProvider,
-   ActionStateDataTypeProvider,
    EmployeeActionStateDataTypeProvider,
+   ManagerActionStateDataTypeProvider,
+   ActionStateDataTypeProvider,
 } from './formatters/index';
 import { InfoTrainingTypeDialog } from './dialogs';
 
@@ -51,17 +52,21 @@ export const UsersTable = ({
    setPageNumber,
    setPageSize,
    employeeActions,
+   adminActions,
+   managerActions,
 }) => (
    <DialogContextProvider>
       <Grid rows={users} columns={columns}>
          <AccountStateDataTypeProvider for={['enabled']} />
          <AvatarStateDataTypeProvider for={['avatar']} />
          <RolesStateDataTypeProvider for={['roles']} />
-         {employeeActions ? (
+         {employeeActions && (
             <EmployeeActionStateDataTypeProvider for={['_action']} />
-         ) : (
-            <ActionStateDataTypeProvider for={['_action']} />
          )}
+         {managerActions && (
+            <ManagerActionStateDataTypeProvider for={['_action']} />
+         )}
+         {adminActions && <ActionStateDataTypeProvider for={['_action']} />}
 
          <PagingState
             currentPage={pageNumber}

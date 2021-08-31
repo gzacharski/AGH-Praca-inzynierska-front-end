@@ -54,6 +54,7 @@ export const AbstractSubpage = ({
             pageSize={pageSize}
             setPageNumber={setPageNumber}
             setPageSize={setPageSize}
+            managerActions
          />
       </Paper>
    );

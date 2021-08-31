@@ -5,6 +5,7 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import {
    MoreVert as InfoIcon,
    Payment as PaymentIcon,
+   GroupAdd as GroupAddIcon,
 } from '@material-ui/icons';
 import { DataTypeProvider } from '@devexpress/dx-react-grid';
 import {
@@ -41,6 +42,34 @@ const EmployeeActionFormatter = ({ row = {} }) => {
    );
 };
 
+const ManagerActionFormatter = ({ row = {} }) => {
+   const { userId = '' } = row;
+   const { setIdAndOpenDialog } = useContext(DialogContext);
+
+   return (
+      <div>
+         <Tooltip title="Pokaż więcej informacji" arrow>
+            <IconButton
+               onClick={() =>
+                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.INFO })
+               }
+            >
+               <InfoIcon />
+            </IconButton>
+         </Tooltip>
+         <Tooltip title="Zmień role" arrow>
+            <IconButton
+               onClick={() =>
+                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.ROLES })
+               }
+            >
+               <GroupAddIcon />
+            </IconButton>
+         </Tooltip>
+      </div>
+   );
+};
+
 export const ActionStateDataTypeProvider = (props) => (
    // eslint-disable-next-line react/jsx-props-no-spreading
    <DataTypeProvider formatterComponent={ActionFormatter} {...props} />
@@ -49,4 +78,9 @@ export const ActionStateDataTypeProvider = (props) => (
 export const EmployeeActionStateDataTypeProvider = (props) => (
    // eslint-disable-next-line react/jsx-props-no-spreading
    <DataTypeProvider formatterComponent={EmployeeActionFormatter} {...props} />
+);
+
+export const ManagerActionStateDataTypeProvider = (props) => (
+   // eslint-disable-next-line react/jsx-props-no-spreading
+   <DataTypeProvider formatterComponent={ManagerActionFormatter} {...props} />
 );

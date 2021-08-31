@@ -4,6 +4,7 @@ import { AvatarStateDataTypeProvider } from './AvatarFormatter';
 import {
    ActionStateDataTypeProvider,
    EmployeeActionStateDataTypeProvider,
+   ManagerActionStateDataTypeProvider,
 } from './ActionColumnFormatter';
 
 export {
@@ -12,4 +13,5 @@ export {
    AvatarStateDataTypeProvider,
    ActionStateDataTypeProvider,
    EmployeeActionStateDataTypeProvider,
+   ManagerActionStateDataTypeProvider,
 };

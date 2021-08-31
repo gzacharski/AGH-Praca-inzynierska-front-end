@@ -6,6 +6,7 @@ export const DIALOG_MODE = {
    EDIT: 'edit',
    DELETE: 'delete',
    GYMPASS: 'gympass',
+   ROLES: 'roles',
 };
 
 export const DialogContext = React.createContext();
