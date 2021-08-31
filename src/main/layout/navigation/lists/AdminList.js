@@ -4,9 +4,7 @@ import {
    Fingerprint,
    BubbleChart,
    Cloud,
-   FileCopy,
    SupervisorAccount,
-   PermDataSetting,
    EventSeat,
 } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
@@ -57,18 +55,6 @@ const AdminList = () => {
             CustomIcon={Cloud}
             pushUrl="/admin/manage"
             secondaryText="Zarządzaj mikroserwisami"
-         />
-         <CustomListItem
-            buttonName="Kopia zapasowa"
-            CustomIcon={FileCopy}
-            pushUrl="/admin/backup"
-            secondaryText="Zarządzaj kopią zapasową"
-         />
-         <CustomListItem
-            buttonName="Konfiguruj"
-            CustomIcon={PermDataSetting}
-            pushUrl="/admin/configure"
-            secondaryText="Konfiguruj ustawienia systemu"
          />
       </List>
    );
