@@ -6,13 +6,16 @@ import {
    MoreVert as InfoIcon,
    Payment as PaymentIcon,
    GroupAdd as GroupAddIcon,
+   Edit as EditIcon,
+   Delete as DeleteIcon,
 } from '@material-ui/icons';
 import { DataTypeProvider } from '@devexpress/dx-react-grid';
 import {
    DialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/DialogContext';
-import { ActionFormatter } from 'src/main/components/tables/utils/columnFormatters';
+
+const { ADD, DELETE, EDIT, GYMPASS, INFO, ROLES } = DIALOG_MODE;
 
 const EmployeeActionFormatter = ({ row = {} }) => {
    const { userId = '' } = row;
@@ -22,18 +25,14 @@ const EmployeeActionFormatter = ({ row = {} }) => {
       <div>
          <Tooltip title="Pokaż więcej informacji" arrow>
             <IconButton
-               onClick={() =>
-                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.INFO })
-               }
+               onClick={() => setIdAndOpenDialog({ id: userId, mode: INFO })}
             >
                <InfoIcon />
             </IconButton>
          </Tooltip>
          <Tooltip title="Karnet" arrow>
             <IconButton
-               onClick={() =>
-                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.GYMPASS })
-               }
+               onClick={() => setIdAndOpenDialog({ id: userId, mode: GYMPASS })}
             >
                <PaymentIcon />
             </IconButton>
@@ -51,7 +50,7 @@ const ManagerActionFormatter = ({ row = {} }) => {
          <Tooltip title="Pokaż więcej informacji" arrow>
             <IconButton
                onClick={() => {
-                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.INFO });
+                  setIdAndOpenDialog({ id: userId, mode: INFO });
                }}
             >
                <InfoIcon />
@@ -60,7 +59,7 @@ const ManagerActionFormatter = ({ row = {} }) => {
          <Tooltip title="Zmień role" arrow>
             <IconButton
                onClick={() => {
-                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.ROLES });
+                  setIdAndOpenDialog({ id: userId, mode: ROLES });
                }}
             >
                <GroupAddIcon />
@@ -70,9 +69,49 @@ const ManagerActionFormatter = ({ row = {} }) => {
    );
 };
 
-export const ActionStateDataTypeProvider = (props) => (
+const AdminActionFormatter = ({ row = {} }) => {
+   const { userId = '' } = row;
+   const { setIdAndOpenDialog } = useContext(DialogContext);
+
+   return (
+      <div>
+         <Tooltip title="Pokaż więcej informacji" arrow>
+            <IconButton
+               onClick={() => setIdAndOpenDialog({ id: userId, mode: INFO })}
+            >
+               <InfoIcon />
+            </IconButton>
+         </Tooltip>
+         <Tooltip title="Edytuj" arrow>
+            <IconButton
+               onClick={() => setIdAndOpenDialog({ id: userId, mode: EDIT })}
+            >
+               <EditIcon />
+            </IconButton>
+         </Tooltip>
+         <Tooltip title="Usuń" arrow>
+            <IconButton
+               onClick={() => setIdAndOpenDialog({ id: userId, mode: DELETE })}
+            >
+               <DeleteIcon />
+            </IconButton>
+         </Tooltip>
+         <Tooltip title="Zmień role" arrow>
+            <IconButton
+               onClick={() => {
+                  setIdAndOpenDialog({ id: userId, mode: ROLES });
+               }}
+            >
+               <GroupAddIcon />
+            </IconButton>
+         </Tooltip>
+      </div>
+   );
+};
+
+export const AdminActionStateDataTypeProvider = (props) => (
    // eslint-disable-next-line react/jsx-props-no-spreading
-   <DataTypeProvider formatterComponent={ActionFormatter} {...props} />
+   <DataTypeProvider formatterComponent={AdminActionFormatter} {...props} />
 );
 
 export const EmployeeActionStateDataTypeProvider = (props) => (

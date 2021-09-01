@@ -59,6 +59,31 @@ export const fetchAdminUsersList = createAsyncThunk(
    },
 );
 
+export const changeClientRoles = createAsyncThunk(
+   'adminUsersList/changeClientRoles',
+   async ({ userId = '', roles = [], token = '' }, { rejectWithValue }) => {
+      const url = `${accountServiceURL}/manager/user/${userId}/roles`;
+
+      try {
+         const response = await axios.post(url, { roles }, config(token));
+         const { user = {}, message = '' } = response?.data || {};
+         return { user, message };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const adminUsersSlice = createSlice({
    name: 'adminUsersList',
    initialState,
@@ -78,6 +103,23 @@ const adminUsersSlice = createSlice({
          state.error = null;
       },
       [fetchAdminUsersList.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [changeClientRoles.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [changeClientRoles.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         adminUsersListAdapter.upsertOne(state, action.payload.user);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [changeClientRoles.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;

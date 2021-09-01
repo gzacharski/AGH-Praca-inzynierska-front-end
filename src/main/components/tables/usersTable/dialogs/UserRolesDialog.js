@@ -15,10 +15,6 @@ import {
    Divider,
 } from '@material-ui/core';
 import {
-   selectById,
-   changeClientRoles,
-} from 'src/main/store/sliceFiles/users/clientSlice';
-import {
    DialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/DialogContext';
@@ -54,6 +50,7 @@ const Form = ({
    roles = [],
    onClose = () => false,
    userId = '',
+   changeClientRoles,
 }) => {
    const classes = useStyles();
    const dispatch = useDispatch();
@@ -226,7 +223,7 @@ const Form = ({
    );
 };
 
-export const UserRolesDialog = () => {
+export const UserRolesDialog = ({ selectById, changeClientRoles }) => {
    const { dialogState, closeDialog, entityId } = useContext(DialogContext);
    const { INFO } = DIALOG_MODE;
    const { mode = INFO, isOpen = false } = dialogState;
@@ -249,6 +246,7 @@ export const UserRolesDialog = () => {
                accessibleRoles={accessibleRoles}
                roles={roles}
                onClose={closeDialog}
+               changeClientRoles={changeClientRoles}
             />
          )}
       </Dialog>

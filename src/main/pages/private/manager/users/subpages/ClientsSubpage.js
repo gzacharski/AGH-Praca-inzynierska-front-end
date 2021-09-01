@@ -6,6 +6,8 @@ import {
    selectNotistack,
    selectAll,
    fetchClientsList,
+   selectById,
+   changeClientRoles,
 } from 'src/main/store/sliceFiles/users/clientSlice';
 import { AbstractSubpage } from './AbstractSubpage';
 
@@ -17,5 +19,7 @@ export const ClientsSubpage = () => (
       selectMessage={selectMessage}
       selectNotistack={selectNotistack}
       selectStatus={selectStatus}
+      selectById={selectById}
+      changeClientRoles={changeClientRoles}
    />
 );

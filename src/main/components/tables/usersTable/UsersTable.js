@@ -20,7 +20,7 @@ import {
    AvatarStateDataTypeProvider,
    EmployeeActionStateDataTypeProvider,
    ManagerActionStateDataTypeProvider,
-   ActionStateDataTypeProvider,
+   AdminActionStateDataTypeProvider,
 } from './formatters/index';
 import { InfoTrainingTypeDialog, UserRolesDialog } from './dialogs';
 
@@ -54,6 +54,8 @@ export const UsersTable = ({
    employeeActions,
    adminActions,
    managerActions,
+   selectById,
+   changeClientRoles,
 }) => (
    <DialogContextProvider>
       <Grid rows={users} columns={columns}>
@@ -66,7 +68,9 @@ export const UsersTable = ({
          {managerActions && (
             <ManagerActionStateDataTypeProvider for={['_action']} />
          )}
-         {adminActions && <ActionStateDataTypeProvider for={['_action']} />}
+         {adminActions && (
+            <AdminActionStateDataTypeProvider for={['_action']} />
+         )}
 
          <PagingState
             currentPage={pageNumber}
@@ -86,7 +90,10 @@ export const UsersTable = ({
          />
          <SearchPanel />
       </Grid>
-      <InfoTrainingTypeDialog />
-      <UserRolesDialog />
+      <InfoTrainingTypeDialog selectById={selectById} />
+      <UserRolesDialog
+         selectById={selectById}
+         changeClientRoles={changeClientRoles}
+      />
    </DialogContextProvider>
 );

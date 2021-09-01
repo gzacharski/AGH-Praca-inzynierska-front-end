@@ -1,18 +1,15 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
    Dialog,
-   Typography,
    Grid,
    TextField,
    makeStyles,
    FormControlLabel,
    Switch,
 } from '@material-ui/core';
-import { selectById } from 'src/main/store/sliceFiles/users/clientSlice';
 import {
    DialogContext,
    DIALOG_MODE,
@@ -62,7 +59,6 @@ const UserInfoForm = ({ readOnly, user = {} }) => {
          avatar,
       },
       validationSchema,
-      onSubmit: (values) => {},
    });
 
    const handleSwitchChange = (event) => {
@@ -266,7 +262,7 @@ const UserInfoForm = ({ readOnly, user = {} }) => {
    );
 };
 
-export const InfoTrainingTypeDialog = () => {
+export const InfoTrainingTypeDialog = ({ selectById }) => {
    const { dialogState, closeDialog, entityId } = useContext(DialogContext);
    const { INFO, ADD } = DIALOG_MODE;
    const { mode = ADD, isOpen = false } = dialogState;
