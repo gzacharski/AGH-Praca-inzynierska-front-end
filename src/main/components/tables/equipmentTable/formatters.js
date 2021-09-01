@@ -29,6 +29,25 @@ export const ImageStateDataTypeProvider = (props) => (
    <DataTypeProvider formatterComponent={ImageFormatter} {...props} />
 );
 
+const ImagesFormatter = ({ row }) => {
+   const classes = useStyles();
+   const { images = [], title = '' } = row;
+   return (
+      <Tooltip title={title} arrow placement="right">
+         <Avatar
+            variant="rounded"
+            alt={title}
+            src={images?.[0] || ''}
+            className={classes.avatar}
+         />
+      </Tooltip>
+   );
+};
+
+export const ImagesStateDataTypeProvider = (props) => (
+   <DataTypeProvider formatterComponent={ImagesFormatter} {...props} />
+);
+
 const EquipmentStateFormatter = ({ value }) => (
    <Chip label={value} size="small" />
 );

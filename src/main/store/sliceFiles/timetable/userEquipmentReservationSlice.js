@@ -48,7 +48,7 @@ export const addUserEquipmentReservation = createAsyncThunk(
          return { message, reservation };
       } catch (error) {
          return rejectWithValue({
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -66,7 +66,7 @@ export const cancelUserEquipmentReservation = createAsyncThunk(
          return { message, eventId };
       } catch (error) {
          return rejectWithValue({
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -84,7 +84,7 @@ export const rateUserEquipmentEvent = createAsyncThunk(
          return { message };
       } catch (error) {
          return rejectWithValue({
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

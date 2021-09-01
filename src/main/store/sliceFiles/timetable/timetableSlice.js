@@ -123,7 +123,7 @@ export const createGroupTraining = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -177,7 +177,7 @@ export const updateGroupTraining = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -208,7 +208,7 @@ export const deleteGroupTraining = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }
@@ -236,7 +236,7 @@ export const enrollToGroupTraining = createAsyncThunk(
          }
          return rejectWithValue({
             notistack: getNotistackVariant(error),
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

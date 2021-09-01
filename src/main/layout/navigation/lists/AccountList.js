@@ -102,15 +102,6 @@ const AccountList = (props) => {
                   <ListItemText primary="Zajęć indywidualnych" />
                </ListItem>
             </List>
-            <List
-               component="div"
-               disablePadding
-               onClick={() => props.history.push('/reservations/equipment')}
-            >
-               <ListItem button className={classes.nested}>
-                  <ListItemText primary="Sprzętu" />
-               </ListItem>
-            </List>
          </Collapse>
          <CustomListItem
             buttonName="Powiadomienia"

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import {
-   BackupPage,
-   ConfigurePage,
    LogsPage,
    ManagementPage,
    StatisticsPage,
@@ -12,12 +10,6 @@ import {
 
 const AdminRouteGroup = () => (
    <Switch>
-      <Route path="/admin/backup">
-         <BackupPage />
-      </Route>
-      <Route path="/admin/configure">
-         <ConfigurePage />
-      </Route>
       <Route path="/admin/equipment">
          <EquipmentPage />
       </Route>

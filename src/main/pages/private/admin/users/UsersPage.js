@@ -12,6 +12,8 @@ import {
    selectNotistack,
    selectAll,
    fetchAdminUsersList,
+   selectById,
+   changeClientRoles,
 } from 'src/main/store/sliceFiles/adminSlices/usersSlice';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
@@ -64,6 +66,9 @@ const AccountPage = () => {
                setPageNumber={setPageNumber}
                setPageSize={setPageSize}
                users={users}
+               adminActions
+               selectById={selectById}
+               changeClientRoles={changeClientRoles}
             />
          </Paper>
       </PageWrapper>

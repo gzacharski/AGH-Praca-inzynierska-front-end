@@ -33,8 +33,7 @@ export const InfoEquipmentDialog = () => {
       <Dialog open={shouldOpen} onClose={closeDialog} maxWidth="md">
          <DialogTitle>
             <Typography variant="h6" color="primary">
-               Szczegółowe informacje o sprzęcie: {JSON.stringify(selectedRow)}{' '}
-               {title}
+               Szczegółowe informacje o sprzęcie: {title}
             </Typography>
          </DialogTitle>
          <DialogContent>

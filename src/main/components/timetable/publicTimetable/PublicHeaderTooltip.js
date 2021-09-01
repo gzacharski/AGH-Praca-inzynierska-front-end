@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
+import { fetchUserNextTraining } from 'src/main/store/sliceFiles/nextTrainingSlice';
+import { fetchUserGroupReservation } from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
 import {
    selectMessage,
    selectStatus,
@@ -12,6 +14,7 @@ import {
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
 import { JoinEventIconButton } from 'src/main/components/buttons';
+import { getEndOfWeek, getStartOfWeek } from 'src/main/utils';
 
 export const PublicHeaderTooltip = ({ appointmentData, ...restProps }) => {
    const history = useHistory();
@@ -21,7 +24,7 @@ export const PublicHeaderTooltip = ({ appointmentData, ...restProps }) => {
    const status = useSelector(selectStatus);
    const { enqueueSnackbar } = useSnackbar();
 
-   const { startDate, id } = appointmentData;
+   const { startDate = '', endDate = '', id = '' } = appointmentData || {};
 
    const handleClick = () => {
       if (auth.isAuthenticated()) {
@@ -29,7 +32,19 @@ export const PublicHeaderTooltip = ({ appointmentData, ...restProps }) => {
          const { userInfo = {}, token = '' } = authState;
          const { userId = '' } = userInfo;
 
+         const startOfWeek = getStartOfWeek(Date.parse(startDate));
+         const endOfWeek = getEndOfWeek(Date.parse(endDate));
+
          dispatch(enrollToGroupTraining({ trainingId: id, userId, token }));
+         dispatch(fetchUserNextTraining({ userId, token }));
+         dispatch(
+            fetchUserGroupReservation({
+               userId,
+               token,
+               startOfWeek,
+               endOfWeek,
+            }),
+         );
       } else {
          history.push('/login?redirect=/timetable');
       }

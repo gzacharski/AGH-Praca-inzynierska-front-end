@@ -1,16 +1,23 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { TasksPage, WorkoutsPage } from 'src/main/pages/private/trainer';
+import {
+   TasksPage,
+   WorkoutsPage,
+   TrainerPage,
+} from 'src/main/pages/private/trainer';
 
 const ManagerRouteGroup = () => (
    <Switch>
+      <Route exact path="/trainer">
+         <TrainerPage />
+      </Route>
       <Route path="/trainer/workouts">
          <WorkoutsPage />
       </Route>
       <Route path="/trainer/tasks">
          <TasksPage />
       </Route>
-      <Redirect to="/" />
+      <Redirect to="/trainer" />
    </Switch>
 );
 

@@ -30,7 +30,7 @@ export const fetchPriceList = createAsyncThunk(
             });
          }
          return rejectWithValue({
-            error: error?.response,
+            error: error?.response?.data,
             message: error?.response?.data?.message,
          });
       }

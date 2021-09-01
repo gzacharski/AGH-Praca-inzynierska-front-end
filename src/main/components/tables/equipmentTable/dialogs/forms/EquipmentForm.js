@@ -1,29 +1,12 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import Image from 'material-ui-image';
 import Cropper from 'react-easy-crop';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-   Grid,
-   TextField,
-   Button,
-   Typography,
-   Select,
-   Input,
-   Chip,
-   Avatar,
-   MenuItem,
-} from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { Grid, TextField, Button } from '@material-ui/core';
 import { useAuth } from 'src/main/auth';
-import {
-   fetchWorkoutList,
-   selectStatus,
-   selectWorkouts,
-} from 'src/main/store/sliceFiles/workoutSlice';
-import { STATUS } from 'src/main/store/status';
 import getCroppedImg from './cropImage';
 import { useStyles } from './EquipmentForm.styles';
 
@@ -31,25 +14,14 @@ const isNotEmpty = (text) => text && text.length !== 0;
 
 const validationSchema = Yup.object({
    title: Yup.string().required('Pole jest wymagane'),
-   description: Yup.string().required('Pole jest wymagane'),
+   synopsis: Yup.string().required('Pole jest wymagane'),
 });
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-   PaperProps: {
-      style: {
-         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-         width: 250,
-      },
-   },
-};
 
 export const EquipmentForm = ({
    equipmentId = '',
    title = '',
-   image = 'http://localhost',
-   description = '',
+   image = '',
+   description = {},
    onCloseCallback = () => false,
    readOnly = false,
    onSubmitReduxCallback = () => false,
@@ -58,6 +30,7 @@ export const EquipmentForm = ({
    const dispatch = useDispatch();
    const { authState = {} } = useAuth();
    const { token = '' } = authState;
+   const { synopsis = '' } = description;
 
    const [imageToUpdate, setImageToUpdate] = useState(null);
 
@@ -67,9 +40,6 @@ export const EquipmentForm = ({
    const [croppedPixels, setCroppedPixels] = useState(null);
    const [croppedImage, setCroppedImage] = useState(null);
    const [editingState, setEditingState] = useState(false);
-   const [selectedWorkouts, setSelectedWorkouts] = useState([]);
-   const status = useSelector(selectStatus);
-   const workouts = useSelector(selectWorkouts);
 
    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
       setCroppedPixels(croppedAreaPixels);
@@ -92,7 +62,7 @@ export const EquipmentForm = ({
       initialValues: {
          equipmentId,
          title,
-         description,
+         synopsis,
       },
       validationSchema,
       onSubmit: (values) => {
@@ -102,21 +72,13 @@ export const EquipmentForm = ({
                file: croppedImage,
                equipmentId: values?.equipmentId,
                title: values?.title,
-               synopsis: values?.description,
-               trainingIds: selectedWorkouts.map(
-                  (training) => training.trainingTypeId,
-               ),
+               synopsis: values?.synopsis,
+               trainingIds: [],
                token,
             }),
          );
       },
    });
-
-   useEffect(() => {
-      if (status === STATUS.IDLE) {
-         dispatch(fetchWorkoutList({}));
-      }
-   }, [status, dispatch]);
 
    const handleFileChange = (event) => {
       setImageToUpdate(URL.createObjectURL(event.target.files[0]));
@@ -126,7 +88,7 @@ export const EquipmentForm = ({
    return (
       <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
          <Grid container spacing={2}>
-            <Grid item xs={12} md={6} justifyContent="center">
+            <Grid item xs={12} justifyContent="center">
                <Grid container>
                   <Grid xs={12}>
                      {editingState ? (
@@ -144,11 +106,13 @@ export const EquipmentForm = ({
                            />
                         </div>
                      ) : (
-                        <Image
-                           src={croppedImage || image}
-                           alt={title}
-                           aspectRatio={16 / 9}
-                        />
+                        (croppedImage || image) && (
+                           <Image
+                              src={croppedImage || image}
+                              alt={title}
+                              aspectRatio={16 / 9}
+                           />
+                        )
                      )}
                   </Grid>
                   {!readOnly && (
@@ -204,7 +168,7 @@ export const EquipmentForm = ({
                   )}
                </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
                <Grid container justifyContent="space-between">
                   <Grid item xs={12}>
                      <TextField
@@ -229,81 +193,28 @@ export const EquipmentForm = ({
                      />
                   </Grid>
                   <Grid item xs={12}>
-                     <Typography variant="subtitle1" color="primary">
-                        Wybierz treningi, w których jest wykorzystywany sprzęt
-                     </Typography>
-                     <Select
-                        labelId="demo-mutiple-chip-label"
-                        id="demo-mutiple-chip"
-                        multiple
-                        fullWidth
-                        disabled={readOnly}
-                        value={selectedWorkouts}
-                        onChange={(event) =>
-                           setSelectedWorkouts(event.target.value)
-                        }
-                        className={classes.select}
-                        input={<Input />}
-                        renderValue={(selected) => (
-                           <div className={classes.chips}>
-                              {selected.map((value) => (
-                                 <Chip
-                                    key={value?.trainingTypeId}
-                                    avatar={
-                                       <Avatar
-                                          src={value?.image}
-                                       >{`${value?.name}`}</Avatar>
-                                    }
-                                    label={`${value?.name}`}
-                                    className={classes.chip}
-                                 />
-                              ))}
-                           </div>
-                        )}
-                        MenuProps={MenuProps}
-                     >
-                        <MenuItem value="" disabled>
-                           Wybierz treningi
-                        </MenuItem>
-                        {workouts.map((workout) => (
-                           <MenuItem
-                              key={workout?.trainingTypeId}
-                              value={workout}
-                           >
-                              <div className={classes.menuItem}>
-                                 <Avatar
-                                    className={classes.avatar}
-                                    src={workout?.image}
-                                 >{`${workout?.name?.[0]}`}</Avatar>
-                                 <Typography>{`${workout?.name}`}</Typography>
-                              </div>
-                           </MenuItem>
-                        ))}
-                     </Select>
-                  </Grid>
-                  <Grid item xs={12}>
                      <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="description"
+                        id="synopsis"
                         label="Opis"
-                        name="description"
+                        name="synopsis"
                         multiline
                         disabled={readOnly}
-                        rows={2}
+                        rows={4}
                         type="text"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.description}
+                        value={formik.values.synopsis}
+                        defaultValue={formik.initialValues.synopsis}
                         error={
-                           formik.touched.description &&
-                           isNotEmpty(formik.errors.description)
+                           formik.touched.synopsis &&
+                           isNotEmpty(formik.errors.synopsis)
                         }
                         helperText={
-                           formik.touched.description &&
-                           formik.errors.description
+                           formik.touched.synopsis && formik.errors.synopsis
                         }
                      />
                   </Grid>

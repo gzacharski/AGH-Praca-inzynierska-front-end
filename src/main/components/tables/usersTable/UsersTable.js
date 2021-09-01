@@ -1,19 +1,28 @@
 import React from 'react';
-import { IntegratedPaging, PagingState } from '@devexpress/dx-react-grid';
+import {
+   IntegratedPaging,
+   PagingState,
+   SearchState,
+   IntegratedFiltering,
+} from '@devexpress/dx-react-grid';
 import {
    Grid,
    Table,
    TableHeaderRow,
    PagingPanel,
+   SearchPanel,
+   Toolbar,
 } from '@devexpress/dx-react-grid-material-ui';
 import { DialogContextProvider } from 'src/main/components/contexts/DialogContext';
 import {
    AccountStateDataTypeProvider,
    RolesStateDataTypeProvider,
    AvatarStateDataTypeProvider,
-   ActionStateDataTypeProvider,
+   EmployeeActionStateDataTypeProvider,
+   ManagerActionStateDataTypeProvider,
+   AdminActionStateDataTypeProvider,
 } from './formatters/index';
-import { InfoTrainingTypeDialog } from './dialogs';
+import { InfoTrainingTypeDialog, UserRolesDialog } from './dialogs';
 
 const columns = [
    { name: 'avatar', title: 'Zdjęcie' },
@@ -42,27 +51,49 @@ export const UsersTable = ({
    pageSize,
    setPageNumber,
    setPageSize,
+   employeeActions,
+   adminActions,
+   managerActions,
+   selectById,
+   changeClientRoles,
 }) => (
    <DialogContextProvider>
       <Grid rows={users} columns={columns}>
          <AccountStateDataTypeProvider for={['enabled']} />
          <AvatarStateDataTypeProvider for={['avatar']} />
          <RolesStateDataTypeProvider for={['roles']} />
-         <ActionStateDataTypeProvider for={['_action']} />
+         {employeeActions && (
+            <EmployeeActionStateDataTypeProvider for={['_action']} />
+         )}
+         {managerActions && (
+            <ManagerActionStateDataTypeProvider for={['_action']} />
+         )}
+         {adminActions && (
+            <AdminActionStateDataTypeProvider for={['_action']} />
+         )}
+
          <PagingState
             currentPage={pageNumber}
             pageSize={pageSize}
             onCurrentPageChange={setPageNumber}
             onPageSizeChange={setPageSize}
          />
+         <SearchState defaultValue="" />
          <IntegratedPaging />
+         <IntegratedFiltering />
          <Table messages={tableMessages} />
          <TableHeaderRow />
+         <Toolbar />
          <PagingPanel
             pageSizes={[5, 10, 20, 50]}
             messages={pagingPanelMessages}
          />
+         <SearchPanel />
       </Grid>
-      <InfoTrainingTypeDialog />
+      <InfoTrainingTypeDialog selectById={selectById} />
+      <UserRolesDialog
+         selectById={selectById}
+         changeClientRoles={changeClientRoles}
+      />
    </DialogContextProvider>
 );

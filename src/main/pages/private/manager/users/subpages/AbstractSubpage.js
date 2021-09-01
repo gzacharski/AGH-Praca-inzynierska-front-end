@@ -13,6 +13,8 @@ export const AbstractSubpage = ({
    selectNotistack,
    fetchData,
    clearMessage,
+   selectById,
+   changeClientRoles,
 }) => {
    const dispatch = useDispatch();
    const status = useSelector(selectStatus);
@@ -54,6 +56,9 @@ export const AbstractSubpage = ({
             pageSize={pageSize}
             setPageNumber={setPageNumber}
             setPageSize={setPageSize}
+            managerActions
+            selectById={selectById}
+            changeClientRoles={changeClientRoles}
          />
       </Paper>
    );

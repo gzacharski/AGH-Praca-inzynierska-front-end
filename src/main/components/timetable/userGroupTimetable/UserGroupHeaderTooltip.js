@@ -20,6 +20,9 @@ import {
    cancelUserGroupReservation,
    rateUserGroupEvent,
 } from 'src/main/store/sliceFiles/timetable/userGroupReservationSlice';
+import { fetchUserNextTraining } from 'src/main/store/sliceFiles/nextTrainingSlice';
+import { fetchPrivateTimetableData } from 'src/main/store/sliceFiles/timetable/timetableSlice';
+import { getEndOfWeek, getStartOfWeek } from 'src/main/utils';
 
 export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
    const [anchorEl, setAnchorEl] = useState(null);
@@ -37,6 +40,7 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
       id = '',
       title = '',
       startDate = '',
+      endDate = '',
       rating = 2.5,
    } = appointmentData;
 
@@ -71,6 +75,17 @@ export const CustomHeaderTooltip = ({ appointmentData, onHide }) => {
                onHide();
                dispatch(
                   cancelUserGroupReservation({ trainingId: id, userId, token }),
+               );
+               dispatch(fetchUserNextTraining({ userId, token }));
+               const startOfWeek = getStartOfWeek(Date.parse(startDate));
+               const endOfWeek = getEndOfWeek(Date.parse(endDate));
+               dispatch(
+                  fetchPrivateTimetableData({
+                     userId,
+                     token,
+                     startOfWeek,
+                     endOfWeek,
+                  }),
                );
             }}
          />

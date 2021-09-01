@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 import {
    selectById,
-   updateTrainingType,
-} from 'src/main/store/sliceFiles/workoutSlice';
+   editEquipment,
+} from 'src/main/store/sliceFiles/equipmentSlice';
 import {
    DialogContext,
    DIALOG_MODE,
@@ -23,13 +23,12 @@ export const EditEquipmentDialog = () => {
 
    const selectedRow =
       useSelector((state) => selectById(state, entityId)) || {};
+
    const {
-      trainingTypeId = '',
-      name = '',
-      image = '',
+      equipmentId = '',
+      title = '',
+      images = [],
       description = '',
-      trainer = {},
-      duration = '',
    } = selectedRow;
 
    const shouldOpen = mode === EDIT && isOpen;
@@ -38,19 +37,17 @@ export const EditEquipmentDialog = () => {
       <Dialog open={shouldOpen} onClose={closeDialog} maxWidth="md">
          <DialogTitle>
             <Typography variant="h6" color="primary">
-               {name} - edytuj sprzęt fitness
+               {title} - edytuj sprzęt fitness
             </Typography>
          </DialogTitle>
          <DialogContent>
             <EquipmentForm
-               title={name}
+               title={title}
                description={description}
-               image={image}
-               duration={duration}
-               trainer={trainer}
-               trainingTypeId={trainingTypeId}
+               image={images?.[0] || ''}
+               equipmentId={equipmentId}
                onCloseCallback={closeDialog}
-               onSubmitReduxCallback={updateTrainingType}
+               onSubmitReduxCallback={editEquipment}
             />
          </DialogContent>
       </Dialog>

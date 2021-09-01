@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Paper, Typography, makeStyles, Slider } from '@material-ui/core';
 import {
    ArgumentAxis,
@@ -11,10 +12,16 @@ import {
 import { Animation, EventTracker, Stack } from '@devexpress/dx-react-chart';
 import { formatISO9075, formatDistanceToNow } from 'date-fns';
 import { pl } from 'date-fns/locale';
-import { useSelector } from 'react-redux';
 import { selectUserInfo } from 'src/main/store/sliceFiles/accountSlice';
+import {
+   selectStatus,
+   fetchUserNextTraining,
+   selectNextTraining,
+} from 'src/main/store/sliceFiles/nextTrainingSlice';
 import { PageWrapper } from 'src/main/components/utils';
 import { AvatarIcon } from 'src/main/components/icons';
+import { STATUS } from 'src/main/store/status';
+import { useAuth } from 'src/main/auth';
 
 const data = [
    { workoutType: 'Sztangi', percentage: 30 },
@@ -27,14 +34,6 @@ const data = [
 const gympass = {
    startDate: '2021-07-20T20:11',
    endDate: '2021-08-20T20:11',
-};
-
-const event = {
-   id: 'dfdfd',
-   title: 'Pilates',
-   startDate: '2021-07-31T12:00',
-   endDate: '2021-07-31T13:30',
-   location: 'Sala nr 2',
 };
 
 const useStyles = makeStyles(({ spacing }) => ({
@@ -63,6 +62,55 @@ const useStyles = makeStyles(({ spacing }) => ({
    },
 }));
 
+const NextWorkout = () => {
+   const classes = useStyles();
+   const dispatch = useDispatch();
+   const status = useSelector(selectStatus);
+   const nextTraining = useSelector(selectNextTraining);
+
+   const { authState = {} } = useAuth();
+   const { token = '', userInfo = {} } = authState;
+   const { userId = '' } = userInfo;
+
+   useEffect(() => {
+      if (status === STATUS.IDLE) {
+         dispatch(fetchUserNextTraining({ userId, token }));
+      }
+   }, [status, dispatch]);
+
+   const { title = '', startDate = '', location = '' } = nextTraining || {};
+
+   let closestWorkout;
+   try {
+      closestWorkout = formatDistanceToNow(Date.parse(startDate), {
+         locale: pl,
+         addSuffix: true,
+      });
+   } catch (error) {
+      closestWorkout = '';
+   }
+
+   return (
+      <Paper elevation={3} className={classes.paper}>
+         <Typography variant="h6">Najbliższe wydarzenie</Typography>
+         {status === STATUS.SUCCEEDED ? (
+            <Paper className={classes.paper2}>
+               <Typography variant="h6">{title}</Typography>
+               <Typography variant="body1">
+                  {location}, {closestWorkout}
+               </Typography>
+            </Paper>
+         ) : (
+            <Paper className={classes.paper2}>
+               <Typography variant="h6">
+                  Nie masz zaplanowanego żadnego treningu
+               </Typography>
+            </Paper>
+         )}
+      </Paper>
+   );
+};
+
 const AccountPage = () => {
    const classes = useStyles();
    const startDate = Date.parse(gympass.startDate);
@@ -72,16 +120,6 @@ const AccountPage = () => {
    const { name, surname, email, phone } = user;
 
    const value = ((currentDate - startDate) * 100) / (endDate - startDate);
-
-   let closestWorkout;
-   try {
-      closestWorkout = formatDistanceToNow(Date.parse(event.startDate), {
-         locale: pl,
-         addSuffix: true,
-      });
-   } catch (error) {
-      closestWorkout = '';
-   }
 
    return (
       <PageWrapper>
@@ -115,17 +153,7 @@ const AccountPage = () => {
                      </Paper>
                   </Grid>
                   <Grid item xs={12}>
-                     <Paper elevation={3} className={classes.paper}>
-                        <Typography variant="h6">
-                           Najbliższe wydarzenie
-                        </Typography>
-                        <Paper className={classes.paper2}>
-                           <Typography variant="h6">{event.title}</Typography>
-                           <Typography variant="body1">
-                              {event.location}, {closestWorkout}
-                           </Typography>
-                        </Paper>
-                     </Paper>
+                     <NextWorkout />
                   </Grid>
                </Grid>
             </Grid>
