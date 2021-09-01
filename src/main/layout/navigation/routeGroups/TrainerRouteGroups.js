@@ -8,7 +8,7 @@ import {
 
 const ManagerRouteGroup = () => (
    <Switch>
-      <Route path="/trainer">
+      <Route exact path="/trainer">
          <TrainerPage />
       </Route>
       <Route path="/trainer/workouts">
