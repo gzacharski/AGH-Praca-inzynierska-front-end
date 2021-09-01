@@ -11,6 +11,7 @@ import {
    clearMessage,
    selectNotistack,
    selectAll,
+   selectById,
    fetchAdminUsersList,
 } from 'src/main/store/sliceFiles/adminSlices/usersSlice';
 import { STATUS } from 'src/main/store';
@@ -65,6 +66,7 @@ const AccountPage = () => {
                setPageSize={setPageSize}
                users={users}
                employeeActions
+               selectById={selectById}
             />
          </Paper>
       </PageWrapper>
