@@ -24,7 +24,7 @@ const initialState = trainerListAdapter.getInitialState({
 export const fetchTrainerList = createAsyncThunk(
    'trainerList/fetchTrainerList',
    async ({ search = '' }, { rejectWithValue }) => {
-      const url = `${accountServiceURL}/trainers${search}`;
+      const url = `${accountServiceURL}/trainer${search}`;
 
       try {
          const response = await axios.get(url, config());
