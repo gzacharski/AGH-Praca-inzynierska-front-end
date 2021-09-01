@@ -50,18 +50,18 @@ const ManagerActionFormatter = ({ row = {} }) => {
       <div>
          <Tooltip title="Pokaż więcej informacji" arrow>
             <IconButton
-               onClick={() =>
-                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.INFO })
-               }
+               onClick={() => {
+                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.INFO });
+               }}
             >
                <InfoIcon />
             </IconButton>
          </Tooltip>
          <Tooltip title="Zmień role" arrow>
             <IconButton
-               onClick={() =>
-                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.ROLES })
-               }
+               onClick={() => {
+                  setIdAndOpenDialog({ id: userId, mode: DIALOG_MODE.ROLES });
+               }}
             >
                <GroupAddIcon />
             </IconButton>

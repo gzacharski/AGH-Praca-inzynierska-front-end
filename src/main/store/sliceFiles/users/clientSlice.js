@@ -58,6 +58,31 @@ export const fetchClientsList = createAsyncThunk(
    },
 );
 
+export const changeClientRoles = createAsyncThunk(
+   'clientsList/changeClientRoles',
+   async ({ userId = '', roles = [], token = '' }, { rejectWithValue }) => {
+      const url = `${accountServiceURL}/manager/user/${userId}/roles`;
+
+      try {
+         const response = await axios.post(url, { roles }, config(token));
+         const { user = {}, message = '' } = response?.data || {};
+         return { user, message };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const clientsListSlice = createSlice({
    name: 'clientsList',
    initialState,
@@ -82,6 +107,23 @@ const clientsListSlice = createSlice({
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
+
+      [changeClientRoles.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [changeClientRoles.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         clientsListAdapter.upsertOne(state, action.payload.user);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [changeClientRoles.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
    },
 });
 
@@ -89,9 +131,8 @@ export default clientsListSlice.reducer;
 
 export const { clearMessage } = clientsListSlice.actions;
 
-export const { selectAll, selectById } = clientsListAdapter.getSelectors(
-   (state) => state.clientsList,
-);
+export const { selectAll, selectById, selectEntities } =
+   clientsListAdapter.getSelectors((state) => state.clientsList);
 
 export const selectMessage = (state) => state.clientsList.message;
 export const selectStatus = (state) => state.clientsList.status;

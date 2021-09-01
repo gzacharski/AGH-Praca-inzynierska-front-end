@@ -22,7 +22,7 @@ import {
    ManagerActionStateDataTypeProvider,
    ActionStateDataTypeProvider,
 } from './formatters/index';
-import { InfoTrainingTypeDialog } from './dialogs';
+import { InfoTrainingTypeDialog, UserRolesDialog } from './dialogs';
 
 const columns = [
    { name: 'avatar', title: 'Zdjęcie' },
@@ -87,5 +87,6 @@ export const UsersTable = ({
          <SearchPanel />
       </Grid>
       <InfoTrainingTypeDialog />
+      <UserRolesDialog />
    </DialogContextProvider>
 );
