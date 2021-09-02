@@ -13,7 +13,7 @@ import {
    DIALOG_MODE,
 } from 'src/main/components/contexts/DialogContext';
 import { useDispatch } from 'react-redux';
-import { deleteGroupTraining } from 'src/main/store/sliceFiles/timetable/timetableSlice';
+import { rejectIndividualTraining } from 'src/main/store/sliceFiles/trainerSlices/trainerTimetableSlice';
 import { useAuth } from 'src/main/auth';
 import { useStyles } from './RejectRequestDialog.styles';
 
@@ -22,7 +22,8 @@ export const RejectRequestDialog = () => {
    const dispatch = useDispatch();
 
    const { authState = {} } = useAuth();
-   const { token = '' } = authState;
+   const { token = '', userInfo = {} } = authState;
+   const { userId = '' } = userInfo;
 
    const {
       dialogState = {},
@@ -34,13 +35,13 @@ export const RejectRequestDialog = () => {
    const shouldOpen = mode === DIALOG_MODE.REJECT && isOpen;
 
    const handleSubmit = () => {
-      console.log('reject');
-      // dispatch(
-      //    deleteGroupTraining({
-      //       trainingId: entityId,
-      //       token,
-      //    }),
-      // );
+      dispatch(
+         rejectIndividualTraining({
+            trainingId: entityId,
+            userId,
+            token,
+         }),
+      );
       closeDialog();
    };
 

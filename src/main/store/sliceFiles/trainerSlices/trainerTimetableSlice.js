@@ -31,13 +31,60 @@ const getNotistackVariant = (error) => {
 
 export const fetchTrainerTrainings = createAsyncThunk(
    'trainerTrainings/fetchUserGroupReservation',
-   async ({ userId, startOfWeek, endOfWeek, token }, { rejectWithValue }) => {
+   async (
+      { userId = '', startOfWeek = '', endOfWeek = '', token = '' },
+      { rejectWithValue },
+   ) => {
       const url = `${trainingsServiceURL}/trainer/${userId}/trainings?startDate=${startOfWeek}&endDate=${endOfWeek}`;
 
       try {
          const response = await axios.get(url, config(token));
          const { data = [] } = response || {};
          return { data, startOfWeek, endOfWeek };
+      } catch (error) {
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const acceptIndividualTraining = createAsyncThunk(
+   'trainerTrainings/acceptIndividualTraining',
+   async (
+      { userId = '', locationId = '', trainingId = '', token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${trainingsServiceURL}/individual/trainer/${userId}/training/${trainingId}?locationId=${locationId}`;
+
+      try {
+         const response = await axios.put(url, {}, config(token));
+         const { message = '', training = {} } = response?.data || {};
+         return { message, training };
+      } catch (error) {
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const rejectIndividualTraining = createAsyncThunk(
+   'trainerTrainings/rejectIndividualTraining',
+   async (
+      { userId = '', trainingId = '', token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${trainingsServiceURL}/individual/trainer/${userId}/training/${trainingId}`;
+
+      try {
+         const response = await axios.delete(url, config(token));
+         const { message = '', training = {} } = response?.data || {};
+         return { message, id: training?.id || '' };
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
@@ -72,6 +119,23 @@ export const trainerTrainingsSlice = createSlice({
          };
       },
       [fetchTrainerTrainings.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+         state.notistack = action.payload.notistack;
+      },
+
+      [rejectIndividualTraining.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [rejectIndividualTraining.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         trainerTrainingsAdapter.removeOne(state, action.payload.id);
+         state.message = action.payload.message;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.error = null;
+      },
+      [rejectIndividualTraining.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.error = action.payload.error;
          state.message = action.payload.message;
