@@ -27,7 +27,7 @@ describe('Home component', () => {
       component.unmount();
    });
 
-   test('should contain button with class name MuiButtonBase-root.', async () => {
+   xtest('should contain button with class name MuiButtonBase-root.', async () => {
       const element = await component.root.findByType('button');
       expect(
          element.props.className.includes('MuiButtonBase-root'),
