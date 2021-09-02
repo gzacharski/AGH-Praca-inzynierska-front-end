@@ -89,8 +89,9 @@ export const cancelUserIndividualReservation = createAsyncThunk(
 
       try {
          const response = await axios.delete(url, config(token, locale));
-         const { message = null } = response?.data;
-         return { message, trainingId };
+         const { message = null, training = {} } = response?.data || {};
+         const { id = '' } = training;
+         return { message, id };
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
@@ -182,10 +183,7 @@ export const userIndividualReservationSlice = createSlice({
       [cancelUserIndividualReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.notistack = NOTISTACK.SUCCESS;
-         userIndividualReservationAdapter.removeOne(
-            state,
-            action.payload.trainingId,
-         );
+         userIndividualReservationAdapter.removeOne(state, action.payload.id);
          state.message = action.payload.message;
          state.error = null;
       },
