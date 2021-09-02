@@ -13,6 +13,8 @@ import { AddEquipmentReservationButton } from './iconButtons/addEquipmentReserva
 import { AddWorkoutButton } from './iconButtons/addWorkoutButton/AddWorkoutButton';
 import { EditEventIconButton } from './iconButtons/editEventIconButton/EditEventIconButton';
 import { RemoveEventIconButton } from './iconButtons/removeEventIconButton/RemoveEventIconButton';
+import { AcceptRequestIconButton } from './iconButtons/acceptRequestButton/AcceptRequestIconButton';
+import { RejectRequestIconButton } from './iconButtons/rejectRequestButton/RejectRequestIconButton';
 
 export {
    ActivateAccountButton,
@@ -30,4 +32,6 @@ export {
    AddWorkoutButton,
    EditEventIconButton,
    RemoveEventIconButton,
+   AcceptRequestIconButton,
+   RejectRequestIconButton,
 };
