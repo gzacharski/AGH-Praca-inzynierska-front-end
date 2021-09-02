@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(({ spacing }) => ({
    button: {
       fontSize: '14px',
       color: 'white',
@@ -13,6 +13,14 @@ const useStyles = makeStyles({
    select: {
       width: '195px',
    },
-});
+   menuItem: {
+      display: 'flex',
+   },
+   avatar: {
+      height: spacing(3),
+      width: spacing(3),
+      marginRight: spacing(1),
+   },
+}));
 
 export { useStyles };

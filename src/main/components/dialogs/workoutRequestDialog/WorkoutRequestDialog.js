@@ -11,6 +11,7 @@ import {
    Select,
    MenuItem,
    CircularProgress,
+   Avatar,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import { useSelector, useDispatch } from 'react-redux';
@@ -101,14 +102,30 @@ const WorkoutRequestDialog = () => {
                         <MenuItem value="" disabled>
                            Wybierz trenera
                         </MenuItem>
-                        {trainers.map((trainer) => (
-                           <MenuItem
-                              key={trainer.userId}
-                              value={trainer.userId}
-                           >
-                              {trainer.name} {trainer.surname}
-                           </MenuItem>
-                        ))}
+                        {trainers.map((trainer) => {
+                           const {
+                              name = '',
+                              surname = '',
+                              avatar = '',
+                           } = trainer;
+
+                           return (
+                              <MenuItem
+                                 key={trainer?.userId}
+                                 value={trainer?.userId}
+                              >
+                                 <div className={classes.menuItem}>
+                                    <Avatar
+                                       className={classes.avatar}
+                                       src={avatar}
+                                    >{`${name?.[0] || ''}${
+                                       surname?.[0] || ''
+                                    }`}</Avatar>
+                                    <Typography>{`${name} ${surname}`}</Typography>
+                                 </div>
+                              </MenuItem>
+                           );
+                        })}
                      </Select>
                   </Grid>
                   <Grid item xs={6}>
