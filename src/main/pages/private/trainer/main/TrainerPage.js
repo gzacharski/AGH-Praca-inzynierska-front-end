@@ -322,7 +322,7 @@ const TrainerPage = () => {
    return (
       <PageWrapper>
          <PublicPageTitle
-            header="Twój profil publiczny"
+            header="Mój profil publiczny"
             subheader="Wybierz odpowiednie zdjęcie i opis dla wyświetlenia na stronie publicznej"
          />
          {status === STATUS.LOADING && <LinearProgress />}

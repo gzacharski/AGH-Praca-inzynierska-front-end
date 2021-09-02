@@ -24,7 +24,7 @@ export default function TrainerList() {
          }
       >
          <CustomListItem
-            buttonName="Strona główna"
+            buttonName="Mój profil"
             CustomIcon={HomeIcon}
             pushUrl="/trainer"
             secondaryText="Plan zajęć w aktualnym tygodniu"
