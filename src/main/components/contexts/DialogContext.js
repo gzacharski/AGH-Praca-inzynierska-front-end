@@ -7,6 +7,8 @@ export const DIALOG_MODE = {
    DELETE: 'delete',
    GYMPASS: 'gympass',
    ROLES: 'roles',
+   ACCEPT: 'accept',
+   REJECT: 'reject',
 };
 
 export const DialogContext = React.createContext();

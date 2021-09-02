@@ -7,9 +7,8 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timetable } from 'src/main/components/timetable';
 import {
-   AddWorkoutDialog,
-   EditWorkoutDialog,
-   DeleteWorkoutDialog,
+   AcceptRequestDialog,
+   RejectRequestDialog,
 } from 'src/main/components/dialogs/workout';
 import { DialogContextProvider } from 'src/main/components/contexts/DialogContext';
 import { TrainerContentTooltip } from './TrainerContentTooltip';
@@ -35,9 +34,8 @@ export const TrainerTimetable = ({ data, status, fetchData, fetchedDates }) => (
                contentComponent={TrainerContentTooltip}
             />
          </Timetable>
-         <AddWorkoutDialog />
-         <EditWorkoutDialog />
-         <DeleteWorkoutDialog />
+         <AcceptRequestDialog />
+         <RejectRequestDialog />
       </CurrentDateContextProvider>
    </DialogContextProvider>
 );

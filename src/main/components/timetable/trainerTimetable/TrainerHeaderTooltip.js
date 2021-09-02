@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useContext } from 'react';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,8 +14,8 @@ import {
 } from 'src/main/components/contexts/DialogContext';
 import { STATUS } from 'src/main/store';
 import {
-   EditEventIconButton,
-   RemoveEventIconButton,
+   AcceptRequestIconButton,
+   RejectRequestIconButton,
 } from 'src/main/components/buttons';
 
 export const TrainerHeaderTooltip = ({ appointmentData, ...restProps }) => {
@@ -24,7 +25,12 @@ export const TrainerHeaderTooltip = ({ appointmentData, ...restProps }) => {
    const { enqueueSnackbar } = useSnackbar();
    const { setIdAndOpenDialog } = useContext(DialogContext);
 
-   const { startDate = '', id = '' } = appointmentData || {};
+   const {
+      startDate = '',
+      id = '',
+      groupTraining = false,
+      accepted = false,
+   } = appointmentData || {};
 
    useEffect(() => {
       if (message) {
@@ -46,16 +52,28 @@ export const TrainerHeaderTooltip = ({ appointmentData, ...restProps }) => {
          {...restProps}
          appointmentData={appointmentData}
       >
-         <EditEventIconButton
-            status={status}
-            onClick={() => setIdAndOpenDialog({ id, mode: DIALOG_MODE.EDIT })}
-            startDate={startDate}
-         />
-         <RemoveEventIconButton
-            status={status}
-            onClick={() => setIdAndOpenDialog({ id, mode: DIALOG_MODE.DELETE })}
-            startDate={startDate}
-         />
+         {!groupTraining && (
+            <>
+               <AcceptRequestIconButton
+                  status={status}
+                  onClick={() =>
+                     setIdAndOpenDialog({ id, mode: DIALOG_MODE.ACCEPT })
+                  }
+                  startDate={startDate}
+                  disabled={accepted}
+                  accepted={accepted}
+               />
+               {!accepted && (
+                  <RejectRequestIconButton
+                     status={status}
+                     onClick={() =>
+                        setIdAndOpenDialog({ id, mode: DIALOG_MODE.REJECT })
+                     }
+                     startDate={startDate}
+                  />
+               )}
+            </>
+         )}
       </AppointmentTooltip.Header>
    );
 };
