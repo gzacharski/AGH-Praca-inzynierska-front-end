@@ -4,7 +4,7 @@ import { UserGroupTimetable } from './userGroupTimetable/UserGroupTimetable';
 import { UserIndividualTimetable } from './userIndividualTimetable/UserIndividualTimetable';
 import { ManagerTimetable } from './managerTimetable/ManagerTimetable';
 import { PublicTimetable } from './publicTimetable/PublicTimetable';
-import { TrainerTimetable } from './TrainerTimetable';
+import { TrainerTimetable } from './trainerTimetable/TrainerTimetable';
 
 export {
    Timetable,

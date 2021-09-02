@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import { useSnackbar } from 'notistack';
-import {
-   Appointments,
-   AppointmentTooltip,
-   Toolbar,
-   TodayButton,
-} from '@devexpress/dx-react-scheduler-material-ui';
 import { useSelector, useDispatch } from 'react-redux';
 import {
    selectAll,
@@ -17,10 +11,7 @@ import {
    selectNotistack,
    selectMessage,
 } from 'src/main/store/sliceFiles/trainerSlices/trainerTimetableSlice';
-import { Timetable } from 'src/main/components/timetable';
-import { ContentTooltip } from 'src/main/components/timetable/appointmentTooltip/ContentTooltip';
-import { HeaderTooltip } from 'src/main/components/timetable/appointmentTooltip/HeaderTooltip';
-import { CurrentDateContextProvider } from 'src/main/components/timetable/CurrentDateContext';
+import { TrainerTimetable } from 'src/main/components/timetable';
 import { getCurrentEndOfWeek, getCurrentStartOfWeek } from 'src/main/utils';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
@@ -69,23 +60,12 @@ const WorkoutsPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Aktualny grafik zajęć indywidualnych i grupowych</PageTitle>
-         <CurrentDateContextProvider>
-            <Timetable
-               data={data}
-               fetchedDates={fetchedDates}
-               fetchData={fetchTrainerTrainings}
-               status={status}
-            >
-               <Toolbar />
-               <TodayButton messages={{ today: 'Dzisiaj' }} />
-               <Appointments />
-               <AppointmentTooltip
-                  showCloseButton
-                  headerComponent={HeaderTooltip}
-                  contentComponent={ContentTooltip}
-               />
-            </Timetable>
-         </CurrentDateContextProvider>
+         <TrainerTimetable
+            data={data}
+            fetchedDates={fetchedDates}
+            fetchData={fetchTrainerTrainings}
+            status={status}
+         />
       </PageWrapper>
    );
 };
