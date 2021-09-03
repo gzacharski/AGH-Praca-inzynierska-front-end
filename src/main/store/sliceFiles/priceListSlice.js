@@ -16,7 +16,7 @@ const initialState = {
 
 export const fetchPriceList = createAsyncThunk(
    'priceList/fetchPriceList',
-   async ({ search }, { rejectWithValue }) => {
+   async ({ search = '' }, { rejectWithValue }) => {
       const url = `${gymPassServiceURL}/offer${search}`;
 
       try {

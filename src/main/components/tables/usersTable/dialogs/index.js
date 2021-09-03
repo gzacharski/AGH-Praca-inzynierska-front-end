@@ -1,4 +1,5 @@
 import { InfoTrainingTypeDialog } from './InfoUserDialog';
 import { UserRolesDialog } from './UserRolesDialog';
+import { GympassDialog } from './GympassDialog';
 
-export { InfoTrainingTypeDialog, UserRolesDialog };
+export { InfoTrainingTypeDialog, UserRolesDialog, GympassDialog };

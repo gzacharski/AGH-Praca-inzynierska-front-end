@@ -22,7 +22,11 @@ import {
    ManagerActionStateDataTypeProvider,
    AdminActionStateDataTypeProvider,
 } from './formatters/index';
-import { InfoTrainingTypeDialog, UserRolesDialog } from './dialogs';
+import {
+   InfoTrainingTypeDialog,
+   UserRolesDialog,
+   GympassDialog,
+} from './dialogs';
 
 const columns = [
    { name: 'avatar', title: 'Zdjęcie' },
@@ -71,7 +75,6 @@ export const UsersTable = ({
          {adminActions && (
             <AdminActionStateDataTypeProvider for={['_action']} />
          )}
-
          <PagingState
             currentPage={pageNumber}
             pageSize={pageSize}
@@ -92,6 +95,10 @@ export const UsersTable = ({
       </Grid>
       <InfoTrainingTypeDialog selectById={selectById} />
       <UserRolesDialog
+         selectById={selectById}
+         changeClientRoles={changeClientRoles}
+      />
+      <GympassDialog
          selectById={selectById}
          changeClientRoles={changeClientRoles}
       />
