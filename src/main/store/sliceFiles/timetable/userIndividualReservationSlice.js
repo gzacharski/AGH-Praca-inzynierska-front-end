@@ -41,8 +41,8 @@ export const fetchUserIndividualReservation = createAsyncThunk(
                Authorization: token,
             },
          });
-         const { data = [], message = null } = response?.data;
-         return { data, startOfWeek, endOfWeek, message };
+         const { data = {} } = response;
+         return { data, startOfWeek, endOfWeek };
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
@@ -54,7 +54,7 @@ export const fetchUserIndividualReservation = createAsyncThunk(
 );
 
 export const addUserIndividualReservation = createAsyncThunk(
-   'userEquipmentReservation/addUserEquipmentReservation',
+   'userIndividualReservation/addUserIndividualReservation',
    async (
       { trainerId, userId, token, startDateTime, endDateTime },
       { rejectWithValue },
@@ -70,8 +70,8 @@ export const addUserIndividualReservation = createAsyncThunk(
 
       try {
          const response = await axios.post(url, body, config(token));
-         const { message = null, reservation = {} } = response?.data;
-         return { message, reservation };
+         const { message = null, training = {} } = response?.data;
+         return { message, training };
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
@@ -89,8 +89,9 @@ export const cancelUserIndividualReservation = createAsyncThunk(
 
       try {
          const response = await axios.delete(url, config(token, locale));
-         const { message = null } = response?.data;
-         return { message, trainingId };
+         const { message = null, training = {} } = response?.data || {};
+         const { id = '' } = training;
+         return { message, id };
       } catch (error) {
          return rejectWithValue({
             notistack: getNotistackVariant(error),
@@ -164,7 +165,7 @@ export const userIndividualReservationSlice = createSlice({
          state.notistack = NOTISTACK.SUCCESS;
          userIndividualReservationAdapter.upsertOne(
             state,
-            action.payload.reservation,
+            action.payload.training,
          );
          state.message = action.payload.message;
          state.error = null;
@@ -182,10 +183,7 @@ export const userIndividualReservationSlice = createSlice({
       [cancelUserIndividualReservation.fulfilled]: (state, action) => {
          state.status = STATUS.SUCCEEDED;
          state.notistack = NOTISTACK.SUCCESS;
-         userIndividualReservationAdapter.removeOne(
-            state,
-            action.payload.trainingId,
-         );
+         userIndividualReservationAdapter.removeOne(state, action.payload.id);
          state.message = action.payload.message;
          state.error = null;
       },

@@ -25,8 +25,10 @@ export const InfoGympassDialog = () => {
       title = '',
       subheader = '',
       price = {},
-      isPremium = false,
+      premium = false,
       description = {},
+      temporaryPass = false,
+      quantity = 1,
    } = selectedRow;
 
    const shouldOpen = mode === INFO && isOpen;
@@ -44,9 +46,11 @@ export const InfoGympassDialog = () => {
                title={title}
                subheader={subheader}
                price={price}
-               isPremium={isPremium}
+               premium={premium}
                description={description}
                onCloseCallback={closeDialog}
+               isTemporaryPass={temporaryPass}
+               quantity={quantity}
                readOnly
             />
          </DialogContent>

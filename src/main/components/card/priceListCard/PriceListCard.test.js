@@ -11,7 +11,7 @@ const gympass = [
       id: 'ac881e68-999f-4656-b75b-c67baa3073f3',
       title: 'Wejście jednorazowe',
       price: { amount: '19,99', currency: 'zł', period: 'wejście' },
-      isPremium: false,
+      premium: false,
       description: {
          synopsis: 'Gdy potrzebujesz skorzystać jednorazowo z naszej siłowni',
          features: [
@@ -28,7 +28,7 @@ const gympass = [
       title: 'Karnet 4 wejścia',
       subheader: 'Najpopularniejszy dla ograniczonej liczby wejść', // pole opcjonalne
       price: { amount: '69,99', currency: 'zł', period: '4 wejścia' },
-      isPremium: true,
+      premium: true,
       description: {
          synopsis: 'Karnet idealny dla osób o nieregularnym trybie życia',
          features: [

@@ -46,7 +46,7 @@ const columns = [
    { name: 'title', title: 'Tytuł' },
    { name: 'subheader', title: 'Podtytuł' },
    { name: 'price', title: 'Cena' },
-   { name: 'isPremium', title: 'Premium' },
+   { name: 'premium', title: 'Premium' },
    { name: 'status', title: 'Status' },
    { name: '_action', title: 'Akcja' },
 ];
@@ -89,7 +89,7 @@ const HeaderCell = ({ column, ...restProps }) => {
 export const GympassTable = ({ data }) => (
    <DialogContextProvider>
       <Grid rows={data} columns={columns}>
-         <PremiumStateDataTypeProvider for={['isPremium']} />
+         <PremiumStateDataTypeProvider for={['premium']} />
          <PriceStateDataTypeProvider for={['price']} />
          <SubheaderStateDataTypeProvider for={['subheader']} />
          <StatusStateDataTypeProvider for={['status']} />

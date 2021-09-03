@@ -11,7 +11,7 @@ const useStyles = makeStyles(({ spacing }) => ({
       margin: 'auto',
    },
    select: {
-      width: '195px',
+      width: '100%',
    },
    menuItem: {
       display: 'flex',

@@ -6,7 +6,7 @@ import {
    createEntityAdapter,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { accountServiceURL } from 'src/main/data/urls';
+import { accountServiceURL, gymPassServiceURL } from 'src/main/data/urls';
 import { NETWORK_ERROR } from 'src/main/data/messages';
 import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
@@ -19,6 +19,7 @@ const adminUsersListAdapter = createEntityAdapter({
 const initialState = adminUsersListAdapter.getInitialState({
    data: [],
    status: STATUS.IDLE,
+   gympassStatus: STATUS.IDLE,
    notistack: NOTISTACK.SUCCESS,
    message: null,
    error: null,
@@ -84,6 +85,90 @@ export const changeClientRoles = createAsyncThunk(
    },
 );
 
+export const fetchUserGympass = createAsyncThunk(
+   'adminUsersList/fetchUserGympass',
+   async ({ userId = '', token = '' }, { rejectWithValue }) => {
+      const url = `${gymPassServiceURL}/purchase/user/${userId}/latest`;
+
+      try {
+         const response = await axios.get(url, config(token));
+         return { userId, gympass: response?.data };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const purchaseGymPass = createAsyncThunk(
+   'adminUsersList/purchaseGymPass',
+   async (
+      { userId = '', gymPassOfferId = '', startDate = '', token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${gymPassServiceURL}/purchase`;
+
+      try {
+         const response = await axios.post(
+            url,
+            { userId, gymPassOfferId, startDate },
+            config(token),
+         );
+         const { purchasedGymPass = {}, message = '' } = response?.data || {};
+         return { user: { userId, gympass: purchasedGymPass }, message };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
+export const checkGymPassValidity = createAsyncThunk(
+   'adminUsersList/checkGymPassValidity',
+   async (
+      { userId = '', purchasedGymPassDocumentId = '', token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${gymPassServiceURL}/purchase/${purchasedGymPassDocumentId}/status`;
+
+      try {
+         const response = await axios.get(url, config(token));
+         const { message = '', result = {} } = response?.data || {};
+         return { user: { userId, gympassValid: result?.valid }, message };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const adminUsersSlice = createSlice({
    name: 'adminUsersList',
    initialState,
@@ -125,6 +210,53 @@ const adminUsersSlice = createSlice({
          state.error = action.payload.error;
          state.message = action.payload.message;
       },
+
+      [fetchUserGympass.pending]: (state, action) => {
+         state.gympassStatus = STATUS.LOADING;
+      },
+      [fetchUserGympass.fulfilled]: (state, action) => {
+         state.gympassStatus = STATUS.SUCCEEDED;
+         adminUsersListAdapter.upsertOne(state, action.payload);
+         state.error = null;
+      },
+      [fetchUserGympass.rejected]: (state, action) => {
+         state.gympassStatus = STATUS.FAILED;
+         state.error = action.payload.error;
+      },
+
+      [purchaseGymPass.pending]: (state, action) => {
+         state.gympassStatus = STATUS.LOADING;
+      },
+      [purchaseGymPass.fulfilled]: (state, action) => {
+         state.gympassStatus = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         adminUsersListAdapter.upsertOne(state, action.payload.user);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [purchaseGymPass.rejected]: (state, action) => {
+         state.gympassStatus = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [checkGymPassValidity.pending]: (state, action) => {
+         state.gympassStatus = STATUS.LOADING;
+      },
+      [checkGymPassValidity.fulfilled]: (state, action) => {
+         state.gympassStatus = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         adminUsersListAdapter.upsertOne(state, action.payload.user);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [checkGymPassValidity.rejected]: (state, action) => {
+         state.gympassStatus = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
    },
 });
 
@@ -138,5 +270,7 @@ export const { selectAll, selectById } = adminUsersListAdapter.getSelectors(
 
 export const selectMessage = (state) => state.adminUsersList.message;
 export const selectStatus = (state) => state.adminUsersList.status;
+export const selectGympassStatus = (state) =>
+   state.adminUsersList.gympassStatus;
 export const selectError = (state) => state.adminUsersList.error;
 export const selectNotistack = (state) => state.adminUsersList.notistack;
