@@ -22,6 +22,7 @@ const validationSchema = Yup.object({
    title: Yup.string().required('Pole jest wymagane'),
    synopsis: Yup.string().required('Pole jest wymagane'),
    features: Yup.array().min(1, 'Wymanaga przynajmniej jedna cecha'),
+   quantity: Yup.string().required('Pole jest wymagane'),
 });
 
 const CustomNumberFormat = ({ inputRef, onChange, name, ...other }) => (
@@ -44,6 +45,26 @@ const CustomNumberFormat = ({ inputRef, onChange, name, ...other }) => (
    />
 );
 
+const CustomNumberFormat2 = ({ inputRef, onChange, name, ...other }) => (
+   <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+         onChange({
+            target: {
+               name,
+               value: values.value,
+            },
+         });
+      }}
+      decimalScale={0}
+      allowNegative={false}
+      thousandSeparator=" "
+      isNumericString
+      isAllowed={({ value }) => value <= 100}
+   />
+);
+
 export const GympassForm = ({
    documentId = '',
    title = '',
@@ -51,6 +72,8 @@ export const GympassForm = ({
    price = {},
    isPremium = false,
    description = {},
+   isTemporaryPass = false,
+   quantity = 1,
    onCloseCallback = () => false,
    readOnly = false,
    onSubmitReduxCallback = () => false,
@@ -73,6 +96,8 @@ export const GympassForm = ({
          isPremium,
          synopsis,
          features,
+         isTemporaryPass,
+         quantity,
       },
       validationSchema,
       onSubmit: (values) => {
@@ -88,6 +113,8 @@ export const GympassForm = ({
                isPremium: values.isPremium,
                synopsis: values.synopsis,
                features: values.features,
+               isTemporaryPass: values.isTemporaryPass,
+               quantity: Number.parseInt(values.quantity, 10),
                token,
             }),
          );
@@ -98,6 +125,13 @@ export const GympassForm = ({
       formik.setValues((values) => ({
          ...values,
          isPremium: event.target.checked,
+      }));
+   };
+
+   const handleSwitch2Change = (event) => {
+      formik.setValues((values) => ({
+         ...values,
+         isTemporaryPass: event.target.checked,
       }));
    };
 
@@ -156,7 +190,11 @@ export const GympassForm = ({
                            onChange={handleSwitchChange}
                         />
                      }
-                     label="Karnet premium"
+                     label={
+                        formik.values.isPremium
+                           ? 'Karnet premium'
+                           : 'Karnet zwykły'
+                     }
                   />
                </div>
             </Grid>
@@ -294,6 +332,55 @@ export const GympassForm = ({
                      }
                   />
                </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+               <div
+                  style={{
+                     verticalAlign: 'middle',
+                     height: '100%',
+                     display: 'flex',
+                  }}
+               >
+                  <FormControlLabel
+                     control={
+                        <Switch
+                           disabled={readOnly}
+                           checked={formik.values.isTemporaryPass}
+                           onChange={handleSwitch2Change}
+                        />
+                     }
+                     label={
+                        formik.values.isTemporaryPass
+                           ? 'Karnet czasowy'
+                           : 'Karnet ilościowy'
+                     }
+                  />
+               </div>
+            </Grid>
+            <Grid item xs={6}>
+               <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="quantity"
+                  label={
+                     formik.values.isTemporaryPass ? 'Ilość dni' : 'Ilość wejść'
+                  }
+                  name="quantity"
+                  disabled={readOnly}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.quantity}
+                  error={
+                     formik.touched.quantity &&
+                     isNotEmpty(formik.errors.quantity)
+                  }
+                  helperText={formik.touched.quantity && formik.errors.quantity}
+                  InputProps={{
+                     inputComponent: CustomNumberFormat2,
+                  }}
+               />
             </Grid>
             {!readOnly && (
                <Grid item xs={12}>
