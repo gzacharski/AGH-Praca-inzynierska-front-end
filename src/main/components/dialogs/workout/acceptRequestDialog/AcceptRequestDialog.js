@@ -86,14 +86,14 @@ export const AcceptRequestDialog = () => {
                   <MenuItem value="" disabled>
                      Wybierz lokalizację
                   </MenuItem>
-                  {locations.map((location) => (
-                     <MenuItem
-                        key={location?.locationId}
-                        value={location?.locationId}
-                     >
-                        {location?.name}
-                     </MenuItem>
-                  ))}
+                  {locations.map((location) => {
+                     const { locationId = '', name = '' } = location || {};
+                     return (
+                        <MenuItem key={locationId} value={locationId}>
+                           {name}
+                        </MenuItem>
+                     );
+                  })}
                </Select>
             </div>
          </DialogContent>
