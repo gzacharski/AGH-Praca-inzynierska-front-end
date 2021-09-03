@@ -25,6 +25,7 @@ import {
 import {
    fetchUserGympass,
    selectGympassStatus,
+   purchaseGymPass,
 } from 'src/main/store/sliceFiles/adminSlices/usersSlice';
 import {
    fetchPriceList,
@@ -61,9 +62,9 @@ const GympassForm = ({ user = {}, onClose = () => false }) => {
    const [purchaseMode, setPurchaseMode] = useState(false);
 
    const { userId = '', name = '', surname = '', gympass } = user;
-   const { gymPassOffer = {} } = gympass || {};
+   const { gymPassOffer = {}, entries = 0 } = gympass || {};
 
-   const { gymPassOfferId = '' } = gymPassOffer;
+   const { gymPassOfferId = '', temporaryPass = false } = gymPassOffer;
 
    useEffect(() => {
       if (Boolean(gympass) === false) {
@@ -85,19 +86,19 @@ const GympassForm = ({ user = {}, onClose = () => false }) => {
    }, [priceListStatus, dispatch]);
 
    const handlePurchaseGympass = () => {
-      console.log('Purchased');
-      console.log({
-         userId,
-         selectedGympass,
-         startDate: formatISO(purchaseDate),
-         maxInteger: Number.MAX_VALUE,
-      });
+      dispatch(
+         purchaseGymPass({
+            userId,
+            gymPassOfferId: selectedGympass,
+            startDate: formatISO(purchaseDate, { representation: 'date' }),
+            token,
+         }),
+      );
       onClose();
       setPurchaseMode(false);
    };
 
    const buttonName = purchaseMode ? 'Anuluj' : 'Kup karnet';
-
    return (
       <div className={classes.root}>
          {status === STATUS.LOADING && <LinearProgress />}
@@ -201,18 +202,30 @@ const GympassForm = ({ user = {}, onClose = () => false }) => {
                         />
                      </Grid>
                      <Grid item xs={6}>
-                        <DatePicker
-                           value={endDate}
-                           onChange={setEndDate}
-                           disableToolbar
-                           fullWidth
-                           label="Data zakończenia karnetu"
-                           orientation="landscape"
-                           variant="inline"
-                           format="dd MMMM yyyy"
-                           inputVariant="outlined"
-                           disabled
-                        />
+                        {temporaryPass && (
+                           <DatePicker
+                              value={endDate}
+                              onChange={setEndDate}
+                              disableToolbar
+                              fullWidth
+                              label="Data zakończenia karnetu"
+                              orientation="landscape"
+                              variant="inline"
+                              format="dd MMMM yyyy"
+                              inputVariant="outlined"
+                              disabled
+                           />
+                        )}
+                        {!temporaryPass && (
+                           <TextField
+                              variant="outlined"
+                              margin="normal"
+                              fullWidth
+                              disabled
+                              label="Dostępna ilość wejść"
+                              value={entries}
+                           />
+                        )}
                      </Grid>
                   </Grid>
                ) : (
@@ -234,6 +247,7 @@ const GympassForm = ({ user = {}, onClose = () => false }) => {
                                  variant="outlined"
                                  color="primary"
                                  onClick={handlePurchaseGympass}
+                                 disabled={!selectedGympass}
                               >
                                  Zakup
                               </Button>

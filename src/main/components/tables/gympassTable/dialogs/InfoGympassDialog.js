@@ -25,9 +25,9 @@ export const InfoGympassDialog = () => {
       title = '',
       subheader = '',
       price = {},
-      isPremium = false,
+      premium = false,
       description = {},
-      isTemporaryPass = false,
+      temporaryPass = false,
       quantity = 1,
    } = selectedRow;
 
@@ -46,10 +46,10 @@ export const InfoGympassDialog = () => {
                title={title}
                subheader={subheader}
                price={price}
-               isPremium={isPremium}
+               premium={premium}
                description={description}
                onCloseCallback={closeDialog}
-               isTemporaryPass={isTemporaryPass}
+               isTemporaryPass={temporaryPass}
                quantity={quantity}
                readOnly
             />

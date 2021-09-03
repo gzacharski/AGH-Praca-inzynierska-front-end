@@ -70,7 +70,7 @@ export const GympassForm = ({
    title = '',
    subheader = '',
    price = {},
-   isPremium = false,
+   premium = false,
    description = {},
    isTemporaryPass = false,
    quantity = 1,
@@ -93,7 +93,7 @@ export const GympassForm = ({
          amount,
          currency,
          period,
-         isPremium,
+         premium,
          synopsis,
          features,
          isTemporaryPass,
@@ -110,7 +110,7 @@ export const GympassForm = ({
                amount: Number.parseFloat(values.amount),
                currency: values.currency,
                period: values.period,
-               isPremium: values.isPremium,
+               premium: values.premium,
                synopsis: values.synopsis,
                features: values.features,
                isTemporaryPass: values.isTemporaryPass,
@@ -124,7 +124,7 @@ export const GympassForm = ({
    const handleSwitchChange = (event) => {
       formik.setValues((values) => ({
          ...values,
-         isPremium: event.target.checked,
+         premium: event.target.checked,
       }));
    };
 
@@ -186,12 +186,12 @@ export const GympassForm = ({
                      control={
                         <Switch
                            disabled={readOnly}
-                           checked={formik.values.isPremium}
+                           checked={formik.values.premium}
                            onChange={handleSwitchChange}
                         />
                      }
                      label={
-                        formik.values.isPremium
+                        formik.values.premium
                            ? 'Karnet premium'
                            : 'Karnet zwykły'
                      }

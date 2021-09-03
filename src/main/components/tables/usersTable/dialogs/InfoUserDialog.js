@@ -64,7 +64,7 @@ const UserInfoForm = ({ readOnly, user = {} }) => {
    const handleSwitchChange = (event) => {
       formik.setValues((values) => ({
          ...values,
-         isPremium: event.target.checked,
+         premium: event.target.checked,
       }));
    };
 

@@ -19,7 +19,7 @@ const PriceListCard = (props) => {
       title = '',
       subheader = '',
       price = {},
-      isPremium = false,
+      premium = false,
       description = {},
    } = gymPass || {};
    const handleBuyClick = (history) =>
@@ -73,10 +73,10 @@ const PriceListCard = (props) => {
          <CardActions>
             <Button
                fullWidth
-               variant={isPremium ? 'contained' : 'outlined'}
+               variant={premium ? 'contained' : 'outlined'}
                className={clsx({
-                  [classes.button]: !isPremium,
-                  [classes.buttonPremium]: isPremium,
+                  [classes.button]: !premium,
+                  [classes.buttonPremium]: premium,
                })}
                onClick={() => handleBuyClick(props.history)}
             >

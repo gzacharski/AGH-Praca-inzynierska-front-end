@@ -109,6 +109,38 @@ export const fetchUserGympass = createAsyncThunk(
    },
 );
 
+export const purchaseGymPass = createAsyncThunk(
+   'adminUsersList/purchaseGymPass',
+   async (
+      { userId = '', gymPassOfferId = '', startDate = '', token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${gymPassServiceURL}/purchase`;
+
+      try {
+         const response = await axios.post(
+            url,
+            { userId, gymPassOfferId, startDate },
+            config(token),
+         );
+         const { purchasedGymPass = {}, message = '' } = response?.data || {};
+         return { user: { userId, gympass: purchasedGymPass }, message };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const adminUsersSlice = createSlice({
    name: 'adminUsersList',
    initialState,
@@ -162,6 +194,23 @@ const adminUsersSlice = createSlice({
       [fetchUserGympass.rejected]: (state, action) => {
          state.gympassStatus = STATUS.FAILED;
          state.error = action.payload.error;
+      },
+
+      [purchaseGymPass.pending]: (state, action) => {
+         state.gympassStatus = STATUS.LOADING;
+      },
+      [purchaseGymPass.fulfilled]: (state, action) => {
+         state.gympassStatus = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         adminUsersListAdapter.upsertOne(state, action.payload.user);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [purchaseGymPass.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
       },
    },
 });

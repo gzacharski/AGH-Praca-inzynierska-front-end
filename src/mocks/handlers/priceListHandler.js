@@ -37,7 +37,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: 'wejście',
                },
-               isPremium: false,
+               premium: false,
                description: {
                   synopsis:
                      'Gdy potrzebujesz skorzystać jednorazowo z naszej siłowni',
@@ -60,7 +60,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: '4 wejścia',
                },
-               isPremium: true,
+               premium: true,
                description: {
                   synopsis:
                      'Karnet idealny dla osób o nieregularnym trybie życia',
@@ -85,7 +85,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: '8 wejść',
                },
-               isPremium: false,
+               premium: false,
                description: {
                   synopsis:
                      'Karnet idealny dla osób o nieregularnym trybie życia',
@@ -110,7 +110,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: 'miesiąc',
                },
-               isPremium: true,
+               premium: true,
                description: {
                   synopsis: 'Najlepszy wybór dla osób regularnie ćwiczących',
                   features: [
@@ -162,7 +162,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: 'wejście',
                },
-               isPremium: false,
+               premium: false,
                description: {
                   synopsis:
                      'Gdy potrzebujesz skorzystać jednorazowo z naszej siłowni',
@@ -184,7 +184,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: '4 wejścia',
                },
-               isPremium: true,
+               premium: true,
                description: {
                   synopsis:
                      'Karnet idealny dla osób o nieregularnym trybie życia',
@@ -208,7 +208,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: '8 wejść',
                },
-               isPremium: false,
+               premium: false,
                description: {
                   synopsis:
                      'Karnet idealny dla osób o nieregularnym trybie życia',
@@ -232,7 +232,7 @@ export const priceListHandlers = [
                   currency: 'zł',
                   period: 'miesiąc',
                },
-               isPremium: true,
+               premium: true,
                description: {
                   synopsis: 'Najlepszy wybór dla osób regularnie ćwiczących',
                   features: [

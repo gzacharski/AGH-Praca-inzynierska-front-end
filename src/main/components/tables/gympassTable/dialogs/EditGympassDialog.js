@@ -28,9 +28,9 @@ export const EditGympassDialog = () => {
       title = '',
       subheader = '',
       price = {},
-      isPremium = false,
+      premium = false,
       description = {},
-      isTemporaryPass = false,
+      temporaryPass = false,
       quantity = 1,
    } = selectedRow;
 
@@ -49,9 +49,9 @@ export const EditGympassDialog = () => {
                title={title}
                subheader={subheader}
                price={price}
-               isPremium={isPremium}
+               premium={premium}
                description={description}
-               isTemporaryPass={isTemporaryPass}
+               isTemporaryPass={temporaryPass}
                quantity={quantity}
                onCloseCallback={closeDialog}
                onSubmitReduxCallback={editGympass}
