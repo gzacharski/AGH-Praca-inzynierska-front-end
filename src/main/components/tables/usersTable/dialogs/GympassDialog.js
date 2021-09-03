@@ -26,6 +26,7 @@ import {
    fetchUserGympass,
    selectGympassStatus,
    purchaseGymPass,
+   checkGymPassValidity,
 } from 'src/main/store/sliceFiles/adminSlices/usersSlice';
 import {
    fetchPriceList,
@@ -62,7 +63,11 @@ const GympassForm = ({ user = {}, onClose = () => false }) => {
    const [purchaseMode, setPurchaseMode] = useState(false);
 
    const { userId = '', name = '', surname = '', gympass } = user;
-   const { gymPassOffer = {}, entries = 0 } = gympass || {};
+   const {
+      gymPassOffer = {},
+      entries = 0,
+      purchasedGymPassDocumentId = '',
+   } = gympass || {};
 
    const { gymPassOfferId = '', temporaryPass = false } = gymPassOffer;
 
@@ -78,6 +83,19 @@ const GympassForm = ({ user = {}, onClose = () => false }) => {
          setSelectedGympass(gymPassOfferId || '');
       }
    }, [gympass]);
+
+   useEffect(() => {
+      if (purchasedGymPassDocumentId) {
+         dispatch(
+            checkGymPassValidity({
+               purchasedGymPassDocumentId:
+                  gympass?.purchasedGymPassDocumentId || '',
+               userId,
+               token,
+            }),
+         );
+      }
+   }, [purchasedGymPassDocumentId, dispatch]);
 
    useEffect(() => {
       if (priceListStatus === STATUS.IDLE) {

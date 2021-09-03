@@ -141,6 +141,34 @@ export const purchaseGymPass = createAsyncThunk(
    },
 );
 
+export const checkGymPassValidity = createAsyncThunk(
+   'adminUsersList/checkGymPassValidity',
+   async (
+      { userId = '', purchasedGymPassDocumentId = '', token = '' },
+      { rejectWithValue },
+   ) => {
+      const url = `${gymPassServiceURL}/purchase/${purchasedGymPassDocumentId}/status`;
+
+      try {
+         const response = await axios.get(url, config(token));
+         const { message = '', result = {} } = response?.data || {};
+         return { user: { userId, gympassValid: result?.valid }, message };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const adminUsersSlice = createSlice({
    name: 'adminUsersList',
    initialState,
@@ -207,7 +235,24 @@ const adminUsersSlice = createSlice({
          state.error = null;
       },
       [purchaseGymPass.rejected]: (state, action) => {
-         state.status = STATUS.FAILED;
+         state.gympassStatus = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [checkGymPassValidity.pending]: (state, action) => {
+         state.gympassStatus = STATUS.LOADING;
+      },
+      [checkGymPassValidity.fulfilled]: (state, action) => {
+         state.gympassStatus = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         adminUsersListAdapter.upsertOne(state, action.payload.user);
+         state.message = action.payload.message;
+         state.error = null;
+      },
+      [checkGymPassValidity.rejected]: (state, action) => {
+         state.gympassStatus = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
