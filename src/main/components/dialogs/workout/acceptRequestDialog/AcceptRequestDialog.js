@@ -1,28 +1,46 @@
-/* eslint-disable no-unused-vars */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
    Dialog,
    DialogTitle,
    DialogActions,
+   DialogContent,
    Typography,
    Divider,
    Button,
+   Select,
+   MenuItem,
 } from '@material-ui/core';
 import {
    DialogContext,
    DIALOG_MODE,
 } from 'src/main/components/contexts/DialogContext';
-import { useDispatch } from 'react-redux';
-import { deleteGroupTraining } from 'src/main/store/sliceFiles/timetable/timetableSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { acceptIndividualTraining } from 'src/main/store/sliceFiles/trainerSlices/trainerTimetableSlice';
 import { useAuth } from 'src/main/auth';
+import {
+   selectAll as selectAllLocations,
+   selectStatus as selectLocationStatus,
+   fetchLocationList,
+} from 'src/main/store/sliceFiles/locationsSlice';
+import { STATUS } from 'src/main/store';
 import { useStyles } from './AcceptRequestDialog.styles';
 
 export const AcceptRequestDialog = () => {
    const classes = useStyles();
    const dispatch = useDispatch();
+   const locationStatus = useSelector(selectLocationStatus);
+   const locations = useSelector(selectAllLocations);
+   const [selectedLocation, setSelectedLocation] = useState('');
 
    const { authState = {} } = useAuth();
-   const { token = '' } = authState;
+   const { token = '', userInfo = {} } = authState;
+   const { userId = '' } = userInfo;
+
+   useEffect(() => {
+      if (locationStatus === STATUS.IDLE) {
+         dispatch(fetchLocationList({ token }));
+      }
+   }, [locationStatus, dispatch]);
 
    const {
       dialogState = {},
@@ -34,13 +52,14 @@ export const AcceptRequestDialog = () => {
    const shouldOpen = mode === DIALOG_MODE.ACCEPT && isOpen;
 
    const handleSubmit = () => {
-      console.log('Accept');
-      // dispatch(
-      //    deleteGroupTraining({
-      //       trainingId: entityId,
-      //       token,
-      //    }),
-      // );
+      dispatch(
+         acceptIndividualTraining({
+            trainingId: entityId,
+            userId,
+            token,
+            locationId: selectedLocation,
+         }),
+      );
       closeDialog();
    };
 
@@ -52,6 +71,32 @@ export const AcceptRequestDialog = () => {
             </Typography>
          </DialogTitle>
          <Divider />
+         <DialogContent>
+            <div>
+               <Typography variant="subtitle1" color="primary">
+                  Wybierz lokalizację
+               </Typography>
+               <Select
+                  id="select-training-type"
+                  value={selectedLocation}
+                  onChange={(event) => setSelectedLocation(event.target.value)}
+                  className={classes.select}
+                  displayEmpty
+               >
+                  <MenuItem value="" disabled>
+                     Wybierz lokalizację
+                  </MenuItem>
+                  {locations.map((location) => (
+                     <MenuItem
+                        key={location?.locationId}
+                        value={location?.locationId}
+                     >
+                        {location?.name}
+                     </MenuItem>
+                  ))}
+               </Select>
+            </div>
+         </DialogContent>
          <DialogActions>
             <Button onClick={handleSubmit} className={classes.button}>
                Akceptuj
