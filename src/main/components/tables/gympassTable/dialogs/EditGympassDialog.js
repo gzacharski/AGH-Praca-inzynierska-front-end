@@ -30,6 +30,8 @@ export const EditGympassDialog = () => {
       price = {},
       isPremium = false,
       description = {},
+      isTemporaryPass = false,
+      quantity = 1,
    } = selectedRow;
 
    const shouldOpen = mode === EDIT && isOpen;
@@ -49,6 +51,8 @@ export const EditGympassDialog = () => {
                price={price}
                isPremium={isPremium}
                description={description}
+               isTemporaryPass={isTemporaryPass}
+               quantity={quantity}
                onCloseCallback={closeDialog}
                onSubmitReduxCallback={editGympass}
             />
