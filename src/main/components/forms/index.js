@@ -7,6 +7,7 @@ import { ChangePasswordForm } from './changePassword/ChangePasswordForm';
 import { ChangeAvatarForm } from './changeAvatar/ChangeAvatarForm';
 import { ChangeAccountPrivacyForm } from './changeAccountPrivacy/ChangeAccountPrivacyForm';
 import { DeleteAccountForm } from './deleteAccountForm/DeleteAccountForm';
+import { TaskForm } from './taskForm/TaskForm';
 
 export {
    ChangeUserInfoForm,
@@ -18,4 +19,5 @@ export {
    ChangeAvatarForm,
    ChangeAccountPrivacyForm,
    DeleteAccountForm,
+   TaskForm,
 };
