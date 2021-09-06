@@ -23,6 +23,7 @@ import locationsSlice from './sliceFiles/locationsSlice';
 import managerGympassListSlice from './sliceFiles/managerSlices/gympassSlice';
 import userNextTrainingSlice from './sliceFiles/nextTrainingSlice';
 import trainerWorkoutsSlice from './sliceFiles/trainerSlices/trainerTimetableSlice';
+import taskListSlice from './sliceFiles/managerSlices/taskSlice';
 
 export const reducer = {
    drawer: drawerReducer,
@@ -49,6 +50,7 @@ export const reducer = {
    managerGympassList: managerGympassListSlice,
    userNextTraining: userNextTrainingSlice,
    trainerTrainings: trainerWorkoutsSlice,
+   taskList: taskListSlice,
 };
 
 export default configureStore({ reducer });
