@@ -9,7 +9,7 @@ export const handlers = [
          ctx.delay(),
          ctx.set(
             'token',
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiMDVhODUwYy04ODI3LTQ4MDUtYWVjZC0zYTg5M2Q1ODY2OGIiLCJyb2xlcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sImV4cCI6MTYyNTQ5MTk2Mn0.Z2o0tfU1BiVL_3qJJUXyMVuZvNpLSed1aRbcqimhIE0',
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4ODlhZGEzMi01MGJkLTQ1ZmYtOGEwZC1mNzgyMWQ3MzU5NjQiLCJyb2xlcyI6WyJST0xFX1VTRVIiLCJST0xFX01BTkFHRVIiXSwiZXhwIjoxNjMwOTE1Mjg0fQ.2oXWmJtT-iB4_PtkY6dSycDd4bqyEkenQ95uAcX4uq8',
          ),
          ctx.set('userId', nanoid()),
       ),
