@@ -12,9 +12,7 @@ import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
 import { NOTISTACK } from '../../notistack';
 
-const taskAdapter = createEntityAdapter({
-   selectId: (entity) => entity.taskId,
-});
+const taskAdapter = createEntityAdapter({});
 
 const initialState = taskAdapter.getInitialState({
    status: STATUS.IDLE,
@@ -58,7 +56,7 @@ export const fetchEmployeeTaskList = createAsyncThunk(
 export const fetchAllTaskList = createAsyncThunk(
    'taskList/fetchAllTaskList',
    async ({ token = '' }, { rejectWithValue }) => {
-      const url = `${tasksServiceURL}/page`;
+      const url = `${tasksServiceURL}/page/0`;
 
       try {
          const response = await axios.get(url, config(token));
