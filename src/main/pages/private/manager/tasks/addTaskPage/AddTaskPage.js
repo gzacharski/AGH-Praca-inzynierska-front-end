@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import {
@@ -16,7 +15,6 @@ import {
 } from '@material-ui/core';
 import { DatePicker, TimePicker } from '@material-ui/pickers';
 import { useSelector, useDispatch } from 'react-redux';
-import NumberFormat from 'react-number-format';
 import { formatISO9075 } from 'date-fns';
 import * as Yup from 'yup';
 import {
@@ -24,6 +22,7 @@ import {
    selectStatus,
    selectAll,
 } from 'src/main/store/sliceFiles/users/employeesSlice';
+import { createNewTask } from 'src/main/store/sliceFiles/managerSlices/taskSlice';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
 import { useStyles } from './AddTaskPage.styles';
@@ -35,44 +34,18 @@ const validationSchema = Yup.object({
    description: Yup.string().required('Pole jest wymagane'),
 });
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-   PaperProps: {
-      style: {
-         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-         width: 250,
-      },
-   },
+const TASK_STATUS = {
+   LOW: { id: 'LOW', pl: 'Niski' },
+   MEDIUM: { id: 'MEDIUM', pl: 'Średni' },
+   HIGH: { id: 'HIGH', pl: 'Wysoki' },
+   CRITICAL: { id: 'CRITICAL', pl: 'Krytyczny' },
 };
-
-const CustomNumberFormat = ({ inputRef, onChange, name, ...other }) => (
-   <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-         onChange({
-            target: {
-               name,
-               value: values.value,
-            },
-         });
-      }}
-      decimalScale={0}
-      allowNegative={false}
-      thousandSeparator=" "
-      decimalSeparator=","
-      isNumericString
-      allowLeadingZeros={false}
-      isAllowed={(inputObj) => inputObj?.value <= 1000}
-   />
-);
 
 const AddTaskPage = () => {
    const classes = useStyles();
    const dispatch = useDispatch();
+   const history = useHistory();
 
-   const [selectedTrainer, setSelectedTrainer] = useState([]);
    const [startDate, setStartDate] = useState(new Date());
    const [startTime, setStartTime] = useState(new Date());
 
@@ -80,7 +53,8 @@ const AddTaskPage = () => {
    const employeeStatus = useSelector(selectStatus);
 
    const { authState = {} } = useAuth();
-   const { token = '' } = authState;
+   const { token = '', userInfo = {} } = authState;
+   const { userId = '' } = userInfo;
 
    useEffect(() => {
       if (employeeStatus === STATUS.IDLE) {
@@ -92,15 +66,24 @@ const AddTaskPage = () => {
       initialValues: {
          title: '',
          description: '',
-         selectedTrainer,
+         selectedEmployee: '',
+         priority: '',
       },
       validationSchema,
       onSubmit: (values) => {
-         console.log({
-            ...values,
-            startDate: formatISO9075(startDate, { representation: 'date' }),
-            startTime: formatISO9075(startTime, { representation: 'time' }),
-         });
+         dispatch(
+            createNewTask({
+               userId,
+               employeeId: values?.selectedEmployee?.userId || '',
+               priority: values?.priority?.id || '',
+               title: values?.title || '',
+               description: values?.description || '',
+               startDate: formatISO9075(startDate, { representation: 'date' }),
+               startTime: formatISO9075(startTime, { representation: 'time' }),
+               token,
+            }),
+         );
+         history.push('/manager/tasks');
       },
    });
 
@@ -113,7 +96,7 @@ const AddTaskPage = () => {
             noValidate
          >
             <Grid container spacing={2} justifyContent="center">
-               <Grid item xs={10}>
+               <Grid item xs={12}>
                   <TextField
                      variant="outlined"
                      margin="normal"
@@ -133,7 +116,7 @@ const AddTaskPage = () => {
                      helperText={formik.touched.title && formik.errors.title}
                   />
                </Grid>
-               <Grid item xs={10}>
+               <Grid item xs={6}>
                   <FormControl variant="outlined" fullWidth>
                      <InputLabel id="demo-mutiple-chip-label">
                         Wybierz pracownika
@@ -141,11 +124,12 @@ const AddTaskPage = () => {
                      <Select
                         labelId="demo-mutiple-chip-label"
                         label="Wybierz pracownika"
-                        value={formik.values.selectedTrainer}
+                        value={formik.values.selectedEmployee}
                         onChange={(event) =>
-                           formik.setValues({
-                              selectedTrainer: event.target.value,
-                           })
+                           formik.setValues((state) => ({
+                              ...state,
+                              selectedEmployee: event.target.value,
+                           }))
                         }
                      >
                         <MenuItem value="" disabled>
@@ -165,7 +149,32 @@ const AddTaskPage = () => {
                      </Select>
                   </FormControl>
                </Grid>
-               <Grid item xs={10}>
+               <Grid item xs={6}>
+                  <FormControl variant="outlined" fullWidth>
+                     <InputLabel id="task">Określ priorytet zadania</InputLabel>
+                     <Select
+                        labelId="task"
+                        label="Określ priorytet zadania"
+                        value={formik.values.priority}
+                        onChange={(event) =>
+                           formik.setValues((state) => ({
+                              ...state,
+                              priority: event.target.value,
+                           }))
+                        }
+                     >
+                        <MenuItem value="" disabled>
+                           Określ priorytet zadania
+                        </MenuItem>
+                        {Object.values(TASK_STATUS).map((task) => (
+                           <MenuItem key={task.id} value={task}>
+                              {task.pl}
+                           </MenuItem>
+                        ))}
+                     </Select>
+                  </FormControl>
+               </Grid>
+               <Grid item xs={12}>
                   <TextField
                      variant="outlined"
                      margin="normal"
@@ -189,7 +198,7 @@ const AddTaskPage = () => {
                      }
                   />
                </Grid>
-               <Grid item xs={5}>
+               <Grid item xs={6}>
                   <Typography variant="subtitle1" color="primary">
                      Określ datę wykonania zadania
                   </Typography>
@@ -208,7 +217,7 @@ const AddTaskPage = () => {
                      )}`}
                   />
                </Grid>
-               <Grid item xs={5}>
+               <Grid item xs={6}>
                   <Typography variant="subtitle1" color="primary">
                      Określ godzinę wykonania zadania
                   </Typography>
@@ -222,15 +231,11 @@ const AddTaskPage = () => {
                         openTo="minutes"
                         orientation="landscape"
                         disablePast
-                        minDate={startDate}
-                        minDateMessage={`Proszę wskazać datę późniejszą niż ${formatISO9075(
-                           startDate,
-                        )}`}
                         minutesStep={5}
                      />
                   </div>
                </Grid>
-               <Grid item xs={10}>
+               <Grid item xs={12}>
                   <Button
                      type="submit"
                      variant="outlined"

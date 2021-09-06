@@ -52,12 +52,6 @@ const AccountPage = () => {
    return (
       <PageWrapper>
          <PageTitle>Zadania pracowników</PageTitle>
-         <Button
-            variant="outlined"
-            onClick={() => history.push('/manager/tasks/add')}
-         >
-            Dodaj nowe zadanie
-         </Button>
          {taskIds.length !== 0 ? (
             <Grid
                container

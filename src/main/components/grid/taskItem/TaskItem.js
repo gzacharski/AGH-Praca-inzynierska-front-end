@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import clsx from 'clsx';
 import {
@@ -13,52 +14,66 @@ import { useSelector, useDispatch } from 'react-redux';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { useAuth } from 'src/main/auth';
-import {
-   markAsReadNotification,
-   deleteNotification,
-   selectById,
-} from 'src/main/store/sliceFiles/notificationsSlice';
+import { selectById } from 'src/main/store/sliceFiles/managerSlices/taskSlice';
 import { useStyles } from './TaskItem.styles';
+
+const TASK_STATUS = {
+   LOW: { id: 'LOW', pl: 'Niski' },
+   MEDIUM: { id: 'MEDIUM', pl: 'Średni' },
+   HIGH: { id: 'HIGH', pl: 'Wysoki' },
+   CRITICAL: { id: 'CRITICAL', pl: 'Krytyczny' },
+};
 
 export const TaskItem = ({ taskId = '' }) => {
    const classes = useStyles();
    const dispatch = useDispatch();
 
-   const notification = useSelector((state) => selectById(state, taskId));
+   const task = useSelector((state) => selectById(state, taskId));
 
    const {
       title = '',
-      content = '',
-      created = '',
-      from = {},
+      description = '',
+      creationDate = '',
+      executionDate = '',
+      assignedBy = {},
+      assignedTo = {},
       markAsRead = false,
-   } = notification;
-   const { name = '', surname = '' } = from;
+      priority = TASK_STATUS.LOW.id,
+   } = task;
+   const { name = '', surname = '' } = assignedBy;
 
    const { authState } = useAuth();
    const { userInfo = {}, token = '' } = authState;
    const { userId = '' } = userInfo;
 
    let createdFromNow;
+   let executionDateFromNow;
    try {
-      createdFromNow = formatDistanceToNow(parseISO(created), {
+      createdFromNow = formatDistanceToNow(parseISO(creationDate), {
+         locale: pl,
+         addSuffix: true,
+      });
+      executionDateFromNow = formatDistanceToNow(parseISO(executionDate), {
          locale: pl,
          addSuffix: true,
       });
    } catch (error) {
       createdFromNow = '';
+      executionDateFromNow = '';
    }
 
    const handleMarkAsReadNotification = () =>
-      !markAsRead &&
-      dispatch(markAsReadNotification({ userId, token, taskId }));
+      !markAsRead && console.log('test1');
 
-   const handleDeleteNotification = () =>
-      dispatch(deleteNotification({ userId, token, taskId }));
+   const handleDeleteNotification = () => {
+      console.log('test2');
+      console.log(priority);
+      console.log(TASK_STATUS[priority]);
+   };
 
    return (
       <>
-         {notification && (
+         {task && (
             <Grid item xs={10} md={8} lg={6}>
                <Paper
                   className={clsx(classes.root, {
@@ -79,6 +94,11 @@ export const TaskItem = ({ taskId = '' }) => {
                               {title}
                            </Typography>
                         </Badge>
+                        <Typography variant="h6" className={classes.title}>
+                           {`Priorytet: ${
+                              TASK_STATUS[priority]?.pl || TASK_STATUS.LOW.pl
+                           }`}
+                        </Typography>
                         <div>
                            <Tooltip
                               title="Usuń powiadomienie"
@@ -94,12 +114,14 @@ export const TaskItem = ({ taskId = '' }) => {
                            </Tooltip>
                         </div>
                      </div>
-                     <Typography
-                        variant="body2"
-                        className={classes.time}
-                     >{`${name} ${surname}, ${createdFromNow}`}</Typography>
+                     <Typography variant="body2" className={classes.time}>
+                        {`Zadanie stworzone przez: ${name} ${surname}, ${createdFromNow}.`}
+                     </Typography>
+                     <Typography variant="body2" className={classes.time}>
+                        {`Wykonawca zadania: ${assignedTo?.name} ${assignedTo?.surname}. Termin wykonania: ${executionDateFromNow}`}
+                     </Typography>
                      <Typography variant="body1" className={classes.content}>
-                        {content}
+                        {description}
                      </Typography>
                   </div>
                </Paper>

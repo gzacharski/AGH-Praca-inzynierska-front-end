@@ -79,6 +79,46 @@ export const fetchAllTaskList = createAsyncThunk(
    },
 );
 
+export const createNewTask = createAsyncThunk(
+   'taskList/createNewTask',
+   async (
+      {
+         userId = '',
+         employeeId = '',
+         priority = '',
+         title = '',
+         description = '',
+         startDate = '',
+         token = '',
+      },
+      { rejectWithValue },
+   ) => {
+      const url = `${tasksServiceURL}/manager/${userId}`;
+
+      try {
+         const response = await axios.post(
+            url,
+            { title, description, employeeId, dueDate: startDate, priority },
+            config(token),
+         );
+         const { message = '', task = {} } = response?.data || {};
+         return { message, task };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data || '',
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const taskSlice = createSlice({
    initialState,
    name: 'taskList',
@@ -114,6 +154,23 @@ const taskSlice = createSlice({
          state.error = null;
       },
       [fetchAllTaskList.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [createNewTask.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [createNewTask.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         taskAdapter.upsertOne(state, action.payload.task);
+         state.error = null;
+      },
+      [createNewTask.rejected]: (state, action) => {
          state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
