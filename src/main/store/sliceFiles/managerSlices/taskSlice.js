@@ -12,7 +12,9 @@ import { requestConfig as config } from 'src/main/utils';
 import { STATUS } from '../../status';
 import { NOTISTACK } from '../../notistack';
 
-const taskAdapter = createEntityAdapter({});
+const taskAdapter = createEntityAdapter({
+   sortComparer: (a, b) => b.taskCreationDate.localeCompare(a.taskCreationDate),
+});
 
 const initialState = taskAdapter.getInitialState({
    status: STATUS.IDLE,
@@ -87,6 +89,7 @@ export const createNewTask = createAsyncThunk(
          title = '',
          description = '',
          startDate = '',
+         startTime = '',
          token = '',
       },
       { rejectWithValue },
@@ -96,7 +99,13 @@ export const createNewTask = createAsyncThunk(
       try {
          const response = await axios.post(
             url,
-            { title, description, employeeId, dueDate: startDate, priority },
+            {
+               title,
+               description,
+               employeeId,
+               dueDate: `${startDate}T${startTime}`,
+               priority,
+            },
             config(token),
          );
          const { message = '', task = {} } = response?.data || {};
@@ -128,6 +137,7 @@ export const updateTask = createAsyncThunk(
          title = '',
          description = '',
          startDate = '',
+         startTime = '',
          token = '',
       },
       { rejectWithValue },
@@ -137,7 +147,13 @@ export const updateTask = createAsyncThunk(
       try {
          const response = await axios.put(
             url,
-            { title, description, employeeId, dueDate: startDate, priority },
+            {
+               title,
+               description,
+               employeeId,
+               dueDate: `${startDate}T${startTime}`,
+               priority,
+            },
             config(token),
          );
          const { message = '', task = {} } = response?.data || {};

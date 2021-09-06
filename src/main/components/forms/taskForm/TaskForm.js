@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -96,7 +97,7 @@ export const TaskForm = ({
             reduxCallback({
                taskId,
                userId,
-               employeeId: values?.selectedEmployee?.userId || '',
+               employeeId: values?.selectedEmployee || '',
                priority: values?.priority?.id || '',
                title: values?.title || '',
                description: values?.description || '',
@@ -110,16 +111,13 @@ export const TaskForm = ({
    });
 
    useEffect(() => {
-      if (selectedEmployee) {
-         const employeeId = selectedEmployee?.userId || '';
-         const allEmployees = { ...employees, ...trainers };
-         const theEmployee = allEmployees[employeeId];
+      if (employees && trainers) {
          formik.setValues((state) => ({
             ...state,
-            selectedEmployee: theEmployee,
+            selectedEmployee: selectedEmployee?.userId || '',
          }));
       }
-   }, []);
+   }, [employees, trainers]);
 
    return (
       <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
@@ -165,7 +163,7 @@ export const TaskForm = ({
                      </MenuItem>
                      {Object.values({ ...employees, ...trainers }).map(
                         (user) => (
-                           <MenuItem key={user?.userId} value={user}>
+                           <MenuItem key={user?.userId} value={user?.userId}>
                               <div className={classes.menuItem}>
                                  <Avatar
                                     className={classes.avatar}

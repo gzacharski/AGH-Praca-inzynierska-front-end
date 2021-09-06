@@ -35,26 +35,31 @@ export const TaskItem = ({ taskId = '' }) => {
    const {
       title = '',
       description = '',
-      creationDate = '',
-      executionDate = '',
+      taskCreationDate = '',
+      dueDate,
       manager = {},
       employee = {},
       priority = TASK_STATUS.LOW.id,
    } = task || {};
 
    let createdFromNow;
-   let executionDateFromNow;
+
    try {
-      createdFromNow = formatDistanceToNow(parseISO(creationDate), {
-         locale: pl,
-         addSuffix: true,
-      });
-      executionDateFromNow = formatDistanceToNow(parseISO(executionDate), {
+      createdFromNow = formatDistanceToNow(parseISO(taskCreationDate), {
          locale: pl,
          addSuffix: true,
       });
    } catch (error) {
       createdFromNow = '';
+   }
+
+   let executionDateFromNow;
+   try {
+      executionDateFromNow = formatDistanceToNow(parseISO(dueDate), {
+         locale: pl,
+         addSuffix: true,
+      });
+   } catch (error) {
       executionDateFromNow = '';
    }
 
