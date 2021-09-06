@@ -7,11 +7,13 @@ const authService = 'auth';
 const trainingsService = 'trainings';
 const equipmentService = 'equipment';
 const gymPassService = 'gympass';
+const taskService = 'task';
 
 export const discoveryServiceURL = `${protocol}://${hostname}:${port}/${discoveryService}`;
 export const accountServiceURL = `${protocol}://${hostname}:${port}/${accountService}`;
 export const authServiceURL = `${protocol}://${hostname}:${port}/${authService}`;
 export const trainingsServiceURL = `${protocol}://${hostname}:${port}/${trainingsService}`;
+export const tasksServiceURL = `${protocol}://${hostname}:${port}/${taskService}`;
 export const apiGateway = `${protocol}://${hostname}:${port}`;
 
 // TODO to fix when back-end is ready
