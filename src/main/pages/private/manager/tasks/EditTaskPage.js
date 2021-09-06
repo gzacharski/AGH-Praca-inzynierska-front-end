@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { parseISO } from 'date-fns';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import {
-   createNewTask,
+   updateTask,
    selectById,
 } from 'src/main/store/sliceFiles/managerSlices/taskSlice';
 import { TaskForm } from 'src/main/components/forms';
@@ -27,13 +28,13 @@ const EditTaskPage = ({ match }) => {
             <>
                <PageTitle>Edytuj zadanie</PageTitle>
                <TaskForm
-                  taskId=""
+                  taskId={taskId}
                   selectedEmployee={employee}
-                  initStartDate={dueDate}
+                  initStartDate={parseISO(dueDate)}
                   priority={TASK_STATUS[priority] || TASK_STATUS.LOW}
                   title={title}
                   description={description}
-                  reduxCallback={createNewTask}
+                  reduxCallback={updateTask}
                   buttonName="Modyfikuj zadanie"
                />
             </>

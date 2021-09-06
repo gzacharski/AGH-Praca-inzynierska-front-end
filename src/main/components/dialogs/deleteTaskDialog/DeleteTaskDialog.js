@@ -8,7 +8,10 @@ import {
    DialogActions,
    Button,
 } from '@material-ui/core';
-import { selectById } from 'src/main/store/sliceFiles/managerSlices/taskSlice';
+import {
+   selectById,
+   deleteTask,
+} from 'src/main/store/sliceFiles/managerSlices/taskSlice';
 import {
    DialogContext,
    DIALOG_MODE,
@@ -25,7 +28,7 @@ export const DeleteGympassDialog = () => {
 
    const taskToDelete =
       useSelector((state) => selectById(state, entityId)) || {};
-   const { id = '', title = '' } = taskToDelete;
+   const { title = '' } = taskToDelete;
 
    const shouldOpen = mode === EDIT && isOpen;
    return (
@@ -42,8 +45,7 @@ export const DeleteGympassDialog = () => {
                      onClick={() => {
                         closeDialog();
                         const { token = '' } = authState;
-                        console.log({ token, id });
-                        //   dispatch(deleteGympass({ token, id }));
+                        dispatch(deleteTask({ token, taskId: entityId }));
                      }}
                   >
                      Usuń

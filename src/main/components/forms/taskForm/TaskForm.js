@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -20,9 +19,13 @@ import * as Yup from 'yup';
 import {
    fetchEmployeesList,
    selectStatus,
-   selectAll,
    selectEntities,
 } from 'src/main/store/sliceFiles/users/employeesSlice';
+import {
+   fetchTrainersList,
+   selectStatus as selectTrainersStatus,
+   selectEntities as selectTrainerEntities,
+} from 'src/main/store/sliceFiles/users/trainersSlice';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
 import { TASK_STATUS } from 'src/main/data/taskStatus';
@@ -31,11 +34,18 @@ import { useStyles } from './TaskForm.styles';
 const isNotEmpty = (text) => text && text.length !== 0;
 
 const validationSchema = Yup.object({
-   title: Yup.string().required('Pole jest wymagane'),
-   description: Yup.string().required('Pole jest wymagane'),
+   title: Yup.string()
+      .required('Pole jest wymagane')
+      .min(2, 'Minimalnie dwa znaki')
+      .max(20, 'Tytuł może mieć maksymalnie 20 znaków.'),
+   description: Yup.string()
+      .required('Pole jest wymagane')
+      .min(2, 'Minimalnie dwa znaki')
+      .max(200, 'Opis może mieć maksymalnie 200 znaków.'),
 });
 
 export const TaskForm = ({
+   taskId = '',
    title = '',
    description = '',
    selectedEmployee = '',
@@ -49,11 +59,13 @@ export const TaskForm = ({
    const dispatch = useDispatch();
    const history = useHistory();
    const employees = useSelector(selectEntities);
+   const trainers = useSelector(selectTrainerEntities);
 
    const [startDate, setStartDate] = useState(initStartDate);
    const [startTime, setStartTime] = useState(initStartTime);
 
    const employeeStatus = useSelector(selectStatus);
+   const trainerStatus = useSelector(selectTrainersStatus);
 
    const { authState = {} } = useAuth();
    const { token = '', userInfo = {} } = authState;
@@ -64,6 +76,12 @@ export const TaskForm = ({
          dispatch(fetchEmployeesList({ token }));
       }
    }, [employeeStatus, dispatch]);
+
+   useEffect(() => {
+      if (trainerStatus === STATUS.IDLE) {
+         dispatch(fetchTrainersList({ token }));
+      }
+   }, [trainerStatus, dispatch]);
 
    const formik = useFormik({
       initialValues: {
@@ -76,6 +94,7 @@ export const TaskForm = ({
       onSubmit: (values) => {
          dispatch(
             reduxCallback({
+               taskId,
                userId,
                employeeId: values?.selectedEmployee?.userId || '',
                priority: values?.priority?.id || '',
@@ -93,7 +112,8 @@ export const TaskForm = ({
    useEffect(() => {
       if (selectedEmployee) {
          const employeeId = selectedEmployee?.userId || '';
-         const theEmployee = employees[employeeId];
+         const allEmployees = { ...employees, ...trainers };
+         const theEmployee = allEmployees[employeeId];
          formik.setValues((state) => ({
             ...state,
             selectedEmployee: theEmployee,
@@ -143,17 +163,19 @@ export const TaskForm = ({
                      <MenuItem value="" disabled>
                         Wybierz pracownika
                      </MenuItem>
-                     {Object.values(employees).map((user) => (
-                        <MenuItem key={user?.userId} value={user}>
-                           <div className={classes.menuItem}>
-                              <Avatar
-                                 className={classes.avatar}
-                                 src={user?.avatar}
-                              >{`${user?.name?.[0]}${user?.surname?.[0]}`}</Avatar>
-                              <Typography>{`${user?.name} ${user?.surname}`}</Typography>
-                           </div>
-                        </MenuItem>
-                     ))}
+                     {Object.values({ ...employees, ...trainers }).map(
+                        (user) => (
+                           <MenuItem key={user?.userId} value={user}>
+                              <div className={classes.menuItem}>
+                                 <Avatar
+                                    className={classes.avatar}
+                                    src={user?.avatar}
+                                 >{`${user?.name?.[0]}${user?.surname?.[0]}`}</Avatar>
+                                 <Typography>{`${user?.name} ${user?.surname}`}</Typography>
+                              </div>
+                           </MenuItem>
+                        ),
+                     )}
                   </Select>
                </FormControl>
             </Grid>

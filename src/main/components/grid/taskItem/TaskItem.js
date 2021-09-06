@@ -40,7 +40,7 @@ export const TaskItem = ({ taskId = '' }) => {
       manager = {},
       employee = {},
       priority = TASK_STATUS.LOW.id,
-   } = task;
+   } = task || {};
 
    let createdFromNow;
    let executionDateFromNow;
