@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import {
    createNewTask,
@@ -22,24 +21,24 @@ const EditTaskPage = ({ match }) => {
       employee = {},
    } = task || {};
 
-   console.log(task);
-
    return (
       <PageWrapper>
-         <PageTitle>Edytuj zadanie</PageTitle>
          {task ? (
-            <TaskForm
-               taskId=""
-               selectedEmployee={employee}
-               initStartDate={dueDate}
-               priority={TASK_STATUS[priority] || TASK_STATUS.LOW}
-               title={title}
-               description={description}
-               reduxCallback={createNewTask}
-               buttonName="Modyfikuj zadanie"
-            />
+            <>
+               <PageTitle>Edytuj zadanie</PageTitle>
+               <TaskForm
+                  taskId=""
+                  selectedEmployee={employee}
+                  initStartDate={dueDate}
+                  priority={TASK_STATUS[priority] || TASK_STATUS.LOW}
+                  title={title}
+                  description={description}
+                  reduxCallback={createNewTask}
+                  buttonName="Modyfikuj zadanie"
+               />
+            </>
          ) : (
-            <CircularProgress />
+            <PageTitle>Nie znaleziono zadania</PageTitle>
          )}
       </PageWrapper>
    );
