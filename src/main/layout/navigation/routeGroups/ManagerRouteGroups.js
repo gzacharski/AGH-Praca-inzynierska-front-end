@@ -7,12 +7,16 @@ import {
    TasksPage,
    TimetablePage,
    UsersPage,
+   AddTaskPage,
 } from 'src/main/pages/private/manager';
 
 const ManagerRouteGroup = () => (
    <Switch>
       <Route exact path="/manager">
          <ManagerPage />
+      </Route>
+      <Route path="/manager/tasks/add">
+         <AddTaskPage />
       </Route>
       <Route path="/manager/tasks">
          <TasksPage />
