@@ -1,12 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { useHistory } from 'react-router-dom';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import { TaskItem } from 'src/main/components/grid/taskItem/TaskItem';
-
 import { STATUS } from 'src/main/store';
 import { NoAssignments } from 'src/main/components/noContent';
 import {
@@ -17,10 +14,11 @@ import {
    fetchAllTaskList,
    selectIds,
 } from 'src/main/store/sliceFiles/managerSlices/taskSlice';
+import { DialogContextProvider } from 'src/main/components/contexts/DialogContext';
 import { useAuth } from 'src/main/auth';
+import { DeleteGympassDialog } from 'src/main/components/dialogs';
 
-const AccountPage = () => {
-   const history = useHistory();
+const TasksPage = () => {
    const { authState = {} } = useAuth();
 
    const dispatch = useDispatch();
@@ -53,17 +51,20 @@ const AccountPage = () => {
       <PageWrapper>
          <PageTitle>Zadania pracowników</PageTitle>
          {taskIds.length !== 0 ? (
-            <Grid
-               container
-               alignItems="center"
-               justifyContent="center"
-               spacing={3}
-               direction="column"
-            >
-               {taskIds.map((id) => (
-                  <TaskItem key={id} taskId={id} />
-               ))}
-            </Grid>
+            <DialogContextProvider>
+               <Grid
+                  container
+                  alignItems="center"
+                  justifyContent="center"
+                  spacing={3}
+                  direction="column"
+               >
+                  {taskIds.map((id) => (
+                     <TaskItem key={id} taskId={id} />
+                  ))}
+               </Grid>
+               <DeleteGympassDialog />
+            </DialogContextProvider>
          ) : (
             <NoAssignments />
          )}
@@ -71,4 +72,4 @@ const AccountPage = () => {
    );
 };
 
-export default AccountPage;
+export default TasksPage;

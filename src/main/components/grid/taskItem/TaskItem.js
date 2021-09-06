@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useContext } from 'react';
 import {
    Grid,
    Paper,
@@ -8,12 +7,15 @@ import {
    Tooltip,
 } from '@material-ui/core';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
-import { useAuth } from 'src/main/auth';
 import { selectById } from 'src/main/store/sliceFiles/managerSlices/taskSlice';
+import {
+   DialogContext,
+   DIALOG_MODE,
+} from 'src/main/components/contexts/DialogContext';
 import { useStyles } from './TaskItem.styles';
 
 const TASK_STATUS = {
@@ -24,8 +26,8 @@ const TASK_STATUS = {
 };
 
 export const TaskItem = ({ taskId = '' }) => {
+   const { setIdAndOpenDialog } = useContext(DialogContext);
    const classes = useStyles();
-   const dispatch = useDispatch();
    const history = useHistory();
 
    const task = useSelector((state) => selectById(state, taskId));
@@ -39,10 +41,6 @@ export const TaskItem = ({ taskId = '' }) => {
       employee = {},
       priority = TASK_STATUS.LOW.id,
    } = task;
-
-   const { authState } = useAuth();
-   const { userInfo = {}, token = '' } = authState;
-   const { userId = '' } = userInfo;
 
    let createdFromNow;
    let executionDateFromNow;
@@ -61,7 +59,8 @@ export const TaskItem = ({ taskId = '' }) => {
    }
 
    const handleEditTask = () => history.push(`/manager/tasks/${taskId}`);
-   const handleDeleteTask = () => console.log('Delete task');
+   const handleDeleteTask = () =>
+      setIdAndOpenDialog({ id: taskId, mode: DIALOG_MODE.EDIT });
 
    return (
       <>

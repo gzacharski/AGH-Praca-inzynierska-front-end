@@ -5,6 +5,7 @@ import { CancelParticipationDialog } from './cancelParticipationDialog/CancelPar
 import { WorkoutRequestDialog } from './workoutRequestDialog/WorkoutRequestDialog';
 import { EquipmentRequestDialog } from './equipmentRequestDialog/EquipmentRequestDialog';
 import TrainingDetailsDialog from './trainingDetailsDialog/TrainingDetailsDialog';
+import { DeleteGympassDialog } from './deleteTaskDialog/DeleteTaskDialog';
 
 export {
    CancelParticipationDialog,
@@ -14,4 +15,5 @@ export {
    WorkoutRequestDialog,
    EquipmentRequestDialog,
    TrainingDetailsDialog,
+   DeleteGympassDialog,
 };
