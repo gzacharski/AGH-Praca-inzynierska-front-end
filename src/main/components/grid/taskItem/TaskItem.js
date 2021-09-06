@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { useAuth } from 'src/main/auth';
@@ -25,6 +26,7 @@ const TASK_STATUS = {
 export const TaskItem = ({ taskId = '' }) => {
    const classes = useStyles();
    const dispatch = useDispatch();
+   const history = useHistory();
 
    const task = useSelector((state) => selectById(state, taskId));
 
@@ -58,7 +60,7 @@ export const TaskItem = ({ taskId = '' }) => {
       executionDateFromNow = '';
    }
 
-   const handleEditTask = () => console.log('Edit task');
+   const handleEditTask = () => history.push(`/manager/tasks/${taskId}`);
    const handleDeleteTask = () => console.log('Delete task');
 
    return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -20,9 +21,11 @@ import {
    fetchEmployeesList,
    selectStatus,
    selectAll,
+   selectEntities,
 } from 'src/main/store/sliceFiles/users/employeesSlice';
 import { STATUS } from 'src/main/store';
 import { useAuth } from 'src/main/auth';
+import { TASK_STATUS } from 'src/main/data/taskStatus';
 import { useStyles } from './TaskForm.styles';
 
 const isNotEmpty = (text) => text && text.length !== 0;
@@ -31,13 +34,6 @@ const validationSchema = Yup.object({
    title: Yup.string().required('Pole jest wymagane'),
    description: Yup.string().required('Pole jest wymagane'),
 });
-
-const TASK_STATUS = {
-   LOW: { id: 'LOW', pl: 'Niski' },
-   MEDIUM: { id: 'MEDIUM', pl: 'Średni' },
-   HIGH: { id: 'HIGH', pl: 'Wysoki' },
-   CRITICAL: { id: 'CRITICAL', pl: 'Krytyczny' },
-};
 
 export const TaskForm = ({
    title = '',
@@ -52,11 +48,11 @@ export const TaskForm = ({
    const classes = useStyles();
    const dispatch = useDispatch();
    const history = useHistory();
+   const employees = useSelector(selectEntities);
 
    const [startDate, setStartDate] = useState(initStartDate);
    const [startTime, setStartTime] = useState(initStartTime);
 
-   const employees = useSelector(selectAll);
    const employeeStatus = useSelector(selectStatus);
 
    const { authState = {} } = useAuth();
@@ -93,6 +89,17 @@ export const TaskForm = ({
          history.push('/manager/tasks');
       },
    });
+
+   useEffect(() => {
+      if (selectedEmployee) {
+         const employeeId = selectedEmployee?.userId || '';
+         const theEmployee = employees[employeeId];
+         formik.setValues((state) => ({
+            ...state,
+            selectedEmployee: theEmployee,
+         }));
+      }
+   }, []);
 
    return (
       <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
@@ -136,7 +143,7 @@ export const TaskForm = ({
                      <MenuItem value="" disabled>
                         Wybierz pracownika
                      </MenuItem>
-                     {employees.map((user) => (
+                     {Object.values(employees).map((user) => (
                         <MenuItem key={user?.userId} value={user}>
                            <div className={classes.menuItem}>
                               <Avatar
