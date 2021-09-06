@@ -189,6 +189,23 @@ const locationListSlice = createSlice({
          state.message = action.payload.message;
       },
 
+      [updateLocation.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [updateLocation.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         locationListAdapter.upsertOne(state, action.payload.location);
+         state.error = null;
+      },
+      [updateLocation.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
       [deleteLocation.pending]: (state, action) => {
          state.status = STATUS.LOADING;
       },
