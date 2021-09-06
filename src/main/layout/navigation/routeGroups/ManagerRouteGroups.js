@@ -8,6 +8,7 @@ import {
    TimetablePage,
    UsersPage,
    AddTaskPage,
+   EditTaskPage,
 } from 'src/main/pages/private/manager';
 
 const ManagerRouteGroup = () => (
@@ -18,8 +19,11 @@ const ManagerRouteGroup = () => (
       <Route path="/manager/tasks/add">
          <AddTaskPage />
       </Route>
-      <Route path="/manager/tasks">
+      <Route exact path="/manager/tasks">
          <TasksPage />
+      </Route>
+      <Route exact path="/manager/tasks/:taskId">
+         <EditTaskPage />
       </Route>
       <Route path="/manager/timetable">
          <TimetablePage />
