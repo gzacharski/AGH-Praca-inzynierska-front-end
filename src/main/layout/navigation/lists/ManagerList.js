@@ -54,14 +54,7 @@ export default function ManagerList() {
             )
          }
       >
-         <Tooltip
-            title="Rezerwacje"
-            arrow
-            placement="right"
-            disableFocusListener={menuIsOpen}
-            disableHoverListener={menuIsOpen}
-            disableTouchListener={menuIsOpen}
-         >
+         <Tooltip title="Zadania" arrow placement="right">
             <ListItem
                button
                onClick={() => {
