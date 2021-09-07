@@ -136,7 +136,7 @@ const LatestUserGympass = () => {
          <Typography variant="h6">
             Twój typ karnetu: {gymPassOffer?.title || ''}
          </Typography>
-         <Slider value={value} track="inverted" disabled />
+         {temporaryPass && <Slider value={value} track="inverted" disabled />}
          <Typography>
             Zakupiono: {formatISO9075(parseISO(purchaseDateTime))}
          </Typography>
@@ -151,14 +151,15 @@ const LatestUserGympass = () => {
          )}
       </>
    );
+   console.log(currentGympass);
 
    return (
       <Paper elevation={3} className={classes.paper}>
-         {status === STATUS.SUCCEEDED ? (
+         {status === STATUS.SUCCEEDED && entries !== 0 ? (
             renderProperGympass
          ) : (
             <Paper className={classes.paper2}>
-               <Typography variant="h6">Nie masz aktualnego karnetu</Typography>
+               <Typography variant="h6">Brak aktywnego karnetu</Typography>
             </Paper>
          )}
       </Paper>
