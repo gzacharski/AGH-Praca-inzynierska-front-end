@@ -57,14 +57,7 @@ const AccountList = (props) => {
             pushUrl="/"
             secondaryText={name && surname && `${name} ${surname}`}
          />
-         <Tooltip
-            title="Rezerwacje"
-            arrow
-            placement="right"
-            disableFocusListener={menuIsOpen}
-            disableHoverListener={menuIsOpen}
-            disableTouchListener={menuIsOpen}
-         >
+         <Tooltip title="Rezerwacje" arrow placement="right">
             <ListItem
                button
                onClick={() => {

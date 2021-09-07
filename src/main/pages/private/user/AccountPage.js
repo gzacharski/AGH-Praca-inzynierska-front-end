@@ -1,16 +1,9 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Paper, Typography, makeStyles, Slider } from '@material-ui/core';
-import {
-   ArgumentAxis,
-   ValueAxis,
-   Chart,
-   BarSeries,
-   Title,
-   Tooltip,
-} from '@devexpress/dx-react-chart-material-ui';
-import { Animation, EventTracker, Stack } from '@devexpress/dx-react-chart';
-import { formatISO9075, formatDistanceToNow } from 'date-fns';
+
+import { formatISO9075, formatDistanceToNow, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { selectUserInfo } from 'src/main/store/sliceFiles/accountSlice';
 import {
@@ -22,19 +15,11 @@ import { PageWrapper } from 'src/main/components/utils';
 import { AvatarIcon } from 'src/main/components/icons';
 import { STATUS } from 'src/main/store/status';
 import { useAuth } from 'src/main/auth';
-
-const data = [
-   { workoutType: 'Sztangi', percentage: 30 },
-   { workoutType: 'TRX', percentage: 20 },
-   { workoutType: 'Rowery', percentage: 11 },
-   { workoutType: 'Pilates', percentage: 39 },
-   { workoutType: 'ABS', percentage: 2 },
-];
-
-const gympass = {
-   startDate: '2021-07-20T20:11',
-   endDate: '2021-08-20T20:11',
-};
+import {
+   fetchUserGympass,
+   selectGympassStatus,
+   selectById,
+} from 'src/main/store/sliceFiles/adminSlices/usersSlice';
 
 const useStyles = makeStyles(({ spacing }) => ({
    paper: {
@@ -97,7 +82,7 @@ const NextWorkout = () => {
             <Paper className={classes.paper2}>
                <Typography variant="h6">{title}</Typography>
                <Typography variant="body1">
-                  {location}, {closestWorkout}
+                  {Boolean(location) && `${location},`} {closestWorkout}
                </Typography>
             </Paper>
          ) : (
@@ -111,68 +96,104 @@ const NextWorkout = () => {
    );
 };
 
-const AccountPage = () => {
+const LatestUserGympass = () => {
    const classes = useStyles();
-   const startDate = Date.parse(gympass.startDate);
-   const endDate = Date.parse(gympass.endDate);
+   const dispatch = useDispatch();
+   const status = useSelector(selectStatus);
+   const [currentGympass, setCurrentGympass] = useState('');
+   const { authState = {} } = useAuth();
+   const { token = '', userInfo = {} } = authState;
+   const { userId = '' } = userInfo;
+   const userGympass = useSelector((state) => selectById(state, userId));
+
+   const startDate = Date.parse(currentGympass?.startDate || '1970-01-01');
+   const endDate = Date.parse(currentGympass?.endDate || '2170-01-01');
    const currentDate = Date.now();
-   const user = useSelector(selectUserInfo);
-   const { name, surname, email, phone } = user;
 
    const value = ((currentDate - startDate) * 100) / (endDate - startDate);
+
+   useEffect(() => {
+      if (status === STATUS.IDLE) {
+         dispatch(fetchUserGympass({ userId, token }));
+      }
+   }, [status, dispatch]);
+
+   useEffect(() => {
+      const { gympass = {} } = userGympass || {};
+      setCurrentGympass(gympass);
+   }, [userGympass]);
+
+   const {
+      gymPassOffer = {},
+      purchaseDateTime = '1970-01-01T10:00:00',
+      entries = 0,
+   } = currentGympass || {};
+
+   const { temporaryPass = false } = gymPassOffer;
+
+   const renderProperGympass = (
+      <>
+         <Typography variant="h6">
+            Twój typ karnetu: {gymPassOffer?.title || ''}
+         </Typography>
+         {temporaryPass && <Slider value={value} track="inverted" disabled />}
+         <Typography>
+            Zakupiono: {formatISO9075(parseISO(purchaseDateTime))}
+         </Typography>
+         {temporaryPass ? (
+            <Typography>
+               Ważny w dniach: od{' '}
+               {formatISO9075(startDate, { representation: 'date' })} do{' '}
+               {formatISO9075(endDate, { representation: 'date' })}
+            </Typography>
+         ) : (
+            <Typography>Ilość pozostałych wejść: {entries}</Typography>
+         )}
+      </>
+   );
+
+   return (
+      <Paper elevation={3} className={classes.paper}>
+         {status === STATUS.SUCCEEDED && entries !== 0 ? (
+            renderProperGympass
+         ) : (
+            <Paper className={classes.paper2}>
+               <Typography variant="h6">Brak aktywnego karnetu</Typography>
+            </Paper>
+         )}
+      </Paper>
+   );
+};
+
+const AccountPage = () => {
+   const classes = useStyles();
+   const user = useSelector(selectUserInfo);
+   const { name, surname, email, phone } = user;
 
    return (
       <PageWrapper>
          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-               <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                     <Paper elevation={3} className={classes.paper}>
-                        <div className={classes.user}>
-                           <div className={classes.avatar}>
-                              <AvatarIcon huge />
-                           </div>
-                           <div className={classes.info}>
-                              <Typography variant="h6">
-                                 {name} {surname}
-                              </Typography>
-                              <Typography variant="body2">{phone}</Typography>
-                              <Typography variant="body2">{email}</Typography>
-                           </div>
-                        </div>
-                     </Paper>
-                  </Grid>
-                  <Grid item xs={12}>
-                     <Paper elevation={3} className={classes.paper}>
-                        <Typography variant="h6">Karnet</Typography>
-                        <Slider value={value} track="inverted" />
-                        <Typography>Typ: standardowy</Typography>
-                        <Typography>
-                           Kończy się: {formatISO9075(endDate)}
+            <Grid item xs={12} md={6} lg={4}>
+               <Paper elevation={3} className={classes.paper}>
+                  <div className={classes.user}>
+                     <div className={classes.avatar}>
+                        <AvatarIcon huge />
+                     </div>
+                     <div className={classes.info}>
+                        <Typography variant="h6">
+                           {name} {surname}
                         </Typography>
-                     </Paper>
-                  </Grid>
-                  <Grid item xs={12}>
-                     <NextWorkout />
-                  </Grid>
-               </Grid>
-            </Grid>
-            <Grid item xs={12} md={6} className={classes.stats}>
-               <Paper elevation={3}>
-                  <Chart data={data}>
-                     <ArgumentAxis />
-                     <ValueAxis />
-                     <BarSeries
-                        argumentField="workoutType"
-                        valueField="percentage"
-                     />
-                     <Title text="Twój udział w zajęciach" />
-                     <Animation />
-                     <EventTracker />
-                     <Tooltip />
-                     <Stack />
-                  </Chart>
+                        <Typography variant="body2">{phone}</Typography>
+                        <Typography variant="body2">{email}</Typography>
+                     </div>
+                  </div>
                </Paper>
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+               <LatestUserGympass />
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+               <NextWorkout />
             </Grid>
          </Grid>
       </PageWrapper>

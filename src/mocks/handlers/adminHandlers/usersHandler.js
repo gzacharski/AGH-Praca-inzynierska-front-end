@@ -61,7 +61,7 @@ export const adminUserHandlers = [
       const users = getRows(total);
       return res(ctx.status(200), ctx.delay(), ctx.json(users));
    }),
-   rest.get(`${accountServiceURL}/admin/employee`, (req, res, ctx) => {
+   rest.get(`${accountServiceURL}/admin/employees`, (req, res, ctx) => {
       const pageNumber = req.url.searchParams.get('pageNumber');
       const pageSize = req.url.searchParams.get('pageSize');
       const getRows = (count) => {

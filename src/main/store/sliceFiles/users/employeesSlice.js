@@ -89,9 +89,8 @@ export default employeeListSlice.reducer;
 
 export const { clearMessage } = employeeListSlice.actions;
 
-export const { selectAll, selectById } = employeeListAdapter.getSelectors(
-   (state) => state.employeesList,
-);
+export const { selectAll, selectById, selectEntities } =
+   employeeListAdapter.getSelectors((state) => state.employeesList);
 
 export const selectMessage = (state) => state.employeesList.message;
 export const selectStatus = (state) => state.employeesList.status;
