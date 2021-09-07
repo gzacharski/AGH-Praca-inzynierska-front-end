@@ -1,5 +1,12 @@
 import React from 'react';
-import { List, ListSubheader } from '@material-ui/core';
+import {
+   List,
+   ListSubheader,
+   Tooltip,
+   ListItem,
+   ListItemIcon,
+   ListItemText,
+} from '@material-ui/core';
 import {
    Fingerprint,
    BubbleChart,
@@ -7,13 +14,19 @@ import {
    SupervisorAccount,
    EventSeat,
 } from '@material-ui/icons';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectDrawer } from 'src/main/store/sliceFiles/drawerSlice';
+import {
+   selectDrawer,
+   selectDrawerMoreInfo,
+} from 'src/main/store/sliceFiles/drawerSlice';
 import CustomListItem from 'src/main/layout/navigation/listItem/CustomListItem';
 
 const AdminList = () => {
    const menuIsOpen = useSelector(selectDrawer);
+
+   const menuMoreInfo = useSelector(selectDrawerMoreInfo);
+
    return (
       <List
          component="div"
@@ -26,12 +39,37 @@ const AdminList = () => {
             )
          }
       >
-         <CustomListItem
-            buttonName="Logi"
-            CustomIcon={Fingerprint}
-            pushUrl="/admin/logs"
-            secondaryText="Informacje z poszczególnych serwisów"
-         />
+         <Tooltip
+            title="Logi"
+            arrow
+            placement="right"
+            disableFocusListener={menuIsOpen}
+            disableHoverListener={menuIsOpen}
+            disableTouchListener={menuIsOpen}
+         >
+            <Link
+               to={{ pathname: 'http://localhost:5601' }}
+               target="_blank"
+               style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+               <ListItem button>
+                  <ListItemIcon>
+                     <Fingerprint />
+                  </ListItemIcon>
+                  <ListItemText
+                     primary="Logi"
+                     secondary={
+                        menuMoreInfo && menuIsOpen
+                           ? 'Informacje z poszczególnych serwisów'
+                           : null
+                     }
+                     secondaryTypographyProps={{
+                        color: 'textSecondary',
+                     }}
+                  />
+               </ListItem>
+            </Link>
+         </Tooltip>
          <CustomListItem
             buttonName="Statystyki"
             CustomIcon={BubbleChart}
