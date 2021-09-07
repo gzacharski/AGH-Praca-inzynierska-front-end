@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Tabs, Tab, AppBar } from '@material-ui/core';
+import { Tabs, Tab, AppBar, Paper } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import {
    TrainingTypeSubpage,
@@ -43,20 +43,22 @@ const AccountPage = () => {
       <PageWrapper>
          <PageTitle>Modyfikuj ofertę</PageTitle>
          <div className={classes.root}>
-            <AppBar position="static" color="transparent">
-               <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="simple tabs example"
-                  indicatorColor="primary"
-                  textColor="primary"
-                  centered
-               >
-                  <Tab label="Typy treningów" {...a11yProps(0)} />
-                  <Tab label="Sale treningowe" {...a11yProps(1)} />
-                  <Tab label="Karnety" {...a11yProps(2)} />
-               </Tabs>
-            </AppBar>
+            <Paper>
+               <AppBar position="static" color="transparent">
+                  <Tabs
+                     value={value}
+                     onChange={handleChange}
+                     aria-label="simple tabs example"
+                     indicatorColor="primary"
+                     textColor="primary"
+                     centered
+                  >
+                     <Tab label="Typy treningów" {...a11yProps(0)} />
+                     <Tab label="Sale treningowe" {...a11yProps(1)} />
+                     <Tab label="Karnety" {...a11yProps(2)} />
+                  </Tabs>
+               </AppBar>
+            </Paper>
             <TabPanel value={value} index={0}>
                <TrainingTypeSubpage />
             </TabPanel>

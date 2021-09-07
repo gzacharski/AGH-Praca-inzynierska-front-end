@@ -22,6 +22,9 @@ const useStyles = makeStyles(({ spacing }) => ({
       width: spacing(3),
       marginRight: spacing(1),
    },
+   paper: {
+      padding: spacing(2),
+   },
 }));
 
 export { useStyles };
