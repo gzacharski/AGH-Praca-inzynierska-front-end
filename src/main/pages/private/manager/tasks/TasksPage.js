@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { Grid } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
-import { TaskItem } from 'src/main/components/grid/taskItem/TaskItem';
+import { TaskItem } from 'src/main/components/grid';
 import { STATUS } from 'src/main/store';
 import { NoAssignments } from 'src/main/components/noContent';
 import {
