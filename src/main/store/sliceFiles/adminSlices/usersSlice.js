@@ -169,6 +169,31 @@ export const checkGymPassValidity = createAsyncThunk(
    },
 );
 
+export const deleteUser = createAsyncThunk(
+   'adminUsersList/deleteUser',
+   async ({ userId = '', token = '' }, { rejectWithValue }) => {
+      const url = `${accountServiceURL}/${userId}`;
+
+      try {
+         const response = await axios.delete(url, config(token));
+         const { message = '' } = response?.data || {};
+         return { userId, message };
+      } catch (error) {
+         if (error.response === undefined) {
+            return rejectWithValue({
+               error: error?.response?.data,
+               message: NETWORK_ERROR,
+            });
+         }
+         return rejectWithValue({
+            notistack: getNotistackVariant(error),
+            error: error?.response?.data,
+            message: error?.response?.data?.message,
+         });
+      }
+   },
+);
+
 const adminUsersSlice = createSlice({
    name: 'adminUsersList',
    initialState,
@@ -253,6 +278,23 @@ const adminUsersSlice = createSlice({
       },
       [checkGymPassValidity.rejected]: (state, action) => {
          state.gympassStatus = STATUS.FAILED;
+         state.notistack = action.payload.notistack;
+         state.error = action.payload.error;
+         state.message = action.payload.message;
+      },
+
+      [deleteUser.pending]: (state, action) => {
+         state.status = STATUS.LOADING;
+      },
+      [deleteUser.fulfilled]: (state, action) => {
+         state.status = STATUS.SUCCEEDED;
+         state.notistack = NOTISTACK.SUCCESS;
+         state.message = action.payload.message;
+         adminUsersListAdapter.removeOne(state, action.payload.userId);
+         state.error = null;
+      },
+      [deleteUser.rejected]: (state, action) => {
+         state.status = STATUS.FAILED;
          state.notistack = action.payload.notistack;
          state.error = action.payload.error;
          state.message = action.payload.message;
