@@ -20,7 +20,6 @@ const links = [
    { name: 'Sprzęt', url: '/equipment', testId: 'equipment' },
    { name: 'Trenerzy', url: '/trainers', testId: 'trainers' },
    { name: 'Grafik', url: '/timetable', testId: 'timetable' },
-   { name: 'Kontakt', url: '/contact', testId: 'contact' },
    { name: 'Cennik', url: '/price-list', testId: 'price-list' },
 ];
 

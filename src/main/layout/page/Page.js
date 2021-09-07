@@ -16,7 +16,6 @@ import {
 import {
    ConfirmRegistration,
    ConfirmResetPasswordPage,
-   ContactPage,
    EquipmentPage,
    LogInPage,
    PriceListPage,
@@ -65,9 +64,6 @@ const Page = () => {
          <PublicRouteOnly path="/confirmNewPassword" sensitive>
             <ConfirmResetPasswordPage />
          </PublicRouteOnly>
-         <Route path="/contact">
-            <ContactPage />
-         </Route>
 
          <PrivateRouteWithRole path="/employee" hasRole={hasEmployeeRole}>
             <EmployeeRouteGroup />
