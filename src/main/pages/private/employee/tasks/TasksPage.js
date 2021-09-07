@@ -18,7 +18,7 @@ import { DialogContextProvider } from 'src/main/components/contexts/DialogContex
 import { useAuth } from 'src/main/auth';
 import { DeleteGympassDialog } from 'src/main/components/dialogs';
 
-const AccountPage = () => {
+const TaskPage = () => {
    const { authState = {} } = useAuth();
 
    const dispatch = useDispatch();
@@ -72,4 +72,4 @@ const AccountPage = () => {
    );
 };
 
-export default AccountPage;
+export default TaskPage;
