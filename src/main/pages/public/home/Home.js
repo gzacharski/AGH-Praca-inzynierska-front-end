@@ -1,17 +1,13 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { PageWrapper } from 'src/main/components/utils';
-import { useStyles } from './Home.styles';
+import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 
 export default function Home() {
-   const classes = useStyles();
-
    return (
       <PageWrapper>
-         <Typography variant="h5" className={classes.root} align="center">
-            Strona główna
-            <br />
-         </Typography>
+         <PublicPageTitle
+            header="Praca inżynierska"
+            subheader="System do wspomagania zarządzania placówką profilaktyki zdrowotnej"
+         />
       </PageWrapper>
    );
 }
