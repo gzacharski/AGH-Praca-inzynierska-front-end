@@ -151,7 +151,6 @@ const LatestUserGympass = () => {
          )}
       </>
    );
-   console.log(currentGympass);
 
    return (
       <Paper elevation={3} className={classes.paper}>
