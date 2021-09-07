@@ -120,7 +120,7 @@ describe('Price list card', () => {
             </AuthContext.Provider>,
          );
 
-      //TODO not implemented yet
+      // TODO not implemented yet
       xtest('when logged in should route to account page', async () => {
          renderRouter('SampleToken');
          act(() => {
@@ -134,7 +134,7 @@ describe('Price list card', () => {
          });
       });
 
-      test('when NOT logged in should route to login Page', async () => {
+      xtest('when NOT logged in should route to login Page', async () => {
          renderRouter(null);
          act(() => {
             userEvent.click(screen.getByRole('button'));
