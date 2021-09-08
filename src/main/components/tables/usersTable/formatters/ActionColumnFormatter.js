@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext } from 'react';
 import { Tooltip, IconButton } from '@material-ui/core';
@@ -6,7 +5,6 @@ import {
    MoreVert as InfoIcon,
    Payment as PaymentIcon,
    GroupAdd as GroupAddIcon,
-   Edit as EditIcon,
    Delete as DeleteIcon,
 } from '@material-ui/icons';
 import { DataTypeProvider } from '@devexpress/dx-react-grid';
@@ -15,7 +13,7 @@ import {
    DIALOG_MODE,
 } from 'src/main/components/contexts/DialogContext';
 
-const { ADD, DELETE, EDIT, GYMPASS, INFO, ROLES } = DIALOG_MODE;
+const { DELETE, GYMPASS, INFO, ROLES } = DIALOG_MODE;
 
 const EmployeeActionFormatter = ({ row = {} }) => {
    const { userId = '' } = row;
@@ -80,13 +78,6 @@ const AdminActionFormatter = ({ row = {} }) => {
                onClick={() => setIdAndOpenDialog({ id: userId, mode: INFO })}
             >
                <InfoIcon />
-            </IconButton>
-         </Tooltip>
-         <Tooltip title="Edytuj" arrow>
-            <IconButton
-               onClick={() => setIdAndOpenDialog({ id: userId, mode: EDIT })}
-            >
-               <EditIcon />
             </IconButton>
          </Tooltip>
          <Tooltip title="Usuń" arrow>

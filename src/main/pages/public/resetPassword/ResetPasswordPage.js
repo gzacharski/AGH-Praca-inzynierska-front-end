@@ -4,6 +4,7 @@ import {
    CircularProgress,
    Typography,
    Slide,
+   Paper,
 } from '@material-ui/core';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import { useStyles } from './ResetPasswordPage.styles';
@@ -37,7 +38,7 @@ export default function ResetPasswordPage() {
    return (
       <Slide direction="right" in mountOnEnter unmountOnExit timeout={400}>
          <Container maxWidth="sm" component="main" className={classes.root}>
-            <div className={classes.paper}>
+            <Paper className={classes.paper}>
                <ConfirmationIcon onRequest={onRequest} status={status} />
                <Typography
                   variant="h5"
@@ -47,7 +48,7 @@ export default function ResetPasswordPage() {
                   Zresetuj hasło
                </Typography>
                {renderContent()}
-            </div>
+            </Paper>
          </Container>
       </Slide>
    );

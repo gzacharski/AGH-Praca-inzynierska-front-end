@@ -26,6 +26,7 @@ import {
    InfoTrainingTypeDialog,
    UserRolesDialog,
    GympassDialog,
+   DeleteUserDialog,
 } from './dialogs';
 
 const columns = [
@@ -102,5 +103,6 @@ export const UsersTable = ({
          selectById={selectById}
          changeClientRoles={changeClientRoles}
       />
+      <DeleteUserDialog />
    </DialogContextProvider>
 );

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { AppBar, Tabs, Tab } from '@material-ui/core';
+import { AppBar, Tabs, Tab, Paper } from '@material-ui/core';
 import { PageWrapper, PageTitle } from 'src/main/components/utils';
 import {
    ClientsSubpage,
@@ -44,20 +44,22 @@ const UsersPage = () => {
       <PageWrapper>
          <PageTitle>Użytkownicy w systemie</PageTitle>
          <div className={classes.root}>
-            <AppBar position="static" color="transparent">
-               <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  centered
-               >
-                  <Tab label="Klienci" {...a11yProps(0)} />
-                  <Tab label="Pracownicy" {...a11yProps(1)} />
-                  <Tab label="Trenerzy" {...a11yProps(2)} />
-                  <Tab label="Managerowie" {...a11yProps(3)} />
-               </Tabs>
-            </AppBar>
+            <Paper>
+               <AppBar position="static" color="transparent">
+                  <Tabs
+                     value={value}
+                     onChange={handleChange}
+                     indicatorColor="primary"
+                     textColor="primary"
+                     centered
+                  >
+                     <Tab label="Klienci" {...a11yProps(0)} />
+                     <Tab label="Pracownicy" {...a11yProps(1)} />
+                     <Tab label="Trenerzy" {...a11yProps(2)} />
+                     <Tab label="Managerowie" {...a11yProps(3)} />
+                  </Tabs>
+               </AppBar>
+            </Paper>
             <TabPanel value={value} index={0}>
                <ClientsSubpage />
             </TabPanel>

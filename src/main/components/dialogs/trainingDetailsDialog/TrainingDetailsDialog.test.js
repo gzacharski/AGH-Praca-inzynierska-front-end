@@ -47,8 +47,4 @@ describe('Show training details', () => {
    test('should render trainer avatar.', () => {
       expect(screen.getByTestId('avatar')).toBeInTheDocument();
    });
-
-   test('should "Sprawdź grafik" button', () => {
-      expect(screen.getByText('Sprawdź grafik')).toBeInTheDocument();
-   });
 });

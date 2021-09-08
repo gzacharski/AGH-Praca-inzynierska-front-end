@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      padding: theme.spacing(3),
    },
    avatar: {
       margin: theme.spacing(1),
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
    backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: '#fff',
-    },
+   },
 }));
 
 export { useStyles };

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import clsx from 'clsx';
 import {
@@ -70,8 +71,9 @@ const PriceListCard = (props) => {
                </ul>
             </div>
          </CardContent>
-         <CardActions>
+         {/* <CardActions>
             <Button
+               disabled
                fullWidth
                variant={premium ? 'contained' : 'outlined'}
                className={clsx({
@@ -82,7 +84,7 @@ const PriceListCard = (props) => {
             >
                Kup
             </Button>
-         </CardActions>
+         </CardActions> */}
       </Card>
    );
 };

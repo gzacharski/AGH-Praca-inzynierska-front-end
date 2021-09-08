@@ -12,7 +12,6 @@ const useStyles = makeStyles(({ spacing }) => ({
    },
    select: {
       width: '100%',
-      margin: 'auto',
    },
    menuItem: {
       display: 'flex',
@@ -21,9 +20,6 @@ const useStyles = makeStyles(({ spacing }) => ({
       height: spacing(3),
       width: spacing(3),
       marginRight: spacing(1),
-   },
-   paper: {
-      padding: spacing(2),
    },
 }));
 

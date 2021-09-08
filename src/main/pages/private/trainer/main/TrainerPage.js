@@ -13,6 +13,7 @@ import {
    TextField,
    Button,
    makeStyles,
+   Paper,
 } from '@material-ui/core';
 import { PageWrapper, PublicPageTitle } from 'src/main/components/utils';
 import {
@@ -132,158 +133,164 @@ const TrainerForm = ({
       setEditingState(true);
    };
    return (
-      <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
-         <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={7}>
-               <Grid container justifyContent="center">
-                  <Grid xs={12}>
-                     {editingState ? (
-                        <div className={classes.cropContainer}>
-                           <Cropper
-                              image={imageToUpdate || image}
-                              crop={crop}
-                              rotation={rotation}
-                              zoom={zoom}
-                              aspect={1}
-                              onCropChange={setCrop}
-                              onCropComplete={onCropComplete}
-                              onRotationChange={setRotation}
-                              onZoomChange={setZoom}
-                           />
-                        </div>
-                     ) : (
-                        (croppedImage || image) && (
-                           <Image
-                              src={croppedImage || image}
-                              alt={synopsis}
-                              aspectRatio={1}
-                           />
-                        )
+      <Paper>
+         <form
+            onSubmit={formik.handleSubmit}
+            className={classes.form}
+            noValidate
+         >
+            <Grid container spacing={2} justifyContent="center">
+               <Grid item xs={7}>
+                  <Grid container justifyContent="center">
+                     <Grid xs={12}>
+                        {editingState ? (
+                           <div className={classes.cropContainer}>
+                              <Cropper
+                                 image={imageToUpdate || image}
+                                 crop={crop}
+                                 rotation={rotation}
+                                 zoom={zoom}
+                                 aspect={1}
+                                 onCropChange={setCrop}
+                                 onCropComplete={onCropComplete}
+                                 onRotationChange={setRotation}
+                                 onZoomChange={setZoom}
+                              />
+                           </div>
+                        ) : (
+                           (croppedImage || image) && (
+                              <Image
+                                 src={croppedImage || image}
+                                 alt={synopsis}
+                                 aspectRatio={1}
+                              />
+                           )
+                        )}
+                     </Grid>
+                     {!readOnly && (
+                        <>
+                           <Grid xs={6}>
+                              <input
+                                 accept="image/jpeg, image/png"
+                                 className={classes.input}
+                                 id="icon-button-file"
+                                 type="file"
+                                 onChange={handleFileChange}
+                              />
+                              <label htmlFor="icon-button-file">
+                                 <Button
+                                    component="span"
+                                    variant="outlined"
+                                    color="primary"
+                                    fullWidth
+                                    style={{ marginTop: '8px' }}
+                                 >
+                                    Wybierz zdjęcie
+                                 </Button>
+                              </label>
+                           </Grid>
+                           <Grid xs={6}>
+                              {editingState ? (
+                                 <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    fullWidth
+                                    style={{ marginTop: '8px' }}
+                                    onClick={() => {
+                                       setEditingState(false);
+                                       showCroppedImage();
+                                    }}
+                                 >
+                                    Przytnij
+                                 </Button>
+                              ) : (
+                                 <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    fullWidth
+                                    style={{ marginTop: '8px' }}
+                                    onClick={() => setEditingState(true)}
+                                    disabled={imageToUpdate === null}
+                                 >
+                                    Edytuj
+                                 </Button>
+                              )}
+                           </Grid>
+                        </>
                      )}
                   </Grid>
-                  {!readOnly && (
-                     <>
-                        <Grid xs={6}>
-                           <input
-                              accept="image/jpeg, image/png"
-                              className={classes.input}
-                              id="icon-button-file"
-                              type="file"
-                              onChange={handleFileChange}
-                           />
-                           <label htmlFor="icon-button-file">
-                              <Button
-                                 component="span"
-                                 variant="outlined"
-                                 color="primary"
-                                 fullWidth
-                                 style={{ marginTop: '8px' }}
-                              >
-                                 Wybierz zdjęcie
-                              </Button>
-                           </label>
-                        </Grid>
-                        <Grid xs={6}>
-                           {editingState ? (
-                              <Button
-                                 variant="outlined"
-                                 color="primary"
-                                 fullWidth
-                                 style={{ marginTop: '8px' }}
-                                 onClick={() => {
-                                    setEditingState(false);
-                                    showCroppedImage();
-                                 }}
-                              >
-                                 Przytnij
-                              </Button>
-                           ) : (
-                              <Button
-                                 variant="outlined"
-                                 color="primary"
-                                 fullWidth
-                                 style={{ marginTop: '8px' }}
-                                 onClick={() => setEditingState(true)}
-                                 disabled={imageToUpdate === null}
-                              >
-                                 Edytuj
-                              </Button>
-                           )}
-                        </Grid>
-                     </>
-                  )}
                </Grid>
-            </Grid>
-            <Grid item xs={7}>
-               <Grid container justifyContent="space-between">
-                  <Grid item xs={12}>
-                     <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        disabled={readOnly}
-                        id="synopsis"
-                        label="Cytat"
-                        name="synopsis"
-                        type="text"
-                        defaultValue={formik.initialValues.synopsis}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.synopsis}
-                        error={
-                           formik.touched.synopsis &&
-                           isNotEmpty(formik.errors.synopsis)
-                        }
-                        helperText={
-                           formik.touched.synopsis && formik.errors.synopsis
-                        }
-                     />
-                  </Grid>
-                  <Grid item xs={12}>
-                     <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="description"
-                        label="Opis/Biografia"
-                        name="description"
-                        multiline
-                        disabled={readOnly}
-                        rows={6}
-                        type="text"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.description}
-                        error={
-                           formik.touched.description &&
-                           isNotEmpty(formik.errors.description)
-                        }
-                        helperText={
-                           formik.touched.description &&
-                           formik.errors.description
-                        }
-                     />
-                  </Grid>
-                  {!readOnly && (
+               <Grid item xs={7}>
+                  <Grid container justifyContent="space-between">
                      <Grid item xs={12}>
-                        <Button
-                           type="submit"
+                        <TextField
                            variant="outlined"
-                           color="primary"
+                           margin="normal"
+                           required
                            fullWidth
-                           style={{ marginTop: '5px' }}
-                           disabled={editingState}
-                        >
-                           Zapisz zmiany
-                        </Button>
+                           disabled={readOnly}
+                           id="synopsis"
+                           label="Cytat"
+                           name="synopsis"
+                           type="text"
+                           defaultValue={formik.initialValues.synopsis}
+                           onChange={formik.handleChange}
+                           onBlur={formik.handleBlur}
+                           value={formik.values.synopsis}
+                           error={
+                              formik.touched.synopsis &&
+                              isNotEmpty(formik.errors.synopsis)
+                           }
+                           helperText={
+                              formik.touched.synopsis && formik.errors.synopsis
+                           }
+                        />
                      </Grid>
-                  )}
+                     <Grid item xs={12}>
+                        <TextField
+                           variant="outlined"
+                           margin="normal"
+                           required
+                           fullWidth
+                           id="description"
+                           label="Opis/Biografia"
+                           name="description"
+                           multiline
+                           disabled={readOnly}
+                           rows={6}
+                           type="text"
+                           onChange={formik.handleChange}
+                           onBlur={formik.handleBlur}
+                           value={formik.values.description}
+                           error={
+                              formik.touched.description &&
+                              isNotEmpty(formik.errors.description)
+                           }
+                           helperText={
+                              formik.touched.description &&
+                              formik.errors.description
+                           }
+                        />
+                     </Grid>
+                     {!readOnly && (
+                        <Grid item xs={12}>
+                           <Button
+                              type="submit"
+                              variant="outlined"
+                              color="primary"
+                              fullWidth
+                              style={{ marginTop: '5px' }}
+                              disabled={editingState}
+                           >
+                              Zapisz zmiany
+                           </Button>
+                        </Grid>
+                     )}
+                  </Grid>
                </Grid>
             </Grid>
-         </Grid>
-      </form>
+         </form>
+      </Paper>
    );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { AuthProvider } from 'src/main/auth';
 import App from './main/App';
 import reportWebVitals from './main/reportWebVitals';
 
@@ -16,7 +17,9 @@ async function main() {
 
    ReactDOM.render(
       <React.StrictMode>
-         <App />
+         <AuthProvider>
+            <App />
+         </AuthProvider>
       </React.StrictMode>,
       document.getElementById('root'),
    );

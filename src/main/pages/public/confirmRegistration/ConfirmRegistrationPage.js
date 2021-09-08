@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
-import { Container, CircularProgress, Typography } from '@material-ui/core';
+import {
+   Container,
+   CircularProgress,
+   Typography,
+   Paper,
+} from '@material-ui/core';
 import { Footer } from 'src/main/layout/footer/Footer';
 import { ConfirmationIcon } from 'src/main/components/icons';
 import { useStyles } from './ConfirmRegistrationPage.styles';
@@ -41,7 +46,7 @@ export default function ConfirmRegistration() {
       <>
          {!hasToken && <Redirect to="/" />}
          <Container maxWidth="sm" component="main" className={classes.root}>
-            <div className={classes.paper}>
+            <Paper className={classes.paper}>
                <ConfirmationIcon onRequest={onRequest} status={status} />
                <Typography
                   variant="h5"
@@ -52,7 +57,7 @@ export default function ConfirmRegistration() {
                </Typography>
                {renderContent()}
                <Footer />
-            </div>
+            </Paper>
          </Container>
       </>
    );

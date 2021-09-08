@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
    Avatar,
@@ -9,8 +8,6 @@ import {
    CardContent,
    Tooltip,
    Typography,
-   Button,
-   CardActionArea,
    IconButton,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
@@ -23,9 +20,6 @@ const TrainingDetailsDialog = ({
    title,
    description,
    trainer,
-   rating = 2.5,
-   duration,
-   comments,
 }) => {
    const classes = useStyles();
    const { name = '', surname = '', avatar = '' } = trainer || {};
@@ -81,22 +75,6 @@ const TrainingDetailsDialog = ({
                   {description}
                </Typography>
             </CardContent>
-            <CardActionArea className={classes.button}>
-               <Button
-                  variant="contained"
-                  color="primary"
-                  data-testid="check-button"
-               >
-                  Sprawdź grafik
-               </Button>
-               <Button
-                  variant="contained"
-                  color="primary"
-                  data-testid="join-button"
-               >
-                  Dołącz
-               </Button>
-            </CardActionArea>
          </Card>
       </Backdrop>
    );

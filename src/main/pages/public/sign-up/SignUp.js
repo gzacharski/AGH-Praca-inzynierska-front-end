@@ -6,6 +6,7 @@ import {
    Snackbar,
    Slide,
    Typography,
+   Paper,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -38,7 +39,7 @@ export default function SingUp() {
                component="main"
                data-testid="main-container"
             >
-               <div className={classes.paper}>
+               <Paper className={classes.paper}>
                   <Avatar className={classes.avatar}>
                      <LockOutlinedIcon />
                   </Avatar>
@@ -82,7 +83,7 @@ export default function SingUp() {
                         {responseMessage}
                      </MuiAlert>
                   </Snackbar>
-               </div>
+               </Paper>
             </Container>
          </Slide>
       </>
