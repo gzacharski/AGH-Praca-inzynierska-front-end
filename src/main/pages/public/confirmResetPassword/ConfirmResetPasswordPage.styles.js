@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      height: '30vh',
       position: 'absolute',
       top: '40%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
+      padding: theme.spacing(2),
    },
    avatar: {
       margin: theme.spacing(1),

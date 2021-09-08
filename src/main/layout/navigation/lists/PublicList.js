@@ -4,7 +4,6 @@ import {
    Group,
    FitnessCenter,
    Event,
-   ContactPhone,
    Payment,
    EmojiPeople,
 } from '@material-ui/icons';
@@ -53,13 +52,6 @@ export default function AdminList() {
             menuIsOpen={menuIsOpen}
             pushUrl="/timetable"
             secondaryText="Zobacz aktualny rozkład jazdy i zarezerwuj sobie udział w zajęciach"
-         />
-         <CustomListItem
-            buttonName="Kontakt"
-            CustomIcon={ContactPhone}
-            menuIsOpen={menuIsOpen}
-            pushUrl="/contact"
-            secondaryText="Napisz do nas"
          />
          <CustomListItem
             buttonName="Cennik"
