@@ -51,7 +51,7 @@ const TrainersPage = () => {
    const location = useLocation();
 
    useEffect(() => {
-      if (status === STATUS.IDLE || trainers.length === 1) {
+      if (status === STATUS.IDLE || trainers.length === 0) {
          const { search = '' } = location;
          dispatch(fetchTrainerList({ search }));
       }
